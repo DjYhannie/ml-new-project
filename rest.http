@@ -1,0 +1,11 @@
+###
+
+POST  http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+    "name": "Rhea May Ardiente",
+    "email":"rhea.ardiente@mlhuillier.com",
+    "password": "rhea2021",
+    "department": "QA department"
+}
