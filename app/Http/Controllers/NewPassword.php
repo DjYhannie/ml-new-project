@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use PharIo\Manifest\Email;
 use Illuminate\Support\Facades\Notification;
+use Symfony\Component\Console\Input\Input;
 
 class NewPassword extends Controller
 {
@@ -58,35 +59,26 @@ class NewPassword extends Controller
 
     public function emailResetLink(Request $request)
     {
-        $rule = $request->validate(['email' => 'required|email|exists:users,email']);
+        $rule = $request->validate(['email' => 'required|email']);
+        $checked = User::where('email', '=', $rule)->first();
+        // dd($checked);
 
         $token = Str::random(64);
+
+
 
         DB::table('password_resets')
             ->insert(['email' => $request->email, 'token' =>$token, 'created_at' => Carbon::now()]);
 
 
 
-        $data = [
-            'name' => 'Password Reset',
-            'body' => 'Please click the link below to reset your password',
-            'description' => 'Reset Password',
-            'dataURL' => url("http://localhost:4200/"),
+        $checked->notify(new EmailNotif($checked));
+        return back()->with('message', 'Email Send');
 
-
-
-        ];
-
-        Notification::send(new EmailNotif($data));
-        // foreach ($request as $email){
-        //     $user = User::where('email', $email)->first();
-        //     $user-> notify(new EmailNotif($user->email));
-        // };
-
-        return response()->json([
-            'message' => 'Succesfull Notif',
-            'token' => $token
-        ]);
+        // return response()->json([
+        //     'message' => 'Succesfull Notif',
+        //     'token' => $token
+        // ]);
     }
 }
 
