@@ -32,7 +32,7 @@ class NewPassword extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required'
+            'token' => 'required'
         ]);
 
         $updatedPassword = DB::table('password_resets')
@@ -41,7 +41,7 @@ class NewPassword extends Controller
 
 
         if (!$updatedPassword)
-            return back()->withInput()->with('error', 'Invalid token!');
+            return response('Invalid token!');
 
             $user = User::where('email', $request->email)
                 ->update(['password' => Hash::make($request->password)]);
@@ -52,16 +52,15 @@ class NewPassword extends Controller
 
         return response()->json([
             'message' => 'Password change successfully',
-            'updates' => $updatedPassword
         ]);
     }
 
 
     public function emailResetLink(Request $request)
     {
+
         $rule = $request->validate(['email' => 'required|email']);
         $checked = User::where('email', '=', $rule)->first();
-        // dd($checked);
 
         $token = Str::random(64);
 
@@ -70,15 +69,17 @@ class NewPassword extends Controller
         DB::table('password_resets')
             ->insert(['email' => $request->email, 'token' =>$token, 'created_at' => Carbon::now()]);
 
+        try{
+            $checked->notify(new EmailNotif($checked));
+            return response()->json([
+                'message' => 'Email Sent',
+                'token' => $token
+            ]);
+        }
+        catch(\Exception $e){
+            return response($e->getMessage());
+        }
 
-
-        $checked->notify(new EmailNotif($checked));
-        return back()->with('message', 'Email Send');
-
-        // return response()->json([
-        //     'message' => 'Succesfull Notif',
-        //     'token' => $token
-        // ]);
     }
 }
 

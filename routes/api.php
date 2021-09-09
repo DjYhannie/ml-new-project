@@ -28,10 +28,11 @@ Route::post('/login',[RegistrationController::class,'login']);
 
 
 
+
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/reset-password',[NewPassword::class, 'updatePassword']);
-    Route::any('/send-email',[NewPassword::class, 'emailResetLink']);
+    Route::post('/send-email',[NewPassword::class, 'emailResetLink']);
 
     Route::post('/logout', [RegistrationController::class, 'logout']);
 });

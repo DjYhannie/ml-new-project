@@ -54,7 +54,7 @@ class RegistrationController extends Controller
            return response()->json([
             'name' => $name,
             'token' => $token,
-            'message' => 'Successfully Registered'
+            'message' => 'Successfully Login'
         ]);
        }
        else{
