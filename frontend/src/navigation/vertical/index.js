@@ -5,8 +5,8 @@ export default [
     icon: 'HomeIcon',
   },
   {
-    title: 'Members',
-    route: 'members',
+    title: 'Examinees',
+    route: 'examinees',
     icon: 'UsersIcon',
   },
   {

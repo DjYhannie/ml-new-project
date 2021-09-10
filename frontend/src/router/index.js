@@ -39,14 +39,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/members',
-      name: 'members',
-      component: () => import('@/views/Members.vue'),
+      path: '/examinees',
+      name: 'examinees',
+      component: () => import('@/views/Examinees.vue'),
       meta: {
-        pageTitle: 'Members',
+        pageTitle: 'Examinees',
         breadcrumb: [
           {
-            text: 'Members',
+            text: 'Examinees',
             active: true,
           },
         ],
@@ -78,6 +78,14 @@ const router = new VueRouter({
             active: true,
           },
         ],
+      },
+    },
+    {
+      path: '/sample',
+      name: 'sample',
+      component: () => import('@/views/Sample.vue'),
+      meta: {
+        layout: 'full',
       },
     },
     {
