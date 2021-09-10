@@ -16,11 +16,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        DB::table('users')->insert([
-            'name' => 'Rhea May Ardiente',
-            'email' => 'rhea.ardiente@mlhuillier.com',
-            'password' => Hash::make('rhea2021'),
-            'is_admin' => '0'
+        DB::table('admins')->insert([
+            'username' => 'Administrator',
+            'password' => Hash::make('admin'),
         ]);
     }
 }

@@ -79,7 +79,6 @@ class NewPassword extends Controller
         catch(\Exception $e){
             return response($e->getMessage());
         }
-
     }
 }
 
