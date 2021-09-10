@@ -42,22 +42,68 @@
             title-tag="h2"
             class="font-weight-bold mb-1"
           >
-            Welcome to MLhuillier Evaluation Test! 👋
+            MLhuillier Evaluation Test
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the test
+            Please fill in input fields
           </b-card-text>
 
           <!-- form -->
-          <validation-observer ref="loginValidation">
+          <validation-observer ref="registerValidation">
             <b-form
-              class="auth-login-form mt-2"
+              class="auth-register-form mt-2"
               @submit.prevent
             >
+
+            <!-- name -->
+              <b-form-group
+                label="Name"
+                label-for="name"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="Name"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="email"
+                    v-model="name"
+                    :state="errors.length > 0 ? false:null"
+                    name="name"
+                    placeholder="Full Name"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+               <!-- department  -->
+              <b-form-group
+                id="dept"
+                label="Department:"
+                label-for="dept"
+              >
+                <validation-provider
+                rules="required"
+                name="Department"
+                #default="{ errors }">
+                  <b-form-select v-model="selected" class="mb-2 form-group" name="department" :state="errors.length > 0 ? false:null">
+                    <option :value="null" disabled>ML Departments</option>
+                    <option value="quality-assurance">Quality Assurance</option>
+                    <option value="developer">Developer</option>
+                    <option value="developer-operation">Developer Operation</option>
+                    <option value="system-administration">System Administration</option>
+                    <option value="helpdesk-facility">HelpDesk Facility</option>
+                    <option value="product-owner">Product Owner</option>
+                  </b-form-select>
+                  <small class="text-danger">{{ errors[0] }}</small>
+              </validation-provider>
+
+              </b-form-group>
+
               <!-- email -->
               <b-form-group
                 label="Email"
-                label-for="login-email"
+                label-for="email"
               >
                 <validation-provider
                   #default="{ errors }"
@@ -65,17 +111,17 @@
                   rules="required|email"
                 >
                   <b-form-input
-                    id="login-email"
+                    id="email"
                     v-model="userEmail"
                     :state="errors.length > 0 ? false:null"
-                    name="login-email"
+                    name="email"
                     placeholder="name.test@mlhuillier.com"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <!-- forgot password -->
+              <!-- password -->
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
@@ -113,16 +159,43 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- checkbox -->
-              <!-- <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
+              <!-- confirm password -->
+              <b-form-group>
+                <div class="d-flex justify-content-between">
+                  <label for="login-password">Confirm Password</label>
+                  <b-link :to="{name:'auth-forgot-password-v2'}">
+                    <small>Forgot Password?</small>
+                  </b-link>
+                </div>
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Confirm Password"
+                  rules="required|password:@confirm"
                 >
-                  Remember Me
-                </b-form-checkbox>
-              </b-form-group> -->
+                  <b-input-group
+                    class="input-group-merge"
+                    :class="errors.length > 0 ? 'is-invalid':null"
+                  >
+                    <b-form-input
+                      id="login-password"
+                      v-model="confirmPassword"
+                      :state="errors.length > 0 ? false:null"
+                      class="form-control-merge"
+                      :type="passwordFieldType"
+                      name="login-password"
+                      placeholder="············"
+                    />
+                    <b-input-group-append is-text>
+                      <feather-icon
+                        class="cursor-pointer"
+                        :icon="passwordToggleIcon"
+                        @click="togglePasswordVisibility"
+                      />
+                    </b-input-group-append>
+                  </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
 
               <!-- submit buttons -->
               <b-button
@@ -131,53 +204,18 @@
                 block
                 @click="validationForm"
               >
-                Sign in
+                 Register
               </b-button>
             </b-form>
           </validation-observer>
 
           <b-card-text class="text-center mt-2">
-            <span>Don't have an account yet? </span>
-            <b-link :to="{name:'registration'}">
-              <span>&nbsp;Register</span>
+            <span>Already have an account? </span>
+            <b-link :to="{name:'login'}">
+              <span>&nbsp;Sign in</span>
               <!-- <router-link to="/registration">Register</router-link> -->
             </b-link>
           </b-card-text>
-
-          <!-- divider -->
-          <!-- <div class="divider my-2">
-            <div class="divider-text">
-              or
-            </div>
-          </div> -->
-
-          <!-- social buttons -->
-          <!-- <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button
-              variant="facebook"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button
-              variant="twitter"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button
-              variant="google"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button
-              variant="github"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div> -->
         </b-col>
       </b-col>
     <!-- /Login-->
@@ -187,15 +225,23 @@
 
 <script>
 /* eslint-disable global-require */
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton, BFormSelect,
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
+extend('password', {
+  params: ['target'],
+  validate(value, { target }) {
+    return value === target
+  },
+  message: 'Password confirmation does not match',
+})
 
 export default {
   components: {
@@ -211,6 +257,7 @@ export default {
     BImg,
     BForm,
     BButton,
+    BFormSelect,
     // VuexyLogo,
     ValidationProvider,
     ValidationObserver,
@@ -219,9 +266,11 @@ export default {
   data() {
     return {
       status: '',
+      name: '',
       password: '',
       userEmail: '',
-      sideImg: require('@/assets/images/pages/login-accept-task.svg'),
+      confirmPassword: '',
+      sideImg: require('@/assets/images/pages/register-shared-goals.svg'),
       // validation rulesimport store from '@/store/index'
       required,
       email,
@@ -234,7 +283,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/pages/login-accept-task.svg')
+        this.sideImg = require('@/assets/images/pages/register-shared-goals.svg')
         return this.sideImg
       }
       return this.sideImg
@@ -242,7 +291,7 @@ export default {
   },
   methods: {
     validationForm() {
-      this.$refs.loginValidation.validate().then(success => {
+      this.$refs.registerValidation.validate().then(success => {
         if (success) {
           this.$toast({
             component: ToastificationContent,

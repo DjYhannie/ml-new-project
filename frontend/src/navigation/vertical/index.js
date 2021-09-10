@@ -5,8 +5,13 @@ export default [
     icon: 'HomeIcon',
   },
   {
-    title: 'Second Page',
-    route: 'second-page',
-    icon: 'FileIcon',
+    title: 'Members',
+    route: 'members',
+    icon: 'UsersIcon',
+  },
+  {
+    title: 'History',
+    route: 'history',
+    icon: 'HistoryIcon',
   },
 ]

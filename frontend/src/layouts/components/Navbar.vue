@@ -50,7 +50,8 @@
             icon="UserIcon"
             class="mr-50"
           />
-          <span>Profile</span>
+          <!-- <span>Profile</span> -->
+          <router-link to="/profile">Profile</router-link>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
@@ -88,7 +89,8 @@
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <!-- <span>Logout</span> -->
+          <router-link to="login">Logout</router-link>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>

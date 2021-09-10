@@ -3,8 +3,8 @@
   <div class="misc-wrapper">
     <b-link class="brand-logo">
       <vuexy-logo />
-      <h2 class="brand-text text-primary ml-1">
-        Vuexy
+      <h2 class="brand-text text-danger ml-1">
+        MLhuillier
       </h2>
     </b-link>
 
@@ -18,9 +18,9 @@
         </p>
 
         <b-button
-          variant="primary"
+          variant="danger"
           class="mb-2 btn-sm-block"
-          :to="{path:'/'}"
+          :to="{path:'login'}"
         >
           Back to home
         </b-button>
@@ -52,14 +52,14 @@ export default {
   },
   data() {
     return {
-      downImg: require('@/assets/images/pages/error.svg'),
+      downImg: require('@/assets/images/pages/error-page-not-found.svg'),
     }
   },
   computed: {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.downImg = require('@/assets/images/pages/error-dark.svg')
+        this.downImg = require('@/assets/images/pages/error-page-not-found.svg')
         return this.downImg
       }
       return this.downImg
