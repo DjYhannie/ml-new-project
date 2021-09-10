@@ -5,7 +5,7 @@
       <!-- Brand logo-->
       <b-link class="brand-logo">
         <!-- <vuexy-logo /> -->
-        <b-img :src="require('@/assets/images/logo/header-logo.png')"></b-img>
+        <b-img :src="require('@/assets/images/logo/header-logo.png')" />
         <h2 class="brand-text text-danger ml-1">
           MLhuillier
         </h2>
@@ -55,7 +55,7 @@
               @submit.prevent
             >
 
-            <!-- name -->
+              <!-- name -->
               <b-form-group
                 label="Name"
                 label-for="name"
@@ -76,27 +76,48 @@
                 </validation-provider>
               </b-form-group>
 
-               <!-- department  -->
+              <!-- department  -->
               <b-form-group
                 id="dept"
                 label="Department:"
                 label-for="dept"
               >
                 <validation-provider
-                rules="required"
-                name="Department"
-                #default="{ errors }">
-                  <b-form-select v-model="selected" class="mb-2 form-group" name="department" :state="errors.length > 0 ? false:null">
-                    <option :value="null" disabled>ML Departments</option>
-                    <option value="quality-assurance">Quality Assurance</option>
-                    <option value="developer">Developer</option>
-                    <option value="developer-operation">Developer Operation</option>
-                    <option value="system-administration">System Administration</option>
-                    <option value="helpdesk-facility">HelpDesk Facility</option>
-                    <option value="product-owner">Product Owner</option>
+                  #default="{ errors }"
+                  rules="required"
+                  name="Department"
+                >
+                  <b-form-select
+                    v-model="selected"
+                    class="mb-2 form-group"
+                    name="department"
+                    :state="errors.length > 0 ? false:null"
+                  >
+                    <option
+                      :value="null"
+                      disabled
+                    >ML Departments</option>
+                    <option value="quality-assurance">
+                      Quality Assurance
+                    </option>
+                    <option value="developer">
+                      Developer
+                    </option>
+                    <option value="developer-operation">
+                      Developer Operation
+                    </option>
+                    <option value="system-administration">
+                      System Administration
+                    </option>
+                    <option value="helpdesk-facility">
+                      HelpDesk Facility
+                    </option>
+                    <option value="product-owner">
+                      Product Owner
+                    </option>
                   </b-form-select>
                   <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
+                </validation-provider>
 
               </b-form-group>
 
@@ -104,7 +125,7 @@
               <b-form-group
                 label="Email"
                 label-for="email"
-              >
+             >
                 <validation-provider
                   #default="{ errors }"
                   name="Email"
@@ -124,27 +145,27 @@
               <!-- password -->
               <b-form-group>
                 <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
+                  <label for="password">Password</label>
                   <b-link :to="{name:'auth-forgot-password-v2'}">
                     <small>Forgot Password?</small>
                   </b-link>
                 </div>
                 <validation-provider
-                  #default="{ errors }"
-                  name="Password"
                   rules="required"
+                  #default="{ errors }"
+                  name="password"
                 >
                   <b-input-group
                     class="input-group-merge"
                     :class="errors.length > 0 ? 'is-invalid':null"
                   >
                     <b-form-input
-                      id="login-password"
+                      id="password"
                       v-model="password"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
-                      name="login-password"
+                      name="password"
                       placeholder="············"
                     />
                     <b-input-group-append is-text>
@@ -162,27 +183,27 @@
               <!-- confirm password -->
               <b-form-group>
                 <div class="d-flex justify-content-between">
-                  <label for="login-password">Confirm Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <!-- <b-link :to="{name:'auth-forgot-password-v2'}">
                     <small>Forgot Password?</small>
-                  </b-link>
+                  </b-link> -->
                 </div>
                 <validation-provider
-                  v-slot="{ errors }"
-                  name="Confirm Password"
-                  rules="required|password:@confirm"
+                  rules="required|confirmPassword:@password"
+                  #default="{ errors }"
+                  name="confirmPassword"
                 >
                   <b-input-group
                     class="input-group-merge"
                     :class="errors.length > 0 ? 'is-invalid':null"
                   >
                     <b-form-input
-                      id="login-password"
+                      id="confirmPassword"
                       v-model="confirmPassword"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
-                      name="login-password"
+                      name="confirmPassword"
                       placeholder="············"
                     />
                     <b-input-group-append is-text>
@@ -235,7 +256,7 @@ import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
-extend('password', {
+extend('confirmPassword', {
   params: ['target'],
   validate(value, { target }) {
     return value === target
