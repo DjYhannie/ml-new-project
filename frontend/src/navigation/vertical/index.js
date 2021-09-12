@@ -10,8 +10,8 @@ export default [
     icon: 'UsersIcon',
   },
   {
-    title: 'History',
-    route: 'history',
-    icon: 'HistoryIcon',
+    title: 'Questionaire',
+    route: 'questionaire',
+    icon: 'FileIcon',
   },
 ]

@@ -77,7 +77,7 @@
               </b-form-group>
 
               <!-- department  -->
-              <b-form-group
+              <!-- <b-form-group
                 id="dept"
                 label="Department:"
                 label-for="dept"
@@ -119,7 +119,7 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
 
-              </b-form-group>
+              </b-form-group> -->
 
               <!-- email -->
               <b-form-group
@@ -249,7 +249,7 @@
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton, BFormSelect,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton,
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
@@ -278,7 +278,6 @@ export default {
     BImg,
     BForm,
     BButton,
-    BFormSelect,
     // VuexyLogo,
     ValidationProvider,
     ValidationObserver,

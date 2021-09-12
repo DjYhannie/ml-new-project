@@ -25,14 +25,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/history',
-      name: 'history',
-      component: () => import('@/views/History.vue'),
+      path: '/questioniare',
+      name: 'questionaire',
+      component: () => import('@/views/Questioniare.vue'),
       meta: {
-        pageTitle: 'History',
+        pageTitle: 'Questioniare',
         breadcrumb: [
           {
-            text: 'History',
+            text: 'Questioniare',
             active: true,
           },
         ],
