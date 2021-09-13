@@ -16,7 +16,7 @@
       <b-badge
         v-if="item.tag"
         pill
-        :variant="item.tagVariant || 'primary'"
+        :variant="item.tagVariant || 'danger'"
         class="mr-1 ml-auto"
       >
         {{ item.tag }}

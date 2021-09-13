@@ -12,6 +12,6 @@ export default [
   {
     title: 'Questionaire',
     route: 'questionaire',
-    icon: 'FileIcon',
+    icon: 'FileTextIcon',
   },
 ]
