@@ -1,20 +1,16 @@
 <template>
   <div>
-    <b-card class="card" title="Create New Question">
-      <!-- <b-card-text>All the best for your new project.</b-card-text>
-      <b-card-text>Please make sure to read our <b-link
-        href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
-        target="_blank"
-      >
-        Template Documentation
-      </b-link> to understand where to go from here and how to use our template.</b-card-text> -->
+    <b-card
+      class="card"
+      title="Create New Question"
+    >
       <b-form-textarea
-      id="textarea"
-      v-model="ask"
-      placeholder="Create question..."
-      rows="3"
-      max-rows="6">
-      </b-form-textarea>
+        id="textarea"
+        v-model="ask"
+        placeholder="Create question..."
+        rows="3"
+        max-rows="6"
+      />
       <!-- multiple choice  -->
       <b-form-radio-group
       v-model="selected"

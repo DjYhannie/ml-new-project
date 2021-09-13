@@ -12,6 +12,11 @@ export default [
   {
     title: 'Questionaire',
     route: 'questionaire',
+    icon: 'FileMinusIcon',
+  },
+  {
+    title: 'Examination Form',
+    route: 'examination-form',
     icon: 'FileTextIcon',
   },
 ]
