@@ -9,7 +9,8 @@
         v-model="ask"
         placeholder="Create question..."
         rows="3"
-        max-rows="6"
+        max-rows="0"
+        overflow-y="hidden"
       />
       <!-- multiple choice  -->
       <b-form-radio-group
@@ -22,7 +23,7 @@
     ></b-form-radio-group>
     <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
 
-       <b-button variant="primary" @click="createQuestion()">Post</b-button>
+       <b-button variant="primary" @click="createQuestion()">Create</b-button>
     </b-card>
 
     <b-card title="Questions:">

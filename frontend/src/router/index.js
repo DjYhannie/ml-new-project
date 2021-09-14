@@ -39,20 +39,6 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/examination-form',
-      name: 'examination-form',
-      component: () => import('@/views/ExaminationForm.vue'),
-      meta: {
-        pageTitle: 'Examination Form',
-        breadcrumb: [
-          {
-            text: 'Examination Form',
-            active: true,
-          },
-        ],
-      },
-    },
-    {
       path: '/examinees',
       name: 'examinees',
       component: () => import('@/views/Examinees.vue'),
@@ -80,20 +66,20 @@ const router = new VueRouter({
         ],
       },
     },
-    // {
-    //   path: '/update-profile',
-    //   name: 'update-profile',
-    //   component: () => import('@/views/UpdateProfile.vue'),
-    //   meta: {
-    //     pageTitle: 'UpdateProfile',
-    //     breadcrumb: [
-    //       {
-    //         text: 'UpdateProfile',
-    //         active: true,
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      path: '/update-profile',
+      name: 'update-profile',
+      component: () => import('@/views/UpdateProfile.vue'),
+      meta: {
+        pageTitle: 'UpdateProfile',
+        breadcrumb: [
+          {
+            text: 'UpdateProfile',
+            active: true,
+          },
+        ],
+      },
+    },
     {
       path: '/sample',
       name: 'sample',

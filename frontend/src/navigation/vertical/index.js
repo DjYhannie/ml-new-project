@@ -14,10 +14,4 @@ export default [
     route: 'questionaire',
     icon: 'FileTextIcon',
   },
-  // Denied!
-  // {
-  //   title: 'Examination Form',
-  //   route: 'examination-form',
-  //   icon: 'FileMinusIcon',
-  // },
 ]

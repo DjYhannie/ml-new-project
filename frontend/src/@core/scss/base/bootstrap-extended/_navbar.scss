@@ -172,8 +172,8 @@
             padding: 0;
             left: inherit;
             &::before {
-              background: $danger;
-              border-color: $danger;
+              background: $primary;
+              border-color: $primary;
             }
           }
           .dropdown-menu-header {
@@ -329,7 +329,7 @@
             color: $body-color;
 
             &:hover {
-              color: $danger;
+              color: $primary;
             }
           }
         }
