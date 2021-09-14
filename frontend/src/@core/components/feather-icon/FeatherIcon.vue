@@ -19,7 +19,7 @@ export default {
     },
     badgeClasses: {
       type: [String, Object, Array],
-      default: 'badge-primary',
+      default: 'badge-danger',
     },
   },
   render(h, { props, data }) {

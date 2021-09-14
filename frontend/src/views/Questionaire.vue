@@ -27,7 +27,11 @@
       <!-- icon  -->
        <b-dropdown
          id="dropdown"
+<<<<<<< HEAD
          variant="outline-secondary"
+=======
+         variant="outline-white"
+>>>>>>> 7ccb58da3fbce11bd79a6c074719cd52a51062ee
          text-align="right"
         >
       <template #button-content>
