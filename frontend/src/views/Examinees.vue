@@ -9,7 +9,6 @@
         <!-- searchbar   -->
         <b-form-group
           label-for="filter-input"
-          label-cols-sm="9"
           label-align-sm="right"
           label-size="sm"
           class="mb-0"
@@ -49,9 +48,7 @@
         </b-form-group>
       </b-col>
     </b-row>
-
     <br>
-
     <b-table
       id="table"
       bordered
@@ -199,5 +196,8 @@ export default {
 .mb-2{
     width: 250px;
     float: right;
+}
+.mb-0{
+  width: 500px;
 }
 </style>
