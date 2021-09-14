@@ -26,7 +26,7 @@
     ></b-form-radio-group>
     <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
 
-       <b-button variant="primary" @click="createQuestion()">Post</b-button>
+       <b-button variant="primary" @click="createQuestion()">Create</b-button>
     </b-card>
 
     <b-card title="Questions:">

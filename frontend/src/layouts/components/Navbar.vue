@@ -91,6 +91,7 @@
           />
           <!-- <span>Logout</span> -->
           <router-link to="login">Logout</router-link>
+          <b-link :to="{name:'login'}" />
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>

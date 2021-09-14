@@ -25,14 +25,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/questioniare',
+      path: '/questionaire',
       name: 'questionaire',
-      component: () => import('@/views/Questioniare.vue'),
+      component: () => import('@/views/Questionaire.vue'),
       meta: {
-        pageTitle: 'Questioniare',
+        pageTitle: 'Questionaire',
         breadcrumb: [
           {
-            text: 'Questioniare',
+            text: 'Questionaire',
             active: true,
           },
         ],
