@@ -90,13 +90,13 @@ $spacers: map-merge(
 //
 // Settings for the `<body>` element.
 $body-bg: #f8f8f8 !default;
-$body-color: #6e6b7b !default;
+$body-color: #73585a !default;
 
 // Links
 //
 // Style anchor elements.
 
-$link-color: $primary !default;
+$link-color: $red !default;
 $link-hover-color: darken($link-color, 5%) !default;
 $link-hover-decoration: none !default;
 
@@ -148,7 +148,7 @@ $h4-font-size: $font-size-base * 1.286 !default;
 $h5-font-size: $font-size-base * 1.07 !default;
 
 $headings-font-family: inherit !default;
-$headings-color: #5e5873 !default;
+$headings-color: #73585a !default;
 
 $display1-weight: $font-weight-normal !default;
 $display2-weight: $font-weight-normal !default;
@@ -229,7 +229,7 @@ $input-border-radius: $border-radius !default;
 $input-border-radius-lg: $border-radius !default;
 $input-border-radius-sm: $border-radius !default;
 
-$input-focus-border-color: $primary !default;
+$input-focus-border-color: $red !default;
 $input-focus-box-shadow: 0 3px 10px 0 rgba($black, 0.1) !default;
 
 $input-placeholder-color: $text-muted !default;
@@ -251,7 +251,7 @@ $custom-checkbox-indicator-icon-checked: url("data:image/svg+xml;charset=utf8,%3
 
 $custom-checkbox-indicator-icon-indeterminate: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{$custom-checkbox-indicator-indeterminate-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-minus'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3C/svg%3E");
 
-$custom-control-indicator-checked-disabled-bg: rgba($primary, 0.65);
+$custom-control-indicator-checked-disabled-bg: rgba($red, 0.65);
 
 $custom-radio-indicator-icon-checked: none;
 
@@ -288,8 +288,8 @@ $dropdown-border-radius: 0.358rem !default;
 $dropdown-box-shadow: 0 5px 25px rgba($black, 0.1) !default;
 
 $dropdown-link-color: $body-color !default;
-$dropdown-link-hover-color: $primary !default;
-$dropdown-link-hover-bg: rgba($primary, 0.12) !default;
+$dropdown-link-hover-color: $red !default;
+$dropdown-link-hover-bg: rgba($red, 0.12) !default;
 
 $dropdown-divider-bg: rgba($black, 0.08) !default;
 $dropdown-font-size: 1rem !default;
@@ -321,10 +321,10 @@ $pagination-disabled-color: $text-muted !default;
 $pagination-color: $body-color !default;
 $pagination-bg: #f3f2f7 !default;
 
-$pagination-hover-color: $primary !default;
+$pagination-hover-color: $red !default;
 $pagination-hover-bg: #f3f2f7 !default;
 
-$pagination-active-color: $primary !default;
+$pagination-active-color: $red !default;
 
 $pagination-disabled-color: $text-muted !default;
 $pagination-disabled-bg: #f3f2f7 !default;
@@ -357,7 +357,7 @@ $nav-link-disabled-color: $text-muted !default;
 
 $nav-tabs-border-width: 0 !default;
 $nav-tabs-border-radius: 0.25 !default;
-$nav-tabs-link-active-color: $primary !default;
+$nav-tabs-link-active-color: $red !default;
 
 $nav-tabs-link-active-bg: transparent !default;
 
@@ -385,7 +385,7 @@ $popover-border-radius: 0.358rem !default;
 $popover-border-color: $border-color !default;
 $popover-box-shadow: 0 0 10px 0 rgba($black, 0.1) !default;
 
-$popover-header-bg: $primary !default;
+$popover-header-bg: $red !default;
 $popover-header-color: $white !default;
 $popover-header-padding-y: 0.65rem !default;
 $popover-header-padding-x: 1.21rem !default;
@@ -409,7 +409,7 @@ $toast-header-background-color: $white !default;
 $progress-height: 0.857rem !default;
 $progress-border-radius: 5rem !default;
 $progress-font-size: $font-size-base * 0.857 !default;
-$progress-bg: rgba($primary, 0.12) !default;
+$progress-bg: rgba($red, 0.12) !default;
 
 // Breadcrumbs
 

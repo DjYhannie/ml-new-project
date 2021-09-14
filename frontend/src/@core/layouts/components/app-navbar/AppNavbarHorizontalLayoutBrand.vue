@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style>
-h2 {
+/* h2 {
   color: red;
-}
+} */
 </style>

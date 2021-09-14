@@ -12,11 +12,12 @@ export default [
   {
     title: 'Questionaire',
     route: 'questionaire',
-    icon: 'FileMinusIcon',
-  },
-  {
-    title: 'Examination Form',
-    route: 'examination-form',
     icon: 'FileTextIcon',
   },
+  // Denied!
+  // {
+  //   title: 'Examination Form',
+  //   route: 'examination-form',
+  //   icon: 'FileMinusIcon',
+  // },
 ]
