@@ -8,6 +8,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NewPassword;
 use App\Http\Controllers\AdminController;
 use App\Models\Admin;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,17 +42,17 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-easy-questions',[AdminController::class, 'easyQuestions']);
     Route::get('/get-average-questions',[AdminController::class, 'averageQuestions']);
     Route::get('/get-hard-questions',[AdminController::class, 'hardQuestions']);
-    Route::get('/get-all-users',[AdminController::class, 'getUsers']);
-
+    Route::get('/get-all-users',[AdminController::class, 'getAllUsers']);
+    Route::post('/get-by-name',[AdminController::class, 'getUserByName']);
 
 
     Route::post('/logout', [RegistrationController::class, 'logout']);
 });
 
+
 Route::get('/test',function(){
     return "test";
 });
 
-Route::get('/test',[NewPassword::class, 'getQuestions']);
 
 

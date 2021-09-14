@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -61,15 +62,22 @@ class AdminController extends Controller
     $validate = $request->validate([
         'question' => 'required',
         'category' => 'required',
+        'answer' => 'required',
+        'choices' => 'required|array'
     ]);
 
 
         $question = Questions::create([
             'question' => $validate['question'],
             'category' => $validate['category'],
+            'answer' => $validate['answer'],
+            'choices' => json_encode($validate['choices'])
+
         ]);
 
         $question->save();
+        $question->choices = json_decode($question->choices);
+
 
         return response()->json([
             'message' => 'Question Successfully Added',
@@ -80,7 +88,7 @@ class AdminController extends Controller
     //Query to get all Questions
     public function getAllQuestions()
     {
-        $user = Auth::user();
+        $user = User::all();
 
         $questions = DB::table('questions')->get();
 
@@ -186,32 +194,37 @@ class AdminController extends Controller
         }
     }
 
-    public function getUsers()
+    public function getAllUsers()
     {
-        $user = Auth::user();
-
         try{
-            $users = DB::table('users')->get();
-
+            $get = DB::table('users')->get();
             return response()->json([
-                'users' => $user
+                'users' => $get
             ]);
         }
-        catch(\Exception $e)
-        {
+        catch(\Exception $e){
             return response()->json([
-                'message' => 'Empty!'
+                'message' => "Users not found"
             ]);
-
         }
-
     }
 
+    public function getUserByName(Request $request)
+    {
+        try{
 
+            $user = DB::table('users')->where('name', 'like', '%'.$request->name.'%');
 
+            return response()->json([
+                'user' => $user
+            ]);
 
-
-
-
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => 'Error!'
+            ]);
+        }
+    }
 
 }

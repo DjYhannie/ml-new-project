@@ -12,7 +12,15 @@ class Questions extends Model
     protected $fillable = [
         'question',
         'category',
+        'answer',
+        'choices'
     ];
+    protected $cast =[
+        'choices' => 'array'
+    ];
+
+    protected $table = 'questions';
+
 
     public function category()
     {
