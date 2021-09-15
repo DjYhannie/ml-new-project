@@ -64,6 +64,8 @@ import {
   BCard, BFormTextarea, BButton, BFormRadioGroup, BIcon, BDropdownItem, BDropdown,
 } from 'bootstrap-vue'
 // import { Store } from '../store/users/index'
+import { mapGetters, mapActions } from 'vuex'
+import * as questionTypes from '../store/types/index'
 
 export default {
   components: {
@@ -80,7 +82,7 @@ export default {
   },
   data() {
     return {
-      ask: '',
+      question: '',
       selected: '',
       options: [
         { item: 'A', name: 'Option A' },
@@ -92,7 +94,15 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters({
+      questions: questionTypes.GETTER_QUESTION,
+    }),
+  },
   methods: {
+    ...mapActions({
+      postQuestion: questionTypes.ACTION_ADD_QUESTION,
+    }),
     createQuestion() {
       console.log(this.ask)
       this.ask = ''
