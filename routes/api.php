@@ -9,6 +9,7 @@ use App\Http\Controllers\NewPassword;
 use App\Http\Controllers\AdminController;
 use App\Models\Admin;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ExamFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/get-hard-questions',[AdminController::class, 'hardQuestions']);
     Route::get('/get-all-users',[AdminController::class, 'getAllUsers']);
     Route::post('/get-by-name',[AdminController::class, 'getUserByName']);
+    Route::post('/answers',[ExamFormController::class, 'examForm']);
 
 
     Route::post('/logout', [RegistrationController::class, 'logout']);
