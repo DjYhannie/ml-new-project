@@ -12,7 +12,7 @@
               alt="logo"
             />
           </span>
-          <h2 class="brand-text mb-0">
+          <h2 class="brand-text mb-0" id="appName">
             {{ appName }}
           </h2>
         </b-link>
@@ -42,5 +42,7 @@ export default {
 </script>
 
 <style>
-
+h2 {
+  color: red;
+}
 </style>

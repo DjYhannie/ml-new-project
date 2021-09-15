@@ -25,23 +25,81 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: '/questionaire',
+      name: 'questionaire',
+      component: () => import('@/views/Questionaire.vue'),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: 'Questionaire',
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: 'Questionaire',
             active: true,
           },
         ],
       },
     },
     {
+      path: '/examinees',
+      name: 'examinees',
+      component: () => import('@/views/Examinees.vue'),
+      meta: {
+        pageTitle: 'Examinees',
+        breadcrumb: [
+          {
+            text: 'Examinees',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/views/Profile.vue'),
+      meta: {
+        pageTitle: 'Profile',
+        breadcrumb: [
+          {
+            text: 'Profile',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/update-profile',
+      name: 'update-profile',
+      component: () => import('@/views/UpdateProfile.vue'),
+      meta: {
+        pageTitle: 'UpdateProfile',
+        breadcrumb: [
+          {
+            text: 'UpdateProfile',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/sample',
+      name: 'sample',
+      component: () => import('@/views/Sample.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue'),
+      meta: {
+        layout: 'full',
+      },
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('@/views/Registration.vue'),
       meta: {
         layout: 'full',
       },

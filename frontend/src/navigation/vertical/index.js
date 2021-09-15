@@ -5,8 +5,13 @@ export default [
     icon: 'HomeIcon',
   },
   {
-    title: 'Second Page',
-    route: 'second-page',
-    icon: 'FileIcon',
+    title: 'Examinees',
+    route: 'examinees',
+    icon: 'UsersIcon',
+  },
+  {
+    title: 'Questionaire',
+    route: 'questionaire',
+    icon: 'FileTextIcon',
   },
 ]

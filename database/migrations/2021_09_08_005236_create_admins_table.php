@@ -15,7 +15,10 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
+            $table->string('username');
+            $table->string('password');
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 
@@ -27,5 +30,6 @@ class CreateAdminsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('admins');
+
     }
 }
