@@ -36,14 +36,15 @@ Route::post('/login',[RegistrationController::class,'login']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/reset-password',[NewPassword::class, 'updatePassword']);
     Route::post('/send-email',[NewPassword::class, 'emailResetLink']);
+    Route::get('/get-all-users',[AdminController::class, 'getAllUsers']);
+    Route::post('/get-by-name',[AdminController::class, 'getUserByName']);
+
     Route::post('/add-question',[AdminController::class, 'addQuestion']);
     Route::get('/get-all-questions',[AdminController::class, 'getAllQuestions']);
     Route::get('/get-questions-bycategory',[AdminController::class, 'allQuestionsByCategory']);
     Route::get('/get-easy-questions',[AdminController::class, 'easyQuestions']);
     Route::get('/get-average-questions',[AdminController::class, 'averageQuestions']);
     Route::get('/get-hard-questions',[AdminController::class, 'hardQuestions']);
-    Route::get('/get-all-users',[AdminController::class, 'getAllUsers']);
-    Route::post('/get-by-name',[AdminController::class, 'getUserByName']);
 
 
     Route::post('/logout', [RegistrationController::class, 'logout']);

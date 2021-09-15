@@ -1,69 +1,161 @@
 <template>
   <div>
-    <b-card class="card" title="Create New Question">
-      <b-form-textarea
-      id="textarea"
-      v-model="ask"
-      placeholder="Create question..."
-      rows="3"
-      max-rows="">
-      </b-form-textarea>
-      <!-- multiple choice  -->
-      <b-form-radio-group
-      v-model="selected"
-      :options="options"
-      class="mb-3"
-      value-field="item"
-      text-field="name"
-      disabled-field="notEnabled"
-      stacked
-    ></b-form-radio-group>
-    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+    <!-- Create Reports  -->
+    <b-card
+      name="create-question"
+    >
+    <b-header>
+          <b-button-group class="buttons">
+            <b-dropdown>
+              <b-dropdown-item
+              >Easy</b-dropdown-item>
+              <b-dropdown-divider />
+              <b-dropdown-item
+              >Intermediate</b-dropdown-item>
+              <b-dropdown-item
+              >Hard</b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+        </b-header>
+      <h3>Create Question 🚀</h3>
+      <b-form @submit.prevent="submit">
+        <b-from-group name="create-question">
+          <!-- <b-form-textarea
+            id="textarea"
+            v-model="createquestion"
+            placeholder="Create question..."
+            rows="3"
+            max-rows="0"
+            overflow-y="hidden"
+          /> -->
+      <div class="input-group">
+     <textarea
+       class="form-control"
+       v-model="question"
+       placeholder="Create question..."/>
+     </div>
+      <br>
+      <div class="input-group mb-1">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Answer..."
+      v-model="answer"
+      aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-1">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="A."
+      v-model="choiceA"
+      aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-1">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="B."
+      v-model="choiceB"
+      aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-1">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="C."
+      v-model="choiceC"
+      aria-describedby="basic-addon1">
+    </div>
+    <div class="input-group mb-1">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="D."
+      v-model="choiceD"
+      aria-describedby="basic-addon1">
+    </div>
 
-       <b-button variant="primary" @click="createQuestion()">Create</b-button>
+          <b-button
+            variant="primary"
+            @click="submit"
+          >
+            Create
+          </b-button>
+        </b-from-group>
+      </b-form>
     </b-card>
 
-    <b-card>
-      <!-- icon  -->
-       <b-dropdown
-         id="dropdown"
-         variant="outline-white"
-         text-align="right"
-        >
-      <template #button-content>
-        <b-icon
-          icon="three-dots-vertical"
-          aria-hidden="true"
-        ></b-icon>
-      </template>
+    <!-- Edit/Delete Reports  -->
+    <div
+      v-for="question in questions"
+      :key="question.id"
+      class="question-content"
+    >
+      <b-card name="questions">
+        <!-- title="Reports 🔒" -->
+        <b-header>
+          <b-button-group id="buttons">
+            <b-dropdown>
+              <b-dropdown-item
+                @click="editButton(question.id)"
+              >Edit</b-dropdown-item>
+              <b-dropdown-divider />
+              <b-dropdown-item
+                @click="delButton(question.id)"
+              >Delete</b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+        </b-header>
+        <hr>
+        <p>{{ question.createquestion }}</p>
 
-      <b-dropdown-item
-        variant="primary"
-        >Edit</b-dropdown-item
-      >
-      <b-dropdown-item
-        variant="danger"
-        >Delete</b-dropdown-item
-      >
-    </b-dropdown>
-    <!-- <b-card-title title="Questions:"/> -->
-    <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">
-              Questions
+        <b-form @submit.prevent="update">
+          <b-from-group name="questions">
+            <div
+              :id="question.id"
+              style="display:none"
+            >
+              <b-form-textarea
+                id="textarea"
+                v-model="question.createquestion"
+                placeholder="Edit report..."
+                rows="3"
+                max-rows="0"
+                overflow-y="hidden"
+              />
+              <b-button
+                variant="danger"
+                @click="cancel()"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="update(question.id, question.createquestion)"
+              >
+                Update Question
+              </b-button>
             </div>
-          </div>
-      <b-card->{{ ask }}</b-card->
-      <b-card-text> </b-card-text>
-    </b-card>
+          </b-from-group>
+        </b-form>
+      </b-card>
+    </div>
   </div>
 </template>
 
 <script>
 import {
-  BCard, BFormTextarea, BButton, BFormRadioGroup, BIcon, BDropdownItem, BDropdown,
+  BCard,
+  BFormTextarea,
+  BButton,
+  BDropdown,
+  BDropdownItem,
+  BDropdownDivider,
+  BButtonGroup,
+  BForm,
+  //   BFormGroup,
 } from 'bootstrap-vue'
-// import { Store } from '../store/users/index'
 import { mapGetters, mapActions } from 'vuex'
 import * as questionTypes from '../store/types/index'
 
@@ -72,26 +164,26 @@ export default {
     BCard,
     BFormTextarea,
     BButton,
-    BFormRadioGroup,
-    BIcon,
-    BDropdownItem,
     BDropdown,
-    // BCardTitle,
-    // BCardText,
-    // BLink,
+    BDropdownItem,
+    BDropdownDivider,
+    BButtonGroup,
+    BForm,
+    // BFormGroup,
   },
   data() {
     return {
-      question: '',
-      selected: '',
-      options: [
-        { item: 'A', name: 'Option A' },
-        { item: 'B', name: 'Option B' },
-        { item: 'C', name: 'Option C' },
-        { item: 'D', name: 'Option D' },
-        // { item: 'D', name: 'Option C', notEnabled: true },
-        // { item: { d: 1 }, name: 'Option D' },
+      questions: [
+        {
+          question: '',
+          answer: '',
+          choiceA: '',
+          choiceB: '',
+          choiceC: '',
+          choiceD: '',
+        },
       ],
+      createquestion: '',
     }
   },
   computed: {
@@ -99,37 +191,49 @@ export default {
       questions: questionTypes.GETTER_QUESTION,
     }),
   },
+  mounted() {
+    this.getQuestions()
+  },
   methods: {
     ...mapActions({
+      getQuestions: questionTypes.ACTION_SET_QUESTIONS,
       postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      // deleteQuestion: questionTypes.ACTION_DELETE_QUESTION,
+      // updateQuestion: questionTypes.ACTION_UPDATE_QUESTION,
     }),
-    createQuestion() {
-      console.log(this.ask)
-      this.ask = ''
+    submit() {
+      //   this.$store.dispatch('users/storeReport', this.message)
+      this.postQuestion(this.createquestion)
+      console.log(this.createquestion)
+      this.createquestion = ''
+    },
+    delButton() {
+    //   this.$store.dispatch('users/deleteReport', id)
+      // this.deleteQuestion(id)
+    },
+    editButton(questionId) {
+      document.getElementById(questionId).style.display = 'block'
+    },
+    update() {
+    //   this.$store.dispatch('users/updateReport', { id, message })
+      // console.log(this.createquestion)
+      // this.updateQuestion(id, this.createquestion)
+      // document.getElementById(id).style.display = 'none'
+    },
+    cancel() {
+      console.log('closed')
+      //   document.getElementById(reportId).style.display = 'none'
     },
   },
 }
 </script>
 
 <style>
-button{
-    margin: 10px;
-    float: right;
+button {
+  margin: 10px;
+  float: right;
 }
-#textarea{
-  border: none;
-  overflow: hidden;
-  resize: none;
-  overflow: -moz-hidden-unscrollable;
-}
-/* .card{
-  border: 1px black;
-} */
-#dropdown{
-  /* border: 0 !important; */
-  border: none;
-  border-color: transparent;
-  box-shadow: none;
-  margin: 0px;
+.buttons {
+  float: right;
 }
 </style>
