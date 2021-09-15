@@ -8,7 +8,6 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\NewPassword;
 use App\Http\Controllers\AdminController;
 use App\Models\Admin;
-use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ExamFormController;
 
 /*
