@@ -59,6 +59,10 @@ class AdminController extends Controller
 
     $user = Auth::user();
 
+    // if (Auth::attempt(['email' => '', 'password' => $password, 'active' => 1])) {
+
+    // }
+
     $validate = $request->validate([
         'question' => 'required',
         'category' => 'required',
@@ -171,7 +175,7 @@ class AdminController extends Controller
 
     public function hardQuestions()
     {
-        $user = Auth::user();
+        $user = Auth::admin();
 
         try
         {
@@ -213,7 +217,7 @@ class AdminController extends Controller
     {
         try{
 
-            $user = DB::table('users')->where('name', 'like', '%'.$request->name.'%');
+            $user = DB::table('users')->where('name', 'like', '%'.$request->name.'%')->get();
 
             return response()->json([
                 'user' => $user
