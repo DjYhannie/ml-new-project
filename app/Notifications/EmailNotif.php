@@ -21,7 +21,7 @@ class EmailNotif extends Notification
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->user = $data;
     }
 
     /**
@@ -45,10 +45,10 @@ class EmailNotif extends Notification
     {
         $url = "http://localhost:4200/";
         return (new MailMessage)
-                    ->greeting($this->data['name'])
-                    ->line($this->data['body'])
-                    ->action($this->data['description'], $this->data['dataURL'] )
-                    ->line($this->data['datatext']);
+                    ->greeting('Password Reset')
+                    ->line('Please click the button below to reset your password')
+                    ->action('Reset Password', $url)
+                    ->line('If clicked!, you will be riderected to anohter page');
     }
 
     /**
