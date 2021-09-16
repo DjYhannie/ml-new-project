@@ -1,28 +1,51 @@
-// import { get } from 'core-js/core/dict'
-// import store from '..'
 import api from '../../libs/axios'
 
 export default {
     state: {
-        questions: [],
-        question: '',
+        namespaced: true,
+        questions: [{
+            course: '',
+            question: '',
+            answer: '',
+            choiceA: '',
+            choiceB: '',
+            choiceC: '',
+            choiceD: '',
+        }],
+        createquestion: '',
+        show: true,
     },
     getters: {
-        getPost (state) {
-            return get.question
+        getCreatedQuestion (state) {
+            return state.createquestion
+        },
+        getQuestions(state) {
+            return state.questions
+        },
+        getUpdated(state) {
+            return state.createquestion
         },
     },
     actions: {
-        async storeQuestion({ commit }, question) {
-            api.post('/add-question', { question,
+        async getQuestions({ commit }) {
+            api.get('https://examapp-backend.herokuapp.com/').then(response => {
+                commit('SET_QUESTIONS', response.data)
+            })
+        },
+        async getCreatedQuestion({ commit }, createquestion) {
+            api.post('https://examapp-backend.herokuapp.com/', { createquestion,
             }).then(response => {
                 commit('ADD_QUESTION', response.data)
             })
         },
     },
     mutations: {
-        ADD_QUESTION(state, question) {
-            state.questions.unshift(question)
+        ADD_QUESTION(state, createquestion) {
+            state.questions.unshift(createquestion)
+        },
+        SET_QUESTIONS(state, questions) {
+            // state.questions = questions
+            state.questions = {...state, questions}
         },
     },
 }

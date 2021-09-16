@@ -51,7 +51,9 @@
             class="mr-50"
           />
           <!-- <span>Profile</span> -->
-          <router-link to="/profile">Profile</router-link>
+          <router-link to="/profile">
+            Profile
+          </router-link>
         </b-dropdown-item>
 
         <b-dropdown-item link-class="d-flex align-items-center">
@@ -90,7 +92,9 @@
             class="mr-50"
           />
           <!-- <span>Logout</span> -->
-          <router-link to="login">Logout</router-link>
+          <router-link to="login">
+            Logout
+          </router-link>
           <b-link :to="{name:'login'}" />
         </b-dropdown-item>
       </b-nav-item-dropdown>

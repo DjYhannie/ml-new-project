@@ -125,7 +125,7 @@
               <b-form-group
                 label="Email"
                 label-for="email"
-             >
+              >
                 <validation-provider
                   #default="{ errors }"
                   name="Email"
@@ -151,8 +151,8 @@
                   </b-link>
                 </div>
                 <validation-provider
-                  rules="required"
                   #default="{ errors }"
+                  rules="required"
                   name="password"
                 >
                   <b-input-group
@@ -189,8 +189,8 @@
                   </b-link> -->
                 </div>
                 <validation-provider
-                  rules="required|confirmPassword:@password"
                   #default="{ errors }"
+                  rules="required|confirmPassword:@password"
                   name="confirmPassword"
                 >
                   <b-input-group
@@ -225,7 +225,7 @@
                 block
                 @click="validationForm"
               >
-                 Register
+                Register
               </b-button>
             </b-form>
           </validation-observer>

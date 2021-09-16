@@ -9,14 +9,16 @@
         Template Documentation
       </b-link> to understand where to go from here and how to use our template.</b-card-text> -->
       <b-form-textarea
-      id="textarea"
-      v-model="text"
-      placeholder="Create report..."
-      rows="3"
-      max-rows="6">
-      </b-form-textarea>
+        id="textarea"
+        v-model="text"
+        placeholder="Create report..."
+        rows="3"
+        max-rows="6"
+      />
       <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
-       <b-button variant="primary">Post</b-button>
+      <b-button variant="primary">
+        Post
+      </b-button>
     </b-card>
 
     <b-card title="Reports 🔒">

@@ -25,14 +25,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/questionaire',
-      name: 'questionaire',
-      component: () => import('@/views/Questionaire.vue'),
+      path: '/questions',
+      name: 'questions',
+      component: () => import('@/views/Questions.vue'),
       meta: {
-        pageTitle: 'Questionaire',
+        pageTitle: 'Questions',
         breadcrumb: [
           {
-            text: 'Questionaire',
+            text: 'Questions',
             active: true,
           },
         ],
@@ -53,14 +53,14 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/profile',
-      name: 'profile',
-      component: () => import('@/views/Profile.vue'),
+      path: '/questionnaire',
+      name: 'questionnaire',
+      component: () => import('@/views/Questionnaire.vue'),
       meta: {
-        pageTitle: 'Profile',
+        pageTitle: 'Questionnaire',
         breadcrumb: [
           {
-            text: 'Profile',
+            text: 'Questionnaire',
             active: true,
           },
         ],
