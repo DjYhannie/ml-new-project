@@ -9,9 +9,16 @@
     >
       Add Question
     </b-button>
+    <b-button
+      class="modalButton"
+      @click="isShow = !isShow"
+      v-b-modal.modal-lg
+    >
+      Add Course
+    </b-button>
 
+    <!-- Add Questions  -->
     <b-modal v-model="modalShow">
-      <!-- <b-card-header> -->
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item>Easy</b-dropdown-item>
@@ -19,15 +26,15 @@
             <b-dropdown-item>Hard</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
-      <!-- </b-card-header> -->
       <h3>Create Question</h3>
       <div class="input-group mb-1">
-            <input
+            <b-form-select v-model="selected" :options="options"></b-form-select>
+            <!-- <input
               v-model="questionDescription.course"
               type="text"
               class="form-control"
               placeholder="Course Name"
-              aria-describedby="basic-addon1">
+              aria-describedby="basic-addon1"> -->
           </div>
       <b-form @submit.prevent="submit">
         <b-form-group name="create-question">
@@ -85,6 +92,22 @@
           >
             Create
           </b-button>
+        </b-form-group>
+      </b-form>
+    </b-modal>
+    <!-- Add Course  -->
+    <b-modal v-model="isShow">
+      <h3>Create Course</h3>
+      <b-form @submit.prevent="submit">
+        <b-form-group name="create-question">
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.course"
+              type="text"
+              class="form-control"
+              placeholder="Course Name"
+              aria-describedby="basic-addon1">
+          </div>
         </b-form-group>
       </b-form>
     </b-modal>
@@ -177,6 +200,7 @@ import {
   BForm,
   BModal,
   BCollapse,
+  BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
 import * as questionTypes from '../store/types/index'
@@ -193,11 +217,13 @@ export default {
     BForm,
     BModal,
     BCollapse,
+    BFormSelect,
   },
   data() {
     return {
       visible: false,
       modalShow: false,
+      isShow: false,
       questionDescription:
         {
           course: '',
@@ -246,6 +272,13 @@ export default {
           choiceC: 'testC',
           choiceD: 'testD',
         },
+      ],
+      options: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: { C: '3PO' }, text: 'This is an option with object value' },
+        { value: 'd', text: 'This one is disabled', disabled: true },
       ],
     }
   },

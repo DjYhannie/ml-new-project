@@ -2,84 +2,93 @@
   <div>
     <!-- add-questions-button  -->
     <div>
-    <b-button
-      class="modalButton"
-      @click="modalShow = !modalShow"
-      v-b-modal.modal-lg
-    >
-      Add Question
-    </b-button>
+      <b-button
+        v-b-modal.modal-lg
+        class="modalButton"
+        @click="modalShow = !modalShow"
+      >
+        Add Questionnaire
+      </b-button>
 
-    <b-modal v-model="modalShow">
-      <!-- <b-card-header> -->
-        <b-button-group class="buttons">
-          <b-dropdown>
-            <b-dropdown-item>Easy</b-dropdown-item>
-            <b-dropdown-item>Intermediate</b-dropdown-item>
-            <b-dropdown-item>Hard</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group>
-      <!-- </b-card-header> -->
-      <h3>Create Questionnaire</h3>
-      <b-form @submit.prevent="submit">
-        <b-form-group name="create-question">
-          <div class="input-group">
-            <b-form-textarea
-              v-model="questionDescription.question"
-              class="form-control"
-              placeholder="Create question..."
-            />
-          </div>
-          <br>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.answer"
-              type="text"
-              class="form-control"
-              placeholder="Answer..."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceA"
-              type="text"
-              class="form-control"
-              placeholder="A."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceB"
-              type="text"
-              class="form-control"
-              placeholder="B."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceC"
-              type="text"
-              class="form-control"
-              placeholder="C."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceD"
-              type="text"
-              class="form-control"
-              placeholder="D."
-              aria-describedby="basic-addon1">
-          </div>
-          <b-button
-            variant="primary"
-            @click="submit"
-          >
-            Create
-          </b-button>
-        </b-form-group>
-      </b-form>
-    </b-modal>
+      <b-modal v-model="modalShow">
+        <h3>Create Questionnaire</h3>
+        <b-form @submit.prevent="submit">
+          <b-form-group name="create-questionnaire">
+            <b-container>
+              <b-row>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample"
+                      type="text"
+                      class="form-control"
+                      placeholder="Title"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample2"
+                      type="time"
+                      class="form-control"
+                      placeholder="Time Duration">
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <!-- <input
+                      v-model="sample3"
+                      type="text"
+                      class="form-control"
+                      placeholder="Course"
+                    > -->
+                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample4"
+                      type="number"
+                      class="form-control"
+                      placeholder="Passing Score">
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample5"
+                      type="text"
+                      class="form-control"
+                      placeholder="Easy">
+                  </div>
+                </b-col>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample6"
+                      type="text"
+                      class="form-control"
+                      placeholder="Intermediate">
+                  </div>
+                </b-col>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <input
+                      v-model="sample7"
+                      type="text"
+                      class="form-control"
+                      placeholder="Hard">
+                  </div>
+                </b-col>
+              </b-row>
+           </b-container>
+         </b-form-group>
+       </b-form>
+     </b-modal>
   </div>
   <br>
 
@@ -108,18 +117,18 @@
       aria-controls="collapse-4"
       @click="visible = !visible"
       >
-        {{ question.question }}
+        {{ question.sample }}
       </b-card>
     <b-collapse id="collapse-4" v-model="visible" class="mt-2">
       <b-card>
          <hr>
-      <p>Course Name: {{ question.course }}</p>
-      <p>Question: {{ question.question }}</p>
-      <p>Answer: {{ question.answer }}</p>
-      <p>A. {{ question.choiceA }}</p>
-      <p>B. {{ question.choiceB }}</p>
-      <p>C. {{ question.choiceC }}</p>
-      <p>D. {{ question.choiceD }}</p>
+      <p>Course Name: {{ question.sample }}</p>
+      <p>Question: {{ question.sample2 }}</p>
+      <p>Answer: {{ question.sample3 }}</p>
+      <p>A. {{ question.sample4 }}</p>
+      <p>B. {{ question.sample5 }}</p>
+      <p>C. {{ question.sample6 }}</p>
+      <p>D. {{ question.sample7 }}</p>
       </b-card>
     </b-collapse>
   </div>
@@ -169,6 +178,10 @@ import {
   BForm,
   BModal,
   BCollapse,
+  BRow,
+  BCol,
+  BContainer,
+  BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
 import * as questionTypes from '../store/types/index'
@@ -185,63 +198,72 @@ export default {
     BForm,
     BModal,
     BCollapse,
+    BRow,
+    BCol,
+    BContainer,
+    BFormSelect,
   },
   data() {
     return {
       visible: false,
       modalShow: false,
-      questionDescription:
-        {
-          course: '',
-          question: '',
-          answer: '',
-          choiceA: '',
-          choiceB: '',
-          choiceC: '',
-          choiceD: '',
-        },
+      questionnairesQuestions:
+      {
+        sample: '',
+        sample2: '',
+        sample3: '',
+        sample4: '',
+        sample5: '',
+        sample6: '',
+        sample7: '',
+      },
       createquestion: '',
       questions: [
         {
-          course: 'Course1',
-          question: 'Question1',
-          answer: 'AnswerA',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
+          sample: 'test1',
+          sample2: 'test1',
+          sample3: 'test1',
+          sample4: 'test1',
+          sample5: 'test1',
+          sample6: 'test1',
+          sample7: 'test1',
         },
         {
-          course: 'Course2',
-          question: 'Question2',
-          answer: 'AnswerB',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
+          sample: 'test2',
+          sample2: 'test2',
+          sample3: 'test2',
+          sample4: 'test2',
+          sample5: 'test2',
+          sample6: 'test2',
+          sample7: 'test2',
         },
         {
-          course: 'Course4',
-          question: 'Question3',
-          answer: 'AnswerC',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
+          sample: 'test3',
+          sample2: 'test3',
+          sample3: 'test3',
+          sample4: 'test3',
+          sample5: 'test3',
+          sample6: 'test3',
+          sample7: 'test3',
         },
         {
-          course: 'Course5',
-          question: 'Question4',
-          answer: 'AnswerD',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
+          sample3: 'test4',
+          sample4: 'test4',
+          sample5: 'test4',
+          sample2: 'test4',
+          sample: 'test4',
+          sample6: 'test4',
+          sample7: 'test4',
         },
       ],
+      options: [
+        { value: null, text: 'Please select an option' },
+        { value: 'a', text: 'This is First option' },
+        { value: 'b', text: 'Selected Option' },
+        { value: { C: '3PO' }, text: 'This is an option with object value' },
+        { value: 'd', text: 'This one is disabled', disabled: true },
+      ],
     }
-  },
-  computed: {
   },
   mounted() {
     this.getQuestions()
