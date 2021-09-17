@@ -1,56 +1,67 @@
 <template>
-  <div>
-    <b-card title="Create Report 🚀">
-      <!-- <b-card-text>All the best for your new project.</b-card-text>
-      <b-card-text>Please make sure to read our <b-link
-        href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
-        target="_blank"
-      >
-        Template Documentation
-      </b-link> to understand where to go from here and how to use our template.</b-card-text> -->
-      <b-form-textarea
-        id="textarea"
-        v-model="text"
-        placeholder="Create report..."
-        rows="3"
-        max-rows="6"
-      />
-      <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
-      <b-button variant="primary">
-        Post
-      </b-button>
+  <div class="accordion" role="tablist">
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-1>Accordion 1</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
     </b-card>
 
-    <b-card title="Reports 🔒">
-      <b-card->We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.</b-card->
-      <b-card-text>Please read our  JWT Documentation to get more out of JWT authentication.</b-card-text>
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-2>Accordion 2</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-3>Accordion 3</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>{{ text }}</b-card-text>
+        </b-card-body>
+      </b-collapse>
     </b-card>
   </div>
 </template>
 
 <script>
-// import { BCard, BCardText, BLink } from 'bootstrap-vue'
-import { BCard, BFormTextarea, BButton } from 'bootstrap-vue'
+import {
+  BCard,
+  BCollapse,
+  BButton,
+} from 'bootstrap-vue'
 
 export default {
   components: {
     BCard,
-    BFormTextarea,
+    BCollapse,
     BButton,
-    // BCardText,
-    // BLink,
   },
   data() {
     return {
-      text: '',
+      text: `
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+        tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
+        assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+        wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+        vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+        synth nesciunt you probably haven't heard of them accusamus labore VHS.
+        `,
     }
   },
 }
 </script>
-
-<style>
-button{
-    margin: 10px;
-    float: right;
-}
-</style>
