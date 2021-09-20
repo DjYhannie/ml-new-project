@@ -17,5 +17,6 @@ class Questionnaire extends Model
         'easy_questions',
         'average_questions',
         'hard_questions',
+        'total_questions'
     ];
 }

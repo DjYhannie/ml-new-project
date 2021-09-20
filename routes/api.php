@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Models\Admin;
 use App\Http\Controllers\ExamFormController;
 use App\Http\Controllers\AdminQuestionsController;
+use App\Http\Controllers\QuestionnaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,13 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/course',[AdminController::class, 'getCourses']);
     Route::post('/course/add',[AdminController::class, 'addCourses']);
+
+    Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
+    Route::post('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
+    Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
+    Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
+    Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);
+
 
     //Get Users
     Route::get('/users',[AdminController::class, 'getAllUsers']);
