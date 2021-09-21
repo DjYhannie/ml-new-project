@@ -17,7 +17,7 @@ class CreateQuestionnairesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('course');
-            $table->time('time_duration');
+            $table->string('time_duration');
             $table->integer('passing_score');
             $table->integer('easy_questions');
             $table->integer('average_questions');

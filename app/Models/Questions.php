@@ -28,4 +28,6 @@ class Questions extends Model
         return $this->belongsTo(Category::class);
     }
 
+    
+
 }

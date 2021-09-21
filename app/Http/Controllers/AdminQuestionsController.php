@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Courses;
 use App\Models\Questionnaire;
 use App\Models\Questions;
 use App\Models\User;
@@ -48,7 +49,8 @@ class AdminQuestionsController extends Controller
         catch(\Exception $e){
             return response()->json([
                 'message' => "Error",
-                'status_code' => 400
+                'status_code' => 400,
+                'error' => $e
             ]);
         }
     }
@@ -424,6 +426,26 @@ class AdminQuestionsController extends Controller
 
             return response()->json([
                 'data' => $question
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => "Error",
+                'error' => $e,
+                'status_code' => 400
+            ]);
+        }
+     }
+
+     public function getCoursesById($id)
+     {
+        try{
+            $user = Auth::user();
+
+            $course = Courses::find($id);
+
+            return response()->json([
+                'data' => $course
             ]);
         }
         catch(\Exception $e){
