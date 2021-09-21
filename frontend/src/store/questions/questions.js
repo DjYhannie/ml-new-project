@@ -28,12 +28,12 @@ export default {
     },
     actions: {
         async getQuestions({ commit }) {
-            api.get('https://examapp-backend.herokuapp.com/').then(response => {
+            api.get('https://examapp-backend.herokuapp.com//get-all-questions').then(response => {
                 commit('SET_QUESTIONS', response.data)
             })
         },
         async getCreatedQuestion({ commit }, createquestion) {
-            api.post('https://examapp-backend.herokuapp.com/', { createquestion,
+            api.post('https://examapp-backend.herokuapp.com/add-question', { createquestion,
             }).then(response => {
                 commit('ADD_QUESTION', response.data)
             })

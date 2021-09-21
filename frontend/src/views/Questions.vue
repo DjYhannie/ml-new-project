@@ -2,23 +2,23 @@
   <div>
     <!-- add-questions-button  -->
     <div>
-    <b-button
-      class="modalButton"
-      @click="modalShow = !modalShow"
-      v-b-modal.modal-lg
-    >
-      Add Question
-    </b-button>
-    <b-button
-      class="modalButton"
-      @click="isShow = !isShow"
-      v-b-modal.modal-lg
-    >
-      Add Course
-    </b-button>
+      <b-button
+        v-b-modal.modal-lg
+        class="modalButton"
+        @click="modalShow = !modalShow"
+      >
+        Add Question
+      </b-button>
+      <b-button
+        v-b-modal.modal-lg
+        class="modalButton"
+        @click="isShow = !isShow"
+      >
+        Add Course
+      </b-button>
 
-    <!-- Add Questions  -->
-    <b-modal v-model="modalShow">
+      <!-- Add Questions  -->
+      <b-modal v-model="modalShow">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item>Easy</b-dropdown-item>
@@ -26,95 +26,110 @@
             <b-dropdown-item>Hard</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
-      <h3>Create Question</h3>
-      <div class="input-group mb-1">
-            <b-form-select v-model="selected" :options="options"></b-form-select>
-            <!-- <input
-              v-model="questionDescription.course"
-              type="text"
-              class="form-control"
-              placeholder="Course Name"
-              aria-describedby="basic-addon1"> -->
-          </div>
-      <b-form @submit.prevent="submit">
-        <b-form-group name="create-question">
-          <div class="input-group">
-            <b-form-textarea
-              v-model="questionDescription.question"
-              class="form-control"
-              placeholder="Create question..."
-            />
-          </div>
-          <br>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.answer"
-              type="text"
-              class="form-control"
-              placeholder="Answer..."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceA"
-              type="text"
-              class="form-control"
-              placeholder="A."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceB"
-              type="text"
-              class="form-control"
-              placeholder="B."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceC"
-              type="text"
-              class="form-control"
-              placeholder="C."
-              aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.choiceD"
-              type="text"
-              class="form-control"
-              placeholder="D."
-              aria-describedby="basic-addon1">
-          </div>
-          <b-button
-            variant="primary"
-            @click="submit"
-          >
-            Create
-          </b-button>
-        </b-form-group>
-      </b-form>
-    </b-modal>
-    <!-- Add Course  -->
-    <b-modal v-model="isShow">
-      <h3>Create Course</h3>
-      <b-form @submit.prevent="submit">
-        <b-form-group name="create-question">
-          <div class="input-group mb-1">
-            <input
-              v-model="questionDescription.course"
-              type="text"
-              class="form-control"
-              placeholder="Course Name"
-              aria-describedby="basic-addon1">
-          </div>
-        </b-form-group>
-      </b-form>
-    </b-modal>
-  </div>
-  <br>
+        <h3>Create Question</h3>
+        <div class="input-group mb-1">
+          <b-form-select
+            v-model="selected"
+            :options="options"
+          />
+          <!-- <input
+            v-model="questionDescription.course"
+            type="text"
+            class="form-control"
+            placeholder="Course Name"
+            aria-describedby="basic-addon1"> -->
+        </div>
+        <b-form @submit.prevent="submit">
+          <b-form-group name="create-question">
+            <div class="input-group">
+              <b-form-textarea
+                v-model="questionDescription.question"
+                class="form-control"
+                placeholder="Create question..."
+              />
+            </div>
+            <br>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.answer"
+                type="text"
+                class="form-control"
+                placeholder="Answer..."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choiceA"
+                type="text"
+                class="form-control"
+                placeholder="A."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choiceB"
+                type="text"
+                class="form-control"
+                placeholder="B."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choiceC"
+                type="text"
+                class="form-control"
+                placeholder="C."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choiceD"
+                type="text"
+                class="form-control"
+                placeholder="D."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <b-button
+              variant="primary"
+              @click="submit"
+            >
+              Add
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+      <!-- Add Course  -->
+      <b-modal v-model="isShow">
+        <h3>Create Course</h3>
+        <b-form @submit.prevent="submit">
+          <b-form-group name="create-question">
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.course"
+                type="text"
+                class="form-control"
+                placeholder="Course Name"
+                aria-describedby="basic-addon1"
+              >
+            </div>
+             <b-button
+              variant="primary"
+              @click="submit"
+            >
+              Add
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    </div>
+    <br>
 
-  <br><br><hr><br>
+    <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
     <div
       v-for="question in questions"
@@ -133,58 +148,62 @@
           </b-dropdown>
         </b-button-group>
         <div>
-    <b-card
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-      >
-        {{ question.question }}
-      </b-card>
-    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-      <b-card>
-         <hr>
-      <p>Course Name: {{ question.course }}</p>
-      <p>Question: {{ question.question }}</p>
-      <p>Answer: {{ question.answer }}</p>
-      <p>A. {{ question.choiceA }}</p>
-      <p>B. {{ question.choiceB }}</p>
-      <p>C. {{ question.choiceC }}</p>
-      <p>D. {{ question.choiceD }}</p>
-      </b-card>
-    </b-collapse>
-  </div>
-      <b-form @submit.prevent="update">
-        <b-form-group name="questions">
-          <div
-            :id="question.id"
-            style="display:none"
+          <b-card
+            :class="visible ? null : 'collapsed'"
+            :aria-expanded="visible ? 'true' : 'false'"
+            aria-controls="collapse-4"
+            @click="visible = !visible"
           >
-            <b-form-textarea
-              id="textarea"
-              v-model="question.createquestion"
-              placeholder="Edite report..."
-              rows="3"
-              max-rows="0"
-              overflow-y="hidden"
-            />
-            <b-button
-              variant="danger"
-              @click="cancel()"
+            {{ question.question }}
+          </b-card>
+          <b-collapse
+            id="collapse-4"
+            v-model="visible"
+            class="mt-2"
+          >
+            <b-card>
+              <hr>
+              <p>Course Name: {{ question.course }}</p>
+              <p>Question: {{ question.question }}</p>
+              <p>Answer: {{ question.answer }}</p>
+              <p>A. {{ question.choiceA }}</p>
+              <p>B. {{ question.choiceB }}</p>
+              <p>C. {{ question.choiceC }}</p>
+              <p>D. {{ question.choiceD }}</p>
+            </b-card>
+          </b-collapse>
+        </div>
+        <b-form @submit.prevent="update">
+          <b-form-group name="questions">
+            <!-- <div
+              :id="question.id"
+              style="display:none"
             >
-              Cancel
-            </b-button>
-            <b-button
-              variant="primary"
-              @click="update(question.id, question.createquestion)"
-            >
-              Update Question
-            </b-button>
-          </div>
-        </b-form-group>
-       </b-form>
+              <b-form-textarea
+                id="textarea"
+                v-model="question.createquestion"
+                placeholder="Edit report..."
+                rows="3"
+                max-rows="0"
+                overflow-y="hidden"
+              />
+              <b-button
+                variant="danger"
+                @click="cancel()"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="update(question.id, question.createquestion)"
+              >
+                Update Question
+              </b-button>
+            </div> -->
+          </b-form-group>
+        </b-form>
       </b-card>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -203,7 +222,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
-import * as questionTypes from '../store/types/index'
+import * as questionTypes from '../store/types/questions'
 
 export default {
   components: {
@@ -280,6 +299,7 @@ export default {
         { value: { C: '3PO' }, text: 'This is an option with object value' },
         { value: 'd', text: 'This one is disabled', disabled: true },
       ],
+      selected: '',
     }
   },
   computed: {
@@ -339,5 +359,8 @@ button{
 .buttons{
   float: right;
   margin-top: 0;
+}
+.modal-footer{
+  display: none;
 }
 </style>

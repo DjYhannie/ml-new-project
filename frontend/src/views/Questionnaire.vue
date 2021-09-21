@@ -18,81 +18,115 @@
               <b-row>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="title">Title: </label>
                     <input
+                      name="title"
                       v-model="sample"
                       type="text"
                       class="form-control"
-                      placeholder="Title"
                     >
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="timeDuration">Time Duration: </label>
                     <input
+                      name="timeDuration"
                       v-model="sample2"
                       type="time"
                       class="form-control"
-                      placeholder="Time Duration">
+                      label="Time Duration"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="course">Course: </label>
                     <!-- <input
                       v-model="sample3"
                       type="text"
                       class="form-control"
                       placeholder="Course"
-                    > -->
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    /> -->
+                    <b-form-select
+                      name="course"
+                      v-model="selected"
+                      :options="options"
+                      label="Course"
+                    />
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="passingScore">Passing Score: </label>
                     <input
+                      name="passingScore"
                       v-model="sample4"
                       type="number"
                       class="form-control"
-                      placeholder="Passing Score">
+                      label="Passing Score"
+                    >
                   </div>
                 </b-col>
               </b-row>
+              <!-- divider -->
+          <div class="divider my-2">
+            <div class="divider-text">
+              Categories
+            </div>
+          </div>
               <b-row>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="easy">Easy: </label>
                     <input
+                      name="easy"
                       v-model="sample5"
                       type="text"
                       class="form-control"
-                      placeholder="Easy">
+                      label="Easy"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="intermediate">Intermediate: </label>
                     <input
+                      name="intermediate"
                       v-model="sample6"
                       type="text"
                       class="form-control"
-                      placeholder="Intermediate">
+                      label="Intermediate"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="hard">Hard: </label>
                     <input
+                      name="hard"
                       v-model="sample7"
                       type="text"
                       class="form-control"
-                      placeholder="Hard">
+                      label="Hard"
+                    >
                   </div>
                 </b-col>
               </b-row>
-           </b-container>
-         </b-form-group>
-       </b-form>
-     </b-modal>
-  </div>
-  <br>
+            </b-container>
+              <b-button
+              variant="primary"
+              @click="submit"
+            >
+              Add
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    </div>
+    <br>
 
-  <br><br><hr><br>
+    <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
     <div
       v-for="question in questions"
@@ -111,58 +145,62 @@
           </b-dropdown>
         </b-button-group>
         <div>
-    <b-card
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-      >
-        {{ question.sample }}
-      </b-card>
-    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-      <b-card>
-         <hr>
-      <p>Course Name: {{ question.sample }}</p>
-      <p>Question: {{ question.sample2 }}</p>
-      <p>Answer: {{ question.sample3 }}</p>
-      <p>A. {{ question.sample4 }}</p>
-      <p>B. {{ question.sample5 }}</p>
-      <p>C. {{ question.sample6 }}</p>
-      <p>D. {{ question.sample7 }}</p>
-      </b-card>
-    </b-collapse>
-  </div>
-      <b-form @submit.prevent="update">
-        <b-form-group name="questions">
-          <div
-            :id="question.id"
-            style="display:none"
+          <b-card
+            :class="visible ? null : 'collapsed'"
+            :aria-expanded="visible ? 'true' : 'false'"
+            aria-controls="collapse-4"
+            @click="visible = !visible"
           >
-            <b-form-textarea
-              id="textarea"
-              v-model="question.createquestion"
-              placeholder="Edite report..."
-              rows="3"
-              max-rows="0"
-              overflow-y="hidden"
-            />
-            <b-button
-              variant="danger"
-              @click="cancel()"
+            {{ question.sample }}
+          </b-card>
+          <b-collapse
+            id="collapse-4"
+            v-model="visible"
+            class="mt-2"
+          >
+            <b-card>
+              <hr>
+              <p>Course Name: {{ question.sample }}</p>
+              <p>Question: {{ question.sample2 }}</p>
+              <p>Answer: {{ question.sample3 }}</p>
+              <p>A. {{ question.sample4 }}</p>
+              <p>B. {{ question.sample5 }}</p>
+              <p>C. {{ question.sample6 }}</p>
+              <p>D. {{ question.sample7 }}</p>
+            </b-card>
+          </b-collapse>
+        </div>
+        <b-form @submit.prevent="update">
+          <b-form-group name="questions">
+            <div
+              :id="question.id"
+              style="display:none"
             >
-              Cancel
-            </b-button>
-            <b-button
-              variant="primary"
-              @click="update(question.id, question.createquestion)"
-            >
-              Update Question
-            </b-button>
-          </div>
-        </b-form-group>
-       </b-form>
+              <b-form-textarea
+                id="textarea"
+                v-model="question.createquestion"
+                placeholder="Edite report..."
+                rows="3"
+                max-rows="0"
+                overflow-y="hidden"
+              />
+              <b-button
+                variant="danger"
+                @click="cancel()"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="update(question.id, question.createquestion)"
+              >
+                Update Question
+              </b-button>
+            </div>
+          </b-form-group>
+        </b-form>
       </b-card>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -207,7 +245,7 @@ export default {
     return {
       visible: false,
       modalShow: false,
-      questionnairesQuestions:
+      questionnairesDescription:
       {
         sample: '',
         sample2: '',
@@ -263,6 +301,7 @@ export default {
         { value: { C: '3PO' }, text: 'This is an option with object value' },
         { value: 'd', text: 'This one is disabled', disabled: true },
       ],
+      seleted: '',
     }
   },
   mounted() {
@@ -316,6 +355,9 @@ button{
 }
 .modalButton{
   float: left;
+}
+.modal-footer {
+  display: none;
 }
 .buttons{
   float: right;

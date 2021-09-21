@@ -28,10 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
 Route::post('/register',[RegistrationController::class,'register']);
 Route::post('/login',[RegistrationController::class,'login']);
-
-
-
-
+Route::post('/logout', [RegistrationController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/reset-password',[NewPassword::class, 'updatePassword']);
@@ -46,8 +43,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/get-by-name',[AdminController::class, 'getUserByName']);
     Route::post('/answers',[ExamFormController::class, 'examForm']);
 
-
-    Route::post('/logout', [RegistrationController::class, 'logout']);
 });
 
 

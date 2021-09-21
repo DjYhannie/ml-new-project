@@ -242,6 +242,7 @@ export default {
   },
   methods: {
     validationForm() {
+      console.log(this.userEmail)
       this.$refs.loginValidation.validate().then(success => {
         if (success) {
           this.$toast({

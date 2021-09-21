@@ -66,7 +66,7 @@
                   rules="required"
                 >
                   <b-form-input
-                    id="email"
+                    id="name"
                     v-model="name"
                     :state="errors.length > 0 ? false:null"
                     name="name"
@@ -75,52 +75,6 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-
-              <!-- department  -->
-              <!-- <b-form-group
-                id="dept"
-                label="Department:"
-                label-for="dept"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  rules="required"
-                  name="Department"
-                >
-                  <b-form-select
-                    v-model="selected"
-                    class="mb-2 form-group"
-                    name="department"
-                    :state="errors.length > 0 ? false:null"
-                  >
-                    <option
-                      :value="null"
-                      disabled
-                    >ML Departments</option>
-                    <option value="quality-assurance">
-                      Quality Assurance
-                    </option>
-                    <option value="developer">
-                      Developer
-                    </option>
-                    <option value="developer-operation">
-                      Developer Operation
-                    </option>
-                    <option value="system-administration">
-                      System Administration
-                    </option>
-                    <option value="helpdesk-facility">
-                      HelpDesk Facility
-                    </option>
-                    <option value="product-owner">
-                      Product Owner
-                    </option>
-                  </b-form-select>
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-
-              </b-form-group> -->
-
               <!-- email -->
               <b-form-group
                 label="Email"
@@ -143,13 +97,10 @@
               </b-form-group>
 
               <!-- password -->
-              <b-form-group>
-                <div class="d-flex justify-content-between">
-                  <label for="password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div>
+              <b-form-group
+                label="Password"
+                label-for="password"
+              >
                 <validation-provider
                   #default="{ errors }"
                   rules="required"
@@ -255,6 +206,7 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+// import { mapActions } from 'vuex'
 
 extend('confirmPassword', {
   params: ['target'],
@@ -291,7 +243,6 @@ export default {
       userEmail: '',
       confirmPassword: '',
       sideImg: require('@/assets/images/pages/register-shared-goals.svg'),
-      // validation rulesimport store from '@/store/index'
       required,
       email,
     }
@@ -311,6 +262,7 @@ export default {
   },
   methods: {
     validationForm() {
+      console.log(this.userEmail)
       this.$refs.registerValidation.validate().then(success => {
         if (success) {
           this.$toast({
