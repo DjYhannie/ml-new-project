@@ -15,7 +15,11 @@ class ImportQuestions implements ToModel
     public function model(array $row)
     {
         return new Questions([
-            'name'
+            'question' => $row[1],
+            'category' => $row[2],
+            'course' => $row[3],
+            'answer' => $row[4],
+            'choices' => json_encode($row[5])
         ]);
     }
 }

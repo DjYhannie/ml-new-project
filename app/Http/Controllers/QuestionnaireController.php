@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Questionnaire;
-
+use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
+
+use function Complex\add;
 
 class QuestionnaireController extends Controller
 {
@@ -136,8 +138,34 @@ class QuestionnaireController extends Controller
 
             $questionnaire = Questionnaire::find($id);
 
+            $easyQuestions = DB::table('questions')
+                            ->select('question')
+                            ->where('category', "easy")
+                            ->where('course', $questionnaire->course)
+                            ->get()
+                            ->random($questionnaire->easy_questions);
+
+            $averageQuestions = DB::table('questions')
+                            ->select('question')
+                            ->where('category', "average")
+                            ->where('course', $questionnaire->course)
+                            ->get()
+                            ->random($questionnaire->average_questions);
+
+            $hardQuestions = DB::table('questions')
+                            ->select('question')
+                            ->where('category', "hard")
+                            ->where('course', $questionnaire->course)
+                            ->get()
+                            ->random($questionnaire->hard_questions);
+
+
+            $merge1 = $easyQuestions->merge($averageQuestions);
+            $allQuestions = $merge1->merge($hardQuestions);
+            $allQuestions->shuffle();
+
             return response()->json([
-                'data' => $questionnaire
+                'data' => $allQuestions
             ]);
         }
         catch(\Exception $e){
