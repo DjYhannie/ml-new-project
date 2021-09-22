@@ -101,6 +101,7 @@ class AdminController extends Controller
         }
     }
 
+
     //Query to get all users
     public function getAllUsers()
     {
