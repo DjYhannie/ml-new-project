@@ -117,7 +117,7 @@
                 aria-describedby="basic-addon1"
               >
             </div>
-             <b-button
+            <b-button
               variant="primary"
               @click="submit"
             >
@@ -221,7 +221,7 @@ import {
   BCollapse,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import * as questionTypes from '../store/types/questions'
 
 export default {
@@ -254,44 +254,44 @@ export default {
           choiceD: '',
         },
       createquestion: '',
-      questions: [
-        {
-          course: 'Course1',
-          question: 'Question1',
-          answer: 'AnswerA',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
-        },
-        {
-          course: 'Course2',
-          question: 'Question2',
-          answer: 'AnswerB',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
-        },
-        {
-          course: 'Course4',
-          question: 'Question3',
-          answer: 'AnswerC',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
-        },
-        {
-          course: 'Course5',
-          question: 'Question4',
-          answer: 'AnswerD',
-          choiceA: 'testA',
-          choiceB: 'testB',
-          choiceC: 'testC',
-          choiceD: 'testD',
-        },
-      ],
+      // questions: [
+      //   {
+      //     course: 'Course1',
+      //     question: 'Question1',
+      //     answer: 'AnswerA',
+      //     choiceA: 'testA',
+      //     choiceB: 'testB',
+      //     choiceC: 'testC',
+      //     choiceD: 'testD',
+      //   },
+      //   {
+      //     course: 'Course2',
+      //     question: 'Question2',
+      //     answer: 'AnswerB',
+      //     choiceA: 'testA',
+      //     choiceB: 'testB',
+      //     choiceC: 'testC',
+      //     choiceD: 'testD',
+      //   },
+      //   {
+      //     course: 'Course4',
+      //     question: 'Question3',
+      //     answer: 'AnswerC',
+      //     choiceA: 'testA',
+      //     choiceB: 'testB',
+      //     choiceC: 'testC',
+      //     choiceD: 'testD',
+      //   },
+      //   {
+      //     course: 'Course5',
+      //     question: 'Question4',
+      //     answer: 'AnswerD',
+      //     choiceA: 'testA',
+      //     choiceB: 'testB',
+      //     choiceC: 'testC',
+      //     choiceD: 'testD',
+      //   },
+      // ],
       options: [
         { value: null, text: 'Please select an option' },
         { value: 'a', text: 'This is First option' },
@@ -303,9 +303,11 @@ export default {
     }
   },
   computed: {
+    ...mapState(['questions']),
   },
   mounted() {
     this.getQuestions()
+    console.log(this.questions)
   },
   methods: {
     ...mapActions({

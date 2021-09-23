@@ -222,7 +222,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
-import * as questionTypes from '../store/types/index'
+import * as questionTypes from '../store/types/questions'
 
 export default {
   components: {

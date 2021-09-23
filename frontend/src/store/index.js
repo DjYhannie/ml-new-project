@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Modules
+import questions from '@/store/module/questions'
+import users from '@/store/module/users'
 import app from './app'
 import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
@@ -13,6 +15,8 @@ export default new Vuex.Store({
     app,
     appConfig,
     verticalMenu,
+    questions,
+    users,
   },
   strict: process.env.DEV,
 })
