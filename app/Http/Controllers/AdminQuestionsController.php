@@ -9,6 +9,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Imports\ImportQuestions;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class AdminQuestionsController extends Controller
@@ -457,5 +460,11 @@ class AdminQuestionsController extends Controller
         }
      }
 
+     public function import()
+    {
+        Excel::import(new ImportQuestions,request()->file('file'));
+
+        return back();
+    }
 
 }
