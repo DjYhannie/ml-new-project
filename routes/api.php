@@ -75,6 +75,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
 
+
+
     Route::post('/logout', [RegistrationController::class, 'logout']);
 });
 
@@ -83,4 +85,6 @@ Route::get('/test',function(){
     return "test";
 });
 
+Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examecode');
+Route::post('/import', [AdminQuestionsController::class, 'import'])->name('import');
 

@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\ExamForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 
 class ExamFormController extends Controller
 {
 
-    public function FunctionName(Request $request)
+    public function examLink()
     {
-        
+        return URL::temporarySignedRoute('examcode', now()->addMinutes(30));
     }
+
+
     public function examForm(Request $request)
     {
         $user = Auth::user();
