@@ -6,6 +6,7 @@ use App\Models\ExamForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\QuestionnaireController;
 
 class ExamFormController extends Controller
 {
@@ -16,23 +17,21 @@ class ExamFormController extends Controller
     }
 
 
-    public function examForm(Request $request)
-    {
-        $user = Auth::user();
 
-        $validation = $request->validate([
-            'name' => 'required|exists:users,name',
 
-        ]);
 
-        $answers= ExamForm::create([
-            'name' => $validation['name'],
+    public function checkAnswer(Request $request, Questions $userAnswer){
+        $response = '';
+        $userAnswer = $request->answer;
 
-        ]);
-        $answers -> save();
-        return response()->json([
-            'message' => 'answer successfully submitted',
-            'answers' => $answers
-        ]);
+        if(DB::table('questions')->where('answer', '=', $userAnswer)){
+            $response = "correct answer";
+        }else{
+            $response = "incorrect answer";
+        }
+        return $response;
     }
+
+
+
 }

@@ -85,6 +85,6 @@ Route::get('/test',function(){
     return "test";
 });
 
-Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examecode');
+Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examcode');
 Route::post('/import', [AdminQuestionsController::class, 'import'])->name('import');
 
