@@ -13,8 +13,8 @@ class ExamFormController extends Controller
     public function examLink()
     {
         return URL::temporarySignedRoute('examcode', now()->addMinutes(30));
-    }
 
+    }
 
     public function examForm(Request $request)
     {
@@ -34,5 +34,25 @@ class ExamFormController extends Controller
             'message' => 'answer successfully submitted',
             'answers' => $answers
         ]);
+    }
+
+    public function sendExamLink()
+    {
+        $user = Auth::user();
+
+        try{
+
+            $email = Auth::user()->email;
+             
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => 'Error',
+                'error' => $e,
+                'status_code' => 400
+            ]);
+        }
+
     }
 }
