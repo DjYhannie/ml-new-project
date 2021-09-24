@@ -61,6 +61,8 @@ class NewPassword extends Controller
 
         $rule = $request->validate(['email' => 'required|email']);
         $checked = User::where('email', '=', $rule)->first();
+        
+        dd($checked);
 
         $token = Str::random(64);
 
