@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/users/name',[AdminController::class, 'getUserByName']);
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
-    Route::post('/send-link', [ExamFormController::class, 'sendExamLink']);
+    Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
 
 
 

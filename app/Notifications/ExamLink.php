@@ -41,7 +41,7 @@ class ExamLink extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = "http://localhost:4200/";
+        $url = '/';
         return (new MailMessage)
                     ->greeting('Good Day!')
                     ->line('Please click the button below to take the Exam')
