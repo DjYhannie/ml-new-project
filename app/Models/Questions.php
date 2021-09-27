@@ -12,6 +12,7 @@ class Questions extends Model
     protected $fillable = [
         'question',
         'category',
+        'course',
         'answer',
         'choices'
     ];
@@ -26,5 +27,7 @@ class Questions extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    
 
 }

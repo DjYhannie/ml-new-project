@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Questions;
 use Error;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Question\Question;
 
 use function PHPSTORM_META\type;
@@ -19,7 +21,6 @@ class AdminController extends Controller
 {
 
     //Admin Login
-
    public function adminLogin(Request $request)
    {
     $validator = Validator::make($request->all(),[
@@ -47,157 +48,61 @@ class AdminController extends Controller
             'token' => $token,
         ];
         return response($response, 201);
-
     }
-
    }
 
-   //Add a Qquestion
-
-   public function addQuestion(Request $request)
-   {
-
-    $user = Auth::user();
-
-    // if (Auth::attempt(['email' => '', 'password' => $password, 'active' => 1])) {
-
-    // }
-
-    $validate = $request->validate([
-        'question' => 'required',
-        'category' => 'required',
-        'answer' => 'required',
-        'choices' => 'required|array'
-    ]);
-
-
-        $question = Questions::create([
-            'question' => $validate['question'],
-            'category' => $validate['category'],
-            'answer' => $validate['answer'],
-            'choices' => json_encode($validate['choices'])
-
-        ]);
-
-        $question->save();
-        $question->choices = json_decode($question->choices);
-
-
-        return response()->json([
-            'message' => 'Question Successfully Added',
-            'questions' => $question
-        ]);
-    }
-
-    //Query to get all Questions
-    public function getAllQuestions()
-    {
-        $user = User::all();
-
-        $questions = DB::table('questions')->get();
-
-        return response()->json([
-            'data' => $questions
-        ]);
-
-
-
-    }
-    //query to get all questions by category
-
-    public function allQuestionsByCategory()
-    {
-        $user = Auth::user();
-
-        $data = DB::table('questions')
-                    ->select('question', 'category')
-                    ->get()
-                    ->groupBy('category');
-
-        return response()->json([
-            'data' => $data
-        ]);
-    }
-
-    //get all easy type questions
-    public function easyQuestions()
+    //Query to add courses
+    public function addCourses(Request $request)
     {
         $user = Auth::user();
         try{
 
-            $data = DB::table('questions')
-                    ->select('id', 'question', 'type')
-                    ->where('category', '=', 'easy')
-                    ->get();
+            $validate = $request->validate([
+                'name' => 'required'
+            ]);
+
+            $courses = Courses::create([
+                'name' => $validate['name']
+            ]);
+
+            $courses->save();
 
             return response()->json([
-                'data' => $data
+                'message' => "Course created sucessfully!",
+                'course' => $courses
             ]);
         }
-        catch(\Exception $e)
-        {
+        catch(\Exception $e){
             return response()->json([
-                'message' => 'Record not Found!'
+                'message' => "Error",
+                'code' => 400,
+                "error" => $e
             ]);
         }
-
-
     }
 
-    // get all average questions
-
-    public function averageQuestions()
+    public function getCourses()
     {
         $user = Auth::user();
+        try{
 
-        try
-        {
-            $data = DB::table('questions')
-                    ->select('id', 'question', 'type')
-                    ->where('category', '=', 'average')
-                    ->get();
+            $courses = DB::table('courses')->get();
 
             return response()->json([
-                'data' => $data
+                'courses' => $courses
             ]);
-
         }
-        catch(\Exception $e)
+        catch (\Exception $e)
         {
             return response()->json([
-                'message' => 'Empty!'
+                'error' => $e,
+                'status_code' => 400
             ]);
-
         }
     }
 
-    //get all hard questions
 
-    public function hardQuestions()
-    {
-        $user = Auth::admin();
-
-        try
-        {
-            $data = DB::table('questions')
-                    ->select('id', 'question', 'type')
-                    ->where('category', '=', 'hard')
-                    ->get();
-
-            return response()->json([
-                'data' => $data
-            ]);
-
-        }
-        catch(\Exception $e)
-        {
-            return response()->json([
-                'message' => 'Empty!'
-            ]);
-
-        }
-    }
-
+    //Query to get all users
     public function getAllUsers()
     {
         try{
@@ -213,6 +118,7 @@ class AdminController extends Controller
         }
     }
 
+    //Query to get user by name
     public function getUserByName(Request $request)
     {
         try{

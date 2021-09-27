@@ -7,12 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailNotif extends Notification
+class ExamLink extends Notification
 {
     use Queueable;
-
     public $data;
-
 
     /**
      * Create a new notification instance.
@@ -32,7 +30,7 @@ class EmailNotif extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -43,12 +41,12 @@ class EmailNotif extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = "/";
+        $url = '/';
         return (new MailMessage)
-                    ->greeting('Password Reset')
-                    ->line('Please click the button below to reset your password')
-                    ->action('Reset Password', $url)
-                    ->line('If clicked!, you will be riderected to anohter page');
+                    ->greeting('Good Day!')
+                    ->line('Please click the button below to take the Exam')
+                    ->action('Examination Link', $url)
+                    ->line('Note: Exam Link expires after 30 minutes if not click!');
     }
 
     /**
@@ -63,6 +61,4 @@ class EmailNotif extends Notification
             //
         ];
     }
-
-
 }

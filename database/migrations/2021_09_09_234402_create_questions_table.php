@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('question');
             $table->string('category');
+            $table->string('course');
             $table->string('answer');
             $table->json('choices');
             $table->timestamps();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExamFormsTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateExamFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('exam_forms', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
-
         });
     }
 
@@ -28,6 +27,6 @@ class CreateExamFormsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exam_forms');
+        Schema::dropIfExists('courses');
     }
 }

@@ -21,8 +21,11 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@grapecity/spread-excelio": "^14.2.0",
+        "@grapecity/spread-sheets": "^14.2.0",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
         "@vue/babel-plugin-transform-vue-jsx": "^1.2.1",
+        "jquery": "^3.6.0",
         "postcss-rtl": "^1.7.3",
         "vue-axios": "^3.2.5",
         "vue-router": "^3.5.2"
