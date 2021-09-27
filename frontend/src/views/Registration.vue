@@ -67,7 +67,7 @@
                 >
                   <b-form-input
                     id="name"
-                    v-model="name"
+                    v-model="register.name"
                     :state="errors.length > 0 ? false:null"
                     name="name"
                     placeholder="Full Name"
@@ -87,7 +87,7 @@
                 >
                   <b-form-input
                     id="email"
-                    v-model="userEmail"
+                    v-model="register.username"
                     :state="errors.length > 0 ? false:null"
                     name="email"
                     placeholder="name.test@mlhuillier.com"
@@ -112,7 +112,7 @@
                   >
                     <b-form-input
                       id="password"
-                      v-model="password"
+                      v-model="register.password"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -150,7 +150,7 @@
                   >
                     <b-form-input
                       id="confirmPassword"
-                      v-model="confirmPassword"
+                      v-model="register.confirmPassword"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -237,11 +237,13 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      status: '',
-      name: '',
-      password: '',
-      userEmail: '',
-      confirmPassword: '',
+      register: {
+        status: '',
+        name: '',
+        password: '',
+        username: '',
+        confirmPassword: '',
+      },
       sideImg: require('@/assets/images/pages/register-shared-goals.svg'),
       required,
       email,
@@ -262,9 +264,12 @@ export default {
   },
   methods: {
     validationForm() {
-      console.log(this.userEmail)
-      this.$refs.registerValidation.validate().then(success => {
+      console.log(this.register)
+      this.$refs.registerValidation.validate().then(async success => {
         if (success) {
+          const register = await this.$store.dispatch('Register', this.register)
+          console.log(register)
+          this.$router.push({ name: 'login' })
           this.$toast({
             component: ToastificationContent,
             props: {

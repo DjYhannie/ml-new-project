@@ -1,4 +1,4 @@
-import api from '../../libs/axios'
+import axios from 'axios'
 import * as userTypes from '../types/users'
 
 export default {
@@ -28,17 +28,28 @@ export default {
 
   },
   actions: {
-    async [userTypes.ACTION_SET_LOGIN]({ commit }) {
-      api.post('http://127.0.0.1:8000/api/adminlogin').then(response => {
+    async [userTypes.ACTION_SET_LOGIN]({ commit }, data) {
+      axios.post('http://127.0.0.1:8000/api/adminlogin', data).then(response => {
         commit(userTypes.MUTATION_SET_LOGIN, response.data)
         console.log(response)
       }).catch(error => {
-        console.log(error)
+        console.log('error', error)
+      })
+    },
+    async [userTypes.ACTION_SET_REGISTER]({ commit }, data) {
+      axios.post('http://127.0.0.1:8000/api/register', data).then(response => {
+        commit(userTypes.ACTION_SET_LOGIN, response.data)
+        console.log(response)
+      }).catch(error => {
+        console.log('error', error)
       })
     },
   },
   mutations: {
     [userTypes.MUTATION_SET_LOGIN]: (state, user) => {
+      state.user = user
+    },
+    [userTypes.MUTATION_SET_REGISTER]: (state, user) => {
       state.user = user
     },
   },

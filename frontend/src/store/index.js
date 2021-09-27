@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Modules
+import auth from '@/store/module/auth'
 import questions from '@/store/module/questions'
 import users from '@/store/module/users'
 import app from './app'
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     verticalMenu,
     questions,
     users,
+    auth,
   },
   strict: process.env.DEV,
 })

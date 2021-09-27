@@ -41,7 +41,7 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="userEmail"
+                    v-model="data.username"
                     :state="errors.length > 0 ? false : null"
                     name="login-email"
                     placeholder="name.test@mlhuillier.com"
@@ -73,7 +73,7 @@
                   >
                     <b-form-input
                       id="login-password"
-                      v-model="password"
+                      v-model="data.password"
                       :state="errors.length > 0 ? false : null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -191,6 +191,7 @@ import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { mapActions } from 'vuex'
 import * as userTypes from '../store/types/users'
+import * as auth from '../store/module/auth'
 
 
 export default {
@@ -215,8 +216,10 @@ export default {
   data() {
     return {
       status: '',
-      password: '',
-      userEmail: '',
+      data: {
+        password: '',
+        username: '',
+      },
       sideImg: require('@/assets/images/pages/login-accept-task.svg'),
       // validation rulesimport store from '@/store/index'
       required,
@@ -236,88 +239,47 @@ export default {
       return this.sideImg
     },
   },
-  methods: {
-    ...mapActions({
-      postUser:userTypes.ACTION_SET_LOGIN
-    }),
-    
-    // validationForm() {
-    //   console.log(this.user)
-    //   console.log(this.$refs.loginValidation.validate)
-    //   this.$refs.loginValidation.validate().then(success => {
-    //     if (success) {
-    //       // console.log(success)
-    //       this.$toast({
-    //         component: ToastificationContent,
-    //         props: {
-    //           title: 'Form Submitted',
-    //           icon: 'EditIcon',
-    //           variant: 'success',
-    //         },
-    //       })
-    //       this.postUser(this.password, this.userEmail)
-          
-    //     }
-    //   })
-    // },
-    validationForm() {
-
-  // Form Validation
-  this.$refs.loginValidation.validate().then(success => {
-
-    // If form validation is successful
-    if (success) {
-
-      // Make Login request using JWT request
-      // NOTE: You can use axios.post() instead of JWT service
-      useJwt.login({
-        email: this.userEmail,
-        password: this.password,
-      })
-        .then(response => {
-          // `response.data` is response from API which is above mentioned
-          const { userData } = response.data
-
-          // Setting access token in localStorage
-          // NOTE: Please check the source code to better understand JWT service
-          useJwt.setToken(response.data.accessToken)
-
-          // Setting refresh token in localStorage
-          useJwt.setRefreshToken(response.data.refreshToken)
-
-          // Setting user data in localStorage
-          localStorage.setItem('userData', JSON.stringify(userData))
-
-          // Updating user ability in CASL plugin instance
-          this.$ability.update(userData.ability)
-
-          // ? This is just for demo purpose as well.
-          // ? Because we are showing eCommerce app's cart items count in navbar
-          this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
-
-          // Redirection after login
-          // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
-          this.$router.replace(getHomeRouteForLoggedInUser(userData.role))
-            .then(() => {
-              this.$toast({
-                component: ToastificationContent,
-                position: 'top-right',
-                props: {
-                  title: `Welcome ${userData.fullName || userData.username}`,
-                  icon: 'CoffeeIcon',
-                  variant: 'success',
-                  text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
-                },
-              })
-            })
-        })
-        .catch(error => {
-          this.$refs.loginForm.setErrors(error.response.data.error)
-        })
-    }
-  })
-},
+  mounted() {
+    console.clear()
   },
+  methods: {
+    // ...mapActions({
+    //   postUser:userTypes.ACTION_SET_LOGIN
+    // }),
+    
+    validationForm() {
+    
+      this.$refs.loginValidation.validate().then(async success => {
+        if (success) {
+          const login = await this.$store.dispatch('LogIn', this.data)
+          console.log(login)
+          this.$router.push({name:'home'})
+          // console.log(this.userData)
+          // this.$store.dispatch(this.postUser, this.userData).then(res => {
+          //   console.log(res);
+          // })
+
+          // this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: 'Form Submitted',
+          //     icon: 'EditIcon',
+          //     variant: 'success',
+          //   },
+          // })   
+        }else {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Email or Password is incorrect',
+              icon: 'EditIcon',
+              variant: 'danger',
+            },
+          }) 
+        }
+      })
+    },
+    }
 }
 </script>
 
