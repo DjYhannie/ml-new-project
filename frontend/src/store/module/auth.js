@@ -7,11 +7,16 @@ const getters = {
   StateToken: state => state.token,
 }
 const actions = {
-  async Register({ dispatch }, form) {
-    const UserForm = new FormData()
-    UserForm.append('username', form.username)
-    UserForm.append('password', form.password)
-    await dispatch('LogIn', UserForm)
+  async Register(form) {
+    // const UserForm = new FormData()
+    const response = await axios.post('/register', form)
+    console.log(response)
+    console.log(form)
+    // UserForm.append('username', form.name)
+    // UserForm.append('password', form.email)
+    // UserForm.append('password', form.password)
+    // UserForm.append('password', form.password_confirmation)
+    // await dispatch('LogIn', UserForm)
   },
   async LogIn({ commit }, User) {
     const response = await axios.post('/adminlogin', User)

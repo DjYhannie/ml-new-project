@@ -21,7 +21,7 @@
                     <label for="title">Title: </label>
                     <input
                       name="title"
-                      v-model="sample"
+                      v-model="questionnaire.title"
                       type="text"
                       class="form-control"
                     >
@@ -32,7 +32,7 @@
                     <label for="timeDuration">Time Duration: </label>
                     <input
                       name="timeDuration"
-                      v-model="sample2"
+                      v-model="questionnaire.time_duration"
                       type="time"
                       class="form-control"
                       label="Time Duration"
@@ -50,7 +50,7 @@
                     /> -->
                     <b-form-select
                       name="course"
-                      v-model="selected"
+                      v-model="questionnaire.seleted"
                       :options="options"
                       label="Course"
                     />
@@ -61,7 +61,7 @@
                     <label for="passingScore">Passing Score: </label>
                     <input
                       name="passingScore"
-                      v-model="sample4"
+                      v-model="questionnaire.passing_score"
                       type="number"
                       class="form-control"
                       label="Passing Score"
@@ -81,7 +81,7 @@
                     <label for="easy">Easy: </label>
                     <input
                       name="easy"
-                      v-model="sample5"
+                      v-model="questionnaire.easy"
                       type="text"
                       class="form-control"
                       label="Easy"
@@ -93,7 +93,7 @@
                     <label for="intermediate">Intermediate: </label>
                     <input
                       name="intermediate"
-                      v-model="sample6"
+                      v-model="questionnaire.intermediate"
                       type="text"
                       class="form-control"
                       label="Intermediate"
@@ -105,7 +105,7 @@
                     <label for="hard">Hard: </label>
                     <input
                       name="hard"
-                      v-model="sample7"
+                      v-model="questionnaire.hard"
                       type="text"
                       class="form-control"
                       label="Hard"
@@ -129,18 +129,18 @@
     <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
     <div
-      v-for="question in questions"
-      :key="question.id"
+      v-for="questionnaire in questionnaires"
+      :key="questionnaire.id"
       class="question-content"
     >
-      <b-card name="questions">
+      <b-card name="questionnaire">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-              @click="editButton(question.id)"
+              @click="editButton(questionnaire.id)"
             >Edit</b-dropdown-item>
             <b-dropdown-item
-              @click="deleteButton(question.id)"
+              @click="deleteButton(questionnaire.id)"
             >Delete</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
@@ -151,7 +151,7 @@
             aria-controls="collapse-4"
             @click="visible = !visible"
           >
-            {{ question.sample }}
+            {{ questionnaire.sample }}
           </b-card>
           <b-collapse
             id="collapse-4"
@@ -160,25 +160,25 @@
           >
             <b-card>
               <hr>
-              <p>Course Name: {{ question.sample }}</p>
-              <p>Question: {{ question.sample2 }}</p>
-              <p>Answer: {{ question.sample3 }}</p>
-              <p>A. {{ question.sample4 }}</p>
-              <p>B. {{ question.sample5 }}</p>
-              <p>C. {{ question.sample6 }}</p>
-              <p>D. {{ question.sample7 }}</p>
+              <p>Title: {{ questionnaire.title }}</p>
+              <p>Course: {{ questionnaire.course }}</p>
+              <p>Time Duration: {{ questionnaire.selected }}</p>
+              <p>Passing Score: {{ questionnaire.passing_score }}</p>
+              <p>Easy: {{ questionnaire.easy }}</p>
+              <p>Intermediate: {{ questionnaire.intermediate }}</p>
+              <p>Hard: {{ questionnaire.hard }}</p>
             </b-card>
           </b-collapse>
         </div>
         <b-form @submit.prevent="update">
-          <b-form-group name="questions">
+          <b-form-group name="questionnaire">
             <div
-              :id="question.id"
+              :id="questionnaire.id"
               style="display:none"
             >
               <b-form-textarea
                 id="textarea"
-                v-model="question.createquestion"
+                v-model="questionnaire.createquestion"
                 placeholder="Edite report..."
                 rows="3"
                 max-rows="0"
@@ -192,9 +192,9 @@
               </b-button>
               <b-button
                 variant="primary"
-                @click="update(question.id, question.createquestion)"
+                @click="update(questionnaire.id, questionnaire.createquestion)"
               >
-                Update Question
+                Update Questionnaire
               </b-button>
             </div>
           </b-form-group>
@@ -222,7 +222,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
-import * as questionTypes from '../store/types/questions'
+import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
   components: {
@@ -245,53 +245,53 @@ export default {
     return {
       visible: false,
       modalShow: false,
-      questionnairesDescription:
+      questionnaire:
       {
-        sample: '',
-        sample2: '',
-        sample3: '',
-        sample4: '',
-        sample5: '',
-        sample6: '',
-        sample7: '',
+        title: '',
+        course: '',
+        selected: '',
+        passing_score: '',
+        easy: '',
+        intermediate: '',
+        hard: '',
       },
       createquestion: '',
       questions: [
         {
-          sample: 'test1',
-          sample2: 'test1',
-          sample3: 'test1',
-          sample4: 'test1',
-          sample5: 'test1',
-          sample6: 'test1',
-          sample7: 'test1',
+          title: 'test1',
+          course: 'test1',
+          selected: 'test1',
+          passing_score: 'test1',
+          easy: 'test1',
+          intermediate: 'test1',
+          hard: 'test1',
         },
         {
-          sample: 'test2',
-          sample2: 'test2',
-          sample3: 'test2',
-          sample4: 'test2',
-          sample5: 'test2',
-          sample6: 'test2',
-          sample7: 'test2',
+          title: 'test2',
+          course: 'test2',
+          selected: 'test2',
+          passing_score: 'test2',
+          easy: 'test2',
+          intermediate: 'test2',
+          hard: 'test2',
         },
         {
-          sample: 'test3',
-          sample2: 'test3',
-          sample3: 'test3',
-          sample4: 'test3',
-          sample5: 'test3',
-          sample6: 'test3',
-          sample7: 'test3',
+          title: 'test3',
+          course: 'test3',
+          selected: 'test3',
+          passing_score: 'test3',
+          easy: 'test3',
+          intermediate: 'test3',
+          hard: 'test3',
         },
         {
-          sample3: 'test4',
-          sample4: 'test4',
-          sample5: 'test4',
-          sample2: 'test4',
-          sample: 'test4',
-          sample6: 'test4',
-          sample7: 'test4',
+          title: 'test4',
+          course: 'test4',
+          selected: 'test4',
+          passing_score: 'test4',
+          easy: 'test4',
+          intermediate: 'test4',
+          hard: 'test4',
         },
       ],
       options: [
@@ -305,15 +305,15 @@ export default {
     }
   },
   mounted() {
-    this.getQuestions()
+    this.getQuestionnaires()
   },
   methods: {
     ...mapActions({
-      getQuestions: questionTypes.ACTION_SET_QUESTIONS,
-      postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
+      postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
     submit() {
-      this.postQuestion(this.createquestion)
+      this.postQuestionnaire(this.createquestion)
       console.log(this.createquestion)
       this.createquestion = ''
     },

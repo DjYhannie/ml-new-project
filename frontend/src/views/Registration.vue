@@ -87,7 +87,7 @@
                 >
                   <b-form-input
                     id="email"
-                    v-model="register.username"
+                    v-model="register.email"
                     :state="errors.length > 0 ? false:null"
                     name="email"
                     placeholder="name.test@mlhuillier.com"
@@ -150,7 +150,7 @@
                   >
                     <b-form-input
                       id="confirmPassword"
-                      v-model="register.confirmPassword"
+                      v-model="register.password_confirmation"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -241,8 +241,8 @@ export default {
         status: '',
         name: '',
         password: '',
-        username: '',
-        confirmPassword: '',
+        email: '',
+        password_confirmation: '',
       },
       sideImg: require('@/assets/images/pages/register-shared-goals.svg'),
       required,

@@ -25,15 +25,25 @@ export default {
   actions: {
     async [questionTypes.ACTION_SET_QUESTIONS]({ commit }) {
       api
-        .get('https://examapp-backend.herokuapp.com/get-all-questions')
+        .get('http://127.0.0.1:8000/api/questions')
         .then(response => {
           commit(questionTypes.MUTATION_SET_QUESTIONS, response.data)
         })
     },
+    // async [questionTypes.ACTION_ADD_QUESTION]({ commit }, data) {
+    //   api
+    //     .put('http://127.0.0.1:8000/api/questions/add')
+    //     .then(response => {
+    //       commit(questionTypes.MUTATION_ADD_QUESTION, response.data)
+    //     })
+    // },
   },
   mutations: {
-    ADD_QUESTION(state, createquestion) {
-      state.questions.unshift(createquestion)
+    // ADD_QUESTION(state, createquestion) {
+    //   state.questions.unshift(createquestion)
+    // },
+    [questionTypes.MUTATION_ADD_QUESTION]: (state, questions) => {
+      state.questions.unshift(questions)
     },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions

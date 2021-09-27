@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Modules
+import questionnaire from '@/store/module/questionnaire'
 import auth from '@/store/module/auth'
 import questions from '@/store/module/questions'
 import users from '@/store/module/users'
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     questions,
     users,
     auth,
+    questionnaire,
   },
   strict: process.env.DEV,
 })
