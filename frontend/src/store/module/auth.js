@@ -22,6 +22,7 @@ const actions = {
     const response = await axios.post('/adminlogin', User)
     commit('setUser', response.data.user)
     commit('setToken', response.data.token)
+    sessionStorage.setItem('setToken', response.data.token)
     return response
   },
   async LogOut({ commit }) {
@@ -47,7 +48,7 @@ const mutations = {
 const state = {
   user: null,
   posts: null,
-  token: null,
+  token: sessionStorage.token ? sessionStorage.getItem('token') : null,
 }
 
 export default {

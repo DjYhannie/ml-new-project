@@ -1,3 +1,4 @@
+import auth from '@/store/module/auth'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -11,7 +12,7 @@ const router = new VueRouter({
   },
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: () => import('@/views/Home.vue'),
       meta: {
@@ -22,6 +23,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
@@ -36,6 +38,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
@@ -50,6 +53,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
@@ -64,6 +68,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
@@ -78,6 +83,7 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
@@ -86,14 +92,16 @@ const router = new VueRouter({
       component: () => import('@/views/Sample.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: true,
       },
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: false,
       },
     },
     {
@@ -102,6 +110,7 @@ const router = new VueRouter({
       component: () => import('@/views/Registration.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: false,
       },
     },
     {
@@ -110,6 +119,7 @@ const router = new VueRouter({
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: false,
       },
     },
     {
@@ -127,6 +137,27 @@ router.afterEach(() => {
   if (appLoading) {
     appLoading.style.display = 'none'
   }
+})
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    next()
+  }, 1000)
+  const token = auth.getters.StateToken
+  // if (to.matched.some(route => route.meta.requiresAuth)) {
+  if (to.matched[0].meta.requiresAuth) {
+    if (auth.currentUser) {
+      console.log(this.currentUser)
+      if (token) {
+        console.log(token)
+      } else {
+        // console.log(this.requiresAuth)
+        next()
+      }
+    } else {
+      next({ name: 'login' })
+    }
+  }
+  next()
 })
 
 export default router
