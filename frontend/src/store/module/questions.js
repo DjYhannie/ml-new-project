@@ -35,8 +35,8 @@ export default {
       commit(questionTypes.MUTATION_SET_QUESTIONS, res.data)
     },
     async [questionTypes.ACTION_ADD_QUESTION]({ commit }, questions) {
-      const res = await api.post('/questions/add/1', { questions })
-      console.log(res, questions)
+      const res = await api.post('/questions/add', { questions })
+      console.log('SUCCESSFUL', res)
       commit(questionTypes.MUTATION_ADD_QUESTION, res.data, questions)
     },
     async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {

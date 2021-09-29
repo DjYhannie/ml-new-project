@@ -20,7 +20,7 @@ class AdminQuestionsController extends Controller
    public function addQuestion(Request $request)
    {
 
-    $user = Auth::user();
+    // $user = Auth::user();
 
     try{
 

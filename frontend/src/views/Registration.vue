@@ -52,7 +52,7 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent
+              @submit.prevent= 'validationForm'
             >
 
               <!-- name -->
@@ -67,7 +67,7 @@
                 >
                   <b-form-input
                     id="name"
-                    v-model="register.name"
+                    v-model="register.username"
                     :state="errors.length > 0 ? false:null"
                     name="name"
                     placeholder="Full Name"
@@ -174,7 +174,6 @@
                 type="submit"
                 variant="danger"
                 block
-                @click="validationForm"
               >
                 Register
               </b-button>
@@ -239,7 +238,7 @@ export default {
     return {
       register: {
         status: '',
-        name: '',
+        username: '',
         password: '',
         email: '',
         password_confirmation: '',
@@ -264,12 +263,11 @@ export default {
   },
   methods: {
     validationForm() {
-      console.log(this.register)
+      console.log('VUE COMPONENT', this.register)
       this.$refs.registerValidation.validate().then(async success => {
         if (success) {
           const register = await this.$store.dispatch('Register', this.register)
           console.log(register)
-          this.$router.push({ name: 'login' })
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -278,6 +276,9 @@ export default {
               variant: 'success',
             },
           })
+          setTimeout(() => {
+            this.$router.push({ name: 'login' })
+          }, 2000)
         }
       })
     },

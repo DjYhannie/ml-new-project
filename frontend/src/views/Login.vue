@@ -112,9 +112,9 @@
               >
                 Sign in
               </b-button>
+              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
-
           <b-card-text class="text-center mt-2">
             <span>Don't have an account yet? </span>
             <b-link :to="{ name: 'registration' }">
@@ -215,6 +215,7 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      isError: false,
       status: '',
       data: {
         password: '',
@@ -253,21 +254,22 @@ export default {
         if (success) {
           const login = await this.$store.dispatch('LogIn', this.data)
           console.log(login)
-          this.$router.push({ name: 'home' })
-          // console.log(this.userData)
-          // this.$store.dispatch(this.postUser, this.userData).then(res => {
-          //   console.log(res);
-          // })
-
-          // this.$toast({
-          //   component: ToastificationContent,
-          //   props: {
-          //     title: 'Form Submitted',
-          //     icon: 'EditIcon',
-          //     variant: 'success',
-          //   },
-          // })   
+          if (this.$store.getters['StateToken']) {
+            console.log('Token', this.$store.getters['StateToken'])
+            setTimeout(() => {
+              this.$router.push({ name: 'home' })
+            },1500)
+              this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Form Submitted',
+                icon: 'EditIcon',
+                variant: 'success',
+              },
+            })     
+          }
         }else {
+          this.isError = true,
           this.$toast({
             component: ToastificationContent,
             props: {

@@ -145,17 +145,17 @@ router.beforeEach((to, from, next) => {
   const token = auth.getters.StateToken
   // if (to.matched.some(route => route.meta.requiresAuth)) {
   if (to.matched[0].meta.requiresAuth) {
-    if (auth.currentUser) {
-      console.log(this.currentUser)
-      if (token) {
-        console.log(token)
-      } else {
-        // console.log(this.requiresAuth)
-        next()
-      }
+    // if (auth.currentUser) {
+    // console.log(this.currentUser)
+    if (token) {
+      console.log(token)
     } else {
+      // console.log(this.requiresAuth)
       next({ name: 'login' })
     }
+    // } else {
+    // next({ name: 'login' })
+    // }
   }
   next()
 })

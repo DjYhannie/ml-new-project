@@ -20,7 +20,7 @@
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
         <b-button-group class="buttons">
-          <b-dropdown v-modal="">
+          <b-dropdown v-model="questionDescription.category">
             <b-dropdown-item>Easy</b-dropdown-item>
             <b-dropdown-item>Intermediate</b-dropdown-item>
             <b-dropdown-item>Hard</b-dropdown-item>
@@ -246,6 +246,7 @@ export default {
       questionDescription:
         {
           course: '',
+          category: '',
           question: '',
           answer: '',
           choices: [
@@ -315,13 +316,11 @@ export default {
   methods: {
     ...mapActions({
       getQuestions: questionTypes.ACTION_SET_QUESTIONS,
-      postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      // postQuestion: questionTypes.ACTION_ADD_QUESTION,
     }),
     submitQuestion() {
-      // this.postQuestion(this.questionDescription)
-      console.log(this.questionDescription)
-      console.log(this.choices)
-      // this.questionDescription = ''
+      console.log('logging...')
+      this.$store.dispatch(questionTypes.ACTION_ADD_QUESTION, this.questionDescription)
     },
     deleteButton() {
       console.log('deleted!')
