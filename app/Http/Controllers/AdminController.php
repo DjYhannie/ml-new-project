@@ -29,7 +29,7 @@ class AdminController extends Controller
     ]);
 
     if ($validator ->fails()) {
-        return response()->json(['status_code'=>400, 'message'=>'Bad Request']);
+        return response()->json(['status_code'=>400, 'message'=>$validator -> errors()]);
 
     }else
     {

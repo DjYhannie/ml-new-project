@@ -1,3 +1,4 @@
+import auth from '@/store/module/auth'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -11,7 +12,7 @@ const router = new VueRouter({
   },
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: () => import('@/views/Home.vue'),
       meta: {
@@ -22,28 +23,94 @@ const router = new VueRouter({
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: '/questions',
+      name: 'questions',
+      component: () => import('@/views/Questions.vue'),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: 'Questions',
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: 'Questions',
             active: true,
           },
         ],
+        requiresAuth: true,
       },
     },
     {
-      path: '/login',
+      path: '/examinees',
+      name: 'examinees',
+      component: () => import('@/views/Examinees.vue'),
+      meta: {
+        pageTitle: 'Examinees',
+        breadcrumb: [
+          {
+            text: 'Examinees',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/questionnaire',
+      name: 'questionnaire',
+      component: () => import('@/views/Questionnaire.vue'),
+      meta: {
+        pageTitle: 'Questionnaire',
+        breadcrumb: [
+          {
+            text: 'Questionnaire',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/update-profile',
+      name: 'update-profile',
+      component: () => import('@/views/UpdateProfile.vue'),
+      meta: {
+        pageTitle: 'UpdateProfile',
+        breadcrumb: [
+          {
+            text: 'UpdateProfile',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/sample',
+      name: 'sample',
+      component: () => import('@/views/Sample.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/',
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: false,
+      },
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('@/views/Registration.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: false,
       },
     },
     {
@@ -52,6 +119,7 @@ const router = new VueRouter({
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
+        requiresAuth: false,
       },
     },
     {
@@ -70,5 +138,37 @@ router.afterEach(() => {
     appLoading.style.display = 'none'
   }
 })
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    next()
+  }, 1000)
+  const token = auth.getters.StateToken
+  // if (to.matched.some(route => route.meta.requiresAuth)) {
+  if (to.matched[0].meta.requiresAuth) {
+    // if (auth.currentUser) {
+    // console.log(this.currentUser)
+    if (token) {
+      console.log(token)
+    } else {
+      // console.log(this.requiresAuth)
+      next({ name: 'login' })
+    }
+    // } else {
+    // next({ name: 'login' })
+    // }
+  }
+  next()
+})
+// router.beforeEach((to, from, next) => {
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ['/', '/register']
+//   const authRequired = !publicPages.includes(to.path)
+//   const loggedIn = sessionStorage.getItem('setUser')
+
+//   if (authRequired && !loggedIn) {
+//     return next('/')
+//   }
+//   next()
+// })
 
 export default router
