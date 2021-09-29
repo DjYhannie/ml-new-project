@@ -17,15 +17,12 @@ class RegistrationController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required',
-            'department' => 'required|string',
         ]);
 
         $user = User::create([
             'name' => $validator['name'],
             'email' => $validator['email'],
             'password' => Hash::make($validator['password']),
-            'department' => $validator['department']
         ]);
 
         $user->save();
@@ -75,7 +72,7 @@ class RegistrationController extends Controller
     }
 
 
-   
+
 
 
 
