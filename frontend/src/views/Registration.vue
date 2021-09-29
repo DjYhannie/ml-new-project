@@ -52,7 +52,11 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
+<<<<<<< HEAD
               @submit.prevent="validationForm"
+=======
+              @submit.prevent= 'validationForm'
+>>>>>>> 4a36481412b8337379d889b4d6592b551d1485fb
             >
 
               <!-- name -->
@@ -67,7 +71,7 @@
                 >
                   <b-form-input
                     id="name"
-                    v-model="register.name"
+                    v-model="register.username"
                     :state="errors.length > 0 ? false:null"
                     name="name"
                     placeholder="Full Name"
@@ -239,7 +243,7 @@ export default {
     return {
       register: {
         status: '',
-        name: '',
+        username: '',
         password: '',
         email: '',
         password_confirmation: '',
@@ -264,27 +268,23 @@ export default {
   },
   methods: {
     validationForm() {
-      console.log(this.register)
+      console.log('VUE COMPONENT', this.register)
       this.$refs.registerValidation.validate().then(async success => {
         console.log(success)
         if (success) {
-          console.log(success)
-          const register = axios.post('/register', this.register).then(res => {
-            console.log(res)
-            this.$router.push({ name: '/' })
-          })
+          const register = await this.$store.dispatch('Register', this.register)
           console.log(register)
-          // const register = await this.$store.dispatch('Register', this.register)
-          // console.log(register)
-          // this.$router.push({ name: 'login' })
-          // this.$toast({
-          //   component: ToastificationContent,
-          //   props: {
-          //     title: 'Form Submitted',
-          //     icon: 'EditIcon',
-          //     variant: 'success',
-          //   },
-          // })
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Form Submitted',
+              icon: 'EditIcon',
+              variant: 'success',
+            },
+          })
+          setTimeout(() => {
+            this.$router.push({ name: 'login' })
+          }, 2000)
         }
       })
     },

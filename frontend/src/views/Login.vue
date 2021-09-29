@@ -21,7 +21,7 @@
 
       <!-- Login-->
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
-        <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
+         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title title-tag="h2" class="font-weight-bold mb-1">
             Welcome to MLhuillier Evaluation Test! 👋
           </b-card-title>
@@ -112,9 +112,9 @@
               >
                 Sign in
               </b-button>
+              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
-
           <b-card-text class="text-center mt-2">
             <span>Don't have an account yet? </span>
             <b-link :to="{ name: 'registration' }">
@@ -215,6 +215,7 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      isError: false,
       status: '',
       data: {
         password: '',
@@ -252,22 +253,23 @@ export default {
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('LogIn', this.data)
-          console.log(login.data)
-          this.$router.push({ name: 'home' })
-          // console.log(this.userData)
-          // this.$store.dispatch(this.postUser, this.userData).then(res => {
-          //   console.log(res);
-          // })
-
-          // this.$toast({
-          //   component: ToastificationContent,
-          //   props: {
-          //     title: 'Form Submitted',
-          //     icon: 'EditIcon',
-          //     variant: 'success',
-          //   },
-          // })   
+          console.log(login)
+          if (this.$store.getters['StateToken']) {
+            console.log('Token', this.$store.getters['StateToken'])
+            setTimeout(() => {
+              this.$router.push({ name: 'home' })
+            },1500)
+              this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Form Submitted',
+                icon: 'EditIcon',
+                variant: 'success',
+              },
+            })     
+          }
         }else {
+          this.isError = true,
           this.$toast({
             component: ToastificationContent,
             props: {

@@ -7,33 +7,59 @@ const getters = {
   StateToken: state => state.token,
 }
 const actions = {
-  // async Register(form) {
-  //   // const UserForm = new FormData()
-  //   console.log(form)
-  //   const response = await axios.post('/register', form)
-  //   console.log(response)
-  //   // console.log(form)
-  //   // UserForm.append('name', form.name)
-  //   // UserForm.append('email', form.email)
-  //   // UserForm.append('password', form.password)
-  //   // UserForm.append('password_confirmation', form.password_confirmation)
-  //   // await dispatch('LogIn', UserForm)
-  //   return response
+  // async Register({ commit, dispatch }, form) {
+  //   // const response =
+  //   await axios.post('/register', form)
+  //   console.log('AUTH.JS', await form)
+  //   commit('setUser', form)
+  //   await dispatch('LogIn', form)
   // },
-  async LogIn({ commit }, User) {
-    // const response = await axios.post('/adminlogin', User)
-    const response = await axios.post('/login', User)
-    commit('setUser', response.data.user)
-    commit('setToken', response.data.token)
-    sessionStorage.setItem('setToken', response.data.token)
-    return response
+  // FOR DEMO
+  async Register({ commit, dispatch }, form) {
+    // const response =
+    const response = await axios.post('/register', form)
+    console.log('REGISTRATION RESPONSE', response)
+    console.log('AUTH.JS', await form)
+    commit('setUser', form)
+    if (response.data.user.role === 'admin') {
+      await dispatch('LogIn', form)
+    } else {
+      await dispatch('UserLogin', form)
+    }
   },
-  async UserLogIn({ commit }, User) {
+  // ADMIN USER
+  // async LogIn({ commit }, User) {
+  //   console.log('Calling Admin...')
+  //   const response = await axios.post('/adminlogin', User)
+  //   console.log('ADMIN RESPONSE', response)
+  //   console.log('ADMIN USER', User)
+  //   commit('setUser', response.data)
+  //   commit('setToken', response.data.token)
+  //   sessionStorage.setItem('setToken', response.data.token)
+  // },
+  // FOR DEMO
+  // async LogIn({ commit, dispatch }, User) {
+  //   console.log('Calling Admin...')
+  //   const response = await axios.post('/adminlogin', User)
+  //   console.log('ADMIN RESPONSE', response)
+  //   // if (response.data.user.role === 'admin') {
+  //   //   console.log('ADMIN', User)
+  //   //   commit('setUser', response.data)
+  //   //   commit('setToken', response.data.token)
+  //   //   sessionStorage.setItem('setToken', response.data.token)
+  //   // } else {
+  //   //   await dispatch('UserLogin', User)
+  //   // }
+  // },
+  // NORMAL USER
+  async UserLogin({ commit }, User) {
+    console.log('Calling Normal User...')
     const response = await axios.post('/login', User)
-    commit('setUser', response.data.user)
+    console.log('USER RESPONSE', response)
+    console.log('USER', User)
+    commit('setUser', response.data)
     commit('setToken', response.data.token)
     sessionStorage.setItem('setToken', response.data.token)
-    return response
   },
   async LogOut({ commit }) {
     const user = null

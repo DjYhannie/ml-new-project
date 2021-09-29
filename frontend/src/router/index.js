@@ -151,7 +151,7 @@ router.beforeEach((to, from, next) => {
       console.log(token)
     } else {
       // console.log(this.requiresAuth)
-      next()
+      next({ name: 'login' })
     }
     // } else {
     // next({ name: 'login' })
