@@ -15,17 +15,29 @@ const actions = {
   //   await dispatch('LogIn', form)
   // },
   // FOR DEMO
-  async Register({ commit, dispatch }, form) {
+  // async Register({ commit, dispatch }, form) {
+  //   // const response =
+  //   const response = await axios.post('/register', form)
+  //   console.log('REGISTRATION RESPONSE', response)
+  //   console.log('AUTH.JS', await form)
+  //   commit('setUser', form)
+  //   if (response.data.user.role === 'admin') {
+  //     await dispatch('LogIn', form)
+  //   } else {
+  //     await dispatch('UserLogin', form)
+  //   }
+  // },
+  // FOR DEMO PART 2
+  async Register({ commit }, form) {
     // const response =
     const response = await axios.post('/register', form)
     console.log('REGISTRATION RESPONSE', response)
     console.log('AUTH.JS', await form)
     commit('setUser', form)
-    if (response.data.user.role === 'admin') {
-      await dispatch('LogIn', form)
-    } else {
-      await dispatch('UserLogin', form)
+    if (response.data.user.role === 'user') {
+      this.$router.push({ name: 'login' })
     }
+    this.$router.push({ name: 'registration' })
   },
   // ADMIN USER
   // async LogIn({ commit }, User) {

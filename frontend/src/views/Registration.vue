@@ -276,9 +276,9 @@ export default {
               variant: 'success',
             },
           })
-          setTimeout(() => {
-            this.$router.push({ name: 'login' })
-          }, 2000)
+          // setTimeout(() => {
+          //   this.$router.push({ name: 'login' })
+          // }, 2000)
         }
       })
     },
