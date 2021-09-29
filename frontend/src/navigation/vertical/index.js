@@ -5,8 +5,18 @@ export default [
     icon: 'HomeIcon',
   },
   {
-    title: 'Second Page',
-    route: 'second-page',
-    icon: 'FileIcon',
+    title: 'Examinees',
+    route: 'examinees',
+    icon: 'UsersIcon',
+  },
+  {
+    title: 'Questions',
+    route: 'questions',
+    icon: 'FileTextIcon',
+  },
+  {
+    title: 'Questionnaire',
+    route: 'questionnaire',
+    icon: 'FileMinusIcon',
   },
 ]

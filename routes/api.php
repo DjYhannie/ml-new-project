@@ -30,10 +30,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
 Route::post('/register',[RegistrationController::class,'register']);
 Route::post('/login',[RegistrationController::class,'login']);
+Route::post('/logout', [RegistrationController::class, 'logout']);
 
-
-
-
+//for testing
+Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/send-email',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
 
     //Questions Related
-    Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
+    // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
     Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
     Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
     Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
@@ -77,8 +77,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
 
 
-
-    Route::post('/logout', [RegistrationController::class, 'logout']);
 });
 
 
