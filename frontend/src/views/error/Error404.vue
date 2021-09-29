@@ -20,9 +20,9 @@
         <b-button
           variant="danger"
           class="mb-2 btn-sm-block"
-          :to="{path:'login'}"
+          :to="{path:'/'}"
         >
-          Back to home
+          Back to Login
         </b-button>
 
         <!-- image -->

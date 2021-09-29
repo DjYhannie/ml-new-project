@@ -18,36 +18,45 @@ export default {
   },
   getters: {
     [questionTypes.GETTER_QUESTION]: state => state.questions,
-    getQuestions(state) {
-      return state.questions
-    },
+    // getQuestions(state) {
+    //   return state.questions
+    // },
   },
   actions: {
+    // async [questionTypes.ACTION_SET_QUESTIONS]({ commit }) {
+    //   api
+    //     .get('http://127.0.0.1:8000/api/questions')
+    //     .then(response => {
+    //       commit(questionTypes.MUTATION_SET_QUESTIONS, response.data)
+    //     })
+    // },
     async [questionTypes.ACTION_SET_QUESTIONS]({ commit }) {
-      api
-        .get('/questions')
-        .then(response => {
-          commit(questionTypes.MUTATION_SET_QUESTIONS, response.data)
-        })
+      const res = await api.get('/questions')
+      commit(questionTypes.MUTATION_SET_QUESTIONS, res.data)
     },
-    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, question) {
-      api
-        .post('/add', question)
-        .then(response => {
-          console.log(question)
-          commit(questionTypes.MUTATION_ADD_QUESTION, response.data)
-        })
+    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, questions) {
+      const res = await api.post('/questions/add/1', { questions })
+      console.log(res, questions)
+      commit(questionTypes.MUTATION_ADD_QUESTION, res.data, questions)
     },
+    async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+      await api.delete(`/delete/${id}`)
+      commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    },
+
   },
   mutations: {
     // ADD_QUESTION(state, createquestion) {
     //   state.questions.unshift(createquestion)
     // },
-    [questionTypes.MUTATION_ADD_QUESTION]: (state, questions) => {
-      state.questions.unshift(questions)
-    },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions
     },
+    [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
+      state.questions.unshift(question)
+    },
+    // [questionTypes.MUTATION_DELETE_QUESTION](state,  id) {
+    //   state.questionses = state.questions.filter
+    // }
   },
 }
