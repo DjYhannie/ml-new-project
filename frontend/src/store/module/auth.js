@@ -7,19 +7,29 @@ const getters = {
   StateToken: state => state.token,
 }
 const actions = {
-  async Register(form) {
-    // const UserForm = new FormData()
-    const response = await axios.post('/register', form)
-    console.log(response)
-    console.log(form)
-    // UserForm.append('username', form.name)
-    // UserForm.append('password', form.email)
-    // UserForm.append('password', form.password)
-    // UserForm.append('password', form.password_confirmation)
-    // await dispatch('LogIn', UserForm)
-  },
+  // async Register(form) {
+  //   // const UserForm = new FormData()
+  //   console.log(form)
+  //   const response = await axios.post('/register', form)
+  //   console.log(response)
+  //   // console.log(form)
+  //   // UserForm.append('name', form.name)
+  //   // UserForm.append('email', form.email)
+  //   // UserForm.append('password', form.password)
+  //   // UserForm.append('password_confirmation', form.password_confirmation)
+  //   // await dispatch('LogIn', UserForm)
+  //   return response
+  // },
   async LogIn({ commit }, User) {
-    const response = await axios.post('/adminlogin', User)
+    // const response = await axios.post('/adminlogin', User)
+    const response = await axios.post('/login', User)
+    commit('setUser', response.data.user)
+    commit('setToken', response.data.token)
+    sessionStorage.setItem('setToken', response.data.token)
+    return response
+  },
+  async UserLogIn({ commit }, User) {
+    const response = await axios.post('/login', User)
     commit('setUser', response.data.user)
     commit('setToken', response.data.token)
     sessionStorage.setItem('setToken', response.data.token)
@@ -27,7 +37,7 @@ const actions = {
   },
   async LogOut({ commit }) {
     const user = null
-    commit('logout', user)
+    commit('/logout', user)
   },
 }
 const mutations = {

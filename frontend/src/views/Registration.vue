@@ -52,7 +52,7 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent
+              @submit.prevent="validationForm"
             >
 
               <!-- name -->
@@ -174,9 +174,8 @@
                 type="submit"
                 variant="danger"
                 block
-                @click="validationForm"
               >
-                Register
+              Register
               </b-button>
             </b-form>
           </validation-observer>
@@ -205,7 +204,8 @@ import {
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import axios from '../libs/axios'
+// import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 // import { mapActions } from 'vuex'
 
 extend('confirmPassword', {
@@ -266,18 +266,25 @@ export default {
     validationForm() {
       console.log(this.register)
       this.$refs.registerValidation.validate().then(async success => {
+        console.log(success)
         if (success) {
-          const register = await this.$store.dispatch('Register', this.register)
-          console.log(register)
-          this.$router.push({ name: 'login' })
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Form Submitted',
-              icon: 'EditIcon',
-              variant: 'success',
-            },
+          console.log(success)
+          const register = axios.post('/register', this.register).then(res => {
+            console.log(res)
+            this.$router.push({ name: '/' })
           })
+          console.log(register)
+          // const register = await this.$store.dispatch('Register', this.register)
+          // console.log(register)
+          // this.$router.push({ name: 'login' })
+          // this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: 'Form Submitted',
+          //     icon: 'EditIcon',
+          //     variant: 'success',
+          //   },
+          // })
         }
       })
     },

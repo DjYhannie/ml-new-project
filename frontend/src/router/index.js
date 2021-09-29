@@ -145,19 +145,30 @@ router.beforeEach((to, from, next) => {
   const token = auth.getters.StateToken
   // if (to.matched.some(route => route.meta.requiresAuth)) {
   if (to.matched[0].meta.requiresAuth) {
-    if (auth.currentUser) {
-      console.log(this.currentUser)
-      if (token) {
-        console.log(token)
-      } else {
-        // console.log(this.requiresAuth)
-        next()
-      }
+    // if (auth.currentUser) {
+    // console.log(this.currentUser)
+    if (token) {
+      console.log(token)
     } else {
-      next({ name: 'login' })
+      // console.log(this.requiresAuth)
+      next()
     }
+    // } else {
+    // next({ name: 'login' })
+    // }
   }
   next()
 })
+// router.beforeEach((to, from, next) => {
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ['/', '/register']
+//   const authRequired = !publicPages.includes(to.path)
+//   const loggedIn = sessionStorage.getItem('setUser')
+
+//   if (authRequired && !loggedIn) {
+//     return next('/')
+//   }
+//   next()
+// })
 
 export default router

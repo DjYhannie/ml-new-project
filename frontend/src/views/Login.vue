@@ -252,7 +252,7 @@ export default {
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('LogIn', this.data)
-          console.log(login)
+          console.log(login.data)
           this.$router.push({ name: 'home' })
           // console.log(this.userData)
           // this.$store.dispatch(this.postUser, this.userData).then(res => {

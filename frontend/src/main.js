@@ -5,7 +5,7 @@ import VueCompositionAPI from '@vue/composition-api'
 import axios from 'axios'
 
 import router from './router'
-import store from './store'
+import store from './store/index'
 import App from './App.vue'
 
 // Global Components
