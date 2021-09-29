@@ -159,5 +159,16 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+// router.beforeEach((to, from, next) => {
+//   // redirect to login page if not logged in and trying to access a restricted page
+//   const publicPages = ['/', '/register']
+//   const authRequired = !publicPages.includes(to.path)
+//   const loggedIn = sessionStorage.getItem('setUser')
+
+//   if (authRequired && !loggedIn) {
+//     return next('/')
+//   }
+//   next()
+// })
 
 export default router
