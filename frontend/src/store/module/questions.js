@@ -25,18 +25,19 @@ export default {
   actions: {
     async [questionTypes.ACTION_SET_QUESTIONS]({ commit }) {
       api
-        .get('http://127.0.0.1:8000/api/questions')
+        .get('/questions')
         .then(response => {
           commit(questionTypes.MUTATION_SET_QUESTIONS, response.data)
         })
     },
-    // async [questionTypes.ACTION_ADD_QUESTION]({ commit }, data) {
-    //   api
-    //     .put('http://127.0.0.1:8000/api/questions/add')
-    //     .then(response => {
-    //       commit(questionTypes.MUTATION_ADD_QUESTION, response.data)
-    //     })
-    // },
+    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, question) {
+      api
+        .post('/add', question)
+        .then(response => {
+          console.log(question)
+          commit(questionTypes.MUTATION_ADD_QUESTION, response.data)
+        })
+    },
   },
   mutations: {
     // ADD_QUESTION(state, createquestion) {

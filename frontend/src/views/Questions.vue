@@ -20,7 +20,7 @@
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
         <b-button-group class="buttons">
-          <b-dropdown>
+          <b-dropdown v-modal="">
             <b-dropdown-item>Easy</b-dropdown-item>
             <b-dropdown-item>Intermediate</b-dropdown-item>
             <b-dropdown-item>Hard</b-dropdown-item>
@@ -39,7 +39,7 @@
             placeholder="Course Name"
             aria-describedby="basic-addon1"> -->
         </div>
-        <b-form @submit.prevent="submit">
+        <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
               <b-form-textarea
@@ -60,7 +60,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choiceA"
+                v-model="questionDescription.choices.choiceA"
                 type="text"
                 class="form-control"
                 placeholder="A."
@@ -69,7 +69,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choiceB"
+                v-model="questionDescription.choices.choiceB"
                 type="text"
                 class="form-control"
                 placeholder="B."
@@ -78,7 +78,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choiceC"
+                v-model="questionDescription.choices.choiceC"
                 type="text"
                 class="form-control"
                 placeholder="C."
@@ -87,7 +87,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choiceD"
+                v-model="questionDescription.choices.choiceD"
                 type="text"
                 class="form-control"
                 placeholder="D."
@@ -96,7 +96,7 @@
             </div>
             <b-button
               variant="primary"
-              @click="submit"
+              type="submit"
             >
               Add
             </b-button>
@@ -106,7 +106,7 @@
       <!-- Add Course  -->
       <b-modal v-model="isShow">
         <h3>Create Course</h3>
-        <b-form @submit.prevent="submit">
+        <b-form @submit.prevent="submitCourse">
           <b-form-group name="create-question">
             <div class="input-group mb-1">
               <input
@@ -119,7 +119,7 @@
             </div>
             <b-button
               variant="primary"
-              @click="submit"
+              type="submit"
             >
               Add
             </b-button>
@@ -181,7 +181,7 @@
             >
               <b-form-textarea
                 id="textarea"
-                v-model="question.createquestion"
+                v-model="question.questionDescription"
                 placeholder="Edit report..."
                 rows="3"
                 max-rows="0"
@@ -195,7 +195,7 @@
               </b-button>
               <b-button
                 variant="primary"
-                @click="update(question.id, question.createquestion)"
+                @click="update(question.id, question.questionDescription)"
               >
                 Update Question
               </b-button>
@@ -248,12 +248,15 @@ export default {
           course: '',
           question: '',
           answer: '',
-          choiceA: '',
-          choiceB: '',
-          choiceC: '',
-          choiceD: '',
+          choices: [
+            {
+              choiceA: '',
+              choiceB: '',
+              choiceC: '',
+              choiceD: '',
+            },
+          ],
         },
-      createquestion: '',
       // questions: [
       //   {
       //     course: 'Course1',
@@ -293,11 +296,11 @@ export default {
       //   },
       // ],
       options: [
-        { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
+        { value: null, text: 'Select Course', disabled: true },
+        { value: 'a', text: 'Course 1' },
+        { value: 'b', text: 'Course 2' },
+        { value: { C: '3PO' }, text: 'Course 3' },
+        { value: 'd', text: 'Course 4' },
       ],
       selected: '',
     }
@@ -314,10 +317,11 @@ export default {
       getQuestions: questionTypes.ACTION_SET_QUESTIONS,
       postQuestion: questionTypes.ACTION_ADD_QUESTION,
     }),
-    submit() {
-      this.postQuestion(this.createquestion)
-      console.log(this.createquestion)
-      this.createquestion = ''
+    submitQuestion() {
+      // this.postQuestion(this.questionDescription)
+      console.log(this.questionDescription)
+      console.log(this.choices)
+      // this.questionDescription = ''
     },
     deleteButton() {
       console.log('deleted!')
