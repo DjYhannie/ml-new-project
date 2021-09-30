@@ -30,7 +30,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
 Route::post('/register',[RegistrationController::class,'register']);
 Route::post('/login',[RegistrationController::class,'login']);
-Route::post('/logout', [RegistrationController::class, 'logout']);
+
 
 //for testing
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
@@ -75,6 +75,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
     Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
+
+    Route::post('/logout', [RegistrationController::class, 'logout']);
 
 
 });

@@ -13,9 +13,9 @@ const axiosIns = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: false,
-  headers: {
-    'Content-type': 'application/json',
-  },
+  // headers: {
+  //   'Content-type': 'application/json',
+  // },
 })
 
 Vue.prototype.$http = axiosIns

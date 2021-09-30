@@ -34,15 +34,15 @@ export default {
       const res = await api.get('/questions')
       commit(questionTypes.MUTATION_SET_QUESTIONS, res.data)
     },
-    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, questions) {
-      const res = await api.post('/questions/add', { questions })
+    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, question) {
+      const res = await api.post('/questions/add', { question })
       console.log('SUCCESSFUL', res)
-      commit(questionTypes.MUTATION_ADD_QUESTION, res.data, questions)
+      commit(questionTypes.MUTATION_ADD_QUESTION, res.data, question)
     },
-    async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-      await api.delete(`/delete/${id}`)
-      commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    },
+    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+    //   await api.delete(`/delete/${id}`)
+    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    // },
 
   },
   mutations: {
@@ -53,7 +53,8 @@ export default {
       state.questions = questions
     },
     [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
-      state.questions.unshift(question)
+      // state.questions.unshift(question)
+      state.questions.push(question)
     },
     // [questionTypes.MUTATION_DELETE_QUESTION](state,  id) {
     //   state.questionses = state.questions.filter

@@ -34,21 +34,20 @@ const actions = {
     console.log('REGISTRATION RESPONSE', response)
     console.log('AUTH.JS', await form)
     commit('setUser', form)
-    if (response.data.user.role === 'user') {
-      this.$router.push({ name: 'login' })
-    }
-    this.$router.push({ name: 'registration' })
+    // if (response.data.user.role === 'user') {
+    //   this.$router.push({ name: 'login' })
+    // }
   },
   // ADMIN USER
-  // async LogIn({ commit }, User) {
-  //   console.log('Calling Admin...')
-  //   const response = await axios.post('/adminlogin', User)
-  //   console.log('ADMIN RESPONSE', response)
-  //   console.log('ADMIN USER', User)
-  //   commit('setUser', response.data)
-  //   commit('setToken', response.data.token)
-  //   sessionStorage.setItem('setToken', response.data.token)
-  // },
+  async LogIn({ commit }, User) {
+    console.log('Calling Admin...')
+    const response = await axios.post('/adminlogin', User)
+    console.log('ADMIN RESPONSE', response)
+    console.log('ADMIN USER', User)
+    commit('setUser', response.data)
+    commit('setToken', response.data.token)
+    sessionStorage.setItem('setToken', response.data.token)
+  },
   // FOR DEMO
   // async LogIn({ commit, dispatch }, User) {
   //   console.log('Calling Admin...')
@@ -73,10 +72,25 @@ const actions = {
     commit('setToken', response.data.token)
     sessionStorage.setItem('setToken', response.data.token)
   },
+  // async LogOut({ commit }, User) {
+  //   const response = await axios.post('/logout', User)
+  //   console.log('RESPONSE_', response)
+  //   window.sessionstorage.clear()
+  //   const user = null
+  //   commit('logout', user)
+  // },
   async LogOut({ commit }) {
-    const user = null
-    commit('/logout', user)
+    const token = null
+    commit('logOut', token)
+    console.log('TOKEN_', token)
   },
+
+  // async logOut({ commit }, state) {
+  //   state.token = null
+  //   state.isLoggedIn = false
+  //   sessionStorage.setItem('token', null)
+  //   commit('/logout', null)
+  // },
 }
 const mutations = {
   setUser(state, username) {
@@ -89,13 +103,17 @@ const mutations = {
     state.token = token
   },
   LogOut(state) {
-    state.user = {}
+    state.user = null
     state.posts = null
+    state.token = null
+    // sessionStorage.clear()
+    window.sessionStorage.clear()
   },
 }
 const state = {
   user: null,
   posts: null,
+  // token: sessionStorage.token ? sessionStorage.getItem('token') : null,
   token: sessionStorage.token ? sessionStorage.getItem('token') : null,
 }
 
