@@ -19,17 +19,22 @@
 
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
-        <b-button-group class="buttons">
+        <h3>Create Question</h3>
+        <!-- <b-button-group class="buttons">
           <b-dropdown v-model="questionDescription.category">
             <b-dropdown-item>Easy</b-dropdown-item>
             <b-dropdown-item>Intermediate</b-dropdown-item>
             <b-dropdown-item>Hard</b-dropdown-item>
           </b-dropdown>
-        </b-button-group>
-        <h3>Create Question</h3>
+        </b-button-group> -->
+        <b-form-select
+            v-model="questionDescription.category"
+            :options="optionsCategories"
+          />
+          <br><br>
         <div class="input-group mb-1">
           <b-form-select
-            v-model="selected"
+            v-model="questionDescription.course"
             :options="options"
           />
           <!-- <input
@@ -131,11 +136,13 @@
 
     <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
+    <div>{{questions.questions.data}}</div>
     <div
-      v-for="question in questions"
+      v-for="question in questions.questions.data"
       :key="question.id"
       class="question-content"
     >
+    <div>CHOICES : {{question.choices['choiceA']}}</div>
       <b-card name="questions">
         <b-button-group class="buttons">
           <b-dropdown>
@@ -166,10 +173,10 @@
               <p>Course Name: {{ question.course }}</p>
               <p>Question: {{ question.question }}</p>
               <p>Answer: {{ question.answer }}</p>
-              <p>A. {{ question.choiceA }}</p>
-              <p>B. {{ question.choiceB }}</p>
-              <p>C. {{ question.choiceC }}</p>
-              <p>D. {{ question.choiceD }}</p>
+              <p>A. {{ question.choices.choiceA }}</p>
+              <p>B. {{ question.choices.choiceB }}</p>
+              <p>C. {{ question.choices.choiceC }}</p>
+              <p>D. {{ question.choices.choiceD }}</p>
             </b-card>
           </b-collapse>
         </div>
@@ -222,7 +229,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions, mapState } from 'vuex'
-import * as questionTypes from '../store/types/questions'
+// import * as questionTypes from '../store/types/questions'
 
 export default {
   components: {
@@ -245,82 +252,65 @@ export default {
       isShow: false,
       questionDescription:
         {
-          course: '',
-          category: '',
+          course: null,
+          category: null,
           question: '',
           answer: '',
-          choices: [
-            {
-              choiceA: '',
-              choiceB: '',
-              choiceC: '',
-              choiceD: '',
-            },
-          ],
+          choices: {
+            choiceA: '',
+            choiceB: '',
+            choiceC: '',
+            choiceD: '',
+          },
+          // choices: [
+          //   { choiceA: '' },
+          //   { choiceB: '' },
+          //   { choiceC: '' },
+          //   { choiceD: '' },
+          // ],
+          // choices: [{
+          //   choiceA: '',
+          //   choiceB: '',
+          //   choiceC: '',
+          //   choiceD: '',
+          // }],
         },
-      // questions: [
-      //   {
-      //     course: 'Course1',
-      //     question: 'Question1',
-      //     answer: 'AnswerA',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course2',
-      //     question: 'Question2',
-      //     answer: 'AnswerB',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course4',
-      //     question: 'Question3',
-      //     answer: 'AnswerC',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course5',
-      //     question: 'Question4',
-      //     answer: 'AnswerD',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      // ],
       options: [
         { value: null, text: 'Select Course', disabled: true },
-        { value: 'a', text: 'Course 1' },
-        { value: 'b', text: 'Course 2' },
-        { value: { C: '3PO' }, text: 'Course 3' },
-        { value: 'd', text: 'Course 4' },
+        { value: 'Course 1', text: 'Course 1' },
+        { value: 'Course 2', text: 'Course 2' },
+        { value: 'Course 3', text: 'Course 3' },
+        { value: 'Course 4', text: 'Course 4' },
       ],
-      selected: '',
+      optionsCategories: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'Easy', text: 'Easy' },
+        { value: 'Average', text: 'Average' },
+        { value: 'Hard', text: 'Hard' },
+      ],
     }
   },
   computed: {
-    ...mapState(['questions']),
+    ...mapState({
+      questions: 'questions',
+    }),
   },
   mounted() {
-    this.getQuestions()
-    console.log(this.questions)
+    this.GET_QUESTIONS()
+    console.log(this.GET_QUESTIONS)
   },
   methods: {
     ...mapActions({
-      getQuestions: questionTypes.ACTION_SET_QUESTIONS,
+      GET_QUESTIONS: 'ACTION_SET_QUESTIONS',
+      // getQuestions: questionTypes.ACTION_SET_QUESTIONS,
       // postQuestion: questionTypes.ACTION_ADD_QUESTION,
     }),
     submitQuestion() {
       console.log('logging...')
-      this.$store.dispatch(questionTypes.ACTION_ADD_QUESTION, this.questionDescription)
+      console.log(this.questionDescription)
+      console.log(this.questionDescription.choices.choiceA)
+      const response = this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
+      console.log(response)
     },
     deleteButton() {
       console.log('deleted!')
