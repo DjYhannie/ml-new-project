@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use function Complex\add;
 
@@ -165,17 +166,16 @@ class QuestionnaireController extends Controller
             $shuffled = $allQuestions->shuffle();
             $shuffled->all();
 
-        //    $url_token = DB::select('select * from url_tokens where questionnaire_id = ? and user_id = ?' , [$questionnaire->id,$user->id]);
-
-
 
             $url_token = DB::select('select * from url_tokens where questionnaire_id = ? and user_id = ?', [$questionnaire->id, $user->id]);
-            // $token = $url_token[0]->token;
-            $token = isset($url_token[0]->token)?$url_token[0]->token:sha1(uniqid(time(),false));
-            dd($token);
-            if (!$url_token[0]) {
 
-                $token = isset($url_token[0]->token)?$url_token[0]->token:sha1(uniqid(time(),false));
+            $token = $url_token? $url_token[0]->token: '';
+
+            if($token){}
+
+            if (!$url_token) {
+
+                $token = sha1(uniqid(time(),true));
                 $token_data = [
                     'token' => $token,
                     'questionnaire_id' => $questionnaire->id,
@@ -184,33 +184,16 @@ class QuestionnaireController extends Controller
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
+
                 DB::table('url_tokens')->insert($token_data);
+
             }
 
             return response()->json([
-                'data' => $allQuestions,
+                'data' => $shuffled,
                 'url_token' => $token
             ]);
 
-
-
-        //    $token = $url_token[0]->token;
-        //    if (!$url_token[0]) {
-        //        $token = sha1(uniqid(time(),false));
-        //        $token_data = [
-        //            'token' => $token,
-        //            'questionnaire_id' => $questionnaire->id,
-        //            'accessed_time' => Carbon::now(),
-        //            'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
-        //            'is_accessed' => true,
-        //        ];
-        //        DB::table('url_tokens')->insert($token_data);
-        //    }
-
-        //     return response()->json([
-        //         'data' => $shuffled,
-        //         'url_token' => $token
-        //     ]);
         }
         catch(\Exception $e){
             return response()->json([

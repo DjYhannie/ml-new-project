@@ -28,6 +28,7 @@ class ExamFormController extends Controller
             DB::table('links')
                 ->insert(['token' =>$token, 'created_at' => Carbon::now()]);
 
+
             return response()->json([
                 'message' => "Link created Successfully",
                 'link' => $token
