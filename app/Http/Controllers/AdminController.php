@@ -25,15 +25,15 @@ class AdminController extends Controller
    {
     $validator = Validator::make($request->all(),[
         'password' => 'required',
-        'username' => 'required'
+        'email' => 'required'
     ]);
 
     if ($validator ->fails()) {
-        return response()->json(['status_code'=>400, 'message'=>'Bad Request']);
+        return response()->json(['status_code'=>400, 'message'=>$validator -> errors()]);
 
     }else
     {
-        $user= Admin::where('username', $request->username)->first();
+        $user= Admin::where('email', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([

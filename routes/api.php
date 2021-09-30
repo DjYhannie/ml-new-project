@@ -32,8 +32,8 @@ Route::post('/register',[RegistrationController::class,'register']);
 Route::post('/login',[RegistrationController::class,'login']);
 
 
-
-
+//for testing
+// Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -74,10 +74,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/users/name',[AdminController::class, 'getUserByName']);
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
-
+    // Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
 
 
     Route::post('/logout', [RegistrationController::class, 'logout']);
+
+
 });
 
 
@@ -85,6 +87,7 @@ Route::get('/test',function(){
     return "test";
 });
 
-Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examecode');
+Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examcode');
+
 Route::post('/import', [AdminQuestionsController::class, 'import'])->name('import');
 

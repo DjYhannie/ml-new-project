@@ -1,47 +1,28 @@
 <template>
   <div class="auth-wrapper auth-v2">
     <b-row class="auth-inner m-0">
-
       <!-- Brand logo-->
       <b-link class="brand-logo">
         <!-- <vuexy-logo /> -->
         <b-img :src="require('@/assets/images/logo/header-logo.png')" />
-        <h2 class="brand-text text-danger ml-1">
-          MLhuillier
-        </h2>
+        <h2 class="brand-text text-danger ml-1">MLhuillier</h2>
       </b-link>
       <!-- /Brand logo-->
 
       <!-- Left Text-->
-      <b-col
-        lg="8"
-        class="d-none d-lg-flex align-items-center p-5"
-      >
-        <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
-          <b-img
-            fluid
-            :src="imgUrl"
-            alt="Login V2"
-          />
+      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
+        <div
+          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
+        >
+          <b-img fluid :src="imgUrl" alt="Login V2" />
         </div>
       </b-col>
       <!-- /Left Text-->
 
       <!-- Login-->
-      <b-col
-        lg="4"
-        class="d-flex align-items-center auth-bg px-2 p-lg-5"
-      >
-        <b-col
-          sm="8"
-          md="6"
-          lg="12"
-          class="px-xl-2 mx-auto"
-        >
-          <b-card-title
-            title-tag="h2"
-            class="font-weight-bold mb-1"
-          >
+      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
+         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
+          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
             Welcome to MLhuillier Evaluation Test! 👋
           </b-card-title>
           <b-card-text class="mb-2">
@@ -50,15 +31,9 @@
 
           <!-- form -->
           <validation-observer ref="loginValidation">
-            <b-form
-              class="auth-login-form mt-2"
-              @submit.prevent
-            >
+            <b-form class="auth-login-form mt-2" @submit.prevent>
               <!-- email -->
-              <b-form-group
-                label="Email"
-                label-for="login-email"
-              >
+              <b-form-group label="Email" label-for="login-email">
                 <validation-provider
                   #default="{ errors }"
                   name="Email"
@@ -66,8 +41,8 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="userEmail"
-                    :state="errors.length > 0 ? false:null"
+                    v-model="data.username"
+                    :state="errors.length > 0 ? false : null"
                     name="login-email"
                     placeholder="name.test@mlhuillier.com"
                   />
@@ -79,7 +54,11 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
+                  <b-link
+                    :to="{
+                      name: 'auth-forgot-password-v2',
+                    }"
+                  >
                     <small>Forgot Password?</small>
                   </b-link>
                 </div>
@@ -90,12 +69,12 @@
                 >
                   <b-input-group
                     class="input-group-merge"
-                    :class="errors.length > 0 ? 'is-invalid':null"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
                   >
                     <b-form-input
                       id="login-password"
-                      v-model="password"
-                      :state="errors.length > 0 ? false:null"
+                      v-model="data.password"
+                      :state="errors.length > 0 ? false : null"
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
@@ -133,12 +112,12 @@
               >
                 Sign in
               </b-button>
+              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
-
           <b-card-text class="text-center mt-2">
             <span>Don't have an account yet? </span>
-            <b-link :to="{name:'registration'}">
+            <b-link :to="{ name: 'registration' }">
               <span>&nbsp;Register</span>
               <!-- <router-link to="/registration">Register</router-link> -->
             </b-link>
@@ -180,22 +159,40 @@
           </div> -->
         </b-col>
       </b-col>
-    <!-- /Login-->
+      <!-- /Login-->
     </b-row>
   </div>
 </template>
 
 <script>
 /* eslint-disable global-require */
+// eslint-disable-next-line
+/* eslint-disable */
+/* eslint-disable eol-last */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton,
-} from 'bootstrap-vue'
+  BRow,
+  BCol,
+  BLink,
+  BFormGroup,
+  BFormInput,
+  BInputGroupAppend,
+  BInputGroup,
+  BCardText,
+  BCardTitle,
+  BImg,
+  BForm,
+  BButton,
+} from 'bootstrap-vue';
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { mapActions } from 'vuex'
+import * as userTypes from '../store/types/users'
+import * as auth from '../store/module/auth'
+
 
 export default {
   components: {
@@ -218,9 +215,12 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      isError: false,
       status: '',
-      password: '',
-      userEmail: '',
+      data: {
+        password: '',
+        username: '',
+      },
       sideImg: require('@/assets/images/pages/login-accept-task.svg'),
       // validation rulesimport store from '@/store/index'
       required,
@@ -240,25 +240,54 @@ export default {
       return this.sideImg
     },
   },
+  mounted() {
+    console.clear()
+  },
   methods: {
+    // ...mapActions({
+    //   postUser:userTypes.ACTION_SET_LOGIN
+    // }),
+    
     validationForm() {
-      this.$refs.loginValidation.validate().then(success => {
+    
+      this.$refs.loginValidation.validate().then(async success => {
         if (success) {
+          const login = await this.$store.dispatch('LogIn', this.data)
+          console.log(login)
+          if (this.$store.getters['StateToken']) {
+            console.log('Token', this.$store.getters['StateToken'])
+            setTimeout(() => {
+              this.$router.push({ name: 'home' })
+            },1500)
+              this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Form Submitted',
+                icon: 'EditIcon',
+                variant: 'success',
+              },
+            })     
+          }
+        }else {
+          this.isError = true,
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Form Submitted',
+              title: 'Email or Password is incorrect',
               icon: 'EditIcon',
-              variant: 'success',
+              variant: 'danger',
             },
-          })
+          }) 
         }
       })
     },
-  },
+    }
 }
 </script>
 
 <style lang="scss">
-@import '@core/scss/vue/pages/page-auth.scss';
+@import "@core/scss/vue/pages/page-auth.scss";
 </style>
+
+
+

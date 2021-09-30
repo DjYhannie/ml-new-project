@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use function Complex\add;
 
@@ -139,21 +140,21 @@ class QuestionnaireController extends Controller
             $questionnaire = Questionnaire::find($id);
 
             $easyQuestions = DB::table('questions')
-                            ->select('question')
+                            ->select('id','question', 'choices', 'answer')
                             ->where('category', "easy")
                             ->where('course', $questionnaire->course)
                             ->get()
                             ->random($questionnaire->easy_questions);
 
             $averageQuestions = DB::table('questions')
-                            ->select('question')
+                            ->select('id','question', 'choices','answer')
                             ->where('category', "average")
                             ->where('course', $questionnaire->course)
                             ->get()
                             ->random($questionnaire->average_questions);
 
             $hardQuestions = DB::table('questions')
-                            ->select('question')
+                            ->select('id','question', 'choices', 'answer')
                             ->where('category', "hard")
                             ->where('course', $questionnaire->course)
                             ->get()
@@ -162,11 +163,37 @@ class QuestionnaireController extends Controller
 
             $merge1 = $easyQuestions->merge($averageQuestions);
             $allQuestions = $merge1->merge($hardQuestions);
-            $allQuestions->shuffle();
+            $shuffled = $allQuestions->shuffle();
+            $shuffled->all();
+
+
+            $url_token = DB::select('select * from url_tokens where questionnaire_id = ? and user_id = ?', [$questionnaire->id, $user->id]);
+
+            $token = $url_token? $url_token[0]->token: '';
+
+            if($token){}
+
+            if (!$url_token) {
+
+                $token = sha1(uniqid(time(),true));
+                $token_data = [
+                    'token' => $token,
+                    'questionnaire_id' => $questionnaire->id,
+                    'user_id' => $user->id,
+                    'accessed_time' => Carbon::now(),
+                    'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
+                    'is_accessed' => true,
+                ];
+
+                DB::table('url_tokens')->insert($token_data);
+
+            }
 
             return response()->json([
-                'data' => $allQuestions
+                'data' => $shuffled,
+                'url_token' => $token
             ]);
+
         }
         catch(\Exception $e){
             return response()->json([
@@ -176,6 +203,4 @@ class QuestionnaireController extends Controller
             ]);
         }
     }
-
-   
 }

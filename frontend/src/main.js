@@ -2,8 +2,10 @@ import Vue from 'vue'
 import { ToastPlugin, ModalPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
+import axios from 'axios'
+
 import router from './router'
-import store from './store'
+import store from './store/index'
 import App from './App.vue'
 
 // Global Components
@@ -13,6 +15,7 @@ import './global-components'
 import '@/libs/portal-vue'
 import '@/libs/toastification'
 
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)

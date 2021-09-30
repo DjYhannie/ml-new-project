@@ -14,18 +14,16 @@ class RegistrationController extends Controller
     public function register(Request $request)
     {
         $validator = $request->validate([
-            'name' => 'required|string|between:2,100',
+            'username' => 'required|string|between:2,100',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'password_confirmation' => 'required',
-            'department' => 'required|string',
         ]);
 
         $user = User::create([
-            'name' => $validator['name'],
+            'username' => $validator['username'],
             'email' => $validator['email'],
             'password' => Hash::make($validator['password']),
-            'department' => $validator['department']
+            'role' => 'user'
         ]);
 
         $user->save();
@@ -59,14 +57,15 @@ class RegistrationController extends Controller
        }
        else{
         return response()->json([
-            'message' => 'Unauthorised.'
+            'message' => 'Unauthorized.'
         ]);
        }
     }
 
-    public function logout(User $id){
+    public function logout(){
         $user = Auth::user();
         $user->currentAccessToken()->delete();
+
 
         return response()->json([
             'status_code' => 200,
@@ -75,7 +74,7 @@ class RegistrationController extends Controller
     }
 
 
-   
+
 
 
 

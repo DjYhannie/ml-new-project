@@ -1,56 +1,88 @@
 <template>
   <div>
-    <b-card title="Create Report 🚀">
-      <!-- <b-card-text>All the best for your new project.</b-card-text>
-      <b-card-text>Please make sure to read our <b-link
-        href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
-        target="_blank"
-      >
-        Template Documentation
-      </b-link> to understand where to go from here and how to use our template.</b-card-text> -->
-      <b-form-textarea
-        id="textarea"
-        v-model="text"
-        placeholder="Create report..."
-        rows="3"
-        max-rows="6"
-      />
-      <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
-      <b-button variant="primary">
-        Post
-      </b-button>
-    </b-card>
+    <b-button
+      id="button"
+      block
+      variant="white"
+      :class="visible ? null : 'collapsed'"
+      :aria-expanded="visible ? 'true' : 'false'"
+      aria-controls="collapse-4"
+      @click="visible = !visible"
+    >
+      Questionnaire 1: Test Questionnaire
+    </b-button>
+    <b-collapse
+      id="collapse-4"
+      v-model="visible"
+      class="mt-2"
+    >
+      <b-card>Title 1: Title 1 in Questionnaire 1</b-card>
+    </b-collapse>
 
-    <b-card title="Reports 🔒">
-      <b-card->We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.</b-card->
-      <b-card-text>Please read our  JWT Documentation to get more out of JWT authentication.</b-card-text>
-    </b-card>
+    <b-button
+      id="button"
+      block
+      variant="white"
+      :class="visible ? null : 'collapsed'"
+      :aria-expanded="visible ? 'true' : 'false'"
+      aria-controls="collapse-4"
+      @click="visible = !visible"
+    >
+      Questionnaire 2: Test Questionnaire
+    </b-button>
+    <b-collapse
+      id="collapse-4"
+      v-model="visible"
+      class="mt-2"
+    >
+      <b-card>Title 2: Title 2 in Questionnaire 2</b-card>
+    </b-collapse>
+
+    <b-button
+      id="button"
+      block
+      variant="white"
+      :class="visible ? null : 'collapsed'"
+      :aria-expanded="visible ? 'true' : 'false'"
+      aria-controls="collapse-4"
+      @click="visible = !visible"
+    >
+      Questionnaire 3: Test Questionnaire
+    </b-button>
+    <b-collapse
+      id="collapse-4"
+      v-model="visible"
+      class="mt-2"
+    >
+      <b-card>Title 3: Title 3 in Questionnaire 3</b-card>
+    </b-collapse>
   </div>
 </template>
 
 <script>
-// import { BCard, BCardText, BLink } from 'bootstrap-vue'
-import { BCard, BFormTextarea, BButton } from 'bootstrap-vue'
+import
+{
+  BButton,
+  BCollapse,
+  BCard,
+} from 'bootstrap-vue'
 
 export default {
   components: {
-    BCard,
-    BFormTextarea,
     BButton,
-    // BCardText,
-    // BLink,
+    BCollapse,
+    BCard,
   },
   data() {
     return {
-      text: '',
+      visible: false,
     }
   },
 }
 </script>
-
 <style>
-button{
-    margin: 10px;
-    float: right;
+#button {
+  text-align: left;
+  /* font-size: 20px; */
 }
 </style>

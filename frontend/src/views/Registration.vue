@@ -52,7 +52,11 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent
+<<<<<<< HEAD
+              @submit.prevent="validationForm"
+=======
+              @submit.prevent= 'validationForm'
+>>>>>>> 4a36481412b8337379d889b4d6592b551d1485fb
             >
 
               <!-- name -->
@@ -66,8 +70,8 @@
                   rules="required"
                 >
                   <b-form-input
-                    id="email"
-                    v-model="name"
+                    id="name"
+                    v-model="register.username"
                     :state="errors.length > 0 ? false:null"
                     name="name"
                     placeholder="Full Name"
@@ -75,52 +79,6 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-
-              <!-- department  -->
-              <!-- <b-form-group
-                id="dept"
-                label="Department:"
-                label-for="dept"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  rules="required"
-                  name="Department"
-                >
-                  <b-form-select
-                    v-model="selected"
-                    class="mb-2 form-group"
-                    name="department"
-                    :state="errors.length > 0 ? false:null"
-                  >
-                    <option
-                      :value="null"
-                      disabled
-                    >ML Departments</option>
-                    <option value="quality-assurance">
-                      Quality Assurance
-                    </option>
-                    <option value="developer">
-                      Developer
-                    </option>
-                    <option value="developer-operation">
-                      Developer Operation
-                    </option>
-                    <option value="system-administration">
-                      System Administration
-                    </option>
-                    <option value="helpdesk-facility">
-                      HelpDesk Facility
-                    </option>
-                    <option value="product-owner">
-                      Product Owner
-                    </option>
-                  </b-form-select>
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-
-              </b-form-group> -->
-
               <!-- email -->
               <b-form-group
                 label="Email"
@@ -133,7 +91,7 @@
                 >
                   <b-form-input
                     id="email"
-                    v-model="userEmail"
+                    v-model="register.email"
                     :state="errors.length > 0 ? false:null"
                     name="email"
                     placeholder="name.test@mlhuillier.com"
@@ -143,13 +101,10 @@
               </b-form-group>
 
               <!-- password -->
-              <b-form-group>
-                <div class="d-flex justify-content-between">
-                  <label for="password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password-v2'}">
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div>
+              <b-form-group
+                label="Password"
+                label-for="password"
+              >
                 <validation-provider
                   #default="{ errors }"
                   rules="required"
@@ -161,7 +116,7 @@
                   >
                     <b-form-input
                       id="password"
-                      v-model="password"
+                      v-model="register.password"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -199,7 +154,7 @@
                   >
                     <b-form-input
                       id="confirmPassword"
-                      v-model="confirmPassword"
+                      v-model="register.password_confirmation"
                       :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
@@ -223,9 +178,8 @@
                 type="submit"
                 variant="danger"
                 block
-                @click="validationForm"
               >
-                Register
+              Register
               </b-button>
             </b-form>
           </validation-observer>
@@ -254,7 +208,9 @@ import {
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import axios from '../libs/axios'
+// import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+// import { mapActions } from 'vuex'
 
 extend('confirmPassword', {
   params: ['target'],
@@ -285,13 +241,14 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      status: '',
-      name: '',
-      password: '',
-      userEmail: '',
-      confirmPassword: '',
+      register: {
+        status: '',
+        username: '',
+        password: '',
+        email: '',
+        password_confirmation: '',
+      },
       sideImg: require('@/assets/images/pages/register-shared-goals.svg'),
-      // validation rulesimport store from '@/store/index'
       required,
       email,
     }
@@ -311,8 +268,12 @@ export default {
   },
   methods: {
     validationForm() {
-      this.$refs.registerValidation.validate().then(success => {
+      console.log('VUE COMPONENT', this.register)
+      this.$refs.registerValidation.validate().then(async success => {
+        console.log(success)
         if (success) {
+          const register = await this.$store.dispatch('Register', this.register)
+          console.log(register)
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -321,6 +282,9 @@ export default {
               variant: 'success',
             },
           })
+          setTimeout(() => {
+            this.$router.push({ name: 'login' })
+          }, 2000)
         }
       })
     },

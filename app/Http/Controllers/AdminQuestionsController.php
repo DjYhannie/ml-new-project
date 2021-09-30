@@ -20,7 +20,7 @@ class AdminQuestionsController extends Controller
    public function addQuestion(Request $request)
    {
 
-    $user = Auth::user();
+    // $user = Auth::user();
 
     try{
 
@@ -119,7 +119,7 @@ class AdminQuestionsController extends Controller
 
 
       //Query to get all Questions
-    public function getAllQuestions()
+    public function getAllQuestions(Questions $question)
     {
         try{
 

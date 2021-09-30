@@ -18,151 +18,189 @@
               <b-row>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="title">Title: </label>
                     <input
-                      v-model="sample"
+                      name="title"
+                      v-model="questionnaire.title"
                       type="text"
                       class="form-control"
-                      placeholder="Title"
                     >
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="timeDuration">Time Duration: </label>
                     <input
-                      v-model="sample2"
+                      name="timeDuration"
+                      v-model="questionnaire.time_duration"
                       type="time"
                       class="form-control"
-                      placeholder="Time Duration">
+                      label="Time Duration"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="course">Course: </label>
                     <!-- <input
                       v-model="sample3"
                       type="text"
                       class="form-control"
                       placeholder="Course"
-                    > -->
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    /> -->
+                    <b-form-select
+                      name="course"
+                      v-model="questionnaire.seleted"
+                      :options="options"
+                      label="Course"
+                    />
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
+                    <label for="passingScore">Passing Score: </label>
                     <input
-                      v-model="sample4"
+                      name="passingScore"
+                      v-model="questionnaire.passing_score"
                       type="number"
                       class="form-control"
-                      placeholder="Passing Score">
+                      label="Passing Score"
+                    >
                   </div>
                 </b-col>
               </b-row>
+              <!-- divider -->
+          <div class="divider my-2">
+            <div class="divider-text">
+              Categories
+            </div>
+          </div>
               <b-row>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="easy">Easy: </label>
                     <input
-                      v-model="sample5"
+                      name="easy"
+                      v-model="questionnaire.easy"
                       type="text"
                       class="form-control"
-                      placeholder="Easy">
+                      label="Easy"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="intermediate">Intermediate: </label>
                     <input
-                      v-model="sample6"
+                      name="intermediate"
+                      v-model="questionnaire.intermediate"
                       type="text"
                       class="form-control"
-                      placeholder="Intermediate">
+                      label="Intermediate"
+                    >
                   </div>
                 </b-col>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
+                    <label for="hard">Hard: </label>
                     <input
-                      v-model="sample7"
+                      name="hard"
+                      v-model="questionnaire.hard"
                       type="text"
                       class="form-control"
-                      placeholder="Hard">
+                      label="Hard"
+                    >
                   </div>
                 </b-col>
               </b-row>
-           </b-container>
-         </b-form-group>
-       </b-form>
-     </b-modal>
-  </div>
-  <br>
+            </b-container>
+              <b-button
+              variant="primary"
+              @click="submit"
+            >
+              Add
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    </div>
+    <br>
 
-  <br><br><hr><br>
+    <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
     <div
-      v-for="question in questions"
-      :key="question.id"
+      v-for="questionnaire in questionnaires"
+      :key="questionnaire.id"
       class="question-content"
     >
-      <b-card name="questions">
+      <b-card name="questionnaire">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-              @click="editButton(question.id)"
+              @click="editButton(questionnaire.id)"
             >Edit</b-dropdown-item>
             <b-dropdown-item
-              @click="deleteButton(question.id)"
+              @click="deleteButton(questionnaire.id)"
             >Delete</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
         <div>
-    <b-card
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-      >
-        {{ question.sample }}
-      </b-card>
-    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-      <b-card>
-         <hr>
-      <p>Course Name: {{ question.sample }}</p>
-      <p>Question: {{ question.sample2 }}</p>
-      <p>Answer: {{ question.sample3 }}</p>
-      <p>A. {{ question.sample4 }}</p>
-      <p>B. {{ question.sample5 }}</p>
-      <p>C. {{ question.sample6 }}</p>
-      <p>D. {{ question.sample7 }}</p>
-      </b-card>
-    </b-collapse>
-  </div>
-      <b-form @submit.prevent="update">
-        <b-form-group name="questions">
-          <div
-            :id="question.id"
-            style="display:none"
+          <b-card
+            :class="visible ? null : 'collapsed'"
+            :aria-expanded="visible ? 'true' : 'false'"
+            aria-controls="collapse-4"
+            @click="visible = !visible"
           >
-            <b-form-textarea
-              id="textarea"
-              v-model="question.createquestion"
-              placeholder="Edite report..."
-              rows="3"
-              max-rows="0"
-              overflow-y="hidden"
-            />
-            <b-button
-              variant="danger"
-              @click="cancel()"
+            {{ questionnaire.sample }}
+          </b-card>
+          <b-collapse
+            id="collapse-4"
+            v-model="visible"
+            class="mt-2"
+          >
+            <b-card>
+              <hr>
+              <p>Title: {{ questionnaire.title }}</p>
+              <p>Course: {{ questionnaire.course }}</p>
+              <p>Time Duration: {{ questionnaire.selected }}</p>
+              <p>Passing Score: {{ questionnaire.passing_score }}</p>
+              <p>Easy: {{ questionnaire.easy }}</p>
+              <p>Intermediate: {{ questionnaire.intermediate }}</p>
+              <p>Hard: {{ questionnaire.hard }}</p>
+            </b-card>
+          </b-collapse>
+        </div>
+        <b-form @submit.prevent="update">
+          <b-form-group name="questionnaire">
+            <div
+              :id="questionnaire.id"
+              style="display:none"
             >
-              Cancel
-            </b-button>
-            <b-button
-              variant="primary"
-              @click="update(question.id, question.createquestion)"
-            >
-              Update Question
-            </b-button>
-          </div>
-        </b-form-group>
-       </b-form>
+              <b-form-textarea
+                id="textarea"
+                v-model="questionnaire.createquestion"
+                placeholder="Edite report..."
+                rows="3"
+                max-rows="0"
+                overflow-y="hidden"
+              />
+              <b-button
+                variant="danger"
+                @click="cancel()"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="update(questionnaire.id, questionnaire.createquestion)"
+              >
+                Update Questionnaire
+              </b-button>
+            </div>
+          </b-form-group>
+        </b-form>
       </b-card>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -184,7 +222,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 import { mapActions } from 'vuex'
-import * as questionTypes from '../store/types/index'
+import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
   components: {
@@ -207,53 +245,53 @@ export default {
     return {
       visible: false,
       modalShow: false,
-      questionnairesQuestions:
+      questionnaire:
       {
-        sample: '',
-        sample2: '',
-        sample3: '',
-        sample4: '',
-        sample5: '',
-        sample6: '',
-        sample7: '',
+        title: '',
+        course: '',
+        selected: '',
+        passing_score: '',
+        easy: '',
+        intermediate: '',
+        hard: '',
       },
       createquestion: '',
       questions: [
         {
-          sample: 'test1',
-          sample2: 'test1',
-          sample3: 'test1',
-          sample4: 'test1',
-          sample5: 'test1',
-          sample6: 'test1',
-          sample7: 'test1',
+          title: 'test1',
+          course: 'test1',
+          selected: 'test1',
+          passing_score: 'test1',
+          easy: 'test1',
+          intermediate: 'test1',
+          hard: 'test1',
         },
         {
-          sample: 'test2',
-          sample2: 'test2',
-          sample3: 'test2',
-          sample4: 'test2',
-          sample5: 'test2',
-          sample6: 'test2',
-          sample7: 'test2',
+          title: 'test2',
+          course: 'test2',
+          selected: 'test2',
+          passing_score: 'test2',
+          easy: 'test2',
+          intermediate: 'test2',
+          hard: 'test2',
         },
         {
-          sample: 'test3',
-          sample2: 'test3',
-          sample3: 'test3',
-          sample4: 'test3',
-          sample5: 'test3',
-          sample6: 'test3',
-          sample7: 'test3',
+          title: 'test3',
+          course: 'test3',
+          selected: 'test3',
+          passing_score: 'test3',
+          easy: 'test3',
+          intermediate: 'test3',
+          hard: 'test3',
         },
         {
-          sample3: 'test4',
-          sample4: 'test4',
-          sample5: 'test4',
-          sample2: 'test4',
-          sample: 'test4',
-          sample6: 'test4',
-          sample7: 'test4',
+          title: 'test4',
+          course: 'test4',
+          selected: 'test4',
+          passing_score: 'test4',
+          easy: 'test4',
+          intermediate: 'test4',
+          hard: 'test4',
         },
       ],
       options: [
@@ -263,18 +301,19 @@ export default {
         { value: { C: '3PO' }, text: 'This is an option with object value' },
         { value: 'd', text: 'This one is disabled', disabled: true },
       ],
+      seleted: '',
     }
   },
   mounted() {
-    this.getQuestions()
+    this.getQuestionnaires()
   },
   methods: {
     ...mapActions({
-      getQuestions: questionTypes.ACTION_SET_QUESTIONS,
-      postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
+      postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
     submit() {
-      this.postQuestion(this.createquestion)
+      this.postQuestionnaire(this.createquestion)
       console.log(this.createquestion)
       this.createquestion = ''
     },
@@ -316,6 +355,9 @@ button{
 }
 .modalButton{
   float: left;
+}
+.modal-footer {
+  display: none;
 }
 .buttons{
   float: right;

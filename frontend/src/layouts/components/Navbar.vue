@@ -92,7 +92,7 @@
             class="mr-50"
           />
           <!-- <span>Logout</span> -->
-          <router-link to="login">
+          <router-link to="/">
             Logout
           </router-link>
           <b-link :to="{name:'login'}" />
