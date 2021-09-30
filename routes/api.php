@@ -34,6 +34,7 @@ Route::post('/login',[RegistrationController::class,'login']);
 
 //for testing
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
+Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -44,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function(){
     // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
     Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
     Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
-    Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
+    // Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
     Route::get('/questions/{id}',[AdminQuestionsController::class, 'getQuestionById']);
     Route::get('/questions/category',[AdminQuestionsController::class, 'allQuestionsByCategory']);
     Route::get('/questions/course',[AdminQuestionsController::class, 'allQuestionsByCourse']);

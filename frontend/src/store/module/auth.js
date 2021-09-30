@@ -15,29 +15,26 @@ const actions = {
   //   await dispatch('LogIn', form)
   // },
   // FOR DEMO
-  // async Register({ commit, dispatch }, form) {
-  //   // const response =
-  //   const response = await axios.post('/register', form)
-  //   console.log('REGISTRATION RESPONSE', response)
-  //   console.log('AUTH.JS', await form)
-  //   commit('setUser', form)
-  //   if (response.data.user.role === 'admin') {
-  //     await dispatch('LogIn', form)
-  //   } else {
-  //     await dispatch('UserLogin', form)
-  //   }
-  // },
-  // FOR DEMO PART 2
   async Register({ commit }, form) {
     // const response =
     const response = await axios.post('/register', form)
     console.log('REGISTRATION RESPONSE', response)
     console.log('AUTH.JS', await form)
     commit('setUser', form)
-    // if (response.data.user.role === 'user') {
-    //   this.$router.push({ name: 'login' })
-    // }
+    // await dispatch('UserLogin', form)
   },
+  // FOR DEMO PART 2
+  // async Register({ commit }, form) {
+  //   // const response =
+  //   const response = await axios.post('/register', form)
+  //   console.log('REGISTRATION RESPONSE', response)
+  //   console.log('AUTH.JS', await form)
+  //   commit('setUser', form)
+  //   if (response.data.user.role === 'user') {
+  //     this.$router.push({ name: 'login' })
+  //   }
+  //   this.$router.push({ name: 'registration' })
+  // },
   // ADMIN USER
   async LogIn({ commit }, User) {
     console.log('Calling Admin...')
@@ -49,19 +46,20 @@ const actions = {
     sessionStorage.setItem('setToken', response.data.token)
   },
   // FOR DEMO
-  // async LogIn({ commit, dispatch }, User) {
-  //   console.log('Calling Admin...')
-  //   const response = await axios.post('/adminlogin', User)
-  //   console.log('ADMIN RESPONSE', response)
-  //   // if (response.data.user.role === 'admin') {
-  //   //   console.log('ADMIN', User)
-  //   //   commit('setUser', response.data)
-  //   //   commit('setToken', response.data.token)
-  //   //   sessionStorage.setItem('setToken', response.data.token)
-  //   // } else {
-  //   //   await dispatch('UserLogin', User)
-  //   // }
-  // },
+  async LogIn({ commit, dispatch }, User) {
+    console.log('Calling Admin...')
+    const response = await axios.post('/adminlogin', User)
+    console.log('ADMIN RESPONSE', response)
+    if (response.data.user.role === 'admin') {
+      console.log('ADMIN', User)
+      commit('setUser', response.data)
+      commit('setToken', response.data.token)
+      sessionStorage.setItem('setToken', response.data.token)
+    } else {
+      this.$router.push('login')
+      await dispatch('UserLogin', User)
+    }
+  },
   // NORMAL USER
   async UserLogin({ commit }, User) {
     console.log('Calling Normal User...')

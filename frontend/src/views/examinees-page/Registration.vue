@@ -52,7 +52,7 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent= 'validationForm'
+              @submit.prevent="validationForm"
             >
 
               <!-- name -->
@@ -270,7 +270,7 @@ export default {
         if (success) {
           this.$router.push({ name: 'user-login' })
           const register = await this.$store.dispatch('Register', this.register)
-          console.log(register)
+          console.log('Response Component', register)
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -279,9 +279,9 @@ export default {
               variant: 'success',
             },
           })
-          // setTimeout(() => {
-          //   this.$router.push({ name: 'login' })
-          // }, 2000)
+          setTimeout(() => {
+            this.$router.push({ name: 'login' })
+          }, 2000)
         }
       })
     },
