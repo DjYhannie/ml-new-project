@@ -1,48 +1,44 @@
+// import { data } from 'jquery'
 import api from '../../libs/axios'
 import * as questionTypes from '../types/questions'
 
+/* eslint no-param-reassign: ["error", { "props": false }] */
 export default {
   state: {
     namespaced: true,
     questions: {},
+    course: '',
     show: true,
   },
   getters: {
     // [questionTypes.GETTER_QUESTION]: state => state.questions,
-    GET_QUESTION(state) {
-      return state.questions
-    },
+    // GET_QUESTION(state) {
+    //   return state.questions
+    // },
+    GET_QUESTION: state => state.questions,
+    GET_COURSE: state => state.course,
   },
   actions: {
-    // async ACTION_SET_QUESTIONS({ commit }) {
-    //   const res = await api.get('/questions')
-    //   console.log('GET_QUESTION', res.data)
-    //   commit('SET_QUESTION', res.data)
-    // },
-    async ACTION_SET_QUESTIONS({ commit }) {
-      await api.get('/questions')
-        .then(res => {
-          console.log(res)
-          let questions = res.data.data.map(question => {
-            questions = JSON.parse(question.choices)
-            console.log(questions)
-            return questions
+    // OK NA
+    ACTION_GET_QUESTIONS({ commit }) {
+      api.get('/questions')
+        .then(res => res).then(choice => {
+          const questions = choice.data.data.map(c => {
+            c.choices = JSON.parse(c.choices)
+            return c
           })
-          commit('SET_QUESTION', questions)
           console.log(questions)
+          commit('SET_QUESTION', questions)
         })
     },
-    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, question) {
-      const res = await api.post('/questions/add', { question })
-      console.log('SUCCESSFUL', res)
-      commit(questionTypes.MUTATION_ADD_QUESTION, res.data, question)
+    // OK NA
+    async ACTION_ADD_QUESTION({ commit, dispatch }, addQuestion) {
+      const response = await api.post('/questions/add', addQuestion)
+      console.log('ADD QUESTION', response.data.questions)
+      commit('SET_QUESTION', response.data.questions)
+      await dispatch('ACTION_GET_QUESTIONS')
+      return response
     },
-    // async ACTION_ADD_QUESTION({ commit }, addQuestion) {
-    //   const response = await api.post('/questions/add', addQuestion)
-    //   console.log('ADD QUESTION', response.data.questions)
-    //   commit('SET_QUESTION', response.data.questions)
-    //   return response
-    // },
     // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
     //   await api.delete(`/delete/${id}`)
     //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
@@ -51,10 +47,20 @@ export default {
     //   await api.delete(`/delete/${id}`)
     //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
     // },
+    async ACTION_ADD_COURSE({ commit }, addCourse) {
+      console.log(addCourse)
+      const response = await api.post('/course/add', addCourse)
+      console.log(response)
+      commit('SET_COURSE', response)
+      return response
+    },
   },
   mutations: {
     SET_QUESTION(state, questions) {
       state.questions = questions
+    },
+    SET_COURSE(state, course) {
+      state.course = course
     },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions

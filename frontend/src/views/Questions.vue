@@ -115,7 +115,7 @@
           <b-form-group name="create-question">
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.course"
+                v-model="course.name"
                 type="text"
                 class="form-control"
                 placeholder="Course Name"
@@ -136,13 +136,11 @@
 
     <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
-    <div>{{questions.questions.data}}</div>
     <div
-      v-for="question in questions.questions.data"
+      v-for="question in questions.questions"
       :key="question.id"
       class="question-content"
     >
-    <div>CHOICES : {{question.choices['choiceA']}}</div>
       <b-card name="questions">
         <b-button-group class="buttons">
           <b-dropdown>
@@ -250,31 +248,21 @@ export default {
       visible: false,
       modalShow: false,
       isShow: false,
-      questionDescription:
-        {
-          course: null,
-          category: null,
-          question: '',
-          answer: '',
-          choices: {
-            choiceA: '',
-            choiceB: '',
-            choiceC: '',
-            choiceD: '',
-          },
-          // choices: [
-          //   { choiceA: '' },
-          //   { choiceB: '' },
-          //   { choiceC: '' },
-          //   { choiceD: '' },
-          // ],
-          // choices: [{
-          //   choiceA: '',
-          //   choiceB: '',
-          //   choiceC: '',
-          //   choiceD: '',
-          // }],
+      questionDescription: {
+        course: null,
+        category: null,
+        question: '',
+        answer: '',
+        choices: {
+          choiceA: '',
+          choiceB: '',
+          choiceC: '',
+          choiceD: '',
         },
+      },
+      course: {
+        name: null,
+      },
       options: [
         { value: null, text: 'Select Course', disabled: true },
         { value: 'Course 1', text: 'Course 1' },
@@ -295,21 +283,32 @@ export default {
       questions: 'questions',
     }),
   },
+  watch: {
+    GET_QUESTIONS: e => {
+      console.log(e)
+    },
+  },
+  created() {
+    this.GET_QUESTIONS()
+  },
   mounted() {
     this.GET_QUESTIONS()
     console.log(this.GET_QUESTIONS)
   },
   methods: {
     ...mapActions({
-      GET_QUESTIONS: 'ACTION_SET_QUESTIONS',
-      // getQuestions: questionTypes.ACTION_SET_QUESTIONS,
-      // postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
+      // ADD_COURSE: 'ACTION_ADD_COURSE',
     }),
-    submitQuestion() {
+    async submitQuestion() {
       console.log('logging...')
-      console.log(this.questionDescription)
-      console.log(this.questionDescription.choices.choiceA)
-      const response = this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
+      const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
+      console.log(response)
+    },
+    async submitCourse() {
+      console.log('adding course')
+      console.log(this.course.name)
+      const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course.name)
       console.log(response)
       this.questionDescription.course = ''
       this.questionDescription.category = ''

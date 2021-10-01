@@ -35,6 +35,7 @@ Route::post('/login',[RegistrationController::class,'login']);
 //for testing
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
+Route::post('/course/add',[AdminController::class, 'addCourses']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -61,7 +62,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/course',[AdminController::class, 'getCourses']);
     Route::post('/course{id}',[AdminController::class, 'getCoursesById']);
-    Route::post('/course/add',[AdminController::class, 'addCourses']);
+    // Route::post('/course/add',[AdminController::class, 'addCourses']);
 
     Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
     Route::post('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
