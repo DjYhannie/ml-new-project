@@ -32,16 +32,24 @@ export default {
           console.log(questions)
         })
     },
-    async ACTION_ADD_QUESTION({ commit }, addQuestion) {
-      const response = await api.post('/questions/add', addQuestion)
-      console.log('ADD QUESTION', response.data.questions)
-      commit('SET_QUESTION', response.data.questions)
-      return response
-    },
-    async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-      await api.delete(`/delete/${id}`)
-      commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    },
+    async [questionTypes.ACTION_ADD_QUESTION]({ commit }, question) {
+      const res = await api.post('/questions/add', { question })
+      console.log('SUCCESSFUL', res)
+      commit(questionTypes.MUTATION_ADD_QUESTION, res.data, question)
+    // async ACTION_ADD_QUESTION({ commit }, addQuestion) {
+    //   const response = await api.post('/questions/add', addQuestion)
+    //   console.log('ADD QUESTION', response.data.questions)
+    //   commit('SET_QUESTION', response.data.questions)
+    //   return response
+    // },
+    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+    //   await api.delete(`/delete/${id}`)
+    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    // },
+    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+    //   await api.delete(`/delete/${id}`)
+    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    // },
 
   },
   mutations: {
@@ -52,10 +60,13 @@ export default {
       state.questions = questions
     },
     [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
+      // state.questions.unshift(question)
+      state.questions.push(question)
       state.questions = question
     },
     // [questionTypes.MUTATION_DELETE_QUESTION](state,  id) {
     //   state.questionses = state.questions.filter
     // }
   },
+}
 }
