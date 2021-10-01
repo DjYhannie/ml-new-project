@@ -19,15 +19,17 @@ export default {
     //   console.log('GET_QUESTION', res.data)
     //   commit('SET_QUESTION', res.data)
     // },
-    ACTION_SET_QUESTIONS({ commit }) {
-      api.get('/questions')
-        .then(res => res.json()).then(b => {
-          const questions = b.data.map(question => {
-            const json = JSON.parse(question.choices)
-            return json
+    async ACTION_SET_QUESTIONS({ commit }) {
+      await api.get('/questions')
+        .then(res => {
+          console.log(res)
+          let questions = res.data.data.map(question => {
+            questions = JSON.parse(question.choices)
+            console.log(questions)
+            return questions
           })
-          console.log(questions)
           commit('SET_QUESTION', questions)
+          console.log(questions)
         })
     },
     async ACTION_ADD_QUESTION({ commit }, addQuestion) {

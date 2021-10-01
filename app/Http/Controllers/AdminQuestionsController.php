@@ -37,11 +37,11 @@ class AdminQuestionsController extends Controller
                 'category' => $validate['category'],
                 'course' => $validate['course'],
                 'answer' => $validate['answer'],
-                'choices' => json_decode($validate['choices'])
+                'choices' => json_encode($validate['choices'])
             ]);
 
             $question->save();
-            // $question->choices = json_decode($question->choices);
+            $question->choices = json_decode($question->choices);
 
             return response()->json([
                 'message' => 'Question Successfully Added',
