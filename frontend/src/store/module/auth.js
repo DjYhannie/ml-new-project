@@ -46,20 +46,20 @@ const actions = {
     sessionStorage.setItem('setToken', response.data.token)
   },
   // FOR DEMO
-  async LogIn({ commit, dispatch }, User) {
-    console.log('Calling Admin...')
-    const response = await axios.post('/adminlogin', User)
-    console.log('ADMIN RESPONSE', response)
-    if (response.data.user.role === 'admin') {
-      console.log('ADMIN', User)
-      commit('setUser', response.data)
-      commit('setToken', response.data.token)
-      sessionStorage.setItem('setToken', response.data.token)
-    } else {
-      this.$router.push('login')
-      await dispatch('UserLogin', User)
-    }
-  },
+  // async LogIn({ commit, dispatch }, User) {
+  //   console.log('Calling Admin...')
+  //   const response = await axios.post('/adminlogin', User)
+  //   console.log('ADMIN RESPONSE', response)
+  //   if (response.data.user.role === 'admin') {
+  //     console.log('ADMIN', User)
+  //     commit('setUser', response.data)
+  //     commit('setToken', response.data.token)
+  //     sessionStorage.setItem('setToken', response.data.token)
+  //   } else {
+  //     this.$router.push('login')
+  //     await dispatch('UserLogin', User)
+  //   }
+  // },
   // NORMAL USER
   async UserLogin({ commit }, User) {
     console.log('Calling Normal User...')
