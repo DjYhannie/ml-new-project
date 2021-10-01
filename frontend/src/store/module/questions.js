@@ -36,6 +36,7 @@ export default {
       const res = await api.post('/questions/add', { question })
       console.log('SUCCESSFUL', res)
       commit(questionTypes.MUTATION_ADD_QUESTION, res.data, question)
+    },
     // async ACTION_ADD_QUESTION({ commit }, addQuestion) {
     //   const response = await api.post('/questions/add', addQuestion)
     //   console.log('ADD QUESTION', response.data.questions)
@@ -50,7 +51,6 @@ export default {
     //   await api.delete(`/delete/${id}`)
     //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
     // },
-
   },
   mutations: {
     SET_QUESTION(state, questions) {
@@ -68,5 +68,4 @@ export default {
     //   state.questionses = state.questions.filter
     // }
   },
-}
 }

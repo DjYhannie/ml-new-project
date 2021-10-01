@@ -311,6 +311,14 @@ export default {
       console.log(this.questionDescription.choices.choiceA)
       const response = this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
       console.log(response)
+      this.questionDescription.course = ''
+      this.questionDescription.category = ''
+      this.questionDescription.answer = ''
+      this.questionDescription.choiceA = ''
+      this.questionDescription.choiceB = ''
+      this.questionDescription.choiceC = ''
+      this.questionDescription.choiceD = ''
+      this.isShow = true
     },
     deleteButton() {
       console.log('deleted!')

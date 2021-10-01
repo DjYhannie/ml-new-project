@@ -23,6 +23,9 @@ import { useWindowSize, useCssVar } from '@vueuse/core'
 
 import store from '@/store'
 
+// BaseTimer
+import BaseTimer from './views/examinees-page/TakeExam.vue'
+
 const LayoutVertical = () => import('@/layouts/vertical/LayoutVertical.vue')
 const LayoutHorizontal = () => import('@/layouts/horizontal/LayoutHorizontal.vue')
 const LayoutFull = () => import('@/layouts/full/LayoutFull.vue')
@@ -35,6 +38,9 @@ export default {
     LayoutVertical,
     LayoutFull,
 
+    // BaseTimer
+    BaseTimer,
+
   },
   // ! We can move this computed: layout & contentLayoutType once we get to use Vue 3
   // Currently, router.currentRoute is not reactive and doesn't trigger any change
@@ -45,6 +51,25 @@ export default {
     },
     contentLayoutType() {
       return this.$store.state.appConfig.layout.type
+    },
+    // BaseTimer.vue
+    computed: {
+      formattedTimeLeft() {
+        const { timeLeft } = this.timeLeft
+        // The largest round integer less than or equal
+        //  to the result of time divided being by 60.
+        const minutes = Math.floor(timeLeft / 60)
+        // Seconds are the remainder of the time divided
+        //  by 60 (modulus operator)
+        let seconds = timeLeft % 60
+        // If the value of seconds is less than 10,
+        //  then display seconds with a leading zero
+        if (seconds < 10) {
+          seconds = `0${seconds}`
+        }
+        // The output in MM:SS format
+        return `${minutes}:${seconds}`
+      },
     },
   },
   beforeCreate() {
