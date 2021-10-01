@@ -41,7 +41,7 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="data.username"
+                    v-model="data.email"
                     :state="errors.length > 0 ? false : null"
                     name="login-email"
                     placeholder="name.test@mlhuillier.com"
@@ -172,7 +172,7 @@ export default {
       status: '',
       data: {
         password: '',
-        username: '',
+        email: '',
       },
       sideImg: require('@/assets/images/pages/login-accept-task.svg'),
       // validation rulesimport store from '@/store/index'
@@ -206,31 +206,51 @@ export default {
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('UserLogin', this.data)
-          console.log(login)
-          if (this.$store.getters['StateToken']) {
-            console.log('Token', this.$store.getters['StateToken'])
-            setTimeout(() => {
-              this.$router.push({ name: 'home' })
-            },1500)
-              this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'Form Submitted',
-                icon: 'EditIcon',
-                variant: 'success',
-              },
-            })     
-          }
-        }else {
-          this.isError = true,
-          this.$toast({
+          console.log('LOGIN_', login)
+          const token = this.$store.getters.StateToken
+          console.log(token)
+          const message = login.data.message
+          if (!token) {
+            this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Email or Password is incorrect',
+              // title: 'Email or Password is incorrect',
+              title: `${message}`,
               icon: 'EditIcon',
               variant: 'danger',
             },
           }) 
+          console.log(token)
+          } else {
+            console.log(token)
+            this.$router.push({ name: 'home' })
+            console.log(login.data.message)
+          }
+          // this.$router.push({ name: 'home' })
+          // if (this.$store.getters['StateToken']) {
+          //   console.log('Token', this.$store.getters['StateToken'])
+          //   setTimeout(() => {
+          //     this.$router.push({ name: 'home' })
+          //   },1500)
+          //     this.$toast({
+          //     component: ToastificationContent,
+          //     props: {
+          //       title: 'Form Submitted',
+          //       icon: 'EditIcon',
+          //       variant: 'success',
+          //     },
+          //   })     
+          // }
+        // }else {
+        //   this.isError = true,
+        //   this.$toast({
+        //     component: ToastificationContent,
+        //     props: {
+        //       title: 'Email or Password is incorrect',
+        //       icon: 'EditIcon',
+        //       variant: 'danger',
+        //     },
+        //   }) 
         }
       })
     },

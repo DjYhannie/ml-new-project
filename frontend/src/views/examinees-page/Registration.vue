@@ -280,7 +280,7 @@ export default {
             },
           })
           setTimeout(() => {
-            this.$router.push({ name: 'login' })
+            this.$router.push({ name: 'user-login' })
           }, 2000)
         }
       })

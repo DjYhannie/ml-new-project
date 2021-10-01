@@ -23,24 +23,11 @@ const actions = {
     commit('setUser', form)
     // await dispatch('UserLogin', form)
   },
-  // FOR DEMO PART 2
-  // async Register({ commit }, form) {
-  //   // const response =
-  //   const response = await axios.post('/register', form)
-  //   console.log('REGISTRATION RESPONSE', response)
-  //   console.log('AUTH.JS', await form)
-  //   commit('setUser', form)
-  //   if (response.data.user.role === 'user') {
-  //     this.$router.push({ name: 'login' })
-  //   }
-  //   this.$router.push({ name: 'registration' })
-  // },
   // ADMIN USER
   async LogIn({ commit }, User) {
     console.log('Calling Admin...')
     const response = await axios.post('/adminlogin', User)
     console.log('ADMIN RESPONSE', response)
-    console.log('ADMIN USER', User)
     commit('setUser', response.data)
     commit('setToken', response.data.token)
     sessionStorage.setItem('setToken', response.data.token)
@@ -65,10 +52,13 @@ const actions = {
     console.log('Calling Normal User...')
     const response = await axios.post('/login', User)
     console.log('USER RESPONSE', response)
-    console.log('USER', User)
-    commit('setUser', response.data)
-    commit('setToken', response.data.token)
-    sessionStorage.setItem('setToken', response.data.token)
+    // console.log('USER', User)
+    if (response.data.token) {
+      commit('setUser', response.data)
+      commit('setToken', response.data.token)
+      sessionStorage.setItem('setToken', response.data.token)
+    }
+    return response
   },
   // async LogOut({ commit }, User) {
   //   const response = await axios.post('/logout', User)

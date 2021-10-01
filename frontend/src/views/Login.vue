@@ -50,9 +50,9 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- forgot password -->
+              <!-- password -->
               <b-form-group>
-                <div class="d-flex justify-content-between">
+                <!-- <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
                   <b-link
                     :to="{
@@ -61,7 +61,7 @@
                   >
                     <small>Forgot Password?</small>
                   </b-link>
-                </div>
+                </div> -->
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
@@ -241,36 +241,62 @@ export default {
     //   postUser:userTypes.ACTION_SET_LOGIN
     // }),
     
-    validationForm() {
+    // validationForm() {
+    
+    //   this.$refs.loginValidation.validate().then(async success => {
+    //     if (success) {
+    //       const login = await this.$store.dispatch('LogIn', this.data)
+    //       console.log(login)
+    //       if (this.$store.getters['StateToken']) {
+    //         console.log('Token', this.$store.getters['StateToken'])
+    //         setTimeout(() => {
+    //           this.$router.push({ name: 'home' })
+    //         },1500)
+    //           this.$toast({
+    //           component: ToastificationContent,
+    //           props: {
+    //             title: 'Form Submitted',
+    //             icon: 'EditIcon',
+    //             variant: 'success',
+    //           },
+    //         })     
+    //       } else {
+    //       this.isError = true,
+    //       this.$toast({
+    //         component: ToastificationContent,
+    //         props: {
+    //           title: 'Email or Password is incorrect',
+    //           icon: 'EditIcon',
+    //           variant: 'danger',
+    //         },
+    //       }) 
+    //       console.log('Empty!')
+    //     }
+    //     }
+    //   })
+    // },
+        validationForm() {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('LogIn', this.data)
-          console.log(login)
-          if (this.$store.getters['StateToken']) {
-            console.log('Token', this.$store.getters['StateToken'])
-            setTimeout(() => {
-              this.$router.push({ name: 'home' })
-            },1500)
-              this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'Form Submitted',
-                icon: 'EditIcon',
-                variant: 'success',
-              },
-            })     
-          }
-        }else {
-          this.isError = true,
-          this.$toast({
+          console.log('LOGIN_', login)
+          const token = this.$store.getters.StateToken
+          console.log(token)
+          const message = login.data.message
+           if (this.$store.getters.StateToken) {
+            this.$router.push({ name: 'home' })
+            // console.log(login.data.data.message)
+          } else {
+            this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Email or Password is incorrect',
+              title: `${message}`,
               icon: 'EditIcon',
               variant: 'danger',
             },
           }) 
+          }
         }
       })
     },

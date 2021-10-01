@@ -19,4 +19,9 @@ export default [
     route: 'questionnaire',
     icon: 'FileMinusIcon',
   },
+  {
+    title: 'Take Exam',
+    route: 'user/take-exam',
+    icon: 'FeatherIcon',
+  },
 ]

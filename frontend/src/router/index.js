@@ -133,6 +133,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/user/take-exam',
+      name: 'user/take-exam',
+      component: () => import('@/views/examinees-page/TakeExam.vue'),
+      meta: {
+        pageTitle: 'Take Exam',
+        breadcrumb: [
+          {
+            text: 'Take Examination',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
       path: '*',
       redirect: 'error-404',
     },
