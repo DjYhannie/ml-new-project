@@ -179,13 +179,14 @@ class QuestionnaireController extends Controller
                 $token_data = [
                     'token' => $token,
                     'questionnaire_id' => $questionnaire->id,
+                    'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
                     'accessed_time' => Carbon::now(),
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
 
-                DB::table('url_tokens')->insert($token_data);
+                DB::table('url_tokens')->insert($token_data, $shuffled);
 
             }
 

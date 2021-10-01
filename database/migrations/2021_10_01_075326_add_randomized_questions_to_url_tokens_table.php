@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropRandomizedQuestionsFromLinksTable extends Migration
+class AddRandomizedQuestionsToUrlTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropRandomizedQuestionsFromLinksTable extends Migration
      */
     public function up()
     {
-        Schema::table('links', function (Blueprint $table) {
-            $table->dropColumn('randomizedQuestions');
+        Schema::table('url_tokens', function (Blueprint $table) {
+            $table->json('randomizedQuestions')->after('questionnaire_id');
         });
     }
 
@@ -25,7 +25,7 @@ class DropRandomizedQuestionsFromLinksTable extends Migration
      */
     public function down()
     {
-        Schema::table('links', function (Blueprint $table) {
+        Schema::table('url_tokens', function (Blueprint $table) {
             //
         });
     }
