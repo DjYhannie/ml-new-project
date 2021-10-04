@@ -20,7 +20,7 @@
       Choose
       </b-button>
       </b-card>
-      <!-- modal  -->
+      <!-- MODAL  -->
        <b-modal id="bv-modal-example" hide-footer>
     <template #modal-title>
       <code>Take the Test?</code>
@@ -31,27 +31,29 @@
     </div>
     <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Start</b-button>
   </b-modal>
-  <!-- ---TIMER---  -->
-    <div class="base-timer">
-    <svg
-      class="base-timer__svg"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g class="base-timer__circle">
-        <circle
-          class="base-timer__path-elapsed"
-          cx="50"
-          cy="50"
-          r="46.5"
-        />
-      </g>
-    </svg>
-    <span class="base-timer__label">
-      <!-- Remaining time label -->
-       {{ formattedTimeLeft }}
-    </span>
-  </div>
+  <!-- Test Questions  -->
+     <b-form class="border bg-white p-3" @submit.prevent>
+        <b-form-group label="Radios using sub-components" />
+      <b-form-radio-group
+        id="radio-group-2"
+        v-model="selected"
+        :aria-describedby="ariaDescribedby"
+        name="radio-sub-component"
+      >
+        <b-form-radio value="choiceA">A. Choice A</b-form-radio>
+        <b-form-radio value="choiceB">B. Choice B</b-form-radio>
+        <b-form-radio value="choiceC">C. None of the above</b-form-radio>
+        <b-form-radio value="choiceD">D. All of the above</b-form-radio>
+      </b-form-radio-group>
+      <br><br>
+      <b-button
+        type="submit"
+        variant="danger"
+        @click="submit"
+        >
+        Submit
+      </b-button>
+     </b-form>
   </div>
 </template>
 
@@ -61,6 +63,10 @@ import {
   BFormSelectOption,
   BCard,
   BButton,
+  BForm,
+  BFormGroup,
+  BFormRadio,
+  BFormRadioGroup,
 } from 'bootstrap-vue'
 
 export default {
@@ -69,13 +75,10 @@ export default {
     BFormSelectOption,
     BCard,
     BButton,
-  },
-  //   BaseTimer.vue
-  props: {
-    timeLeft: {
-      type: Number,
-      required: true,
-    },
+    BForm,
+    BFormGroup,
+    BFormRadio,
+    BFormRadioGroup,
   },
   data() {
     return {
@@ -95,35 +98,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    // BaseTime.vue
-/* Sets the containers height and width */
-.base-timer {
-  position: relative;
-  width: 300px;
-  height: 300px;
-/* Removes SVG styling that would hide the time label */
-  &__circle {
-    fill: none;
-    stroke: none;
-  }
-/* The SVG path that displays the timer's progress */
-  &__path-elapsed {
-    stroke-width: 7px;
-    stroke:grey;
-  }
-  &__label {
-    position: absolute;
-    /* Size should match the parent container */
-    width: 300px;
-    height: 300px;
-    /* Keep the label aligned to the top */
-    top: 0;
-    /* Create a flexible box that centers content vertically and horizontally */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Sort of an arbitrary number; adjust to your liking */
-    font-size: 48px;
-  }
-}
+
 </style>

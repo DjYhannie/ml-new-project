@@ -19,14 +19,7 @@
 
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
-        <h3>Create Question</h3>
-        <!-- <b-button-group class="buttons">
-          <b-dropdown v-model="questionDescription.category">
-            <b-dropdown-item>Easy</b-dropdown-item>
-            <b-dropdown-item>Intermediate</b-dropdown-item>
-            <b-dropdown-item>Hard</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group> -->
+        <!-- <h3>Create Question</h3> -->
         <b-form-select
             v-model="questionDescription.category"
             :options="optionsCategories"
@@ -37,12 +30,6 @@
             v-model="questionDescription.course"
             :options="options"
           />
-          <!-- <input
-            v-model="questionDescription.course"
-            type="text"
-            class="form-control"
-            placeholder="Course Name"
-            aria-describedby="basic-addon1"> -->
         </div>
         <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
@@ -100,6 +87,15 @@
               >
             </div>
             <b-button
+              v-show="editShow"
+              variant="primary"
+              type="submit"
+              @click="editQuestion()"
+            >
+              Edit
+            </b-button>
+            <b-button
+              v-show="addShow"
               variant="primary"
               type="submit"
             >
@@ -185,7 +181,7 @@
         </div>
         <b-form @submit.prevent="update">
           <b-form-group name="questions">
-            <!-- <div
+            <div
               :id="question.id"
               style="display:none"
             >
@@ -209,7 +205,7 @@
               >
                 Update Question
               </b-button>
-            </div> -->
+            </div>
           </b-form-group>
         </b-form>
       </b-card>
@@ -231,8 +227,8 @@ import {
   BCollapse,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions, mapState } from 'vuex'
-// import * as questionTypes from '../store/types/questions'
+import { mapActions, mapMutations, mapState } from 'vuex'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -250,6 +246,9 @@ export default {
   },
   data() {
     return {
+      addShow: true,
+      editShow: false,
+      index: null,
       visible: false,
       modalShow: false,
       isShow: false,
@@ -310,10 +309,31 @@ export default {
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
       GET_COURSES: 'ACTION_GET_COURSE',
     }),
+    ...mapMutations({
+      DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
+    }),
     async submitQuestion() {
       console.log('logging...')
       const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
       console.log(response)
+      this.questionDescription.course = ''
+      this.questionDescription.category = ''
+      this.questionDescription.question = ''
+      this.questionDescription.answer = ''
+      this.questionDescription.choices.choiceA = ''
+      this.questionDescription.choices.choiceB = ''
+      this.questionDescription.choices.choiceC = ''
+      this.questionDescription.choices.choiceD = ''
+      this.modalShow = false
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Added!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
+      // this.isShow = true
     },
     async submitCourse() {
       console.log('adding course')
@@ -322,14 +342,28 @@ export default {
       this.isShow = false
       console.log('VUE COMPONENT RESPONSE', response)
     },
-    deleteButton() {
+    async deleteButton(question) {
+      console.log(question)
+      const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
+      console.log('DELETED_', response)
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Deleted!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
       console.log('deleted!')
     },
     editButton() {
+      this.modalShow = true
+      this.editShow = true
+      this.addShow = false
       console.log('edited!')
     },
-    cancel() {
-      // document.getElementById(questions.id).style.display = 'none'
+    editQuestion() {
+      console.log('EDITED__')
     },
   },
 }

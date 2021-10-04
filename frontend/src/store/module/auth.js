@@ -31,6 +31,7 @@ const actions = {
     commit('setUser', response.data)
     commit('setToken', response.data.token)
     sessionStorage.setItem('setToken', response.data.token)
+    return response
   },
   // FOR DEMO
   // async LogIn({ commit, dispatch }, User) {

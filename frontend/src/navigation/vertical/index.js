@@ -1,5 +1,10 @@
 export default [
   {
+    title: 'Take Exam',
+    route: 'user/take-exam',
+    icon: 'FeatherIcon',
+  },
+  {
     title: 'Home',
     route: 'home',
     icon: 'HomeIcon',
@@ -18,10 +23,5 @@ export default [
     title: 'Questionnaire',
     route: 'questionnaire',
     icon: 'FileMinusIcon',
-  },
-  {
-    title: 'Take Exam',
-    route: 'user/take-exam',
-    icon: 'FeatherIcon',
   },
 ]
