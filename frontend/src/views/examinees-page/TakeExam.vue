@@ -15,13 +15,13 @@
     <!-- button  -->
     <b-button
       id="show-btn"
-      @click="$bvModal.show('bv-modal-example')"
+      @click="choose(x)"
       variant="danger">
       Choose
       </b-button>
       </b-card>
       <!-- modal  -->
-       <b-modal id="bv-modal-example" hide-footer>
+       <b-modal id="bv-modal-example" ref="isModal" hide-footer>
     <template #modal-title>
       <code>Take the Test?</code>
     </template>
@@ -29,29 +29,12 @@
       <h3>Click Start if you are ready to take the test!</h3>
       <p>By clicking the start button the timer will automatically start.</p>
     </div>
-    <b-button class="mt-3" block @click="$bvModal.hide('bv-modal-example')">Start</b-button>
+    <b-button class="mt-3" variant="outline-danger" @click="start()">Start</b-button>
   </b-modal>
-  <!-- ---TIMER---  -->
-    <div class="base-timer">
-    <svg
-      class="base-timer__svg"
-      viewBox="0 0 100 100"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g class="base-timer__circle">
-        <circle
-          class="base-timer__path-elapsed"
-          cx="50"
-          cy="50"
-          r="46.5"
-        />
-      </g>
-    </svg>
-    <span class="base-timer__label">
-      <!-- Remaining time label -->
-       {{ formattedTimeLeft }}
-    </span>
-  </div>
+  <!-- BaseTimer  -->
+  <BaseTimer v-show="isTimer"
+      :time-left="timeLeft"
+    />
   </div>
 </template>
 
@@ -62,68 +45,68 @@ import {
   BCard,
   BButton,
 } from 'bootstrap-vue'
+import BaseTimer from './BaseTimer.vue'
 
 export default {
   components: {
+    BaseTimer,
     BFormSelect,
     BFormSelectOption,
     BCard,
     BButton,
   },
-  //   BaseTimer.vue
-  props: {
-    timeLeft: {
-      type: Number,
-      required: true,
-    },
-  },
   data() {
     return {
+      isTimer: false,
+      isModal: true,
+      // isShow: false,
       selected: null,
       options: [
         { value: 'A', text: 'Questionnaire 1 (from options prop)' },
         { value: 'B', text: 'Questionnaire 2 (from options prop)' },
       ],
+      // BaseTimer
+      timeLimit: 20,
+      timePassed: 0,
+      timeInterval: null,
     }
   },
   methods: {
     choose() {
+      this.$refs.isModal.show()
       console.log('Choosen!')
     },
+    start() {
+      this.$refs.isModal.hide()
+      // this.isShow = true
+      this.isTimer = true
+    },
+    // BaseTimer
+    startTimer() {
+      this.timerInterval = setInterval(() => {
+        this.timePassed += 1
+      }, 1000)
+    },
+  },
+  // BaseTimer
+  computed: {
+    formattedTimeLeft() {
+      const { timeLeft } = this.timeLeft
+      // The largest round integer less than or equal to the result of time divided being by 60.
+      const minutes = Math.floor(timeLeft / 60)
+      // Seconds are the remainder of the time divided by 60 (modulus operator)
+      let seconds = timeLeft % 60
+      // If the value of seconds is less than 10,then display seconds with a leading zero
+      if (seconds < 10) {
+        seconds = `0${seconds}`
+      }
+      // The output in MM:SS format
+      return `${minutes}:${seconds}`
+    },
+  },
+  // BaseTimer
+  mounted() {
+    this.startTimer() 
   },
 }
 </script>
-
-<style scoped lang="scss">
-    // BaseTime.vue
-/* Sets the containers height and width */
-.base-timer {
-  position: relative;
-  width: 300px;
-  height: 300px;
-/* Removes SVG styling that would hide the time label */
-  &__circle {
-    fill: none;
-    stroke: none;
-  }
-/* The SVG path that displays the timer's progress */
-  &__path-elapsed {
-    stroke-width: 7px;
-    stroke:grey;
-  }
-  &__label {
-    position: absolute;
-    /* Size should match the parent container */
-    width: 300px;
-    height: 300px;
-    /* Keep the label aligned to the top */
-    top: 0;
-    /* Create a flexible box that centers content vertically and horizontally */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Sort of an arbitrary number; adjust to your liking */
-    font-size: 48px;
-  }
-}
-</style>

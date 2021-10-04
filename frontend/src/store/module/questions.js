@@ -39,14 +39,6 @@ export default {
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
     async ACTION_ADD_COURSE({ commit }, addCourse) {
       console.log(addCourse)
       const response = await api.post('/course/add', addCourse)

@@ -148,6 +148,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/user/baseTimer',
+      name: 'user/baseTimer',
+      component: () => import('@/views/examinees-page/BaseTimer.vue'),
+      meta: {
+        pageTitle: 'Base Timer',
+        breadcrumb: [
+          {
+            text: 'Base Timer',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
       path: '*',
       redirect: 'error-404',
     },
