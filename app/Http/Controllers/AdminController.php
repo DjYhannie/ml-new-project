@@ -25,7 +25,7 @@ class AdminController extends Controller
    {
     $validator = Validator::make($request->all(),[
         'password' => 'required',
-        'username' => 'required'
+        'email' => 'required'
     ]);
 
     if ($validator ->fails()) {
@@ -33,7 +33,7 @@ class AdminController extends Controller
 
     }else
     {
-        $user= Admin::where('username', $request->username)->first();
+        $user= Admin::where('email', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
@@ -54,7 +54,7 @@ class AdminController extends Controller
     //Query to add courses
     public function addCourses(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         try{
 
             $validate = $request->validate([

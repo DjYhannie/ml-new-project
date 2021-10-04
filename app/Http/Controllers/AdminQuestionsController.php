@@ -118,7 +118,7 @@ class AdminQuestionsController extends Controller
 
 
       //Query to get all Questions
-    public function getAllQuestions()
+    public function getAllQuestions(Questions $question)
     {
         try{
 

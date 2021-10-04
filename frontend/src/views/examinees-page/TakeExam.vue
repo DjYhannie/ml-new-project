@@ -35,6 +35,29 @@
   <BaseTimer v-show="isTimer"
       :time-left="timeLeft"
     />
+  <!-- Test Questions  -->
+     <b-form class="border bg-white p-3" @submit.prevent>
+        <b-form-group label="Radios using sub-components" />
+      <b-form-radio-group
+        id="radio-group-2"
+        v-model="selected"
+        :aria-describedby="ariaDescribedby"
+        name="radio-sub-component"
+      >
+        <b-form-radio value="choiceA">A. Choice A</b-form-radio>
+        <b-form-radio value="choiceB">B. Choice B</b-form-radio>
+        <b-form-radio value="choiceC">C. None of the above</b-form-radio>
+        <b-form-radio value="choiceD">D. All of the above</b-form-radio>
+      </b-form-radio-group>
+      <br><br>
+      <b-button
+        type="submit"
+        variant="danger"
+        @click="submit"
+        >
+        Submit
+      </b-button>
+     </b-form>
   </div>
 </template>
 
@@ -44,6 +67,10 @@ import {
   BFormSelectOption,
   BCard,
   BButton,
+  BForm,
+  BFormGroup,
+  BFormRadio,
+  BFormRadioGroup,
 } from 'bootstrap-vue'
 import BaseTimer from './BaseTimer.vue'
 
@@ -54,6 +81,10 @@ export default {
     BFormSelectOption,
     BCard,
     BButton,
+    BForm,
+    BFormGroup,
+    BFormRadio,
+    BFormRadioGroup,
   },
   data() {
     return {
@@ -110,3 +141,7 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+
+</style>
