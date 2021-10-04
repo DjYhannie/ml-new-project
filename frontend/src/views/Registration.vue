@@ -52,11 +52,7 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-<<<<<<< HEAD
-              @submit.prevent="validationForm"
-=======
               @submit.prevent= 'validationForm'
->>>>>>> 4a36481412b8337379d889b4d6592b551d1485fb
             >
 
               <!-- name -->

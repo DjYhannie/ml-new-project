@@ -186,9 +186,10 @@ class QuestionnaireController extends Controller
                     'is_accessed' => true,
                 ];
 
-                DB::table('url_tokens')->insert($token_data, $shuffled);
-
+                DB::table('url_tokens')->insert($token_data);
+                return $token_data;
             }
+
 
             return response()->json([
                 'data' => $shuffled,
@@ -199,6 +200,21 @@ class QuestionnaireController extends Controller
         catch(\Exception $e){
             return response()->json([
                 'message' => "Error",
+                'error' => $e,
+                'status_code' => 400
+            ]);
+        }
+    }
+    public function getRandomizeQuestions()
+    {
+        $user = Auth::user();
+
+        try{
+            DB::table('url_tokens')
+                ->select('id', 'user_id', '');
+        }
+        catch(\Exception $e){
+            return response()->json([
                 'error' => $e,
                 'status_code' => 400
             ]);
