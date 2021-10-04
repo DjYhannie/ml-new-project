@@ -13,7 +13,7 @@ export default {
   },
   getters: {
     GET_QUESTION: state => state.questions,
-    GET_COURSE: state => state.courses,
+    GET_COURSES: state => state.courses,
   },
   actions: {
     // OK NA
@@ -39,8 +39,8 @@ export default {
     async ACTION_GET_COURSE({ commit }) {
       const response = await api.get('/course')
       console.log(response.data.courses)
-      commit('SET_COURSES', response.data.courses)
-      return response.data.courses
+      commit('SET_COURSES', response.data)
+      return response.data
     },
     // OK NA
     async ACTION_ADD_COURSE({ commit }, addCourse) {
@@ -73,7 +73,7 @@ export default {
       state.questions = question
     },
     // [questionTypes.MUTATION_DELETE_QUESTION](state,  id) {
-    //   state.questionses = state.questions.filter
+    //   state.questions = state.questions.filter
     // }
   },
 }

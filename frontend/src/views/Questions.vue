@@ -133,10 +133,13 @@
       </b-modal>
     </div>
     <br>
-    <div v-for="course in courses" :key="course">
-      {{course[0]}}
+    <div>
+      {{courses.courses[0]}}
     </div>
-    <br><br><hr><br>
+    <br>
+    <br>
+    <hr>
+    <br>
     <!-- Edit/Delete Questions  -->
     <div
       v-for="question in questions.questions"
