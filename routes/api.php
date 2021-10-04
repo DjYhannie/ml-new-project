@@ -37,6 +37,9 @@ Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
 Route::post('/course/add',[AdminController::class, 'addCourses']);
 
+Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
+Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
+
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
@@ -44,8 +47,8 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Questions Related
     // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
-    Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
-    Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
+    // Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
+    // Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
     // Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
     Route::get('/questions/{id}',[AdminQuestionsController::class, 'getQuestionById']);
     Route::get('/questions/category',[AdminQuestionsController::class, 'allQuestionsByCategory']);

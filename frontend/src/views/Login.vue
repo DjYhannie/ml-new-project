@@ -112,7 +112,6 @@
               >
                 Sign in
               </b-button>
-              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
 
@@ -284,9 +283,8 @@ export default {
           const token = this.$store.getters.StateToken
           console.log(token)
           const message = login.data.message
-           if (this.$store.getters.StateToken) {
+          if (this.$store.getters.StateToken) {
             this.$router.push({ name: 'home' })
-            // console.log(login.data.data.message)
           } else {
             this.$toast({
             component: ToastificationContent,
