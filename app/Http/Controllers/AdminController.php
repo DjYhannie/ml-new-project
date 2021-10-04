@@ -54,7 +54,7 @@ class AdminController extends Controller
     //Query to add courses
     public function addCourses(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         try{
 
             $validate = $request->validate([

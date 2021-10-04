@@ -133,7 +133,9 @@
       </b-modal>
     </div>
     <br>
-
+    <div v-for="course in courses" :key="course">
+      {{course[0]}}
+    </div>
     <br><br><hr><br>
     <!-- Edit/Delete Questions  -->
     <div
@@ -281,24 +283,29 @@ export default {
   computed: {
     ...mapState({
       questions: 'questions',
+      courses: 'courses',
     }),
   },
   watch: {
-    GET_QUESTIONS: e => {
-      console.log(e)
-    },
+    // GET_QUESTIONS: e => {
+    //   console.log(e)
+    // },
+    // GET_COURSES: e => {
+    //   console.log('GET COURSES', e)
+    // },
   },
   created() {
     this.GET_QUESTIONS()
+    this.GET_COURSES()
   },
   mounted() {
     this.GET_QUESTIONS()
-    console.log(this.GET_QUESTIONS)
+    this.GET_COURSES()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
-      // ADD_COURSE: 'ACTION_ADD_COURSE',
+      GET_COURSES: 'ACTION_GET_COURSE',
     }),
     async submitQuestion() {
       console.log('logging...')
@@ -307,17 +314,10 @@ export default {
     },
     async submitCourse() {
       console.log('adding course')
-      console.log(this.course.name)
-      const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course.name)
-      console.log(response)
-      this.questionDescription.course = ''
-      this.questionDescription.category = ''
-      this.questionDescription.answer = ''
-      this.questionDescription.choiceA = ''
-      this.questionDescription.choiceB = ''
-      this.questionDescription.choiceC = ''
-      this.questionDescription.choiceD = ''
-      this.isShow = true
+      const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
+      this.course.name = ''
+      this.isShow = false
+      console.log('VUE COMPONENT RESPONSE', response)
     },
     deleteButton() {
       console.log('deleted!')

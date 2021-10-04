@@ -2,21 +2,18 @@
 import api from '../../libs/axios'
 import * as questionTypes from '../types/questions'
 
+// important ni siya
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export default {
   state: {
     namespaced: true,
     questions: {},
-    course: '',
+    courses: {},
     show: true,
   },
   getters: {
-    // [questionTypes.GETTER_QUESTION]: state => state.questions,
-    // GET_QUESTION(state) {
-    //   return state.questions
-    // },
     GET_QUESTION: state => state.questions,
-    GET_COURSE: state => state.course,
+    GET_COURSE: state => state.courses,
   },
   actions: {
     // OK NA
@@ -39,28 +36,33 @@ export default {
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
+    async ACTION_GET_COURSE({ commit }) {
+      const response = await api.get('/course')
+      console.log(response.data.courses)
+      commit('SET_COURSES', response.data.courses)
+      return response.data.courses
+    },
+    // OK NA
     async ACTION_ADD_COURSE({ commit }, addCourse) {
-      console.log(addCourse)
       const response = await api.post('/course/add', addCourse)
-      console.log(response)
-      commit('SET_COURSE', response)
+      commit('SET_COURSES', response)
       return response
     },
+    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+    //   await api.delete(`/delete/${id}`)
+    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    // },
+    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
+    //   await api.delete(`/delete/${id}`)
+    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
+    // },
   },
   mutations: {
     SET_QUESTION(state, questions) {
       state.questions = questions
     },
-    SET_COURSE(state, course) {
-      state.course = course
+    SET_COURSES(state, courses) {
+      state.courses = courses
     },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions

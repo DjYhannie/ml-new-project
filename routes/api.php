@@ -36,6 +36,7 @@ Route::post('/login',[RegistrationController::class,'login']);
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
 Route::post('/course/add',[AdminController::class, 'addCourses']);
+Route::get('/course',[AdminController::class, 'getCourses']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -60,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/questions/course/averagecategory',[AdminQuestionsController::class, 'getQuestionsByCourseAverageCategory']);
     Route::post('/questions/course/hardcategory',[AdminQuestionsController::class, 'getQuestionsByCourseHardCategory']);
 
-    Route::post('/course',[AdminController::class, 'getCourses']);
+    // Route::post('/course',[AdminController::class, 'getCourses']);
     Route::post('/course{id}',[AdminController::class, 'getCoursesById']);
     // Route::post('/course/add',[AdminController::class, 'addCourses']);
 
