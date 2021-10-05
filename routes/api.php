@@ -30,10 +30,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
 Route::post('/register',[RegistrationController::class,'register']);
 Route::post('/login',[RegistrationController::class,'login']);
-Route::post('/logout', [RegistrationController::class, 'logout']);
+
 
 //for testing
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
+Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
+Route::post('/course/add',[AdminController::class, 'addCourses']);
+Route::get('/course',[AdminController::class, 'getCourses']);
+// Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
+Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
+Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
+
+Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
+Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
 
 Route::middleware('auth:sanctum')->group(function(){
 
@@ -43,8 +52,11 @@ Route::middleware('auth:sanctum')->group(function(){
     //Questions Related
     // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
     Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
-    Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
-    Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
+    // Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
+    // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
+    // Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
+    // Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
+    // Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
     Route::get('/questions/{id}',[AdminQuestionsController::class, 'getQuestionById']);
     Route::get('/questions/category',[AdminQuestionsController::class, 'allQuestionsByCategory']);
     Route::get('/questions/course',[AdminQuestionsController::class, 'allQuestionsByCourse']);
@@ -58,14 +70,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/questions/course/averagecategory',[AdminQuestionsController::class, 'getQuestionsByCourseAverageCategory']);
     Route::post('/questions/course/hardcategory',[AdminQuestionsController::class, 'getQuestionsByCourseHardCategory']);
 
-    Route::post('/course',[AdminController::class, 'getCourses']);
+    // Route::post('/course',[AdminController::class, 'getCourses']);
     Route::post('/course{id}',[AdminController::class, 'getCoursesById']);
-    Route::post('/course/add',[AdminController::class, 'addCourses']);
+    // Route::post('/course/add',[AdminController::class, 'addCourses']);
 
-    Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
+    // Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
     Route::post('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
     Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
-    Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
+    // Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
     Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);
 
 
@@ -74,7 +86,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/users/name',[AdminController::class, 'getUserByName']);
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
-    Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
+    // Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
+
+
+    Route::post('/logout', [RegistrationController::class, 'logout']);
+
+    Route::post('/logout', [RegistrationController::class, 'logout']);
 
 
 });

@@ -38,7 +38,6 @@ class AdminQuestionsController extends Controller
                 'course' => $validate['course'],
                 'answer' => $validate['answer'],
                 'choices' => json_encode($validate['choices'])
-
             ]);
 
             $question->save();
@@ -119,7 +118,7 @@ class AdminQuestionsController extends Controller
 
 
       //Query to get all Questions
-    public function getAllQuestions()
+    public function getAllQuestions(Questions $question)
     {
         try{
 

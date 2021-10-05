@@ -105,21 +105,61 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/registration',
-      name: 'registration',
-      component: () => import('@/views/Registration.vue'),
-      meta: {
-        layout: 'full',
-        requiresAuth: false,
-      },
-    },
-    {
       path: '/error-404',
       name: 'error-404',
       component: () => import('@/views/error/Error404.vue'),
       meta: {
         layout: 'full',
         requiresAuth: false,
+      },
+    },
+    // Examinees Pages
+    {
+      path: '/user-login',
+      name: 'user-login',
+      component: () => import('@/views/examinees-page/UserLogin.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: false,
+      },
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: () => import('@/views/examinees-page/Registration.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: false,
+      },
+    },
+    {
+      path: '/user/take-exam',
+      name: 'user/take-exam',
+      component: () => import('@/views/examinees-page/TakeExam.vue'),
+      meta: {
+        pageTitle: 'Take Exam',
+        breadcrumb: [
+          {
+            text: 'Take Examination',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/user/baseTimer',
+      name: 'user/baseTimer',
+      component: () => import('@/views/examinees-page/BaseTimer.vue'),
+      meta: {
+        pageTitle: 'Base Timer',
+        breadcrumb: [
+          {
+            text: 'Base Timer',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
       },
     },
     {
@@ -138,13 +178,31 @@ router.afterEach(() => {
     appLoading.style.display = 'none'
   }
 })
+// router.beforeEach((to, from, next) => {
+//   setTimeout(() => {
+//     next()
+//   }, 1000)
+//   const token = auth.getters.StateToken
+//   // if (to.matched.some(route => route.meta.requiresAuth)) {
+//   if (to.matched[0].meta.requiresAuth) {
+//     // if (auth.currentUser) {
+//     // console.log(this.currentUser)
+//     if (token) {
+//       console.log(token)
+//     } else {
+//       // console.log(this.requiresAuth)
+//       next({ name: 'login' })
+//     }
+//     // } else {
+//     // next({ name: 'login' })
+//     // }
+//   }
+//   next()
+// })
 router.beforeEach((to, from, next) => {
-  setTimeout(() => {
-    next()
-  }, 1000)
   const token = auth.getters.StateToken
-  // if (to.matched.some(route => route.meta.requiresAuth)) {
-  if (to.matched[0].meta.requiresAuth) {
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+  // if (to.matched[0].meta.requiresAuth) {
     // if (auth.currentUser) {
     // console.log(this.currentUser)
     if (token) {
@@ -159,16 +217,5 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-// router.beforeEach((to, from, next) => {
-//   // redirect to login page if not logged in and trying to access a restricted page
-//   const publicPages = ['/', '/register']
-//   const authRequired = !publicPages.includes(to.path)
-//   const loggedIn = sessionStorage.getItem('setUser')
-
-//   if (authRequired && !loggedIn) {
-//     return next('/')
-//   }
-//   next()
-// })
 
 export default router

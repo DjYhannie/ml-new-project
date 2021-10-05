@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminsTable extends Migration
+class CreateLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('password');
-            //modified
-            $table->string('role');
-            //
+            $table->json('randomizedQuestions');
+            $table->string('token');
             $table->timestamps();
-            $table->rememberToken();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -32,7 +29,6 @@ class CreateAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
-
+        Schema::dropIfExists('links');
     }
 }

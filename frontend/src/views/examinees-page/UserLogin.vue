@@ -50,9 +50,9 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- password -->
+              <!-- forgot password -->
               <b-form-group>
-                <!-- <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
                   <b-link
                     :to="{
@@ -61,7 +61,7 @@
                   >
                     <small>Forgot Password?</small>
                   </b-link>
-                </div> -->
+                </div>
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
@@ -92,17 +92,6 @@
                 </validation-provider>
               </b-form-group>
 
-              <!-- checkbox -->
-              <!-- <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
-                >
-                  Remember Me
-                </b-form-checkbox>
-              </b-form-group> -->
-
               <!-- submit buttons -->
               <b-button
                 type="submit"
@@ -112,43 +101,15 @@
               >
                 Sign in
               </b-button>
+              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
-
-          <!-- divider -->
-          <!-- <div class="divider my-2">
-            <div class="divider-text">
-              or
-            </div>
-          </div> -->
-
-          <!-- social buttons -->
-          <!-- <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button
-              variant="facebook"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button
-              variant="twitter"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button
-              variant="google"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button
-              variant="github"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div> -->
+          <b-card-text class="text-center mt-2">
+            <span>Don't have an account yet? </span>
+            <b-link :to="{ name: 'registration' }">
+              <span>&nbsp;Register</span>
+            </b-link>
+          </b-card-text>
         </b-col>
       </b-col>
       <!-- /Login-->
@@ -181,9 +142,9 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import { mapActions } from 'vuex'
-import * as userTypes from '../store/types/users'
-import * as auth from '../store/module/auth'
+// import { mapActions } from 'vuex'
+// import * as userTypes from '../store/types/users'
+// import * as auth from '../store/module/auth'
 
 
 export default {
@@ -240,61 +201,56 @@ export default {
     //   postUser:userTypes.ACTION_SET_LOGIN
     // }),
     
-    // validationForm() {
-    
-    //   this.$refs.loginValidation.validate().then(async success => {
-    //     if (success) {
-    //       const login = await this.$store.dispatch('LogIn', this.data)
-    //       console.log(login)
-    //       if (this.$store.getters['StateToken']) {
-    //         console.log('Token', this.$store.getters['StateToken'])
-    //         setTimeout(() => {
-    //           this.$router.push({ name: 'home' })
-    //         },1500)
-    //           this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: 'Form Submitted',
-    //             icon: 'EditIcon',
-    //             variant: 'success',
-    //           },
-    //         })     
-    //       } else {
-    //       this.isError = true,
-    //       this.$toast({
-    //         component: ToastificationContent,
-    //         props: {
-    //           title: 'Email or Password is incorrect',
-    //           icon: 'EditIcon',
-    //           variant: 'danger',
-    //         },
-    //       }) 
-    //       console.log('Empty!')
-    //     }
-    //     }
-    //   })
-    // },
-        validationForm() {
+    validationForm() {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
-          const login = await this.$store.dispatch('LogIn', this.data)
+          const login = await this.$store.dispatch('UserLogin', this.data)
           console.log('LOGIN_', login)
           const token = this.$store.getters.StateToken
-          console.log('TOKEN_', token)
+          console.log(token)
           const message = login.data.message
-          if (this.$store.getters.StateToken) {
-            this.$router.push({ name: 'home' })
-          } else {
+          if (!token) {
             this.$toast({
             component: ToastificationContent,
             props: {
+              // title: 'Email or Password is incorrect',
               title: `${message}`,
               icon: 'EditIcon',
               variant: 'danger',
             },
           }) 
+          console.log(token)
+          } else {
+            console.log(token)
+            this.$router.push({ name: 'home' })
+            console.log(login.data.message)
           }
+          // this.$router.push({ name: 'home' })
+          // if (this.$store.getters['StateToken']) {
+          //   console.log('Token', this.$store.getters['StateToken'])
+          //   setTimeout(() => {
+          //     this.$router.push({ name: 'home' })
+          //   },1500)
+          //     this.$toast({
+          //     component: ToastificationContent,
+          //     props: {
+          //       title: 'Form Submitted',
+          //       icon: 'EditIcon',
+          //       variant: 'success',
+          //     },
+          //   })     
+          // }
+        // }else {
+        //   this.isError = true,
+        //   this.$toast({
+        //     component: ToastificationContent,
+        //     props: {
+        //       title: 'Email or Password is incorrect',
+        //       icon: 'EditIcon',
+        //       variant: 'danger',
+        //     },
+        //   }) 
         }
       })
     },

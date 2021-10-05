@@ -12,6 +12,7 @@ use App\Models\Questions;
 use App\Notifications\ExamLink;
 use Illuminate\Notifications\Notifiable;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
 class ExamFormController extends Controller
@@ -19,36 +20,27 @@ class ExamFormController extends Controller
 
     public function examLink()
     {
-        $link = URL::temporarySignedRoute('examcode', now()->addMinutes(30));
-        dd(gettype($link));
-        return response()->json($this->sendExamLink($link));
+         // $link = URL::temporarySignedRoute('examcode', now()->addMinutes(30));
+        try{
 
+            $token = sha1(uniqid(time(),true));
+
+            DB::table('links')
+                ->insert(['token' =>$token, 'created_at' => Carbon::now()]);
+
+
+            return response()->json([
+                'message' => "Link created Successfully",
+                'link' => $token
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => $e,
+                'status_code' => 400
+            ]);
+        }
     }
-
-
-    public function sendExamLink()
-    {
-
-
-
-        // $user = Auth::user();
-
-        // $rule = $request->validate(['email' => 'required|email']);
-        // $checked = User::where('email', '=', $rule)->first();
-
-        // $link = URL::temporarySignedRoute('examcode', now()->addMinutes(30));
-        $user = Auth::user()->email;
-        dd($user);
-        // return response()->json($user);
-        // Notification::send($user, new ExamLink());
-        $user->notify(new ExamLink($user));
-
-        return response()->json([
-            'message' => 'Email Sent'
-        ]);
-
-    }
-
 
 
 
@@ -63,7 +55,5 @@ class ExamFormController extends Controller
         }
         return $response;
     }
-
-
 
 }

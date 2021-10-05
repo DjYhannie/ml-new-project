@@ -52,7 +52,7 @@
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent= 'validationForm'
+              @submit.prevent="validationForm"
             >
 
               <!-- name -->
@@ -204,8 +204,8 @@ import {
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
-import axios from '../libs/axios'
-// import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+// import axios from '../libs/axios'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 // import { mapActions } from 'vuex'
 
 extend('confirmPassword', {
@@ -268,8 +268,9 @@ export default {
       this.$refs.registerValidation.validate().then(async success => {
         console.log(success)
         if (success) {
+          this.$router.push({ name: 'user-login' })
           const register = await this.$store.dispatch('Register', this.register)
-          console.log(register)
+          console.log('Response Component', register)
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -279,7 +280,7 @@ export default {
             },
           })
           setTimeout(() => {
-            this.$router.push({ name: 'login' })
+            this.$router.push({ name: 'user-login' })
           }, 2000)
         }
       })
