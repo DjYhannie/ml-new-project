@@ -9,14 +9,6 @@
       >
         Add Question
       </b-button>
-      <b-button
-        v-b-modal.modal-lg
-        class="modalButton"
-        @click="isShow = !isShow"
-      >
-        Add Course
-      </b-button>
-
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
         <!-- <h3>Create Question</h3> -->
@@ -25,12 +17,21 @@
             :options="optionsCategories"
           />
           <br><br>
-        <div class="input-group mb-1">
+        <!-- <div class="input-group mb-1">
           <b-form-select
             v-model="questionDescription.course"
             :options="options"
           />
-        </div>
+        </div> -->
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.course"
+                type="text"
+                class="form-control"
+                placeholder="Course"
+                aria-describedby="basic-addon1"
+              >
+            </div>
         <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
@@ -253,7 +254,7 @@ export default {
       modalShow: false,
       isShow: false,
       questionDescription: {
-        course: null,
+        course: '',
         category: null,
         question: '',
         answer: '',

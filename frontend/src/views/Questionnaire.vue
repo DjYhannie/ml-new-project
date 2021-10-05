@@ -9,7 +9,7 @@
       >
         Add Questionnaire
       </b-button>
-
+        <!-- Add Questionnaires  -->
       <b-modal v-model="modalShow">
         <h3>Create Questionnaire</h3>
         <b-form @submit.prevent="submitQuestionnaire">
@@ -36,6 +36,7 @@
                       type="number"
                       class="form-control"
                       label="Time Duration"
+                      placeholder="mins."
                     >
                   </div>
                 </b-col>
@@ -106,6 +107,18 @@
                     <input
                       name="hard"
                       v-model="questionnaire.hard_questions"
+                      type="text"
+                      class="form-control"
+                      label="Hard"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="total_questions">Total Questions: </label>
+                    <input
+                      name="hard"
+                      v-model="questionnaire.total_questions"
                       type="text"
                       class="form-control"
                       label="Hard"
@@ -258,44 +271,6 @@ export default {
         total_questions: '',
       },
       createquestion: '',
-      questions: [
-        {
-          title: 'test1',
-          course: 'test1',
-          selected: 'test1',
-          passing_score: 'test1',
-          easy: 'test1',
-          intermediate: 'test1',
-          hard: 'test1',
-        },
-        {
-          title: 'test2',
-          course: 'test2',
-          selected: 'test2',
-          passing_score: 'test2',
-          easy: 'test2',
-          intermediate: 'test2',
-          hard: 'test2',
-        },
-        {
-          title: 'test3',
-          course: 'test3',
-          selected: 'test3',
-          passing_score: 'test3',
-          easy: 'test3',
-          intermediate: 'test3',
-          hard: 'test3',
-        },
-        {
-          title: 'test4',
-          course: 'test4',
-          selected: 'test4',
-          passing_score: 'test4',
-          easy: 'test4',
-          intermediate: 'test4',
-          hard: 'test4',
-        },
-      ],
       options: [
         { value: null, text: 'Select Course', disabled: true },
         { value: 'Course 1', text: 'Course 1' },

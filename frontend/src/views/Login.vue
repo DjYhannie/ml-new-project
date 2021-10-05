@@ -52,16 +52,6 @@
 
               <!-- password -->
               <b-form-group>
-                <!-- <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
-                  <b-link
-                    :to="{
-                      name: 'auth-forgot-password-v2',
-                    }"
-                  >
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div> -->
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
@@ -91,19 +81,7 @@
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-
-              <!-- checkbox -->
-              <!-- <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
-                >
-                  Remember Me
-                </b-form-checkbox>
-              </b-form-group> -->
-
-              <!-- submit buttons -->
+              <!-- submit button -->
               <b-button
                 type="submit"
                 variant="danger"
@@ -114,41 +92,6 @@
               </b-button>
             </b-form>
           </validation-observer>
-
-          <!-- divider -->
-          <!-- <div class="divider my-2">
-            <div class="divider-text">
-              or
-            </div>
-          </div> -->
-
-          <!-- social buttons -->
-          <!-- <div class="auth-footer-btn d-flex justify-content-center">
-            <b-button
-              variant="facebook"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="FacebookIcon" />
-            </b-button>
-            <b-button
-              variant="twitter"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="TwitterIcon" />
-            </b-button>
-            <b-button
-              variant="google"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="MailIcon" />
-            </b-button>
-            <b-button
-              variant="github"
-              href="javascript:void(0)"
-            >
-              <feather-icon icon="GithubIcon" />
-            </b-button>
-          </div> -->
         </b-col>
       </b-col>
       <!-- /Login-->
@@ -236,44 +179,6 @@ export default {
     // console.clear()
   },
   methods: {
-    // ...mapActions({
-    //   postUser:userTypes.ACTION_SET_LOGIN
-    // }),
-    
-    // validationForm() {
-    
-    //   this.$refs.loginValidation.validate().then(async success => {
-    //     if (success) {
-    //       const login = await this.$store.dispatch('LogIn', this.data)
-    //       console.log(login)
-    //       if (this.$store.getters['StateToken']) {
-    //         console.log('Token', this.$store.getters['StateToken'])
-    //         setTimeout(() => {
-    //           this.$router.push({ name: 'home' })
-    //         },1500)
-    //           this.$toast({
-    //           component: ToastificationContent,
-    //           props: {
-    //             title: 'Form Submitted',
-    //             icon: 'EditIcon',
-    //             variant: 'success',
-    //           },
-    //         })     
-    //       } else {
-    //       this.isError = true,
-    //       this.$toast({
-    //         component: ToastificationContent,
-    //         props: {
-    //           title: 'Email or Password is incorrect',
-    //           icon: 'EditIcon',
-    //           variant: 'danger',
-    //         },
-    //       }) 
-    //       console.log('Empty!')
-    //     }
-    //     }
-    //   })
-    // },
         validationForm() {
     
       this.$refs.loginValidation.validate().then(async success => {

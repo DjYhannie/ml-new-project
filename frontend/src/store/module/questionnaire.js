@@ -24,8 +24,8 @@ export default {
     GET_QUESTIONNAIRE: state => state.questionnaires,
   },
   actions: {
-    ACTION_GET_QUESTIONNAIRE({ commit }) {
-      const response = api.get('/questionnaire')
+    async ACTION_GET_QUESTIONNAIRE({ commit }) {
+      const response = await api.get('/questionnaire')
       console.log(response)
       commit('SET_QUESTIONNAIRE')
       return response
@@ -60,9 +60,9 @@ export default {
     [questionnaireTypes.MUTATION_ADD_QUESTION]: (state, questionnaires) => {
       state.questionnaires.unshift(questionnaires)
     },
-    [questionnaireTypes.MUTATION_SET_QUESTIONNAIRE]: (state, questionnaires) => {
-      state.questionnaires = questionnaires
-    },
+    // [questionnaireTypes.MUTATION_SET_QUESTIONNAIRE]: (state, questionnaires) => {
+    //   state.questionnaires = questionnaires
+    // },
     [questionnaireTypes.MUTATION_ADD_QUESTIONNAIRE]: (state, questionnaire) => {
       state.questionnaires = questionnaire
     },
