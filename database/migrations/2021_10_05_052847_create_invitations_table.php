@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRandomizedQuestionsToUrlTokensTable extends Migration
+class CreateInvitationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddRandomizedQuestionsToUrlTokensTable extends Migration
      */
     public function up()
     {
-        Schema::table('url_tokens', function (Blueprint $table) {
-            $table->json('randomizedQuestions')->after('questionnaire_id');
+        Schema::create('invitations', function (Blueprint $table) {
+            $table->id();
+            $table->string('email')->unique();
+            $table->string('token', 20)->unique();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddRandomizedQuestionsToUrlTokensTable extends Migration
      */
     public function down()
     {
-        Schema::table('url_tokens', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('invitations');
     }
 }

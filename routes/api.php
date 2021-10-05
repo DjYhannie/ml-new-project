@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
     Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
     Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);
+    Route::get('/questionnaire/time/{id}', [QuestionnaireController::class, 'getExpiratiionTime']);
 
 
     //Get Users

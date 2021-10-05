@@ -46,6 +46,15 @@ class QuestionnaireController extends Controller
             ]);
     }
 
+    public function addReciepient(Request $request)
+    {
+        $user = Auth::user();
+
+        $validate = Validator::make($request -> all(),[
+            'email' => 'required'
+        ]);
+    }
+
 
     public function updateQuestionnaire(Request $request, $id)
     {
@@ -205,13 +214,16 @@ class QuestionnaireController extends Controller
             ]);
         }
     }
-    public function getRandomizeQuestions()
+    public function getExpiratiionTime($id)
     {
         $user = Auth::user();
 
         try{
-            DB::table('url_tokens')
-                ->select('id', 'user_id', '');
+            $questionnairetime = Questionnaire::find($id);
+            $time = $questionnairetime->time_duration;
+            
+            dd($time);
+
         }
         catch(\Exception $e){
             return response()->json([
@@ -220,4 +232,43 @@ class QuestionnaireController extends Controller
             ]);
         }
     }
+
+    public function invites(Request $request )
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        $validator->after(function ($validator) use ($request){
+            if (Invitation::where('email', $request->input('email'))->exist()){
+                $validator->errors()->add('email', 'Invite exists with this email!');
+            }
+        });
+        if ($validate->fails()) {
+            return response()->json([
+                'message' => 'Error',
+                'error'   => $validate->errors()
+            ]);
+        }
+        do{
+            $token = Str::random(20);
+        }
+        while (Invitation::where('token', $token)->first());
+
+        Invitation::create([
+            'token' => $token,
+            'email' => $request->input('email')
+        ]);
+
+        $url = URL::temporarySignedRoute(
+            'invitation', now()->addMinutes(30),
+            ['token' => $token]
+        );
+
+        Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
+
+    }
+
+
+
 }
