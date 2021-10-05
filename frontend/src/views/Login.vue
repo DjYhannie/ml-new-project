@@ -41,7 +41,7 @@
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="data.username"
+                    v-model="data.email"
                     :state="errors.length > 0 ? false : null"
                     name="login-email"
                     placeholder="name.test@mlhuillier.com"
@@ -211,7 +211,7 @@ export default {
       status: '',
       data: {
         password: '',
-        username: '',
+        email: '',
       },
       sideImg: require('@/assets/images/pages/login-accept-task.svg'),
       // validation rulesimport store from '@/store/index'
@@ -281,7 +281,7 @@ export default {
           const login = await this.$store.dispatch('LogIn', this.data)
           console.log('LOGIN_', login)
           const token = this.$store.getters.StateToken
-          console.log(token)
+          console.log('TOKEN_', token)
           const message = login.data.message
           if (this.$store.getters.StateToken) {
             this.$router.push({ name: 'home' })

@@ -12,7 +12,7 @@
 
       <b-modal v-model="modalShow">
         <h3>Create Questionnaire</h3>
-        <b-form @submit.prevent="submit">
+        <b-form @submit.prevent="submitQuestionnaire">
           <b-form-group name="create-questionnaire">
             <b-container>
               <b-row>
@@ -33,7 +33,7 @@
                     <input
                       name="timeDuration"
                       v-model="questionnaire.time_duration"
-                      type="time"
+                      type="number"
                       class="form-control"
                       label="Time Duration"
                     >
@@ -50,7 +50,7 @@
                     /> -->
                     <b-form-select
                       name="course"
-                      v-model="questionnaire.seleted"
+                      v-model="questionnaire.course"
                       :options="options"
                       label="Course"
                     />
@@ -81,7 +81,7 @@
                     <label for="easy">Easy: </label>
                     <input
                       name="easy"
-                      v-model="questionnaire.easy"
+                      v-model="questionnaire.easy_questions"
                       type="text"
                       class="form-control"
                       label="Easy"
@@ -93,7 +93,7 @@
                     <label for="intermediate">Intermediate: </label>
                     <input
                       name="intermediate"
-                      v-model="questionnaire.intermediate"
+                      v-model="questionnaire.average_questions"
                       type="text"
                       class="form-control"
                       label="Intermediate"
@@ -105,7 +105,7 @@
                     <label for="hard">Hard: </label>
                     <input
                       name="hard"
-                      v-model="questionnaire.hard"
+                      v-model="questionnaire.hard_questions"
                       type="text"
                       class="form-control"
                       label="Hard"
@@ -116,7 +116,7 @@
             </b-container>
               <b-button
               variant="primary"
-              @click="submit"
+             type="submit"
             >
               Add
             </b-button>
@@ -131,16 +131,14 @@
     <div
       v-for="questionnaire in questionnaires"
       :key="questionnaire.id"
-      class="question-content"
+      class="questionnaire-content"
     >
       <b-card name="questionnaire">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-              @click="editButton(questionnaire.id)"
             >Edit</b-dropdown-item>
             <b-dropdown-item
-              @click="deleteButton(questionnaire.id)"
             >Delete</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
@@ -151,22 +149,23 @@
             aria-controls="collapse-4"
             @click="visible = !visible"
           >
-            {{ questionnaire.sample }}
+            {{ questionnaire.title }}
           </b-card>
           <b-collapse
             id="collapse-4"
             v-model="visible"
             class="mt-2"
           >
+          <!-- Display  -->
             <b-card>
               <hr>
               <p>Title: {{ questionnaire.title }}</p>
               <p>Course: {{ questionnaire.course }}</p>
-              <p>Time Duration: {{ questionnaire.selected }}</p>
+              <p>Time Duration: {{ questionnaire.time_duration }}</p>
               <p>Passing Score: {{ questionnaire.passing_score }}</p>
-              <p>Easy: {{ questionnaire.easy }}</p>
-              <p>Intermediate: {{ questionnaire.intermediate }}</p>
-              <p>Hard: {{ questionnaire.hard }}</p>
+              <p>Easy: {{ questionnaire.easy_questions }}</p>
+              <p>Intermediate: {{ questionnaire.average_questions }}</p>
+              <p>Hard: {{ questionnaire.hard_questions }}</p>
             </b-card>
           </b-collapse>
         </div>
@@ -221,8 +220,9 @@ import {
   BContainer,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions } from 'vuex'
-import * as questionnaireTypes from '../store/types/questionnaire'
+import { mapActions, mapState } from 'vuex'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+// import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
   components: {
@@ -250,10 +250,12 @@ export default {
         title: '',
         course: '',
         selected: '',
+        time_duration: '',
         passing_score: '',
-        easy: '',
-        intermediate: '',
-        hard: '',
+        easy_questions: '',
+        average_questions: '',
+        hard_questions: '',
+        total_questions: '',
       },
       createquestion: '',
       questions: [
@@ -295,28 +297,61 @@ export default {
         },
       ],
       options: [
-        { value: null, text: 'Please select an option' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true },
+        { value: null, text: 'Select Course', disabled: true },
+        { value: 'Course 1', text: 'Course 1' },
+        { value: 'Course 2', text: 'Course 2' },
+        { value: 'Course 3', text: 'Course 3' },
+        { value: 'Course 4', text: 'Course 4' },
       ],
       seleted: '',
     }
   },
+  computed: {
+    ...mapState({
+      questionnaires: 'questionnaires',
+    }),
+  },
+  created() {
+    this.GET_QUESTIONNAIRES()
+  },
   mounted() {
-    this.getQuestionnaires()
+    this.GET_QUESTIONNAIRES()
+    // this.getQuestionnaires()
   },
   methods: {
     ...mapActions({
-      getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
-      postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
+      GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
+      // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
+      // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
-    submit() {
-      this.postQuestionnaire(this.createquestion)
-      console.log(this.createquestion)
-      this.createquestion = ''
+    async submitQuestionnaire() {
+      this.questionnaire.total_questions = parseInt(this.questionnaire.easy_questions, 10) + parseInt(this.questionnaire.average_questions, 10) + parseInt(this.questionnaire.hard_questions, 10)
+      console.log(this.questionnaire)
+      const response = await this.$store.dispatch('ACTION_ADD_QUESTIONNAIRE', this.questionnaire)
+      console.log('ADD_', response)
+      this.questionnaire.title = ''
+      this.questionnaire.course = ''
+      this.questionnaire.time_duration = ''
+      this.questionnaire.passing_score = ''
+      this.questionnaire.easy_questions = ''
+      this.questionnaire.average_questions = ''
+      this.questionnaire.hard_questions = ''
+      this.questionnaire.total_questions = ''
+      this.modalShow = false
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Added!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
     },
+    // submit() {
+    //   this.postQuestionnaire(this.createquestion)
+    //   console.log(this.createquestion)
+    //   this.createquestion = ''
+    // },
     deleteButton() {
       console.log('deleted!')
     },

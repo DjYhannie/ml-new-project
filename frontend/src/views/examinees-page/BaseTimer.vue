@@ -78,16 +78,17 @@ export default {
         },
       }
     },
-    remainingPathColor() {
-      const { alert, warning, info } = this.colorCodes
-      if (this.timeLeft <= alert.threshold) {
-        return alert.color
-      } else if (this.timeLeft <= warning.threshold) {
-        return warning.color
-      } else {
-        return info.color
-      }
-    },
+    // remainingPathColor() {
+    // const { alert, warning, info } = this.colorCodes
+    // console.log(this.timeLeft <= alert.threshold)
+    // if (this.timeLeft <= alert.threshold) {
+    //   return alert.color
+    // } else if (this.timeLeft <= warning.threshold) {
+    //   return warning.color
+    // } else {
+    //   return info.color
+    // }
+    // },
   },
 }
 </script>

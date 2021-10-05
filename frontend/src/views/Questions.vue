@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- add-questions-button  -->
+      <!-- add-questions-button  -->
     <div>
       <b-button
         v-b-modal.modal-lg
@@ -129,9 +129,9 @@
       </b-modal>
     </div>
     <br>
-    <div>
+    <!-- <div>
       {{courses.courses[0]}}
-    </div>
+    </div> -->
     <br>
     <br>
     <hr>

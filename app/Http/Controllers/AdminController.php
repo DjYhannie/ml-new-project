@@ -33,7 +33,7 @@ class AdminController extends Controller
 
     }else
     {
-        $user= Admin::where('email', $request->username)->first();
+        $user= Admin::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([

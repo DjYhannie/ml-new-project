@@ -137,7 +137,7 @@ export default {
   },
   // BaseTimer
   mounted() {
-    this.startTimer() 
+    this.startTimer()
   },
 }
 </script>
