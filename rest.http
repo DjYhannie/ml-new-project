@@ -9,3 +9,30 @@ Content-Type: application/json
     "password": "rhea2021",
     "department": "QA department"
 }
+
+#####
+
+POST http://localhost:8000/api/questions/add
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
+
+####
+
+POST http://localhost:8000/api/questionnaire/create
+Content-Type: application/json
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
+
+{
+    "title" : "test",
+    "course": "logic",
+    "time_duration": 40,
+    "passing_score": 10,
+    "easy_questions": 5,
+    "average_questions": 5,
+    "hard_questions":5,
+    "total_questions": 15
+}
+
+###
+GET http://localhost:8000/api/questionnaire/1
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
+

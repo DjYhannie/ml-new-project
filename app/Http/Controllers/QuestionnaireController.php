@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Validator;
 
 use function Complex\add;
 
@@ -17,7 +18,7 @@ class QuestionnaireController extends Controller
     {
             $user = Auth::user();
 
-            $validate = $request->validate([
+            $validate = Validator::make($request->all(),[
                 'title' => 'required',
                 'course' => 'required',
                 'time_duration' => 'required',
@@ -28,16 +29,14 @@ class QuestionnaireController extends Controller
                 'total_questions' => 'required'
             ]);
 
-            $questionnaire = Questionnaire::create([
-                'title' => $validate['title'],
-                'course' => $validate['course'],
-                'time_duration' => $validate['time_duration'],
-                'passing_score' => $validate['passing_score'],
-                'easy_questions' =>$validate['easy_questions'],
-                'average_questions' => $validate['average_questions'],
-                'hard_questions' => $validate['hard_questions'],
-                'total_questions' => $validate['total_questions']
-            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'message' => 'Error',
+                    'error'   => $validate->errors()
+                ]);
+            }
+
+            $questionnaire = Questionnaire::create($validate->validated());
 
             $questionnaire->save();
 
@@ -167,14 +166,12 @@ class QuestionnaireController extends Controller
             $shuffled->all();
 
 
-            $url_token = DB::select('select * from url_tokens where questionnaire_id = ? and user_id = ?', [$questionnaire->id, $user->id]);
-
-            $token = $url_token? $url_token[0]->token: '';
-
-            if($token){}
+            $url_token = DB::table('url_tokens')->select('*')
+                        ->where('questionnaire_id', $questionnaire->id)
+                        ->where('user_id', $user->id)
+                        ->first();
 
             if (!$url_token) {
-
                 $token = sha1(uniqid(time(),true));
                 $token_data = [
                     'token' => $token,
@@ -187,20 +184,23 @@ class QuestionnaireController extends Controller
                 ];
 
                 DB::table('url_tokens')->insert($token_data);
-                return $token_data;
+                return response()->json([
+                    'data'  => $token_data,
+                    'url_token' => $token
+                ]);
             }
 
 
             return response()->json([
-                'data' => $shuffled,
-                'url_token' => $token
+                'data'      => $url_token,
+                'url_token' => $url_token->token
             ]);
 
         }
         catch(\Exception $e){
             return response()->json([
                 'message' => "Error",
-                'error' => $e,
+                'error' => $e->getMessage(),
                 'status_code' => 400
             ]);
         }
