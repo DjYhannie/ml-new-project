@@ -1,7 +1,36 @@
 <template>
   <div class="auth-wrapper auth-v2">
+    <b-row class="auth-inner m-0">
       <!-- Brand logo-->
+      <b-link class="brand-logo">
+        <!-- <vuexy-logo /> -->
+        <b-img :src="require('@/assets/images/logo/header-logo.png')" />
+        <h2 class="brand-text text-danger ml-1">MLhuillier</h2>
+      </b-link>
+      <!-- /Brand logo-->
+
+      <!-- Left Text-->
+      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
+        <div
+          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
+        >
+          <b-img fluid :src="imgUrl" alt="Login V2" />
+        </div>
+      </b-col>
+      <!-- /Left Text-->
+
       <!-- Login-->
+      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
+         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
+          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
+            <!-- Welcome to MLhuillier Evaluation Test! 👋 -->
+            A new password will be send to your email
+          </b-card-title>
+          <br><br><br>
+          <b-card-text class="mb-2">
+            <!-- A new password will be send to your email -->
+          </b-card-text>
+
           <!-- form -->
           <validation-observer ref="loginValidation">
             <b-form class="auth-login-form mt-2" @submit.prevent>
@@ -31,10 +60,13 @@
               >
                 Send
               </b-button>
+              <p v-if="isError" id="isError">Incorrect Credentials</p>
             </b-form>
           </validation-observer>
+        </b-col>
+      </b-col>
       <!-- /Login-->
-
+    </b-row>
   </div>
 </template>
 
@@ -63,9 +95,9 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import { mapActions } from 'vuex'
-import * as userTypes from '../store/types/users'
-import * as auth from '../store/module/auth'
+// import { mapActions } from 'vuex'
+// import * as userTypes from '../store/types/users'
+// import * as auth from '../store/module/auth'
 
 
 export default {
@@ -92,7 +124,6 @@ export default {
       isError: false,
       status: '',
       data: {
-        password: '',
         email: '',
       },
       sideImg: require('@/assets/images/pages/login-accept-task.svg'),
@@ -102,9 +133,6 @@ export default {
     }
   },
   computed: {
-    passwordToggleIcon() {
-      return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
-    },
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -114,22 +142,17 @@ export default {
       return this.sideImg
     },
   },
-  mounted() {
-    // console.clear()
-  },
   methods: {
-        validationForm() {
+    validationForm() {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
-          const login = await this.$store.dispatch('LogIn', this.data)
+          const login = await this.$store.dispatch('ResetPassword', this.data)
           console.log('LOGIN_', login)
           const token = this.$store.getters.StateToken
-          console.log('TOKEN_', token)
+          console.log(token)
           const message = login.data.message
-          if (this.$store.getters.StateToken) {
-            this.$router.push({ name: 'home' })
-          } else {
+          if (!token) {
             this.$toast({
             component: ToastificationContent,
             props: {
@@ -138,6 +161,11 @@ export default {
               variant: 'danger',
             },
           }) 
+          console.log(token)
+          } else {
+            console.log(token)
+            this.$router.push({ name: 'home' })
+            console.log(login.data.message)
           }
         }
       })
@@ -149,3 +177,6 @@ export default {
 <style lang="scss">
 @import "@core/scss/vue/pages/page-auth.scss";
 </style>
+
+
+

@@ -165,10 +165,10 @@
             :class="visible ? null : 'collapsed'"
             :aria-expanded="visible ? 'true' : 'false'"
             aria-controls="collapse-4"
-            @click="visible(question.id)"
+            @click="visible = !visible"
           >
+          <!-- @click="visible(question.id)" -->
             {{ question.question }}
-          </b-card>
           <b-collapse
             id="collapse-4"
             v-model="visible"
@@ -185,6 +185,7 @@
               <p>D. {{ question.choices.choiceD }}</p>
             </b-card>
           </b-collapse>
+          </b-card>
         </div>
         <b-form @submit.prevent="update" v-show="updateShow">
           <b-form-group name="questions">
@@ -261,7 +262,7 @@ export default {
       modalShow: false,
       isShow: false,
       questionDescription: {
-        course: '', 
+        course: '',
         category: null,
         question: '',
         answer: '',

@@ -1,88 +1,61 @@
 <template>
   <div>
-    <b-button
-      id="button"
-      block
-      variant="white"
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-    >
-      Questionnaire 1: Test Questionnaire
-    </b-button>
-    <b-collapse
-      id="collapse-4"
-      v-model="visible"
-      class="mt-2"
-    >
-      <b-card>Title 1: Title 1 in Questionnaire 1</b-card>
-    </b-collapse>
-
-    <b-button
-      id="button"
-      block
-      variant="white"
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-    >
-      Questionnaire 2: Test Questionnaire
-    </b-button>
-    <b-collapse
-      id="collapse-4"
-      v-model="visible"
-      class="mt-2"
-    >
-      <b-card>Title 2: Title 2 in Questionnaire 2</b-card>
-    </b-collapse>
-
-    <b-button
-      id="button"
-      block
-      variant="white"
-      :class="visible ? null : 'collapsed'"
-      :aria-expanded="visible ? 'true' : 'false'"
-      aria-controls="collapse-4"
-      @click="visible = !visible"
-    >
-      Questionnaire 3: Test Questionnaire
-    </b-button>
-    <b-collapse
-      id="collapse-4"
-      v-model="visible"
-      class="mt-2"
-    >
-      <b-card>Title 3: Title 3 in Questionnaire 3</b-card>
-    </b-collapse>
+    <div
+      v-for="questionnaire in questionnaires"
+      :key="questionnaire.id">
+      <!-- <b-card @click="showDetails"> -->
+      <b-card  @click="showDetails()" id="detailsShow">
+        <!-- <b-button @click="showDetails()" id="detailsShow">Show Details</b-button> -->
+      <h5>{{ questionnaire.title }}</h5>
+      <!-- toggle  -->
+      <b-card v-if="isShowDetails" id="details">
+      <h3>{{ questionnaire.course }}</h3>
+    </b-card>
+    </b-card>
+    </div>
   </div>
 </template>
 
 <script>
-import
-{
-  BButton,
-  BCollapse,
-  BCard,
-} from 'bootstrap-vue'
+import { BCard } from 'bootstrap-vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
-    BButton,
-    BCollapse,
     BCard,
   },
   data() {
     return {
-      visible: false,
+      isShowDetails: false,
     }
+  },
+  computed: {
+    ...mapGetters({
+      questionnaires: 'GET_QUESTIONNAIRE',
+    }),
+  },
+  async mounted() {
+    await this.GET_QUESTIONNAIRES()
+  },
+  methods: {
+    ...mapActions({
+      GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
+    }),
+    showDetails() {
+      this.isShowDetails = true
+      const show = document.getElementById('details')
+      const s = show.style.display === 'none' ? show.style.display === 'block' : show.style.display === 'none'
+      console.log(s)
+      // if (show.style.visibility === 'none') {
+      //   show.style.visibility === 'block'
+      // } else {
+      //   show.style.visibility === 'none'
+      // }
+    },
   },
 }
 </script>
-<style>
-#button {
-  text-align: left;
-  /* font-size: 20px; */
-}
+
+<style scoped>
+
 </style>

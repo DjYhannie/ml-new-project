@@ -33,6 +33,8 @@ Route::post('/login',[RegistrationController::class,'login']);
 
 
 //for testing
+Route::post('/reset-password',[NewPassword::class, 'updatePassword']);
+
 Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 Route::get('/questions',[AdminQuestionsController::class, 'getAllQuestions']);
 Route::post('/course/add',[AdminController::class, 'addCourses']);
@@ -47,7 +49,7 @@ Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQ
 
 Route::middleware('auth:sanctum')->group(function(){
 
-    Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
+    // Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
     Route::post('/send-email',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
 
     //Questions Related

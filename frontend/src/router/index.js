@@ -124,6 +124,24 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: () => import('@/views/examinees-page/ResetPassword.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: false,
+      },
+    },
+    {
+      path: '/update-password',
+      name: 'update-password',
+      component: () => import('@/views/examinees-page/UpdatePassword.vue'),
+      meta: {
+        layout: 'full',
+        requiresAuth: false,
+      },
+    },
+    {
       path: '/registration',
       name: 'registration',
       component: () => import('@/views/examinees-page/Registration.vue'),

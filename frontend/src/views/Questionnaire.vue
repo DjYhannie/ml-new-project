@@ -160,6 +160,8 @@
             @click="editButton(questionnaire.id)">Edit</b-dropdown-item>
             <b-dropdown-item
             @click="deleteButton(questionnaire.id)">Delete</b-dropdown-item>
+             <b-dropdown-item
+            @click="sendButton(questionnaire.id)">Send to</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
         <div>
@@ -218,6 +220,39 @@
             </div>
           </b-form-group>
         </b-form>
+              <!-- Send Emal  -->
+      <b-card v-show="sendEmail">
+        <validation-observer ref="loginValidation">
+            <b-form class="auth-login-form mt-2" @submit.prevent>
+              <!-- email -->
+              <b-form-group label="Email" label-for="login-email">
+                <validation-provider
+                  #default="{ errors }"
+                  name="Email"
+                  rules="required|email"
+                >
+                  <b-form-input
+                    id="login-email"
+                    v-model="data.email"
+                    :state="errors.length > 0 ? false : null"
+                    name="login-email"
+                    placeholder="name.test@mlhuillier.com"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+              <!-- submit button -->
+              <b-button
+                type="submit"
+                variant="danger"
+                block
+                @click="validationForm"
+              >
+                Send
+              </b-button>
+            </b-form>
+          </validation-observer>
+      </b-card>
       </b-card>
     </div>
   </div>
@@ -226,6 +261,7 @@
 <script>
 import {
   BFormGroup,
+  BFormInput,
   BCard,
   BFormTextarea,
   BButton,
@@ -242,11 +278,14 @@ import {
 } from 'bootstrap-vue'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { required, email } from '@validations'
 // import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
   components: {
     BCard,
+    BFormInput,
     BFormTextarea,
     BButton,
     BButtonGroup,
@@ -260,9 +299,15 @@ export default {
     BCol,
     BContainer,
     BFormSelect,
+    ValidationProvider,
+    ValidationObserver,
   },
   data() {
     return {
+      data: {
+        email: '',
+      },
+      sendEmail: false,
       visible: false,
       modalShow: false,
       index: null,
@@ -287,6 +332,8 @@ export default {
         { value: 'Course 4', text: 'Course 4' },
       ],
       seleted: '',
+      required,
+      email,
     }
   },
   computed: {
@@ -349,8 +396,13 @@ export default {
     // },
     async deleteButton(questionnaire) {
       console.log(questionnaire)
-      const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE')
+      const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       console.log('DELETED_', response)
+      return response
+    },
+    sendButton() {
+      this.sendEmail = true
+      console.log('SEND__')
     },
     editButton() {
     },

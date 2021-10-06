@@ -32,24 +32,6 @@
           <!-- form -->
           <validation-observer ref="loginValidation">
             <b-form class="auth-login-form mt-2" @submit.prevent>
-              <!-- email -->
-              <b-form-group label="Email" label-for="login-email">
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="login-email"
-                    v-model="data.email"
-                    :state="errors.length > 0 ? false : null"
-                    name="login-email"
-                    placeholder="name.test@mlhuillier.com"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-
               <!-- forgot password -->
               <b-form-group>
                 <div class="d-flex justify-content-between">
@@ -193,14 +175,8 @@ export default {
       return this.sideImg
     },
   },
-  mounted() {
-    // console.clear()
-  },
-  methods: {
-    // ...mapActions({
-    //   postUser:userTypes.ACTION_SET_LOGIN
-    // }),
-    
+
+  methods: { 
     validationForm() {
     
       this.$refs.loginValidation.validate().then(async success => {
@@ -226,31 +202,6 @@ export default {
             this.$router.push({ name: 'home' })
             console.log(login.data.message)
           }
-          // this.$router.push({ name: 'home' })
-          // if (this.$store.getters['StateToken']) {
-          //   console.log('Token', this.$store.getters['StateToken'])
-          //   setTimeout(() => {
-          //     this.$router.push({ name: 'home' })
-          //   },1500)
-          //     this.$toast({
-          //     component: ToastificationContent,
-          //     props: {
-          //       title: 'Form Submitted',
-          //       icon: 'EditIcon',
-          //       variant: 'success',
-          //     },
-          //   })     
-          // }
-        // }else {
-        //   this.isError = true,
-        //   this.$toast({
-        //     component: ToastificationContent,
-        //     props: {
-        //       title: 'Email or Password is incorrect',
-        //       icon: 'EditIcon',
-        //       variant: 'danger',
-        //     },
-        //   }) 
         }
       })
     },
