@@ -49,9 +49,9 @@ Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQ
 
 Route::middleware('auth:sanctum')->group(function(){
 
-    // Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
-    Route::post('/send-email',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
-
+    Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
+    Route::post('/send/resetpassword',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
+    Route::post('/send/invitation', [QuestionnaireController::class, 'invites'])->name('invitation');
     //Questions Related
     // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
     Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
@@ -82,6 +82,7 @@ Route::middleware('auth:sanctum')->group(function(){
     // Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
     // Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
     Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);
+    Route::get('/questionnaire/time/{id}', [QuestionnaireController::class, 'getExpiratiionTime']);
 
 
     //Get Users

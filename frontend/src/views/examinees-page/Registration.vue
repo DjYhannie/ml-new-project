@@ -54,7 +54,6 @@
               class="auth-register-form mt-2"
               @submit.prevent="validationForm"
             >
-
               <!-- name -->
               <b-form-group
                 label="Name"
