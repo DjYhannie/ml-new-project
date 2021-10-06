@@ -155,11 +155,17 @@
           </b-dropdown>
         </b-button-group>
         <div>
-          <b-card
+          <!-- <b-card
             :class="visible ? null : 'collapsed'"
             :aria-expanded="visible ? 'true' : 'false'"
             aria-controls="collapse-4"
             @click="visible = !visible"
+          > -->
+          <b-card
+            :class="visible ? null : 'collapsed'"
+            :aria-expanded="visible ? 'true' : 'false'"
+            aria-controls="collapse-4"
+            @click="visible(question.id)"
           >
             {{ question.question }}
           </b-card>
@@ -180,7 +186,7 @@
             </b-card>
           </b-collapse>
         </div>
-        <b-form @submit.prevent="update">
+        <b-form @submit.prevent="update" v-show="updateShow">
           <b-form-group name="questions">
             <div
               :id="question.id"
@@ -247,6 +253,7 @@ export default {
   },
   data() {
     return {
+      updateShow: true,
       addShow: true,
       editShow: false,
       index: null,
@@ -254,7 +261,7 @@ export default {
       modalShow: false,
       isShow: false,
       questionDescription: {
-        course: '',
+        course: '', 
         category: null,
         question: '',
         answer: '',

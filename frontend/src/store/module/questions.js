@@ -99,7 +99,7 @@ export default {
     },
     [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
       // state.questions.unshift(question)
-      state.questions.push(question)
+      // state.questions.push(question)
       state.questions = question
     },
     // [questionTypes.MUTATION_DELETE_QUESTION](state,  id) {

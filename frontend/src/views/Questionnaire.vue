@@ -84,20 +84,24 @@
                       name="easy"
                       v-model="questionnaire.easy_questions"
                       type="text"
-                      class="form-control"
+                      class="form-control categories"
                       label="Easy"
+                      id="easy"
+                      v-on:keyup="total()"
                     >
                   </div>
                 </b-col>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
-                    <label for="intermediate">Intermediate: </label>
+                    <label for="intermediate">Average: </label>
                     <input
                       name="intermediate"
                       v-model="questionnaire.average_questions"
                       type="text"
-                      class="form-control"
+                      class="form-control categories"
                       label="Intermediate"
+                      id="average"
+                      v-on:keyup="total()"
                     >
                   </div>
                 </b-col>
@@ -108,8 +112,10 @@
                       name="hard"
                       v-model="questionnaire.hard_questions"
                       type="text"
-                      class="form-control"
+                      class="form-control categories"
                       label="Hard"
+                      id="hard"
+                      v-on:keyup="total()"
                     >
                   </div>
                 </b-col>
@@ -122,6 +128,7 @@
                       type="text"
                       class="form-control"
                       label="Hard"
+                      id="total"
                     >
                   </div>
                 </b-col>
@@ -150,9 +157,9 @@
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-            >Edit</b-dropdown-item>
+            @click="editButton(questionnaire.id)">Edit</b-dropdown-item>
             <b-dropdown-item
-            >Delete</b-dropdown-item>
+            @click="deleteButton(questionnaire.id)">Delete</b-dropdown-item>
           </b-dropdown>
         </b-button-group>
         <div>
@@ -233,7 +240,7 @@ import {
   BContainer,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 // import * as questionnaireTypes from '../store/types/questionnaire'
 
@@ -258,6 +265,7 @@ export default {
     return {
       visible: false,
       modalShow: false,
+      index: null,
       questionnaire:
       {
         title: '',
@@ -282,22 +290,21 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      questionnaires: 'questionnaires',
+    ...mapGetters({
+      questionnaires: 'GET_QUESTIONNAIRE',
     }),
   },
-  created() {
-    this.GET_QUESTIONNAIRES()
-  },
-  mounted() {
-    this.GET_QUESTIONNAIRES()
-    // this.getQuestionnaires()
+  async mounted() {
+    await this.GET_QUESTIONNAIRES()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
+    }),
+    ...mapMutations({
+      DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
     async submitQuestionnaire() {
       this.questionnaire.total_questions = parseInt(this.questionnaire.easy_questions, 10) + parseInt(this.questionnaire.average_questions, 10) + parseInt(this.questionnaire.hard_questions, 10)
@@ -322,22 +329,37 @@ export default {
         },
       })
     },
+    total() {
+      let total = 0
+      const category = document.getElementsByClassName('categories')
+      const Display = document.getElementById('total')
+      for (let i = 0; i < category.length; i += 1) {
+        const el = category[i]
+        total += parseInt(el.value, 10)
+      }
+      const isValid = Number.isInteger(total)
+      if (isValid) {
+        Display.value = total
+      }
+    },
     // submit() {
     //   this.postQuestionnaire(this.createquestion)
     //   console.log(this.createquestion)
     //   this.createquestion = ''
     // },
-    deleteButton() {
-      console.log('deleted!')
+    async deleteButton(questionnaire) {
+      console.log(questionnaire)
+      const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE')
+      console.log('DELETED_', response)
     },
     editButton() {
-      console.log('edited!')
     },
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
     },
   },
 }
+
 </script>
 
 <style>

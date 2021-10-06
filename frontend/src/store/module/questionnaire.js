@@ -18,37 +18,33 @@ export default {
     questionnaires: {},
     createquestion: '',
     show: true,
+    index: null,
   },
   getters: {
     // [questionnaireTypes.GETTER_QUESTION]: state => state.questionnaires,
     GET_QUESTIONNAIRE: state => state.questionnaires,
+    GET_INDEX: state => state.index,
   },
   actions: {
     async ACTION_GET_QUESTIONNAIRE({ commit }) {
       const response = await api.get('/questionnaire')
-      console.log(response)
-      commit('SET_QUESTIONNAIRE')
+      // console.log(response)
+      commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_ADD_QUESTIONNAIRE({ commit }, questionnaire) {
+    async ACTION_ADD_QUESTIONNAIRE({ commit, dispatch }, questionnaire) {
       const response = await api.post('/questionnaire/create', questionnaire)
-      console.log(response)
-      commit('SET_QUESTIONNAIRE', response)
+      // console.log(response.data.data)
+      dispatch('ACTION_GET_QUESTIONNAIRE')
+      commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    // async [questionnaireTypes.ACTION_ADD_QUESTIONNAIRE]({ commit }, questionnaire) {
-    //   const response = await api.post('/questionnaire/create', questionnaire)
-    //   console.log(response)
-    //   commit(questionnaireTypes.MUTATION_ADD_QUESTIONNAIRE, response.data)
-    //   return response
-    // },
-    // async [questionTypes.ACTION_ADD_QUESTION]({ commit }, data) {
-    //   api
-    //     .put('http://127.0.0.1:8000/api/questions/add')
-    //     .then(response => {
-    //       commit(questionTypes.MUTATION_ADD_QUESTION, response.data)
-    //     })
-    // },
+    async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
+      const response = await api.delete(`/questionnaire/delete/${id}`)
+      console.log(response)
+      await dispatch('ACTION_GET_QUESTIONNAIRE')
+      return response
+    },
   },
   mutations: {
     // ADD_QUESTION(state, createquestion) {

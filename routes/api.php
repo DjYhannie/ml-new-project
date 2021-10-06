@@ -40,6 +40,7 @@ Route::get('/course',[AdminController::class, 'getCourses']);
 // Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
 Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
 Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
+Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
 
 Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);
 Route::delete('questions/delete/{id}',[AdminQuestionsController::class, 'deleteQuestion']);
@@ -76,7 +77,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
     Route::post('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
-    Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
+    // Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
     // Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
     Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);
 
