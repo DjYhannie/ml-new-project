@@ -36,9 +36,10 @@ const actions = {
   // RESET PASSWORD
   async ResetPassword({ commit }, User) {
     console.log('RESET__')
-    const response = await axios.post('/reset-password', User)
+    const response = await axios.post('/send/resetpassword', User)
     console.log('RESET PASSWORD', response)
     commit('setUser', response.data)
+    commit('setToken', response.data)
     return response
   },
   // NORMAL USER

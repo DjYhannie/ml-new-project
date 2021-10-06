@@ -54,22 +54,6 @@ export default {
       commit('SET_COURSES', response)
       return response
     },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
-    // async [questionTypes.ACTION_DELETE_QUESTION]({ commit }, id) {
-    //   await api.delete(`/delete/${id}`)
-    //   commit(questionTypes.MUTATION_DELETE_QUESTION, id)
-    // },
-    // Done
-    // async ACTION_ADD_COURSE({ commit }, addCourse) {
-    //   console.log(addCourse)
-    //   const response = await api.post('/course/add', addCourse)
-    //   console.log(response)
-    //   commit('SET_COURSE', response)
-    //   return response
-    // },
     // Done
     async ACTION_DELETE_QUESTION({ dispatch }, id) {
       const response = await api.delete(`questions/delete/${id}`)

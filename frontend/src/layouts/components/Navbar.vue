@@ -92,10 +92,10 @@
             class="mr-50"
           />
           <!-- <span>Logout</span> -->
-          <router-link to="/">
+          <router-link to="/user-login">
           <span @click="logout()">Logout</span>
           </router-link>
-          <b-link :to="{name:'login'}" />
+          <b-link :to="{name:'user-login'}" />
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>

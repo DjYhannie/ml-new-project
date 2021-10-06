@@ -6,16 +6,8 @@ import * as questionnaireTypes from '../types/questionnaire'
 export default {
   state: {
     namespaced: true,
-    // questionnaires: [{
-    //   title: '',
-    //   course: '',
-    //   time_duration: '',
-    //   passing_score: '',
-    //   easy: '',
-    //   intermediate: '',
-    //   hard: '',
-    // }],
     questionnaires: {},
+    courses: {},
     createquestion: '',
     show: true,
     index: null,
@@ -24,6 +16,7 @@ export default {
     // [questionnaireTypes.GETTER_QUESTION]: state => state.questionnaires,
     GET_QUESTIONNAIRE: state => state.questionnaires,
     GET_INDEX: state => state.index,
+    GET_COURSES: state => state.courses,
   },
   actions: {
     async ACTION_GET_QUESTIONNAIRE({ commit }) {
@@ -36,8 +29,14 @@ export default {
       const response = await api.post('/questionnaire/create', questionnaire)
       // console.log(response.data.data)
       dispatch('ACTION_GET_QUESTIONNAIRE')
-      commit('SET_QUESTIONNAIRE', response.data.data)
+      commit('GET_QUESTIONNAIRE', response.data.data)
       return response
+    },
+    async ACTION_GET_COURSES({ commit }) {
+      const response = await api.get('/course')
+      console.log(response.data.courses)
+      commit('SET_COURSES', response.data)
+      return response.data
     },
     async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
       const response = await api.delete(`/questionnaire/delete/${id}`)
@@ -55,6 +54,9 @@ export default {
     },
     [questionnaireTypes.MUTATION_ADD_QUESTION]: (state, questionnaires) => {
       state.questionnaires.unshift(questionnaires)
+    },
+    SET_COURSES(state, courses) {
+      state.courses = courses
     },
     // [questionnaireTypes.MUTATION_SET_QUESTIONNAIRE]: (state, questionnaires) => {
     //   state.questionnaires = questionnaires

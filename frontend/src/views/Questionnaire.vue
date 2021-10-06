@@ -11,6 +11,9 @@
       </b-button>
         <!-- Add Questionnaires  -->
       <b-modal v-model="modalShow">
+      <template #modal-title>
+      Using <code>$bvModal</code> Methods
+    </template>
         <h3>Create Questionnaire</h3>
         <b-form @submit.prevent="submitQuestionnaire">
           <b-form-group name="create-questionnaire">
@@ -43,18 +46,12 @@
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
                     <label for="course">Course: </label>
-                    <!-- <input
-                      v-model="sample3"
-                      type="text"
-                      class="form-control"
-                      placeholder="Course"
-                    /> -->
                     <b-form-select
-                      name="course"
-                      v-model="questionnaire.course"
-                      :options="options"
-                      label="Course"
-                    />
+                      v-model="selected"
+                      >
+                      <option v-for="course in courses.courses"
+                      :key="course.id">{{ course.name }}</option>
+                  </b-form-select>
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
@@ -191,6 +188,7 @@
             </b-card>
           </b-collapse>
         </div>
+        <!-- questionnaires  -->
         <b-form @submit.prevent="update">
           <b-form-group name="questionnaire">
             <div
@@ -339,14 +337,17 @@ export default {
   computed: {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
+      courses: 'GET_COURSES',
     }),
   },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
+    await this.GET_COURSES()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
+      GET_COURSES: 'ACTION_GET_COURSES',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
@@ -399,6 +400,9 @@ export default {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       console.log('DELETED_', response)
       return response
+    },
+    validationForm() {
+      console.log('SEND EMAIL__')
     },
     sendButton() {
       this.sendEmail = true

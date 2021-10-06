@@ -155,12 +155,6 @@
           </b-dropdown>
         </b-button-group>
         <div>
-          <!-- <b-card
-            :class="visible ? null : 'collapsed'"
-            :aria-expanded="visible ? 'true' : 'false'"
-            aria-controls="collapse-4"
-            @click="visible = !visible"
-          > -->
           <b-card
             :class="visible ? null : 'collapsed'"
             :aria-expanded="visible ? 'true' : 'false'"
