@@ -38,8 +38,8 @@ Route::post('/login',[RegistrationController::class,'login']);
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
-    Route::post('/send-email',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
-
+    Route::post('/send/resetpassword',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
+    Route::post('/send/invitation', [QuestionnaireController::class, 'invites'])->name('invitation');
     //Questions Related
     Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
     Route::post('questions/update/{id}', [AdminQuestionsController::class, 'updateQuestion']);

@@ -43,10 +43,10 @@ class InviteNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting('Greetings')
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', $this->notification_url)
-                    ->line('Thank you for using our application!');
+                    ->greeting('Greatings of Peace and Joy!')
+                    ->line('An ivitation link.')
+                    ->action('Accept Invitation', $this->notification_url)
+                    ->line('Thank you!');
     }
 
     /**

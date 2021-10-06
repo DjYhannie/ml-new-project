@@ -13,4 +13,7 @@ class Invitation extends Model
         'email',
         'token'
     ];
+    protected $cast = [
+        'emails' => 'array'
+    ];
 }

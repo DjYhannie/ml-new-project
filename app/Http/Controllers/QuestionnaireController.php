@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Questions;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Validator;
+use Illuminate\Support\Str;
+use App\Url;
 
 use function Complex\add;
 
@@ -44,15 +47,6 @@ class QuestionnaireController extends Controller
                 'message' => "Created Successfully",
                 'data' => $questionnaire
             ]);
-    }
-
-    public function addReciepient(Request $request)
-    {
-        $user = Auth::user();
-
-        $validate = Validator::make($request -> all(),[
-            'email' => 'required'
-        ]);
     }
 
 
@@ -221,7 +215,7 @@ class QuestionnaireController extends Controller
         try{
             $questionnairetime = Questionnaire::find($id);
             $time = $questionnairetime->time_duration;
-            
+
             dd($time);
 
         }
@@ -236,18 +230,18 @@ class QuestionnaireController extends Controller
     public function invites(Request $request )
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email'
+            'email' => 'required|array'
         ]);
 
-        $validator->after(function ($validator) use ($request){
-            if (Invitation::where('email', $request->input('email'))->exist()){
-                $validator->errors()->add('email', 'Invite exists with this email!');
-            }
-        });
-        if ($validate->fails()) {
+        // $validator->after(function ($validator) use ($request){
+        //     if (Invitation::where('email', $request->email)->exist()){
+        //         $validator->errors()->add('email', 'Invite exists with this email!');
+        //     }
+        // });
+        if ($validator->fails()) {
             return response()->json([
                 'message' => 'Error',
-                'error'   => $validate->errors()
+                'error'   => $validator->errors()
             ]);
         }
         do{
@@ -255,10 +249,11 @@ class QuestionnaireController extends Controller
         }
         while (Invitation::where('token', $token)->first());
 
-        Invitation::create([
+        $email = Invitation::create([
             'token' => $token,
             'email' => $request->input('email')
         ]);
+        dd($email);
 
         $url = URL::temporarySignedRoute(
             'invitation', now()->addMinutes(30),
@@ -268,7 +263,5 @@ class QuestionnaireController extends Controller
         Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
 
     }
-
-
 
 }
