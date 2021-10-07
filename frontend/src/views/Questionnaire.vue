@@ -11,9 +11,6 @@
       </b-button>
         <!-- Add Questionnaires  -->
       <b-modal v-model="modalShow">
-      <template #modal-title>
-      Using <code>$bvModal</code> Methods
-    </template>
         <h3>Create Questionnaire</h3>
         <b-form @submit.prevent="submitQuestionnaire">
           <b-form-group name="create-questionnaire">
@@ -47,10 +44,10 @@
                   <div class="input-group mb-1">
                     <label for="course">Course: </label>
                     <b-form-select
-                      v-model="selected"
+                      v-model="questionnaire.course"
                       >
-                      <option v-for="course in courses.courses"
-                      :key="course.id">{{ course.name }}</option>
+                      <option v-for="question in questions"
+                      :key="question.id">{{ question.course }}</option>
                   </b-form-select>
                   </div>
                 </b-col>
@@ -313,7 +310,7 @@ export default {
       {
         title: '',
         course: '',
-        selected: '',
+        // selected: '',
         time_duration: '',
         passing_score: '',
         easy_questions: '',
@@ -322,14 +319,13 @@ export default {
         total_questions: '',
       },
       createquestion: '',
-      options: [
-        { value: null, text: 'Select Course', disabled: true },
-        { value: 'Course 1', text: 'Course 1' },
-        { value: 'Course 2', text: 'Course 2' },
-        { value: 'Course 3', text: 'Course 3' },
-        { value: 'Course 4', text: 'Course 4' },
-      ],
-      seleted: '',
+      // options: [
+      //   { value: null, text: 'Select Course', disabled: true },
+      //   { value: 'Course 1', text: 'Course 1' },
+      //   { value: 'Course 2', text: 'Course 2' },
+      //   { value: 'Course 3', text: 'Course 3' },
+      //   { value: 'Course 4', text: 'Course 4' },
+      // ],
       required,
       email,
     }
@@ -337,17 +333,20 @@ export default {
   computed: {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
-      courses: 'GET_COURSES',
+      // courses: 'GET_COURSES',
+      questions: 'GET_QUESTION',
     }),
   },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
-    await this.GET_COURSES()
+    // await this.GET_COURSES()
+    await this.GET_QUESTIONS()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
-      GET_COURSES: 'ACTION_GET_COURSES',
+      // GET_COURSES: 'ACTION_GET_COURSES',
+      GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),

@@ -23,10 +23,10 @@
       <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
          <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
           <b-card-title title-tag="h2" class="font-weight-bold mb-1">
-            Welcome to MLhuillier Evaluation Test! 👋
+            Welcome to ML OEx - MLhuillier Online Exam! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the test
+            Please sign-in to your account to start the exam
           </b-card-text>
 
           <!-- form -->

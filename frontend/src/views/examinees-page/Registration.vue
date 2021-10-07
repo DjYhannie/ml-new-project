@@ -42,7 +42,7 @@
             title-tag="h2"
             class="font-weight-bold mb-1"
           >
-            MLhuillier Evaluation Test
+            ML OEx Mlhuillier Online Exam
           </b-card-title>
           <b-card-text class="mb-2">
             Please fill in input fields

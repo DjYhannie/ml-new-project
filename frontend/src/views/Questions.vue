@@ -171,7 +171,7 @@
             <b-card>
               <hr>
               <p>Course Name: {{ question.course }}</p>
-              <p>Question: {{ question.question }}</p>
+              <!-- <p>Question: {{ question.question }}</p> -->
               <p>Answer: {{ question.answer }}</p>
               <p>A. {{ question.choices.choiceA }}</p>
               <p>B. {{ question.choices.choiceB }}</p>
@@ -288,7 +288,7 @@ export default {
   computed: {
     ...mapState({
       questions: 'questions',
-      courses: 'courses',
+      // courses: 'courses',
     }),
   },
   watch: {
@@ -301,16 +301,16 @@ export default {
   },
   created() {
     this.GET_QUESTIONS()
-    this.GET_COURSES()
+    // this.GET_COURSES()
   },
   mounted() {
     this.GET_QUESTIONS()
-    this.GET_COURSES()
+    // this.GET_COURSES()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
-      GET_COURSES: 'ACTION_GET_COURSE',
+      // GET_COURSES: 'ACTION_GET_COURSE',
     }),
     ...mapMutations({
       DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
