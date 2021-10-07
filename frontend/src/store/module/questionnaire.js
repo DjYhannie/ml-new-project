@@ -22,13 +22,13 @@ export default {
   },
   actions: {
     async ACTION_GET_QUESTIONNAIRE({ commit }) {
-      const response = await api.get('/questionnaire')
+      const response = await api.get('/questionnaire', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // console.log(response)
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
     async ACTION_ADD_QUESTIONNAIRE({ commit, dispatch }, questionnaire) {
-      const response = await api.post('/questionnaire/create', questionnaire)
+      const response = await api.post('/questionnaire/create', questionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // console.log(response.data.data)
       dispatch('ACTION_GET_QUESTIONNAIRE')
       commit('GET_QUESTIONNAIRE', response.data.data)
@@ -47,9 +47,14 @@ export default {
     //   return response.data
     // },
     async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
-      const response = await api.delete(`/questionnaire/delete/${id}`)
+      const response = await api.delete(`/questionnaire/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
       await dispatch('ACTION_GET_QUESTIONNAIRE')
+      return response
+    },
+    async ACTION_SEND_QUESTIONNAIRE(sendQuestionnaire) {
+      const response = await api.post('/send/invitation', sendQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log(response)
       return response
     },
   },
@@ -68,6 +73,9 @@ export default {
     // },
     // SET_QUESTIONS(state, questions) {
     //   state.questions = questions
+    // },
+    // [questionnaireTypes.MUTATION_ADD_QUESTIONNAIRE]: (state, questionnaire) => {
+    //   state.questionnaires = questionnaire
     // },
     // [questionnaireTypes.MUTATION_ADD_QUESTIONNAIRE]: (state, questionnaire) => {
     //   state.questionnaires = questionnaire

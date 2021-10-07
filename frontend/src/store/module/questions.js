@@ -11,6 +11,7 @@ export default {
     // courses: {},
     show: true,
     index: null,
+    token: sessionStorage.getItem('token'),
   },
   getters: {
     // [questionTypes.GETTER_QUESTION]: state => state.questions,
@@ -24,7 +25,7 @@ export default {
   actions: {
     // Done
     ACTION_GET_QUESTIONS({ commit }) {
-      api.get('/questions')
+      api.get('/questions', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(res => res).then(choice => {
           const questions = choice.data.data.map(c => {
             c.choices = JSON.parse(c.choices)
@@ -36,7 +37,7 @@ export default {
     },
     // Done
     async ACTION_ADD_QUESTION({ commit, dispatch }, addQuestion) {
-      const response = await api.post('/questions/add', addQuestion)
+      const response = await api.post('/questions/add', addQuestion, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log('ADD QUESTION', response.data.questions)
       commit('SET_QUESTION', response.data.questions)
       await dispatch('ACTION_GET_QUESTIONS')
@@ -56,7 +57,7 @@ export default {
     // },
     // Done
     async ACTION_DELETE_QUESTION({ dispatch }, id) {
-      const response = await api.delete(`questions/delete/${id}`)
+      const response = await api.delete(`questions/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // const response = await api.delete('questions/delete/{id}')
       console.log(response)
       // commit(questionTypes.MUTATION_DELETE_QUESTION, id)
@@ -65,7 +66,7 @@ export default {
     },
     // Update
     async ACTION_UPDATE_QUESTION({ dispatch }, id) {
-      const response = await api.put(`questions/delete/${id}`)
+      const response = await api.put(`questions/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
       await dispatch('ACTION_GET_QUESTIONS')
       return response

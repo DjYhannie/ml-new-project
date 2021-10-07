@@ -22,6 +22,7 @@ const actions = {
     console.log('AUTH.JS', await form)
     commit('setUser', form)
     // await dispatch('UserLogin', form)
+    return response
   },
   // ADMIN USER
   async LogIn({ commit }, User) {
@@ -30,16 +31,17 @@ const actions = {
     console.log('ADMIN RESPONSE', response)
     commit('setUser', response.data)
     commit('setToken', response.data.token)
-    sessionStorage.setItem('setToken', response.data.token)
+    sessionStorage.setItem('token', response.data.token)
     return response
   },
+  // OK NA
   // RESET PASSWORD
-  async ResetPassword({ commit }, User) {
+  async ResetPassword({ commit }, Email) {
     console.log('RESET__')
-    const response = await axios.post('/send/resetpassword', User)
+    console.log(Email)
+    const response = await axios.post('/send/resetpassword', Email)
     console.log('RESET PASSWORD', response)
     commit('setUser', response.data)
-    commit('setToken', response.data)
     return response
   },
   // NORMAL USER
@@ -51,7 +53,7 @@ const actions = {
     if (response.data.token) {
       commit('setUser', response.data)
       commit('setToken', response.data.token)
-      sessionStorage.setItem('setToken', response.data.token)
+      sessionStorage.setItem('token', response.data.token)
     }
     return response
   },

@@ -139,8 +139,8 @@
       </b-modal>
     </div>
     <br>
-
     <br><br><hr><br>
+    {{questions}}
     <!-- Edit/Delete Questions  -->
     <div
       v-for="questionnaire in questionnaires"
@@ -241,7 +241,7 @@
                 type="submit"
                 variant="danger"
                 block
-                @click="validationForm"
+                @click="submitEmail"
               >
                 Send
               </b-button>
@@ -333,7 +333,6 @@ export default {
   computed: {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
-      // courses: 'GET_COURSES',
       questions: 'GET_QUESTION',
     }),
   },
@@ -400,8 +399,17 @@ export default {
       console.log('DELETED_', response)
       return response
     },
-    validationForm() {
+    submitEmail() {
       console.log('SEND EMAIL__')
+      console.log(this.data)
+      console.log(this.$refs.loginValidation[0].validate())
+      this.$refs.loginValidation[0].validate().then(async success => {
+        console.log(success)
+        if (success) {
+          const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
+          console.log(sendEmail)
+        }
+      })
     },
     sendButton() {
       this.sendEmail = true
