@@ -17,6 +17,11 @@ use function Complex\add;
 
 class QuestionnaireController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function createQuestionnaire(Request $request)
     {
             $user = Auth::user();
@@ -181,7 +186,7 @@ class QuestionnaireController extends Controller
                     'questionnaire_id' => $questionnaire->id,
                     'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
-                    'accessed_time' => Carbon::now(),
+                    'time_started' => Carbon::now(),
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
@@ -216,7 +221,10 @@ class QuestionnaireController extends Controller
             $questionnairetime = Questionnaire::find($id);
             $time = $questionnairetime->time_duration;
 
-            dd($time);
+            return response()->json([
+                'time' => $time,
+                'status_code' => 200
+            ]);
 
         }
         catch(\Exception $e){

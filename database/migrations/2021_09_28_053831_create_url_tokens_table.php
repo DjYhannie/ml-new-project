@@ -19,7 +19,7 @@ class CreateUrlTokensTable extends Migration
             $table->unsignedBigInteger('questionnaire_id');
             $table->json('randomizedQuestions');
             $table->string('token');
-            $table->dateTime('accessed_time');
+            $table->dateTime('time_started');
             $table->dateTime('expired_time');
             $table->boolean('is_accessed')->default(false);
             $table->timestamps();

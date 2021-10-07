@@ -22,10 +22,10 @@ class NewPassword extends Controller
 {
     use Notifiable;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function updatePassword(Request $request)
     {
@@ -58,12 +58,9 @@ class NewPassword extends Controller
 
     public function emailResetLink(Request $request)
     {
-
         $rule = $request->validate(['email' => 'required|email']);
         $checked = User::where('email', '=', $rule)->first();
-
         $token = Str::random(64);
-
 
 
         DB::table('password_resets')
@@ -79,6 +76,11 @@ class NewPassword extends Controller
         catch(\Exception $e){
             return response($e->getMessage());
         }
+    }
+
+    public function test(Request $request)
+    {
+        dd("tees");
     }
 }
 

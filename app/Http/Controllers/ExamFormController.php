@@ -45,15 +45,37 @@ class ExamFormController extends Controller
 
 
     public function checkAnswer(Request $request, Questions $userAnswer){
-        $response = '';
-        $userAnswer = $request->answer;
+        // $response = '';
+        // $userAnswer = $request->answer;
 
-        if(DB::table('questions')->where('answer', '=', $userAnswer)){
-            $response = "correct answer";
-        }else{
-            $response = "incorrect answer";
+        // if(DB::table('questions')->where('answer', '=', $userAnswer)){
+        //     $response = "correct answer";
+        // }else{
+        //     $response = "incorrect answer";
+        // }
+        // return $response;
+
+        $user = Auth::user();
+
+        try{
+
+            $randomizedQuestions = DB::table('url_tokens')
+                ->select('randomizedQuestions')
+                ->where('id', $id)->get();
+
+
+            return response()->json([
+                'questions' => json_decode($randomizedQuestions[0]->randomizedQuestions),
+            ]);
+
         }
-        return $response;
+        catch(\Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 400
+            ]);
+        }
+
     }
 
 }
