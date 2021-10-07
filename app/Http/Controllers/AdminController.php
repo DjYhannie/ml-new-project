@@ -33,12 +33,12 @@ class AdminController extends Controller
 
     }else
     {
-        $user= Admin::where('email', $request->username)->first();
+        $user= Admin::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => ['These credentials do not match our records.']
-            ], 404);
+            ], 200);
         }
 
         $token = $user->createToken('my-app-token')->plainTextToken;
@@ -54,7 +54,7 @@ class AdminController extends Controller
     //Query to add courses
     public function addCourses(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         try{
 
             $validate = $request->validate([

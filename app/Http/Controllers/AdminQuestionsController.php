@@ -38,7 +38,6 @@ class AdminQuestionsController extends Controller
                 'course' => $validate['course'],
                 'answer' => $validate['answer'],
                 'choices' => json_encode($validate['choices'])
-
             ]);
 
             $question->save();

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 use App\Models\Questionnaire;
 use App\Models\Questions;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Validator;
+use Illuminate\Support\Str;
+use App\Url;
 
 use function Complex\add;
 
@@ -17,7 +21,7 @@ class QuestionnaireController extends Controller
     {
             $user = Auth::user();
 
-            $validate = $request->validate([
+            $validate = Validator::make($request->all(),[
                 'title' => 'required',
                 'course' => 'required',
                 'time_duration' => 'required',
@@ -28,16 +32,14 @@ class QuestionnaireController extends Controller
                 'total_questions' => 'required'
             ]);
 
-            $questionnaire = Questionnaire::create([
-                'title' => $validate['title'],
-                'course' => $validate['course'],
-                'time_duration' => $validate['time_duration'],
-                'passing_score' => $validate['passing_score'],
-                'easy_questions' =>$validate['easy_questions'],
-                'average_questions' => $validate['average_questions'],
-                'hard_questions' => $validate['hard_questions'],
-                'total_questions' => $validate['total_questions']
-            ]);
+            if ($validate->fails()) {
+                return response()->json([
+                    'message' => 'Error',
+                    'error'   => $validate->errors()
+                ]);
+            }
+
+            $questionnaire = Questionnaire::create($validate->validated());
 
             $questionnaire->save();
 
@@ -167,18 +169,17 @@ class QuestionnaireController extends Controller
             $shuffled->all();
 
 
-            $url_token = DB::select('select * from url_tokens where questionnaire_id = ? and user_id = ?', [$questionnaire->id, $user->id]);
-
-            $token = $url_token? $url_token[0]->token: '';
-
-            if($token){}
+            $url_token = DB::table('url_tokens')->select('*')
+                        ->where('questionnaire_id', $questionnaire->id)
+                        ->where('user_id', $user->id)
+                        ->first();
 
             if (!$url_token) {
-
                 $token = sha1(uniqid(time(),true));
                 $token_data = [
                     'token' => $token,
                     'questionnaire_id' => $questionnaire->id,
+                    'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
                     'accessed_time' => Carbon::now(),
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
@@ -186,21 +187,81 @@ class QuestionnaireController extends Controller
                 ];
 
                 DB::table('url_tokens')->insert($token_data);
-
+                return response()->json([
+                    'data'  => $token_data,
+                    'url_token' => $token
+                ]);
             }
 
+
             return response()->json([
-                'data' => $shuffled,
-                'url_token' => $token
+                'data'      => $url_token,
+                'url_token' => $url_token->token
             ]);
 
         }
         catch(\Exception $e){
             return response()->json([
                 'message' => "Error",
+                'error' => $e->getMessage(),
+                'status_code' => 400
+            ]);
+        }
+    }
+    public function getExpiratiionTime($id)
+    {
+        $user = Auth::user();
+
+        try{
+            $questionnairetime = Questionnaire::find($id);
+            $time = $questionnairetime->time_duration;
+
+            dd($time);
+
+        }
+        catch(\Exception $e){
+            return response()->json([
                 'error' => $e,
                 'status_code' => 400
             ]);
         }
     }
+
+    public function invites(Request $request )
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|array'
+        ]);
+
+        // $validator->after(function ($validator) use ($request){
+        //     if (Invitation::where('email', $request->email)->exist()){
+        //         $validator->errors()->add('email', 'Invite exists with this email!');
+        //     }
+        // });
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Error',
+                'error'   => $validator->errors()
+            ]);
+        }
+        do{
+            $token = Str::random(20);
+        }
+        while (Invitation::where('token', $token)->first());
+
+        $email = Invitation::create([
+            'token' => $token,
+            'email' => $request->input('email')
+        ]);
+        dd($email);
+
+        $url = URL::temporarySignedRoute(
+            'invitation', now()->addMinutes(30),
+            ['token' => $token]
+        );
+
+        Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
+
+    }
+
 }

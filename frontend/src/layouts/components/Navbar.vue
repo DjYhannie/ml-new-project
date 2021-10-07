@@ -92,10 +92,10 @@
             class="mr-50"
           />
           <!-- <span>Logout</span> -->
-          <router-link to="/">
-            Logout
+          <router-link to="/user-login">
+          <span @click="logout()">Logout</span>
           </router-link>
-          <b-link :to="{name:'login'}" />
+          <b-link :to="{name:'user-login'}" />
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -107,6 +107,7 @@ import {
   BLink, BNavbarNav, BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
 } from 'bootstrap-vue'
 import DarkToggler from '@core/layouts/components/app-navbar/components/DarkToggler.vue'
+// import store from '@/store/index'
 
 export default {
   components: {
@@ -124,6 +125,13 @@ export default {
     toggleVerticalMenuActive: {
       type: Function,
       default: () => {},
+    },
+  },
+  methods: {
+    logout() {
+      console.log('LOG_OUT')
+      this.$store.commit('LogOut')
+      this.$router.replace({ name: 'logout' })
     },
   },
 }
