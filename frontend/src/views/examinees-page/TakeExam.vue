@@ -13,9 +13,9 @@
       </b-button>
       </b-card>
 <!-- Timer  -->
-  <BaseTimer v-show="isTimer"
+  <!-- <BaseTimer v-show="isTimer"
       :time-left="timeLeft"
-    />
+    /> -->
   <!-- Test Questions  -->
   <b-card v-show="formShow">
          <b-form @submit.prevent>
@@ -55,11 +55,11 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-import BaseTimer from './BaseTimer.vue'
+// import BaseTimer from './BaseTimer.vue'
 
 export default {
   components: {
-    BaseTimer,
+    // BaseTimer,
     // BFormSelect,
     // BFormSelectOption,
     BCard,
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      isTimer: false,
+      // isTimer: false,
       formShow: false,
       helloShow: true,
       // isShow: false,
@@ -81,14 +81,14 @@ export default {
         { value: 'B', text: 'Questionnaire 2 (from options prop)' },
       ],
       // BaseTimer
-      timeLimit: 20,
-      timePassed: 0,
-      timeInterval: null,
+      // timeLimit: 20,
+      // timePassed: 0,
+      // timeInterval: null,
     }
   },
   methods: {
     start() {
-      this.isTimer = true
+      // this.isTimer = true
       this.formShow = true
       this.helloShow = false
     },
@@ -96,32 +96,32 @@ export default {
       console.log('SUBMITTED__')
     },
     // BaseTimer
-    startTimer() {
-      this.timerInterval = setInterval(() => {
-        this.timePassed += 1
-      }, 1000)
-    },
+    // startTimer() {
+    //   this.timerInterval = setInterval(() => {
+    //     this.timePassed += 1
+    //   }, 1000)
+    // },
   },
   // BaseTimer
-  computed: {
-    formattedTimeLeft() {
-      const { timeLeft } = this.timeLeft
-      // The largest round integer less than or equal to the result of time divided being by 60.
-      const minutes = Math.floor(timeLeft / 60)
-      // Seconds are the remainder of the time divided by 60 (modulus operator)
-      let seconds = timeLeft % 60
-      // If the value of seconds is less than 10,then display seconds with a leading zero
-      if (seconds < 10) {
-        seconds = `0${seconds}`
-      }
-      // The output in MM:SS format
-      return `${minutes}:${seconds}`
-    },
-  },
+  // computed: {
+  //   formattedTimeLeft() {
+  //     const { timeLeft } = this.timeLeft
+  //     // The largest round integer less than or equal to the result of time divided being by 60.
+  //     const minutes = Math.floor(timeLeft / 60)
+  //     // Seconds are the remainder of the time divided by 60 (modulus operator)
+  //     let seconds = timeLeft % 60
+  //     // If the value of seconds is less than 10,then display seconds with a leading zero
+  //     if (seconds < 10) {
+  //       seconds = `0${seconds}`
+  //     }
+  //     // The output in MM:SS format
+  //     return `${minutes}:${seconds}`
+  //   },
+  // },
   // BaseTimer
-  mounted() {
-    this.startTimer()
-  },
+  // mounted() {
+  //   this.startTimer()
+  // },
 }
 </script>
 

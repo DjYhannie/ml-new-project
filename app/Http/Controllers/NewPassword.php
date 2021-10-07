@@ -22,10 +22,10 @@ class NewPassword extends Controller
 {
     use Notifiable;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function updatePassword(Request $request)
     {
@@ -64,7 +64,7 @@ class NewPassword extends Controller
 
         $token = Str::random(64);
 
-
+        
 
         DB::table('password_resets')
             ->insert(['email' => $request->email, 'token' =>$token, 'created_at' => Carbon::now()]);

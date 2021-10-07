@@ -47,10 +47,10 @@
                   <div class="input-group mb-1">
                     <label for="course">Course: </label>
                     <b-form-select
-                      v-model="selected"
+                      v-model="questionnaire.course"
                       >
-                      <option v-for="course in courses.courses"
-                      :key="course.id">{{ course.name }}</option>
+                      <option v-for="question in questions"
+                      :key="question.id">{{ question.course }}</option>
                   </b-form-select>
                   </div>
                 </b-col>
@@ -142,8 +142,8 @@
       </b-modal>
     </div>
     <br>
-
     <br><br><hr><br>
+    {{questions}}
     <!-- Edit/Delete Questions  -->
     <div
       v-for="questionnaire in questionnaires"
@@ -244,7 +244,7 @@
                 type="submit"
                 variant="danger"
                 block
-                @click="validationForm"
+                @click="submitEmail"
               >
                 Send
               </b-button>
@@ -313,7 +313,7 @@ export default {
       {
         title: '',
         course: '',
-        selected: '',
+        // selected: '',
         time_duration: '',
         passing_score: '',
         easy_questions: '',
@@ -329,7 +329,7 @@ export default {
         { value: 'Course 3', text: 'Course 3' },
         { value: 'Course 4', text: 'Course 4' },
       ],
-      seleted: '',
+      // seleted: '',
       required,
       email,
     }
@@ -337,17 +337,17 @@ export default {
   computed: {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
-      courses: 'GET_COURSES',
+      questions: 'GET_QUESTION',
     }),
   },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
-    await this.GET_COURSES()
+    await this.GET_QUESTIONS()
   },
   methods: {
     ...mapActions({
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
-      GET_COURSES: 'ACTION_GET_COURSES',
+      GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
@@ -401,8 +401,17 @@ export default {
       console.log('DELETED_', response)
       return response
     },
-    validationForm() {
+    submitEmail() {
       console.log('SEND EMAIL__')
+      console.log(this.data)
+      console.log(this.$refs.loginValidation[0].validate())
+      this.$refs.loginValidation[0].validate().then(async success => {
+        console.log(success)
+        if (success) {
+          const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
+          console.log(sendEmail)
+        }
+      })
     },
     sendButton() {
       this.sendEmail = true
