@@ -42,60 +42,15 @@
             title-tag="h2"
             class="font-weight-bold mb-1"
           >
-            MLhuillier Evaluation Test
+            Kindly enter new password and confirm
           </b-card-title>
-          <b-card-text class="mb-2">
-            Please fill in input fields
-          </b-card-text>
 
           <!-- form -->
           <validation-observer ref="registerValidation">
             <b-form
               class="auth-register-form mt-2"
-              @submit.prevent= 'validationForm'
+              @submit.prevent="validationForm"
             >
-
-              <!-- name -->
-              <b-form-group
-                label="Name"
-                label-for="name"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="Name"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="name"
-                    v-model="register.username"
-                    :state="errors.length > 0 ? false:null"
-                    name="name"
-                    placeholder="Full Name"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- email -->
-              <b-form-group
-                label="Email"
-                label-for="email"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="email"
-                    v-model="register.email"
-                    :state="errors.length > 0 ? false:null"
-                    name="email"
-                    placeholder="name.test@mlhuillier.com"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-
               <!-- password -->
               <b-form-group
                 label="Password"
@@ -135,9 +90,6 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="confirmPassword">Confirm Password</label>
-                  <!-- <b-link :to="{name:'auth-forgot-password-v2'}">
-                    <small>Forgot Password?</small>
-                  </b-link> -->
                 </div>
                 <validation-provider
                   #default="{ errors }"
@@ -175,18 +127,10 @@
                 variant="danger"
                 block
               >
-              Register
+              Submit
               </b-button>
             </b-form>
           </validation-observer>
-
-          <b-card-text class="text-center mt-2">
-            <span>Already have an account? </span>
-            <b-link :to="{name:'login'}">
-              <span>&nbsp;Sign in</span>
-              <!-- <router-link to="/registration">Register</router-link> -->
-            </b-link>
-          </b-card-text>
         </b-col>
       </b-col>
     <!-- /Login-->
@@ -199,13 +143,13 @@
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardTitle, BImg, BForm, BButton,
 } from 'bootstrap-vue'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
-import axios from '../libs/axios'
-// import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+// import axios from '../libs/axios'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 // import { mapActions } from 'vuex'
 
 extend('confirmPassword', {
@@ -225,7 +169,6 @@ export default {
     BFormInput,
     BInputGroupAppend,
     BInputGroup,
-    BCardText,
     BCardTitle,
     BImg,
     BForm,
@@ -268,8 +211,9 @@ export default {
       this.$refs.registerValidation.validate().then(async success => {
         console.log(success)
         if (success) {
+          this.$router.push({ name: 'user-login' })
           const register = await this.$store.dispatch('Register', this.register)
-          console.log(register)
+          console.log('Response Component', register)
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -279,7 +223,7 @@ export default {
             },
           })
           setTimeout(() => {
-            this.$router.push({ name: 'login' })
+            this.$router.push({ name: 'user-login' })
           }, 2000)
         }
       })

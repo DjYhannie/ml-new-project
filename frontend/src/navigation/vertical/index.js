@@ -1,5 +1,10 @@
 export default [
   {
+    title: 'Take Exam',
+    route: 'user/take-exam',
+    icon: 'FeatherIcon',
+  },
+  {
     title: 'Home',
     route: 'home',
     icon: 'HomeIcon',

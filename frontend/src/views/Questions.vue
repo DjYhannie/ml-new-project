@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- add-questions-button  -->
+      <!-- add-questions-button  -->
     <div>
       <b-button
         v-b-modal.modal-lg
@@ -9,36 +9,29 @@
       >
         Add Question
       </b-button>
-      <b-button
-        v-b-modal.modal-lg
-        class="modalButton"
-        @click="isShow = !isShow"
-      >
-        Add Course
-      </b-button>
-
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
-        <b-button-group class="buttons">
-          <b-dropdown v-model="questionDescription.category">
-            <b-dropdown-item>Easy</b-dropdown-item>
-            <b-dropdown-item>Intermediate</b-dropdown-item>
-            <b-dropdown-item>Hard</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group>
-        <h3>Create Question</h3>
-        <div class="input-group mb-1">
+        <!-- <h3>Create Question</h3> -->
+        <b-form-select
+            v-model="questionDescription.category"
+            :options="optionsCategories"
+          />
+          <br><br>
+        <!-- <div class="input-group mb-1">
           <b-form-select
-            v-model="selected"
+            v-model="questionDescription.course"
             :options="options"
           />
-          <!-- <input
-            v-model="questionDescription.course"
-            type="text"
-            class="form-control"
-            placeholder="Course Name"
-            aria-describedby="basic-addon1"> -->
-        </div>
+        </div> -->
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.course"
+                type="text"
+                class="form-control"
+                placeholder="Course"
+                aria-describedby="basic-addon1"
+              >
+            </div>
         <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
@@ -95,6 +88,15 @@
               >
             </div>
             <b-button
+              v-show="editShow"
+              variant="primary"
+              type="submit"
+              @click="editQuestion()"
+            >
+              Edit
+            </b-button>
+            <b-button
+              v-show="addShow"
               variant="primary"
               type="submit"
             >
@@ -110,7 +112,7 @@
           <b-form-group name="create-question">
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.course"
+                v-model="course.name"
                 type="text"
                 class="form-control"
                 placeholder="Course Name"
@@ -128,11 +130,16 @@
       </b-modal>
     </div>
     <br>
-
-    <br><br><hr><br>
+    <!-- <div>
+      {{courses.courses[0]}}
+    </div> -->
+    <br>
+    <br>
+    <hr>
+    <br>
     <!-- Edit/Delete Questions  -->
     <div
-      v-for="question in questions"
+      v-for="question in questions.questions"
       :key="question.id"
       class="question-content"
     >
@@ -154,8 +161,8 @@
             aria-controls="collapse-4"
             @click="visible = !visible"
           >
+          <!-- @click="visible(question.id)" -->
             {{ question.question }}
-          </b-card>
           <b-collapse
             id="collapse-4"
             v-model="visible"
@@ -166,16 +173,17 @@
               <p>Course Name: {{ question.course }}</p>
               <p>Question: {{ question.question }}</p>
               <p>Answer: {{ question.answer }}</p>
-              <p>A. {{ question.choiceA }}</p>
-              <p>B. {{ question.choiceB }}</p>
-              <p>C. {{ question.choiceC }}</p>
-              <p>D. {{ question.choiceD }}</p>
+              <p>A. {{ question.choices.choiceA }}</p>
+              <p>B. {{ question.choices.choiceB }}</p>
+              <p>C. {{ question.choices.choiceC }}</p>
+              <p>D. {{ question.choices.choiceD }}</p>
             </b-card>
           </b-collapse>
+          </b-card>
         </div>
-        <b-form @submit.prevent="update">
+        <b-form @submit.prevent="update" v-show="updateShow">
           <b-form-group name="questions">
-            <!-- <div
+            <div
               :id="question.id"
               style="display:none"
             >
@@ -199,7 +207,7 @@
               >
                 Update Question
               </b-button>
-            </div> -->
+            </div>
           </b-form-group>
         </b-form>
       </b-card>
@@ -221,8 +229,8 @@ import {
   BCollapse,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions, mapState } from 'vuex'
-import * as questionTypes from '../store/types/questions'
+import { mapActions, mapMutations, mapState } from 'vuex'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -240,96 +248,125 @@ export default {
   },
   data() {
     return {
+      updateShow: true,
+      addShow: true,
+      editShow: false,
+      index: null,
       visible: false,
       modalShow: false,
       isShow: false,
-      questionDescription:
-        {
-          course: '',
-          category: '',
-          question: '',
-          answer: '',
-          choices: [
-            {
-              choiceA: '',
-              choiceB: '',
-              choiceC: '',
-              choiceD: '',
-            },
-          ],
+      questionDescription: {
+        course: '',
+        category: null,
+        question: '',
+        answer: '',
+        choices: {
+          choiceA: '',
+          choiceB: '',
+          choiceC: '',
+          choiceD: '',
         },
-      // questions: [
-      //   {
-      //     course: 'Course1',
-      //     question: 'Question1',
-      //     answer: 'AnswerA',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course2',
-      //     question: 'Question2',
-      //     answer: 'AnswerB',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course4',
-      //     question: 'Question3',
-      //     answer: 'AnswerC',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      //   {
-      //     course: 'Course5',
-      //     question: 'Question4',
-      //     answer: 'AnswerD',
-      //     choiceA: 'testA',
-      //     choiceB: 'testB',
-      //     choiceC: 'testC',
-      //     choiceD: 'testD',
-      //   },
-      // ],
+      },
+      course: {
+        name: null,
+      },
       options: [
         { value: null, text: 'Select Course', disabled: true },
-        { value: 'a', text: 'Course 1' },
-        { value: 'b', text: 'Course 2' },
-        { value: { C: '3PO' }, text: 'Course 3' },
-        { value: 'd', text: 'Course 4' },
+        { value: 'Course 1', text: 'Course 1' },
+        { value: 'Course 2', text: 'Course 2' },
+        { value: 'Course 3', text: 'Course 3' },
+        { value: 'Course 4', text: 'Course 4' },
       ],
-      selected: '',
+      optionsCategories: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'Easy', text: 'Easy' },
+        { value: 'Average', text: 'Average' },
+        { value: 'Hard', text: 'Hard' },
+      ],
     }
   },
   computed: {
-    ...mapState(['questions']),
+    ...mapState({
+      questions: 'questions',
+      courses: 'courses',
+    }),
+  },
+  watch: {
+    // GET_QUESTIONS: e => {
+    //   console.log(e)
+    // },
+    // GET_COURSES: e => {
+    //   console.log('GET COURSES', e)
+    // },
+  },
+  created() {
+    this.GET_QUESTIONS()
+    this.GET_COURSES()
   },
   mounted() {
-    this.getQuestions()
-    console.log(this.questions)
+    this.GET_QUESTIONS()
+    this.GET_COURSES()
   },
   methods: {
     ...mapActions({
-      getQuestions: questionTypes.ACTION_SET_QUESTIONS,
-      // postQuestion: questionTypes.ACTION_ADD_QUESTION,
+      GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
+      GET_COURSES: 'ACTION_GET_COURSE',
     }),
-    submitQuestion() {
+    ...mapMutations({
+      DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
+    }),
+    async submitQuestion() {
       console.log('logging...')
-      this.$store.dispatch(questionTypes.ACTION_ADD_QUESTION, this.questionDescription)
+      const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
+      console.log(response)
+      this.questionDescription.course = ''
+      this.questionDescription.category = ''
+      this.questionDescription.question = ''
+      this.questionDescription.answer = ''
+      this.questionDescription.choices.choiceA = ''
+      this.questionDescription.choices.choiceB = ''
+      this.questionDescription.choices.choiceC = ''
+      this.questionDescription.choices.choiceD = ''
+      this.modalShow = false
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Added!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
+      // this.isShow = true
     },
-    deleteButton() {
+    async submitCourse() {
+      console.log('adding course')
+      const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
+      this.course.name = ''
+      this.isShow = false
+      console.log('VUE COMPONENT RESPONSE', response)
+    },
+    async deleteButton(question) {
+      console.log(question)
+      const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
+      console.log('DELETED_', response)
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Deleted!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
       console.log('deleted!')
     },
     editButton() {
+      this.modalShow = true
+      this.editShow = true
+      this.addShow = false
       console.log('edited!')
     },
-    cancel() {
-      // document.getElementById(questions.id).style.display = 'none'
+    editQuestion() {
+      console.log('EDITED__')
     },
   },
 }

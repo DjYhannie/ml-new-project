@@ -22,5 +22,5 @@ export default new Vuex.Store({
     auth,
     questionnaire,
   },
-  strict: process.env.DEV,
+  // strict: process.env.DEV,
 })
