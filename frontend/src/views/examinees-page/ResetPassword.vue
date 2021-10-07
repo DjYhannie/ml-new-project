@@ -147,26 +147,27 @@ export default {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
+          console.log(this.data)
           const login = await this.$store.dispatch('ResetPassword', this.data)
           console.log('LOGIN_', login)
-          const token = this.$store.getters.StateToken
-          console.log(token)
-          const message = login.data.message
-          if (!token) {
-            this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${message}`,
-              icon: 'EditIcon',
-              variant: 'danger',
-            },
-          }) 
-          console.log(token)
-          } else {
-            console.log(token)
-            this.$router.push({ name: 'home' })
-            console.log(login.data.message)
-          }
+          // const token = this.$store.getters.StateToken
+          console.log(login.data.token)
+          // const message = login.data.message
+          // if (!token) {
+          //   this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: `${message}`,
+          //     icon: 'EditIcon',
+          //     variant: 'danger',
+          //   },
+          // }) 
+          // console.log(token)
+          // } else {
+          //   console.log(token)
+          //   this.$router.push({ name: 'home' })
+          //   console.log(login.data.message)
+          // }
         }
       })
     },
