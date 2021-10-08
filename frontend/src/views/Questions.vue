@@ -17,13 +17,7 @@
             :options="optionsCategories"
           />
           <br><br>
-        <!-- <div class="input-group mb-1">
-          <b-form-select
-            v-model="questionDescription.course"
-            :options="options"
-          />
-        </div> -->
-            <div class="input-group mb-1">
+           <div class="input-group mb-1">
               <input
                 v-model="questionDescription.course"
                 type="text"
@@ -130,9 +124,6 @@
       </b-modal>
     </div>
     <br>
-    <!-- <div>
-      {{courses.courses[0]}}
-    </div> -->
     <br>
     <br>
     <hr>
@@ -161,7 +152,6 @@
             aria-controls="collapse-4"
             @click="visible = !visible"
           >
-          <!-- @click="visible(question.id)" -->
             {{ question.question }}
           <b-collapse
             id="collapse-4"
@@ -171,7 +161,6 @@
             <b-card>
               <hr>
               <p>Course Name: {{ question.course }}</p>
-              <!-- <p>Question: {{ question.question }}</p> -->
               <p>Answer: {{ question.answer }}</p>
               <p>A. {{ question.choices.choiceA }}</p>
               <p>B. {{ question.choices.choiceB }}</p>
