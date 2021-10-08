@@ -7,7 +7,7 @@
         <!-- <vuexy-logo /> -->
         <b-img :src="require('@/assets/images/logo/header-logo.png')" />
         <h2 class="brand-text text-danger ml-1">
-          MLhuillier
+          ML OEx
         </h2>
       </b-link>
       <!-- /Brand logo-->
