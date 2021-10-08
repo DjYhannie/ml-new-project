@@ -44,7 +44,7 @@ class ExamFormController extends Controller
 
 
 
-    public function checkAnswer(Request $request, Questions $userAnswer){
+    public function checkAnswer(Request $request){
         // $response = '';
         // $userAnswer = $request->answer;
 
@@ -56,6 +56,8 @@ class ExamFormController extends Controller
         // return $response;
 
         $user = Auth::user();
+        $id = $request->id;
+        $answer = json_decode(str_replace("'", '"', $request->answers));
 
         try{
 

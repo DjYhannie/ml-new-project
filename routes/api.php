@@ -73,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);
     // Route::get('/send-link', [ExamFormController::class, 'sendExamLink']);
+    Route::post('/checkanswer', [ExamFormController::class, 'checkAnswer']);
 
 
     Route::post('/logout', [RegistrationController::class, 'logout']);

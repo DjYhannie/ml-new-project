@@ -238,7 +238,7 @@ class QuestionnaireController extends Controller
     public function invites(Request $request )
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|array'
+            'emails' => 'required|array'
         ]);
 
         // $validator->after(function ($validator) use ($request){

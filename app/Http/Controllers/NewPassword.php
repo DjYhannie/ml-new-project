@@ -78,9 +78,5 @@ class NewPassword extends Controller
         }
     }
 
-    public function test(Request $request)
-    {
-        dd("tees");
-    }
 }
 

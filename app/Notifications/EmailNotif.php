@@ -43,7 +43,7 @@ class EmailNotif extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = "/";
+        $url = "";
         return (new MailMessage)
                     ->greeting('Password Reset')
                     ->line('Please click the button below to reset your password')
