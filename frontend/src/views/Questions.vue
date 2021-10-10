@@ -43,13 +43,10 @@
             </div>
             <br>
             <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.answer"
-                type="text"
-                class="form-control"
-                placeholder="Answer..."
-                aria-describedby="basic-addon1"
-              >
+              <b-form-select
+            v-model="questionDescription.answer"
+            :options="optionsAnswers"
+          />
             </div>
             <div class="input-group mb-1">
               <input
@@ -137,6 +134,13 @@
     <br>
     <hr>
     <br>
+    <b-card>
+      <label for="filter-categories">Filter</label>
+        <b-form-select
+            v-model="filterCategories"
+            :options="optionsFilterCategories"
+          />
+    </b-card>
     <!-- Edit/Delete Questions  -->
     <div
       v-for="question in questions.questions"
@@ -156,22 +160,19 @@
         </b-button-group>
         <div>
           <b-card
-            :class="visible ? null : 'collapsed'"
-            :aria-expanded="visible ? 'true' : 'false'"
-            aria-controls="collapse-4"
-            @click="visible = !visible"
+            v-b-toggle="'accordion-details'+ question.id" id="detailsShow"
           >
           <!-- @click="visible(question.id)" -->
             {{ question.question }}
-          <b-collapse
-            id="collapse-4"
-            v-model="visible"
-            class="mt-2"
+          </b-card>
+          <div :id="question.id">
+            <b-collapse
+            v-bind:id="'accordion-details'+ question.id"
           >
             <b-card>
               <hr>
+              <p>Category: {{ question.category }}</p>
               <p>Course Name: {{ question.course }}</p>
-              <p>Question: {{ question.question }}</p>
               <p>Answer: {{ question.answer }}</p>
               <p>A. {{ question.choices.choiceA }}</p>
               <p>B. {{ question.choices.choiceB }}</p>
@@ -179,7 +180,7 @@
               <p>D. {{ question.choices.choiceD }}</p>
             </b-card>
           </b-collapse>
-          </b-card>
+          </div>
         </div>
         <b-form @submit.prevent="update" v-show="updateShow">
           <b-form-group name="questions">
@@ -217,6 +218,7 @@
 
 <script>
 import {
+  VBToggle,
   BFormGroup,
   BCard,
   BFormTextarea,
@@ -246,8 +248,13 @@ export default {
     BCollapse,
     BFormSelect,
   },
+  directives: {
+    'b-toggle': VBToggle,
+  },
   data() {
     return {
+      questionsCopy: null,
+      filterCategories: null,
       updateShow: true,
       addShow: true,
       editShow: false,
@@ -279,9 +286,22 @@ export default {
       ],
       optionsCategories: [
         { value: null, text: 'Select Category', disabled: true },
-        { value: 'Easy', text: 'Easy' },
-        { value: 'Average', text: 'Average' },
-        { value: 'Hard', text: 'Hard' },
+        { value: 'easy', text: 'Easy' },
+        { value: 'average', text: 'Average' },
+        { value: 'hard', text: 'Hard' },
+      ],
+      optionsAnswers: [
+        { value: null, text: 'Select Choices', disabled: true },
+        { value: 'A', text: 'A' },
+        { value: 'B', text: 'B' },
+        { value: 'C', text: 'C' },
+        { value: 'D', text: 'D' },
+      ],
+      optionsFilterCategories: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'easy', text: 'Easy' },
+        { value: 'average', text: 'Average' },
+        { value: 'hard', text: 'Hard' },
       ],
     }
   },
@@ -292,6 +312,9 @@ export default {
     }),
   },
   watch: {
+    filterCategories() {
+      this.filterByCategories()
+    },
     // GET_QUESTIONS: e => {
     //   console.log(e)
     // },
@@ -306,6 +329,7 @@ export default {
   mounted() {
     this.GET_QUESTIONS()
     this.GET_COURSES()
+    this.questionsCopy = this.questions.questions
   },
   methods: {
     ...mapActions({
@@ -315,6 +339,13 @@ export default {
     ...mapMutations({
       DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
     }),
+    filterByCategories() {
+      if (this.filterCategories == null) {
+        this.questions.questions = this.questionsCopy
+      } else {
+        this.questions.questions = this.questions.questions.filter(question => question.category.toLowerCase() === this.filterCategories)
+      }
+    },
     async submitQuestion() {
       console.log('logging...')
       const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)

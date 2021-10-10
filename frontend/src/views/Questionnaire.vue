@@ -11,9 +11,6 @@
       </b-button>
         <!-- Add Questionnaires  -->
       <b-modal v-model="modalShow">
-      <template #modal-title>
-      Using <code>$bvModal</code> Methods
-    </template>
         <h3>Create Questionnaire</h3>
         <b-form @submit.prevent="submitQuestionnaire">
           <b-form-group name="create-questionnaire">
@@ -144,6 +141,13 @@
     <br>
 
     <br><br><hr><br>
+    <b-card>
+      <label for="filter-courses">Filter</label>
+        <b-form-select
+            v-model="filterCourses"
+            :options="optionsFilterCourses"
+          />
+    </b-card>
     <!-- Edit/Delete Questions  -->
     <div
       v-for="questionnaire in questionnaires"
@@ -163,17 +167,13 @@
         </b-button-group>
         <div>
           <b-card
-            :class="visible ? null : 'collapsed'"
-            :aria-expanded="visible ? 'true' : 'false'"
-            aria-controls="collapse-4"
-            @click="visible = !visible"
+            v-b-toggle="'accordion-details'+ questionnaire.id" id="detailsShow"
           >
             {{ questionnaire.title }}
           </b-card>
-          <b-collapse
-            id="collapse-4"
-            v-model="visible"
-            class="mt-2"
+          <div :id="questionnaire.id">
+            <b-collapse
+            v-bind:id="'accordion-details'+ questionnaire.id"
           >
           <!-- Display  -->
             <b-card>
@@ -187,6 +187,7 @@
               <p>Hard: {{ questionnaire.hard_questions }}</p>
             </b-card>
           </b-collapse>
+          </div>
         </div>
         <!-- questionnaires  -->
         <b-form @submit.prevent="update">
@@ -258,6 +259,7 @@
 
 <script>
 import {
+  VBToggle,
   BFormGroup,
   BFormInput,
   BCard,
@@ -300,8 +302,13 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
+  directives: {
+    'b-toggle': VBToggle,
+  },
   data() {
     return {
+      questionnaireCopy: null,
+      filterCategories: null,
       data: {
         email: '',
       },
@@ -329,6 +336,13 @@ export default {
         { value: 'Course 3', text: 'Course 3' },
         { value: 'Course 4', text: 'Course 4' },
       ],
+      optionsFilterCourses: [
+        { value: null, text: 'Select Course', disabled: true },
+        { value: 'Course 1', text: 'Course 1' },
+        { value: 'Course 2', text: 'Course 2' },
+        { value: 'Course 3', text: 'Course 3' },
+        { value: 'Course 4', text: 'Course 4' },
+      ],
       seleted: '',
       required,
       email,
@@ -340,9 +354,15 @@ export default {
       courses: 'GET_COURSES',
     }),
   },
+  watch: {
+    filterCategories() {
+      this.filterByCategories()
+    },
+  },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
     await this.GET_COURSES()
+    this.questionnaireCopy = this.questionnaires.questionnaires
   },
   methods: {
     ...mapActions({
@@ -354,6 +374,13 @@ export default {
     ...mapMutations({
       DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
+    filterByCourses() {
+      if (this.filterByCourses == null) {
+        this.questionnaires.questionnaires = this.questionnaireCopy
+      } else {
+        this.questionnaires.questionnaires = this.questionnaires.questionnaires.filter(questionnaire => questionnaire.course.toLowerCase() === this.filterByCourses)
+      }
+    },
     async submitQuestionnaire() {
       this.questionnaire.total_questions = parseInt(this.questionnaire.easy_questions, 10) + parseInt(this.questionnaire.average_questions, 10) + parseInt(this.questionnaire.hard_questions, 10)
       console.log(this.questionnaire)
