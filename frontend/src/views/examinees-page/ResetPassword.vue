@@ -5,7 +5,7 @@
       <b-link class="brand-logo">
         <!-- <vuexy-logo /> -->
         <b-img :src="require('@/assets/images/logo/header-logo.png')" />
-        <h2 class="brand-text text-danger ml-1">MLhuillier</h2>
+        <h2 class="brand-text text-danger ml-1">ML OEx</h2>
       </b-link>
       <!-- /Brand logo-->
 
@@ -147,26 +147,27 @@ export default {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
+          console.log(this.data)
           const login = await this.$store.dispatch('ResetPassword', this.data)
           console.log('LOGIN_', login)
-          const token = this.$store.getters.StateToken
-          console.log(token)
-          const message = login.data.message
-          if (!token) {
-            this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${message}`,
-              icon: 'EditIcon',
-              variant: 'danger',
-            },
-          }) 
-          console.log(token)
-          } else {
-            console.log(token)
-            this.$router.push({ name: 'home' })
-            console.log(login.data.message)
-          }
+          // const token = this.$store.getters.StateToken
+          console.log(login.data.token)
+          // const message = login.data.message
+          // if (!token) {
+          //   this.$toast({
+          //   component: ToastificationContent,
+          //   props: {
+          //     title: `${message}`,
+          //     icon: 'EditIcon',
+          //     variant: 'danger',
+          //   },
+          // }) 
+          // console.log(token)
+          // } else {
+          //   console.log(token)
+          //   this.$router.push({ name: 'home' })
+          //   console.log(login.data.message)
+          // }
         }
       })
     },

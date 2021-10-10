@@ -17,13 +17,7 @@
             :options="optionsCategories"
           />
           <br><br>
-        <!-- <div class="input-group mb-1">
-          <b-form-select
-            v-model="questionDescription.course"
-            :options="options"
-          />
-        </div> -->
-            <div class="input-group mb-1">
+           <div class="input-group mb-1">
               <input
                 v-model="questionDescription.course"
                 type="text"
@@ -127,9 +121,6 @@
       </b-modal>
     </div>
     <br>
-    <!-- <div>
-      {{courses.courses[0]}}
-    </div> -->
     <br>
     <br>
     <hr>
@@ -162,7 +153,6 @@
           <b-card
             v-b-toggle="'accordion-details'+ question.id" id="detailsShow"
           >
-          <!-- @click="visible(question.id)" -->
             {{ question.question }}
           </b-card>
           <div :id="question.id">
@@ -308,7 +298,7 @@ export default {
   computed: {
     ...mapState({
       questions: 'questions',
-      courses: 'courses',
+      // courses: 'courses',
     }),
   },
   watch: {
@@ -324,7 +314,7 @@ export default {
   },
   created() {
     this.GET_QUESTIONS()
-    this.GET_COURSES()
+    // this.GET_COURSES()
   },
   mounted() {
     this.GET_QUESTIONS()
@@ -334,7 +324,7 @@ export default {
   methods: {
     ...mapActions({
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
-      GET_COURSES: 'ACTION_GET_COURSE',
+      // GET_COURSES: 'ACTION_GET_COURSE',
     }),
     ...mapMutations({
       DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',

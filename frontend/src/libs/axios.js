@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 // axios
 import axios from 'axios'
 
@@ -13,6 +12,7 @@ const axiosIns = axios.create({
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
+    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
   },
   withCredentials: false,
 })

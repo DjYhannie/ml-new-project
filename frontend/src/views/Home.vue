@@ -20,7 +20,7 @@
 
 <script>
 import { BCard, VBToggle, BCollapse } from 'bootstrap-vue'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -39,6 +39,9 @@ export default {
   computed: {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
+    }),
+    ...mapState({
+      // questionnaires: 'questionnaires',
     }),
   },
   async mounted() {
@@ -62,6 +65,8 @@ export default {
       // } else {
       //   show.style.visibility === 'none'
       // }
+      // counter += 1
+      // console.log(String(id), show.id, counter)
     },
   },
 }
