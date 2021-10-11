@@ -26,7 +26,7 @@
                 aria-describedby="basic-addon1"
               >
             </div>
-        <b-form @submit.prevent="submitQuestion">
+        <b-form @submit.prevent="submitQuestion" @click="editQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
               <b-form-textarea
@@ -44,7 +44,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choices.choiceA"
+                v-model="questionDescription.choices.A"
                 type="text"
                 class="form-control"
                 placeholder="A."
@@ -53,7 +53,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choices.choiceB"
+                v-model="questionDescription.choices.B"
                 type="text"
                 class="form-control"
                 placeholder="B."
@@ -62,7 +62,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choices.choiceC"
+                v-model="questionDescription.choices.C"
                 type="text"
                 class="form-control"
                 placeholder="C."
@@ -71,7 +71,7 @@
             </div>
             <div class="input-group mb-1">
               <input
-                v-model="questionDescription.choices.choiceD"
+                v-model="questionDescription.choices.D"
                 type="text"
                 class="form-control"
                 placeholder="D."
@@ -82,7 +82,6 @@
               v-show="editShow"
               variant="primary"
               type="submit"
-              @click="editQuestion()"
             >
               Edit
             </b-button>
@@ -164,10 +163,10 @@
               <p>Category: {{ question.category }}</p>
               <p>Course Name: {{ question.course }}</p>
               <p>Answer: {{ question.answer }}</p>
-              <p>A. {{ question.choices.choiceA }}</p>
-              <p>B. {{ question.choices.choiceB }}</p>
-              <p>C. {{ question.choices.choiceC }}</p>
-              <p>D. {{ question.choices.choiceD }}</p>
+              <p>A. {{ question.choices.A }}</p>
+              <p>B. {{ question.choices.B }}</p>
+              <p>C. {{ question.choices.C }}</p>
+              <p>D. {{ question.choices.D }}</p>
             </b-card>
           </b-collapse>
           </div>
@@ -258,10 +257,10 @@ export default {
         question: '',
         answer: '',
         choices: {
-          choiceA: '',
-          choiceB: '',
-          choiceC: '',
-          choiceD: '',
+          A: '',
+          B: '',
+          C: '',
+          D: '',
         },
       },
       course: {
@@ -344,10 +343,10 @@ export default {
       this.questionDescription.category = ''
       this.questionDescription.question = ''
       this.questionDescription.answer = ''
-      this.questionDescription.choices.choiceA = ''
-      this.questionDescription.choices.choiceB = ''
-      this.questionDescription.choices.choiceC = ''
-      this.questionDescription.choices.choiceD = ''
+      this.questionDescription.choices.A = ''
+      this.questionDescription.choices.B = ''
+      this.questionDescription.choices.C = ''
+      this.questionDescription.choices.D = ''
       this.modalShow = false
       this.$toast({
         component: ToastificationContent,
@@ -386,8 +385,10 @@ export default {
       this.addShow = false
       console.log('edited!')
     },
-    editQuestion() {
-      console.log('EDITED__')
+    async editQuestion(question) {
+      console.log('EDITED__', question)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
+      console.log(response)
     },
   },
 }

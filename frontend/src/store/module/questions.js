@@ -65,10 +65,10 @@ export default {
       return response
     },
     // Update
-    async ACTION_UPDATE_QUESTION({ dispatch }, id) {
-      const response = await api.put(`questions/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_UPDATE_QUESTION({ dispatch, questions }, id) {
+      const response = await api.post(`questions/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
-      await dispatch('ACTION_GET_QUESTIONS')
+      await dispatch('ACTION_GET_QUESTIONS', questions)
       return response
     },
   },
