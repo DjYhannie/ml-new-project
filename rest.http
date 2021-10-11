@@ -20,6 +20,9 @@ Content-Type: application/json
     "password" : "test123"
 }
 
+####
+POST http://localhost:8000/api/logout
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
 
 ####
 
@@ -61,5 +64,12 @@ Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
 Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+
+####
+
+POST http://localhost:8000/api/checkanswer
+Content-Type: application/json
+Authorization: Bearer 6|KRoBhOj652cvVWL1GjH95019LI7CpctE2Qyoey0a
+
 
 

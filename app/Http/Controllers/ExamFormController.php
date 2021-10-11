@@ -44,16 +44,7 @@ class ExamFormController extends Controller
 
 
 
-    public function checkAnswer(Request $request){
-        // $response = '';
-        // $userAnswer = $request->answer;
-
-        // if(DB::table('questions')->where('answer', '=', $userAnswer)){
-        //     $response = "correct answer";
-        // }else{
-        //     $response = "incorrect answer";
-        // }
-        // return $response;
+    public function getAnswer(Request $request){
 
         $user = Auth::user();
         $id = $request->id;
@@ -63,12 +54,9 @@ class ExamFormController extends Controller
 
             $randomizedQuestions = DB::table('url_tokens')
                 ->select('randomizedQuestions')
-                ->where('id', $id)->get();
+                ->where('id', $id)->get()->toArray();
 
-
-            return response()->json([
-                'questions' => json_decode($randomizedQuestions[0]->randomizedQuestions),
-            ]);
+            return $this->checkAnswer($answer, $randomizedQuestions);
 
         }
         catch(\Exception $e){
@@ -77,7 +65,40 @@ class ExamFormController extends Controller
                 'status_code' => 400
             ]);
         }
+    }
 
+    public function checkAnswer($answer, $randomizedQuestions)
+    {
+        $randomizedQuestions = json_decode(($randomizedQuestions[0]->randomizedQuestions));
+        $passing_score = DB::table('url_tokens')->join('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
+                            ->first('questionnaires.passing_score');
+
+        try{
+
+            $points = 0;
+
+            foreach($answer as $id => $ans){
+                $question = $randomizedQuestions[array_search($id, array_keys($randomizedQuestions))];
+                if($ans == $question->answer){
+                    $points = $points += 1;
+                }
+                else{
+                    $points = $points;
+                }
+            }
+            // return $points;
+            if($points >= $passing_score){
+                return response('Pass')->with($points);
+            }
+            else{
+                return response('Failed')->with($points);
+            }
+
+
+        }
+        catch(\Exception $e){
+            return response($e);
+        }
     }
 
 }
