@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "username": "Shannia lee",
-    "email":"rhea0951@gmail.com",
+    "email":"johnstiger885@gmail.com",
     "password": "test123",
     "password_confirmation": "test123"
 }
@@ -16,7 +16,7 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com",
+    "email" : "johnstiger885@gmail.com",
     "password" : "test123"
 }
 
@@ -43,7 +43,7 @@ Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 {
     "title" : "test",
@@ -58,21 +58,21 @@ Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
 
 ###
 GET http://localhost:8000/api/questionnaire/1
-Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 ####
 
 POST http://localhost:8000/api/checkanswer
 Content-Type: application/json
-Authorization: Bearer 6|KRoBhOj652cvVWL1GjH95019LI7CpctE2Qyoey0a
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 {
     "id" : 1,
-    "answer" : "[{'53':'D'},{'149':'B'},{'112':'B'},{'95':'C'},{'65':'B'},{'133':'B'},{'18':'B'},{'140':'C'},{'77':'A'},{'83':'C'},{'118':'D'},{'111':'C'},{'136':'D'},{'120':'A'},{'81':'B'}]"
+    "answers" : "[{'134':'C'},{'112':'D'},{'146':'C'},{'95':'B'},{'145':'D'},{'133':'A'},{'83':'D'},{'2':'B'},{'115':'C'},{'41':'B'},{'69':'B'},{'130':'A'},{'72':'D'},{'38':'A'},{'5':'B'}]"
 }
 
