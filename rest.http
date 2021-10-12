@@ -71,5 +71,8 @@ POST http://localhost:8000/api/checkanswer
 Content-Type: application/json
 Authorization: Bearer 6|KRoBhOj652cvVWL1GjH95019LI7CpctE2Qyoey0a
 
-
+{
+    "id" : 1,
+    "answer" : "[{'53':'D'},{'149':'B'},{'112':'B'},{'95':'C'},{'65':'B'},{'133':'B'},{'18':'B'},{'140':'C'},{'77':'A'},{'83':'C'},{'118':'D'},{'111':'C'},{'136':'D'},{'120':'A'},{'81':'B'}]"
+}
 
