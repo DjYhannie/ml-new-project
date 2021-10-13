@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "username": "Shannia lee",
-    "email":"rhea0951@gmail.com",
+    "email":"johnstiger885@gmail.com",
     "password": "test123",
     "password_confirmation": "test123"
 }
@@ -20,6 +20,9 @@ Content-Type: application/json
     "password" : "admin"
 }
 
+####
+POST http://localhost:8000/api/logout
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
 
 ####
 
@@ -40,7 +43,7 @@ Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 {
     "title" : "test",
@@ -60,7 +63,9 @@ Authorization: Bearer 3|Z4lz4NHGiqbT0ZuNPoJ2piT5OUrkqh0Gln5RZpDs
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 1|yOo9S2hYRn7Uata0I7PawAlDZBmrGs9KdLeabPaI
+Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
+
+####
 
 ####
 POST http://localhost:8000/api/checkanswer
@@ -69,5 +74,5 @@ Authorization: Bearer 3|Z4lz4NHGiqbT0ZuNPoJ2piT5OUrkqh0Gln5RZpDs
 
 {
     "id": 1,
-    "answers":  "[{'49':'B'},{'14':'B'},{'65':'A'},{'118':'C'},{'56':'D'},{'98':'B'},{'86':'D'},{'123':'B'},{'105':'B'},{'101':'C'},{'133':'B'},{'21':'A'},{'32':'B'},{'132':'C'},{'44':'A'}]"
+    "answers":  "[{'49':'B'},{'14':'C'},{'65':'A'},{'118':'C'},{'56':'D'},{'98':'B'},{'86':'D'},{'123':'B'},{'105':'B'},{'101':'C'},{'133':'B'},{'21':'A'},{'32':'B'},{'132':'C'},{'44':'A'}]"
 }
