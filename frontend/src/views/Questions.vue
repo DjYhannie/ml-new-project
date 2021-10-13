@@ -11,7 +11,7 @@
       </b-button>
       <!-- Add Questions  -->
       <b-modal v-model="modalShow">
-        <!-- <h3>Create Question</h3> -->
+        <h3>Create Question</h3>
         <b-form-select
             v-model="questionDescription.category"
             :options="optionsCategories"
@@ -26,7 +26,7 @@
                 aria-describedby="basic-addon1"
               >
             </div>
-        <b-form @submit.prevent="submitQuestion" @click="editQuestion">
+        <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
               <b-form-textarea
@@ -79,13 +79,6 @@
               >
             </div>
             <b-button
-              v-show="editShow"
-              variant="primary"
-              type="submit"
-            >
-              Edit
-            </b-button>
-            <b-button
               v-show="addShow"
               variant="primary"
               type="submit"
@@ -131,17 +124,99 @@
             :options="optionsFilterCategories"
           />
     </b-card>
-    <!-- Edit/Delete Questions  -->
-    <div
+    <!-- Edit Qustionnaire  -->
+      <b-modal v-model="modalEditShow">
+        <h3>Create Question</h3>
+        <b-form-select
+            v-model="questionDescription.category"
+            :options="optionsCategories"
+          />
+          <br><br>
+           <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.course"
+                type="text"
+                class="form-control"
+                placeholder="Course"
+                aria-describedby="basic-addon1"
+              >
+            </div>
+        <b-form @submit.prevent="submitEditQuestion">
+          <b-form-group name="create-question">
+            <div class="input-group">
+              <b-form-textarea
+                v-model="questionDescription.question"
+                class="form-control"
+                placeholder="Create question..."
+              />
+            </div>
+            <br>
+            <div class="input-group mb-1">
+              <b-form-select
+            v-model="questionDescription.answer"
+            :options="optionsAnswers"
+          />
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choices.A"
+                type="text"
+                class="form-control"
+                placeholder="A."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choices.B"
+                type="text"
+                class="form-control"
+                placeholder="B."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choices.C"
+                type="text"
+                class="form-control"
+                placeholder="C."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choices.D"
+                type="text"
+                class="form-control"
+                placeholder="D."
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <b-button
+              v-show="addShow"
+              variant="primary"
+              type="submit"
+            >
+              Save Changes
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    <!-- Display Questionnaire -->
+    <b-card>
+      <div
       v-for="question in questions.questions"
       :key="question.id"
       class="question-content"
     >
-      <b-card name="questions">
+      <b-card class="border" name="questions">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-              @click="editButton(question.id)"
+              v-b-modal.modal-lg
+        class="modalButton"
+        @click="modalEditShow = !modalEditShow"
             >Edit</b-dropdown-item>
             <b-dropdown-item
               @click="deleteButton(question.id)"
@@ -171,37 +246,9 @@
           </b-collapse>
           </div>
         </div>
-        <b-form @submit.prevent="update" v-show="updateShow">
-          <b-form-group name="questions">
-            <div
-              :id="question.id"
-              style="display:none"
-            >
-              <b-form-textarea
-                id="textarea"
-                v-model="question.questionDescription"
-                placeholder="Edit report..."
-                rows="3"
-                max-rows="0"
-                overflow-y="hidden"
-              />
-              <b-button
-                variant="danger"
-                @click="cancel()"
-              >
-                Cancel
-              </b-button>
-              <b-button
-                variant="primary"
-                @click="update(question.id, question.questionDescription)"
-              >
-                Update Question
-              </b-button>
-            </div>
-          </b-form-group>
-        </b-form>
       </b-card>
     </div>
+    </b-card>
   </div>
 </template>
 
@@ -246,7 +293,7 @@ export default {
       filterCategories: null,
       updateShow: true,
       addShow: true,
-      editShow: false,
+      modalEditShow: false,
       index: null,
       visible: false,
       modalShow: false,
@@ -385,7 +432,7 @@ export default {
       this.addShow = false
       console.log('edited!')
     },
-    async editQuestion(question) {
+    async submitEditQuestion(question) {
       console.log('EDITED__', question)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
       console.log(response)

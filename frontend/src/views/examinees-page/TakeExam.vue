@@ -17,8 +17,9 @@
       :time-left="timeLeft"
     /> -->
   <!-- Test Questions  -->
-  <b-card v-show="formShow">
-         <b-form @submit.prevent>
+  <div>
+    <b-card v-show="formShow">
+         <b-form @submit="submitExam">
         <b-form-group label="Radios using sub-components" />
       <b-form-radio-group
         id="radio-group-2"
@@ -27,20 +28,20 @@
         required
       >
       <!-- :aria-describedby="ariaDescribedby" -->
-        <b-form-radio value="choiceA">A. Choice A</b-form-radio>
-        <b-form-radio value="choiceB">B. Choice B</b-form-radio>
-        <b-form-radio value="choiceC">C. None of the above</b-form-radio>
-        <b-form-radio value="choiceD">D. All of the above</b-form-radio>
+        <b-form-radio value="A">A. Choice A</b-form-radio>
+        <b-form-radio value="B">B. Choice B</b-form-radio>
+        <b-form-radio value="C">C. None of the above</b-form-radio>
+        <b-form-radio value="D">D. All of the above</b-form-radio>
       </b-form-radio-group>
       <b-button
         type="submit"
         variant="danger"
-        @click="submit()"
         >
         Submit
       </b-button>
      </b-form>
   </b-card>
+  </div>
   </div>
 </template>
 
@@ -56,6 +57,7 @@ import {
   BFormRadioGroup,
 } from 'bootstrap-vue'
 // import BaseTimer from './BaseTimer.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -86,13 +88,24 @@ export default {
       // timeInterval: null,
     }
   },
+  computed: {
+    ...mapState({
+      exams: 'exams',
+    }),
+  },
+  mounted() {
+    this.GET_OEXAM()
+  },
   methods: {
+    ...mapActions({
+      GET_OEXAM: 'ACTION_GET_ONLINE_EXAM',
+    }),
     start() {
       // this.isTimer = true
       this.formShow = true
       this.helloShow = false
     },
-    submit() {
+    submitExam() {
       console.log('SUBMITTED__')
     },
     // BaseTimer

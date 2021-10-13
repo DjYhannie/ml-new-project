@@ -8,7 +8,7 @@ export default {
   state: {
     namespaced: true,
     questions: {},
-    // courses: {},
+    courses: [],
     show: true,
     index: null,
     token: sessionStorage.getItem('token'),
@@ -20,7 +20,7 @@ export default {
     // },
     GET_INDEX: state => state.index,
     GET_QUESTION: state => state.questions,
-    // GET_COURSES: state => state.courses,
+    GET_COURSES: state => state.courses,
   },
   actions: {
     // Done
@@ -31,8 +31,14 @@ export default {
             c.choices = JSON.parse(c.choices)
             return c
           })
+          this.courses = []
+          questions.forEach(element => {
+            this.courses.push(element.course)
+          })
+          this.courses = [...new Set(this.courses)]
           console.log(questions)
           commit('SET_QUESTION', questions)
+          commit('SET_COURSES', this.courses)
         })
     },
     // Done
@@ -76,9 +82,9 @@ export default {
     SET_QUESTION(state, questions) {
       state.questions = questions
     },
-    // SET_COURSES(state, courses) {
-    //   state.courses = courses
-    // },
+    SET_COURSES(state, courses) {
+      state.courses = courses
+    },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions
     },

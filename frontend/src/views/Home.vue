@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div
+ <b-card>
+      <div
       v-for="questionnaire in questionnaires"
       :key="questionnaire.id">
       <!-- <b-card @click="showDetails"> -->
-      <b-card v-b-toggle="'accordion-details'+ questionnaire.id" id="detailsShow">
+      <b-card class="border" v-b-toggle="'accordion-details'+ questionnaire.id" id="detailsShow">
         <!-- <b-button @click="showDetails(questionnaire.id) == !showDetails(questionnaire.id)" id="detailsShow">Show Details</b-button> -->
       <h5>{{ questionnaire.title }}</h5>
       <!-- toggle  -->
@@ -15,6 +16,7 @@
       </div>
     </b-card>
     </div>
+ </b-card>
   </div>
 </template>
 

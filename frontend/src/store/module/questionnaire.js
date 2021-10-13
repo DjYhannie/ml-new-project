@@ -34,6 +34,12 @@ export default {
       commit('GET_QUESTIONNAIRE', response.data.data)
       return response
     },
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, questionnaires }, id) {
+      const response = await api.post(`questionnaires/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log(response)
+      await dispatch('ACTION_GET_QUESTIONNAIRES', questionnaires)
+      return response
+    },
     // async ACTION_GET_COURSES({ commit }) {
     //   const response = await api.get('/course')
     //   console.log(response.data.courses)

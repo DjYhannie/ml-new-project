@@ -1,140 +1,81 @@
 <template>
-  <div class="auth-wrapper auth-v2">
-    <b-row class="auth-inner m-0">
-      <!-- Brand logo-->
-      <b-link class="brand-logo">
-        <!-- <vuexy-logo /> -->
-        <b-img :src="require('@/assets/images/logo/header-logo.png')" />
-        <h2 class="brand-text text-danger ml-1">ML OEx</h2>
-      </b-link>
-      <!-- /Brand logo-->
-
-      <!-- Left Text-->
-      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
-        <div
-          class="w-100 d-lg-flex align-items-center justify-content-center px-5"
-        >
-          <b-img fluid :src="imgUrl" alt="Login V2" />
-        </div>
-      </b-col>
-      <!-- /Left Text-->
-
-      <!-- Login-->
-      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
-         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
-            Welcome to ML OEx - MLhuillier Online Exam! 👋
-          </b-card-title>
-          <b-card-text class="mb-2">
-            Please sign-in to your account to start the exam
-          </b-card-text>
-
-          <!-- form -->
-          <validation-observer ref="loginValidation">
-            <b-form @submit.prevent="submitQuestion" @click="editQuestion">
-              <!-- course -->
-              <b-form-group label="Course" label-for="course">
+  <div>
+      <!-- add-questions-button  -->
+    <div>
+      <b-button
+        v-b-modal.modal-lg
+        class="modalButton"
+        @click="modalShow = !modalShow"
+      >
+        Add Question
+      </b-button>
+      <!-- Add Questions  -->
+      <b-modal v-model="modalShow">
+        <!-- <b-form-select
+            v-model="questionDescription.category"
+            :options="optionsCategories"
+          />
+          <br><br>
+           <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.course"
+                type="text"
+                class="form-control"
+                placeholder="Course"
+                aria-describedby="basic-addon1"
+              >
+            </div> -->
+        <validation-observer ref="loginValidation">
+            <b-form class="auth-login-form mt-2" @submit.prevent>
+              <!-- email -->
+              <b-form-group label="Email" label-for="login-email">
                 <validation-provider
                   #default="{ errors }"
-                  name="Course"
-                  rules="required"
+                  name="Email"
+                  rules="required|email"
                 >
                   <b-form-input
-                    id="course"
-                    v-model="questionDescription.course"
+                    id="login-email"
+                    v-model="data.email"
                     :state="errors.length > 0 ? false : null"
-                    name="course"
-                    placeholder="Course"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- question -->
-              <b-form-group label="Question" label-for="question">
-                <validation-provider
-                  #default="{ errors }"
-                  name="Question"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="course"
-                    v-model="questionDescription.question"
-                    :state="errors.length > 0 ? false : null"
-                    name="question"
-                    placeholder="Create Question"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- A -->
-              <b-form-group label="A" label-for="a">
-                <validation-provider
-                  #default="{ errors }"
-                  name="A"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="a"
-                    v-model="questionDescription.choices.A"
-                    :state="errors.length > 0 ? false : null"
-                    name="a"
-                    placeholder="A"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- B -->
-              <b-form-group label="B" label-for="b">
-                <validation-provider
-                  #default="{ errors }"
-                  name="B"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="a"
-                    v-model="questionDescription.choices.B"
-                    :state="errors.length > 0 ? false : null"
-                    name="b"
-                    placeholder="B"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- C -->
-              <b-form-group label="C" label-for="c">
-                <validation-provider
-                  #default="{ errors }"
-                  name="C"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="c"
-                    v-model="questionDescription.choices.C"
-                    :state="errors.length > 0 ? false : null"
-                    name="c"
-                    placeholder="C"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- D -->
-              <b-form-group label="D" label-for="d">
-                <validation-provider
-                  #default="{ errors }"
-                  name="D"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="a"
-                    v-model="questionDescription.choices.D"
-                    :state="errors.length > 0 ? false : null"
-                    name="d"
-                    placeholder="D"
+                    name="login-email"
+                    placeholder="name.test@mlhuillier.com"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
+              <!-- password -->
+              <b-form-group>
+                <validation-provider
+                  #default="{ errors }"
+                  name="Password"
+                  rules="required"
+                >
+                  <b-input-group
+                    class="input-group-merge"
+                    :class="errors.length > 0 ? 'is-invalid' : null"
+                  >
+                    <b-form-input
+                      id="login-password"
+                      v-model="data.password"
+                      :state="errors.length > 0 ? false : null"
+                      class="form-control-merge"
+                      :type="passwordFieldType"
+                      name="login-password"
+                      placeholder="············"
+                    />
+                    <b-input-group-append is-text>
+                      <feather-icon
+                        class="cursor-pointer"
+                        :icon="passwordToggleIcon"
+                        @click="togglePasswordVisibility"
+                      />
+                    </b-input-group-append>
+                  </b-input-group>
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
               <!-- submit button -->
               <b-button
                 type="submit"
@@ -146,124 +87,342 @@
               </b-button>
             </b-form>
           </validation-observer>
-        </b-col>
-      </b-col>
-      <!-- /Login-->
-    </b-row>
+      </b-modal>
+      <!-- Add Course  -->
+      <b-modal v-model="isShow">
+        <h3>Create Course</h3>
+        <b-form @submit.prevent="submitCourse">
+          <b-form-group name="create-question">
+            <div class="input-group mb-1">
+              <input
+                v-model="course.name"
+                type="text"
+                class="form-control"
+                placeholder="Course Name"
+                aria-describedby="basic-addon1"
+              >
+            </div>
+            <b-button
+              variant="primary"
+              type="submit"
+            >
+              Add
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    </div>
+    <br>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <b-card>
+      <label for="filter-categories">Filter</label>
+        <b-form-select
+            v-model="filterCategories"
+            :options="optionsFilterCategories"
+          />
+    </b-card>
+    <!-- Edit/Delete Questions  -->
+    <div
+      v-for="question in questions.questions"
+      :key="question.id"
+      class="question-content"
+    >
+      <b-card name="questions">
+        <b-button-group class="buttons">
+          <b-dropdown>
+            <b-dropdown-item
+              @click="editButton(question.id)"
+            >Edit</b-dropdown-item>
+            <b-dropdown-item
+              @click="deleteButton(question.id)"
+            >Delete</b-dropdown-item>
+          </b-dropdown>
+        </b-button-group>
+        <div>
+          <b-card
+            v-b-toggle="'accordion-details'+ question.id" id="detailsShow"
+          >
+            {{ question.question }}
+          </b-card>
+          <div :id="question.id">
+            <b-collapse
+            v-bind:id="'accordion-details'+ question.id"
+          >
+            <b-card>
+              <hr>
+              <p>Category: {{ question.category }}</p>
+              <p>Course Name: {{ question.course }}</p>
+              <p>Answer: {{ question.answer }}</p>
+              <p>A. {{ question.choices.A }}</p>
+              <p>B. {{ question.choices.B }}</p>
+              <p>C. {{ question.choices.C }}</p>
+              <p>D. {{ question.choices.D }}</p>
+            </b-card>
+          </b-collapse>
+          </div>
+        </div>
+        <b-form @submit.prevent="update" v-show="updateShow">
+          <b-form-group name="questions">
+            <div
+              :id="question.id"
+              style="display:none"
+            >
+              <b-form-textarea
+                id="textarea"
+                v-model="question.questionDescription"
+                placeholder="Edit report..."
+                rows="3"
+                max-rows="0"
+                overflow-y="hidden"
+              />
+              <b-button
+                variant="danger"
+                @click="cancel()"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                variant="primary"
+                @click="update(question.id, question.questionDescription)"
+              >
+                Update Question
+              </b-button>
+            </div>
+          </b-form-group>
+        </b-form>
+      </b-card>
+    </div>
   </div>
 </template>
 
 <script>
-/* eslint-disable global-require */
-// eslint-disable-next-line
-/* eslint-disable */
-/* eslint-disable eol-last */
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
-// import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow,
-  BCol,
-  BLink,
+  VBToggle,
   BFormGroup,
-  BFormInput,
-  BInputGroupAppend,
-  BInputGroup,
-  BCardText,
-  BCardTitle,
-  BImg,
-  BForm,
+  BCard,
+  BFormTextarea,
   BButton,
-} from 'bootstrap-vue';
-import { required, email } from '@validations'
-import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import store from '@/store/index'
+  BButtonGroup,
+  BDropdownItem,
+  BDropdown,
+  BForm,
+  BModal,
+  BCollapse,
+  BFormSelect,
+  BFormInput,
+} from 'bootstrap-vue'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import { mapActions } from 'vuex'
-import * as userTypes from '../store/types/users'
-import * as auth from '../store/module/auth'
-
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 
 export default {
   components: {
-    BRow,
-    BCol,
-    BLink,
-    BFormGroup,
-    BFormInput,
-    BInputGroupAppend,
-    BInputGroup,
-    BCardText,
-    BCardTitle,
-    BImg,
-    BForm,
+    BCard,
+    BFormTextarea,
     BButton,
-    // VuexyLogo,
+    BButtonGroup,
+    BFormGroup,
+    BDropdownItem,
+    BDropdown,
+    BForm,
+    BModal,
+    BCollapse,
+    BFormSelect,
+    BFormInput,
     ValidationProvider,
     ValidationObserver,
   },
-  mixins: [togglePasswordVisibility],
+  directives: {
+    'b-toggle': VBToggle,
+  },
   data() {
     return {
-      isError: false,
-      status: '',
-      data: {
-        password: '',
-        email: '',
+      questionsCopy: null,
+      filterCategories: null,
+      updateShow: true,
+      addShow: true,
+      editShow: false,
+      index: null,
+      visible: false,
+      modalShow: false,
+      isShow: false,
+      questionDescription: {
+        course: '',
+        category: null,
+        question: '',
+        answer: '',
+        choices: {
+          A: '',
+          B: '',
+          C: '',
+          D: '',
+        },
       },
-      sideImg: require('@/assets/images/pages/login-accept-task.svg'),
-      // validation rulesimport store from '@/store/index'
-      required,
-      email,
+      course: {
+        name: null,
+      },
+      options: [
+        { value: null, text: 'Select Course', disabled: true },
+        { value: 'Course 1', text: 'Course 1' },
+        { value: 'Course 2', text: 'Course 2' },
+        { value: 'Course 3', text: 'Course 3' },
+        { value: 'Course 4', text: 'Course 4' },
+      ],
+      optionsCategories: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'easy', text: 'Easy' },
+        { value: 'average', text: 'Average' },
+        { value: 'hard', text: 'Hard' },
+      ],
+      optionsAnswers: [
+        { value: null, text: 'Select Choices', disabled: true },
+        { value: 'A', text: 'A' },
+        { value: 'B', text: 'B' },
+        { value: 'C', text: 'C' },
+        { value: 'D', text: 'D' },
+      ],
+      optionsFilterCategories: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'easy', text: 'Easy' },
+        { value: 'average', text: 'Average' },
+        { value: 'hard', text: 'Hard' },
+      ],
     }
   },
   computed: {
-    passwordToggleIcon() {
-      return this.passwordFieldType === 'password' ? 'EyeIcon' : 'EyeOffIcon'
+    ...mapState({
+      questions: 'questions',
+      // courses: 'courses',
+    }),
+  },
+  watch: {
+    filterCategories() {
+      this.filterByCategories()
     },
-    imgUrl() {
-      if (store.state.appConfig.layout.skin === 'dark') {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/pages/login-accept-task.svg')
-        return this.sideImg
-      }
-      return this.sideImg
-    },
+    // GET_QUESTIONS: e => {
+    //   console.log(e)
+    // },
+    // GET_COURSES: e => {
+    //   console.log('GET COURSES', e)
+    // },
+  },
+  created() {
+    this.GET_QUESTIONS()
+    // this.GET_COURSES()
   },
   mounted() {
-    // console.clear()
+    this.GET_QUESTIONS()
+    this.GET_COURSES()
+    this.questionsCopy = this.questions.questions
   },
   methods: {
-        validationForm() {
-    
-      this.$refs.loginValidation.validate().then(async success => {
-        if (success) {
-          const login = await this.$store.dispatch('LogIn', this.data)
-          console.log('LOGIN_', login)
-          const token = this.$store.getters.StateToken
-          console.log('TOKEN_', token)
-          const message = login.data.message
-          if (this.$store.getters.StateToken) {
-            this.$router.push({ name: 'home' })
-          } else {
-            this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: `${message}`,
-              icon: 'EditIcon',
-              variant: 'danger',
-            },
-          }) 
-          }
-        }
-      })
+    ...mapActions({
+      GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
+      // GET_COURSES: 'ACTION_GET_COURSE',
+    }),
+    ...mapMutations({
+      DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
+    }),
+    filterByCategories() {
+      if (this.filterCategories == null) {
+        this.questions.questions = this.questionsCopy
+      } else {
+        this.questions.questions = this.questions.questions.filter(question => question.category.toLowerCase() === this.filterCategories)
+      }
     },
-    }
+    async submitQuestion() {
+      console.log('logging...')
+      const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
+      console.log(response)
+      this.questionDescription.course = ''
+      this.questionDescription.category = ''
+      this.questionDescription.question = ''
+      this.questionDescription.answer = ''
+      this.questionDescription.choices.A = ''
+      this.questionDescription.choices.B = ''
+      this.questionDescription.choices.C = ''
+      this.questionDescription.choices.D = ''
+      this.modalShow = false
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Added!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
+      // this.isShow = true
+    },
+    async submitCourse() {
+      console.log('adding course')
+      const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
+      this.course.name = ''
+      this.isShow = false
+      console.log('VUE COMPONENT RESPONSE', response)
+    },
+    async deleteButton(question) {
+      console.log(question)
+      const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
+      console.log('DELETED_', response)
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Deleted!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
+      console.log('deleted!')
+    },
+    editButton() {
+      this.modalShow = true
+      this.editShow = true
+      this.addShow = false
+      console.log('edited!')
+    },
+    async editQuestion(question) {
+      console.log('EDITED__', question)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
+      console.log(response)
+    },
+  },
 }
 </script>
 
-<style lang="scss">
-@import "@core/scss/vue/pages/page-auth.scss";
+<style>
+button{
+    margin: 10px;
+    float: right;
+}
+#textarea{
+  border: none;
+  overflow: hidden;
+  resize: none;
+  overflow: -moz-hidden-unscrollable;
+}
+/* .card{
+  border: 1px black;
+} */
+.dropdown{
+  /* border: 0 !important; */
+  border: none;
+  border-color: transparent;
+  box-shadow: none;
+  margin: 0px;
+  float: right;
+  margin-top: 25px;
+}
+.modalButton{
+  float: left;
+}
+.buttons{
+  float: right;
+  margin-top: 0;
+}
+.modal-footer{
+  display: none;
+}
 </style>
-
-
-

@@ -46,8 +46,8 @@
                     <b-form-select
                       v-model="questionnaire.course"
                       >
-                      <option v-for="question in questions"
-                      :key="question.id">{{ question.course }}</option>
+                      <option v-for="course in courses"
+                      :key="course">{{ course }}</option>
                   </b-form-select>
                   </div>
                 </b-col>
@@ -140,6 +140,7 @@
     </div>
     <br>
     <br><br><hr><br>
+    <!-- Filters course to search  -->
     <b-card>
       <label for="filter-courses">Filter</label>
         <b-form-select
@@ -148,16 +149,147 @@
           />
     </b-card>
     <!-- Edit/Delete Questions  -->
-    <div
+     <b-modal v-model="modalEditShow">
+        <h3>Edit Questionnaire</h3>
+        <b-form @submit.prevent="submitEditQuestionnaire">
+          <b-form-group name="create-questionnaire">
+            <b-container>
+              <b-row>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="title">Title: </label>
+                    <input
+                      name="title"
+                      v-model="questionnaire.title"
+                      type="text"
+                      class="form-control"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="timeDuration">Time Duration: </label>
+                    <input
+                      name="timeDuration"
+                      v-model="questionnaire.time_duration"
+                      type="number"
+                      class="form-control"
+                      label="Time Duration"
+                      placeholder="mins."
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="course">Course: </label>
+                    <b-form-select
+                      v-model="questionnaire.course"
+                      >
+                      <option v-for="course in courses"
+                      :key="course">{{ course }}</option>
+                  </b-form-select>
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="passingScore">Passing Score: </label>
+                    <input
+                      name="passingScore"
+                      v-model="questionnaire.passing_score"
+                      type="number"
+                      class="form-control"
+                      label="Passing Score"
+                    >
+                  </div>
+                </b-col>
+              </b-row>
+              <!-- divider -->
+          <div class="divider my-2">
+            <div class="divider-text">
+              Categories
+            </div>
+          </div>
+              <b-row>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <label for="easy">Easy: </label>
+                    <input
+                      name="easy"
+                      v-model="questionnaire.easy_questions"
+                      type="text"
+                      class="form-control categories"
+                      label="Easy"
+                      id="easy"
+                      v-on:keyup="total()"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <label for="intermediate">Average: </label>
+                    <input
+                      name="intermediate"
+                      v-model="questionnaire.average_questions"
+                      type="text"
+                      class="form-control categories"
+                      label="Intermediate"
+                      id="average"
+                      v-on:keyup="total()"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-4">
+                  <div class="input-group mb-1">
+                    <label for="hard">Hard: </label>
+                    <input
+                      name="hard"
+                      v-model="questionnaire.hard_questions"
+                      type="text"
+                      class="form-control categories"
+                      label="Hard"
+                      id="hard"
+                      v-on:keyup="total()"
+                    >
+                  </div>
+                </b-col>
+                <b-col class="col-md-6">
+                  <div class="input-group mb-1">
+                    <label for="total_questions">Total Questions: </label>
+                    <input
+                      name="hard"
+                      v-model="questionnaire.total_questions"
+                      type="text"
+                      class="form-control"
+                      label="Hard"
+                      id="total"
+                    >
+                  </div>
+                </b-col>
+              </b-row>
+            </b-container>
+              <b-button
+              variant="primary"
+             type="submit"
+            >
+              Save Changes
+            </b-button>
+          </b-form-group>
+        </b-form>
+      </b-modal>
+    <!-- Display  -->
+    <b-card>
+      <div
       v-for="questionnaire in questionnaires"
       :key="questionnaire.id"
       class="questionnaire-content"
     >
-      <b-card name="questionnaire">
+      <b-card class="border" name="questionnaire">
         <b-button-group class="buttons">
           <b-dropdown>
             <b-dropdown-item
-            @click="editButton(questionnaire.id)">Edit</b-dropdown-item>
+            v-b-modal.modal-lg
+        class="modalButton"
+        @click="modalEditShow = !modalEditShow">Edit</b-dropdown-item>
             <b-dropdown-item
             @click="deleteButton(questionnaire.id)">Delete</b-dropdown-item>
              <b-dropdown-item
@@ -177,7 +309,7 @@
           <!-- Display  -->
             <b-card>
               <hr>
-              <p>Title: {{ questionnaire.title }}</p>
+              <!-- <p>Title: {{ questionnaire.title }}</p> -->
               <p>Course: {{ questionnaire.course }}</p>
               <p>Time Duration: {{ questionnaire.time_duration }}</p>
               <p>Passing Score: {{ questionnaire.passing_score }}</p>
@@ -188,36 +320,6 @@
           </b-collapse>
           </div>
         </div>
-        <!-- questionnaires  -->
-        <b-form @submit.prevent="update">
-          <b-form-group name="questionnaire">
-            <div
-              :id="questionnaire.id"
-              style="display:none"
-            >
-              <b-form-textarea
-                id="textarea"
-                v-model="questionnaire.createquestion"
-                placeholder="Edite report..."
-                rows="3"
-                max-rows="0"
-                overflow-y="hidden"
-              />
-              <b-button
-                variant="danger"
-                @click="cancel()"
-              >
-                Cancel
-              </b-button>
-              <b-button
-                variant="primary"
-                @click="update(questionnaire.id, questionnaire.createquestion)"
-              >
-                Update Questionnaire
-              </b-button>
-            </div>
-          </b-form-group>
-        </b-form>
               <!-- Send Emal  -->
       <b-card v-show="sendEmail">
         <validation-observer ref="loginValidation">
@@ -253,6 +355,7 @@
       </b-card>
       </b-card>
     </div>
+    </b-card>
   </div>
 </template>
 
@@ -262,7 +365,7 @@ import {
   BFormGroup,
   BFormInput,
   BCard,
-  BFormTextarea,
+  // BFormTextarea,
   BButton,
   BButtonGroup,
   BDropdownItem,
@@ -285,7 +388,7 @@ export default {
   components: {
     BCard,
     BFormInput,
-    BFormTextarea,
+    // BFormTextarea,
     BButton,
     BButtonGroup,
     BFormGroup,
@@ -306,6 +409,7 @@ export default {
   },
   data() {
     return {
+      isUpdate: true,
       questionnaireCopy: null,
       filterCategories: null,
       data: {
@@ -314,6 +418,7 @@ export default {
       sendEmail: false,
       visible: false,
       modalShow: false,
+      modalEditShow: false,
       index: null,
       questionnaire:
       {
@@ -351,6 +456,7 @@ export default {
     ...mapGetters({
       questionnaires: 'GET_QUESTIONNAIRE',
       questions: 'GET_QUESTION',
+      courses: 'GET_COURSES',
     }),
   },
   watch: {
@@ -366,7 +472,7 @@ export default {
   methods: {
     ...mapActions({
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
-      // GET_COURSES: 'ACTION_GET_COURSES',
+      GET_COURSES: 'ACTION_GET_QUESTIONS',
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
@@ -444,7 +550,10 @@ export default {
       this.sendEmail = true
       console.log('SEND__')
     },
-    editButton() {
+    async submitEditQuestionnaire(questionnaire) {
+      console.log('EDITED__', questionnaire)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
+      console.log(response)
     },
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
