@@ -47,7 +47,7 @@ class ExamFormController extends Controller
 
         $user = Auth::user();
         $id = $request->id;
-        $answer = json_decode(str_replace("'", '"', $request->answers));
+        $answer = json_decode(str_replace('}', ']',str_replace('{','[', str_replace(':',',',str_replace("'", '"', $request->answers)))));
 
 
         try{
@@ -69,34 +69,41 @@ class ExamFormController extends Controller
 
     public function checkAnswer($answer, $randomizedQuestions)
     {
-        $randomizedQuestions = json_decode(($randomizedQuestions[0]->randomizedQuestions));
+        $answer = collect($answer);
+        // return $answer;
+        $randomizedQuestions = json_decode($randomizedQuestions[0]->randomizedQuestions);
         $passing_score = DB::table('url_tokens')->join('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
                             ->first('questionnaires.passing_score');
-        // return $passing_score;
+
 
         try{
 
+            $points = 0;
+            $ctr = 0;
 
-            foreach($answer as $id => $ans){
-                $points = 0;
-                $question = $randomizedQuestions[array_search($id, array_keys($randomizedQuestions))];
-
-                if($ans == $question->answer){
-                    $points += 1;
+            foreach($answer as $ans){
+                $question = $randomizedQuestions[$ctr];
+                if($ans[1] == $question->answer){
+                    $points = $points += 1;
                 }
-                else{
-                    $points = $points;
-                }
-
+                $ctr++;
 
             }
-            return $points;
 
-            if($points >= $passing_score){
-                return response('Pass')->with($points);
+            $pass = $passing_score->passing_score;
+
+            if($points >= $pass){
+
+               return response()->json([
+                   'points' => $points,
+                   'remaks' => "PASS"
+               ]);
             }
             else{
-                return response('Failed')->with($points);
+                return response()->json([
+                    'points' => $points,
+                    'remaks' => "FAIL"
+                ]);
             }
 
 

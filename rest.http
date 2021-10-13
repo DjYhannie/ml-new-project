@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "username": "Shannia lee",
-    "email":"johnstiger885@gmail.com",
+    "email":"rhea.ardiente@mlhuillier.com",
     "password": "test123",
     "password_confirmation": "test123"
 }
@@ -16,7 +16,7 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "johnstiger885@gmail.com",
+    "email" : "rhea.ardiente@mlhuillier.com",
     "password" : "test123"
 }
 
@@ -31,7 +31,7 @@ POST http://localhost:8000/api/send/resetpassword
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com"
+    "email" : "rhea.ardiente@mlhuillier.com"
 }
 
 #####
@@ -73,6 +73,6 @@ Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 
 {
     "id" : 1,
-    "answers" : "[{'134':'C'},{'112':'D'},{'146':'C'},{'95':'B'},{'145':'D'},{'133':'A'},{'83':'D'},{'2':'B'},{'115':'C'},{'41':'B'},{'69':'B'},{'130':'A'},{'72':'D'},{'38':'A'},{'5':'B'}]"
+    "answers" : "[{'134':'B'},{'112':'D'},{'146':'B'},{'95':'A'},{'145':'D'},{'133':'C'},{'83':'A'},{'2':'A'},{'115':'C'},{'41':'B'},{'69':'c'},{'130':'A'},{'72':'D'},{'38':'A'},{'5':'B'}]"
 }
 
