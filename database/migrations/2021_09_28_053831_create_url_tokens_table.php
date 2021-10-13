@@ -18,6 +18,7 @@ class CreateUrlTokensTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('questionnaire_id');
             $table->json('randomizedQuestions');
+            $table->longtext('result')->nullable();
             $table->string('token');
             $table->dateTime('time_started');
             $table->dateTime('expired_time');

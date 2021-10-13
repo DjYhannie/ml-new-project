@@ -48,7 +48,7 @@ class ExamFormController extends Controller
         $user = Auth::user();
         $id = $request->id;
         $answer = json_decode(str_replace('}', ']',str_replace('{','[',str_replace(':', ',',str_replace("'", '"', $request->answers)))));
-        return $answer;
+
         try{
             $randomizedQuestions = DB::table('url_tokens')
                 ->select('randomizedQuestions')
@@ -76,15 +76,26 @@ class ExamFormController extends Controller
 
         try{
             $points = 0;
+            $result = [];
+            $res = [];
             $ctr = 0;
 
             foreach($answer as $ans){
                 $question = $randomizedQuestions[$ctr];
+                $res['question_id'] = $question->id;
+                $res['is_correct'] = ($ans[1] == $question->answer);
+                $res['user_answer'] = $ans[1];
+                $res['correct_answer'] = $question->answer; 
                 if($ans[1] == $question->answer){
                     $points = $points += 1;
                 }
                 $ctr++;
+
+                array_push($result, $res);
             }
+
+            // save the result here;;
+            // convert the result variable to string using json_encode();
 
             return $points;
             if($points >= $passing){
