@@ -8,7 +8,7 @@
     <link rel = "icon" type = "image/png" href = "name-of-image.png">
 </head>
 <style>
-    /* For mobile phones: */
+  /* For mobile phones: */
 [class*="col-"] {
   width: 100%;
 }

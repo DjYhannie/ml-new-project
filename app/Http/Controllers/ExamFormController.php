@@ -43,54 +43,66 @@ class ExamFormController extends Controller
     }
 
 
-    public function getAnswer(Request $request){
 
+    public function getAnswer(Request $request){
         $user = Auth::user();
         $id = $request->id;
-        $answer = json_decode(str_replace('}', ']',str_replace('{','[', str_replace(':',',',str_replace("'", '"', $request->answers)))));
 
+        $answer = json_decode(str_replace('}', ']',str_replace('{','[',str_replace(':', ',',str_replace("'", '"', $request->answers)))));
 
         try{
-
             $randomizedQuestions = DB::table('url_tokens')
                 ->select('randomizedQuestions')
                 ->where('id', $id)->get()->toArray();
 
-            return $this->checkAnswer($answer, $randomizedQuestions);
+            return $this->chechAnswer($answer, $randomizedQuestions, $id);
 
         }
         catch(\Exception $e){
-            return response()->json([
-                'error' => $e->getMessage(),
-                'status_code' => 400
-            ]);
+            return response($e);
+            // ->json([
+            //     'error' => $e,
+            //     'status_code' => 400
+            // ]);
         }
     }
 
-    public function checkAnswer($answer, $randomizedQuestions)
+    public function chechAnswer($answer, $randomizedQuestions, $id)
     {
         $answer = collect($answer);
-        // return $answer;
         $randomizedQuestions = json_decode($randomizedQuestions[0]->randomizedQuestions);
-        $passing_score = DB::table('url_tokens')->join('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
-                            ->first('questionnaires.passing_score');
 
+
+        $passing = DB::table('url_tokens')->join('questionnaires', 'questionnaires.id','=', 'url_tokens.questionnaire_id')
+                    ->first('questionnaires.passing_score');
 
         try{
-
             $points = 0;
+            $result = [];
+            $res = [];
             $ctr = 0;
 
             foreach($answer as $ans){
                 $question = $randomizedQuestions[$ctr];
+                $res['question_id'] = $question->id;
+                $res['is_correct'] = ($ans[1] == $question->answer);
+                $res['user_answer'] = $ans[1];
+                $res['correct_answer'] = $question->answer;
                 if($ans[1] == $question->answer){
                     $points = $points += 1;
                 }
                 $ctr++;
 
+               array_push($result, $res);
             }
 
-            $pass = $passing_score->passing_score;
+            $pass = $passing->passing_score;
+
+            // $result = json_encode($result);
+            // return $result;
+
+            DB::update('update url_tokens set result = ?', $result);
+            return "updated";
 
             if($points >= $pass){
 
@@ -107,10 +119,28 @@ class ExamFormController extends Controller
             }
 
 
+                // DB::table('url_tokens')->where('id', $id)->update(array('result' => $result));
+                return "pass";
+
+
+            // save the result here;;
+            // convert the result variable to string using json_encode();
+
+            return $points;
+            if($points >= $passing){
+                return "pass";
+            }else{
+                return "failed";
+            }
+
         }
         catch(\Exception $e){
-            return response($e);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 400
+            ]);
         }
     }
+
 
 }
