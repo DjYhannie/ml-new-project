@@ -98,10 +98,10 @@ class ExamFormController extends Controller
 
             $pass = $passing->passing_score;
 
-            // $result = json_encode($result);
+            $result = json_encode($result);
             // return $result;
 
-            DB::update('update url_tokens set result = ?', $result);
+            DB::update('update url_tokens set result = ?', array($result));
             return "updated";
 
             if($points >= $pass){
@@ -141,6 +141,5 @@ class ExamFormController extends Controller
             ]);
         }
     }
-
 
 }

@@ -16,8 +16,8 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "rhea.ardiente@mlhuillier.com",
-    "password" : "test123"
+    "email" : "admin@admin.com",
+    "password" : "admin"
 }
 
 ####
@@ -37,13 +37,13 @@ Content-Type: application/json
 #####
 
 POST http://localhost:8000/api/questions/add
-Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
+Authorization: Bearer 4|gf7I2hNCWjKAlX78pQXYlmBHflqJdXlOWmlbp
 
 ####
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
+Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 {
     "title" : "test",
@@ -58,8 +58,7 @@ Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
 
 ###
 GET http://localhost:8000/api/questionnaire/1
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
-
+Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
@@ -70,9 +69,9 @@ Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
 ####
 POST http://localhost:8000/api/checkanswer
 Content-Type: application/json
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
+Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 {
     "id" : 1,
-    "answers" : "[{'6':'C'},{'56':'B'},{'95':'D'},{'74':'D'},{'106':'C'},{'75':'C'},{'142':'D'},{'127':'B'},{'123':'A'},{'57':'A'},{'53':'A'},{'118':'D'},{'132':'C'},{'88':'C'},{'97':'D'}]"
+    "answers" : "[{'42':'C'},{'27':'A'},{'20':'B'},{'21':'B'},{'143':'C'},{'148':'A'},{'89':'C'},{'99':'A'},{'57':'B'},{'77':'A'},{'63':'A'},{'36':'C'},{'83':'D'},{'141':'C'},{'12':'B'}]"
 }
