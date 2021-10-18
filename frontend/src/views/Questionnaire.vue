@@ -527,7 +527,7 @@ export default {
     //   this.postQuestionnaire(this.createquestion)
     //   console.log(this.createquestion)
     //   this.createquestion = ''
-    // },
+    // },asdf
     async deleteButton(questionnaire) {
       console.log(questionnaire)
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
