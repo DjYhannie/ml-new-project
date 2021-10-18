@@ -73,20 +73,23 @@
       <!-- shows data  -->
       <template #row-details="row">
         <b-card>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Name: {{ row.item.name }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Attemps: {{ row.item.attemps }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Score: {{ row.item.score }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Date: {{ row.item.date }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Remark: {{ row.item.remarks }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col></b-col>
           </b-row>
         </b-card>
       </template>
@@ -197,7 +200,10 @@ export default {
 </script>
 <style>
 .mb-2{
-    width: 250px;
-    float: right;
+    /* width: 300px; */
+    float: inherit;
+}
+.rowDetails{
+  border-collapse: collapse ;
 }
 </style>

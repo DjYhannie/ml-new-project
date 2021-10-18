@@ -16,6 +16,8 @@ import '@/libs/portal-vue'
 import '@/libs/toastification'
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
+// axios.defaults.headers.get['header-name'] = 'value'
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)
