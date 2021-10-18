@@ -189,7 +189,8 @@ export default {
           console.log('TOKEN_', token)
           const message = login.data.message
           if (this.$store.getters.StateToken) {
-            this.$router.push({ name: 'home' })
+            // this.$router.push({ name: 'home' })
+            window.location.href = `${location.origin}/home`
           } else {
             this.$toast({
             component: ToastificationContent,

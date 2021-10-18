@@ -223,7 +223,8 @@ export default {
           console.log(token)
           } else {
             console.log(token)
-            this.$router.push({ name: 'home' })
+            window.location.href = `${window.location.origin}/home`
+            // this.$router.push({ name: 'home' })
             console.log(login.data.message)
           }
           // this.$router.push({ name: 'home' })
