@@ -17,7 +17,7 @@ const actions = {
   // FOR DEMO
   async Register({ commit }, form) {
     // const response =
-    const response = await axios.post('register', form)
+    const response = await axios.post('/register', form)
     console.log('REGISTRATION RESPONSE', response)
     console.log('AUTH.JS', await form)
     commit('setUser', form)
@@ -27,7 +27,7 @@ const actions = {
   // ADMIN USER
   async LogIn({ commit }, User) {
     console.log('Calling Admin...')
-    const response = await axios.post('adminlogin', User)
+    const response = await axios.post('/adminlogin', User)
     console.log('ADMIN RESPONSE', response)
     commit('setUser', response.data.user)
     commit('setToken', response.data.token)

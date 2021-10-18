@@ -73,7 +73,14 @@
       <!-- shows data  -->
       <template #row-details="row">
         <b-card>
-          <b-row class="mb-2">
+          <b-container class="bv-example-row">
+  <b-row>
+    <b-col>
+      <!-- attempt 1 -->
+      <b-row class="mb-2">
+            <b-col>First Attemp:</b-col>
+          </b-row>
+      <b-row class="mb-2">
             <b-col>Name: {{ row.item.name }}</b-col>
           </b-row>
           <b-row class="mb-2">
@@ -88,9 +95,53 @@
           <b-row class="mb-2">
             <b-col>Remark: {{ row.item.remarks }}</b-col>
           </b-row>
-          <b-row class="mb-2">
-            <b-col></b-col>
+         </b-col>
+    <b-col>
+      <!-- attempt 2 -->
+      <b-col>
+        <b-row class="mb-2">
+            <b-col>Second Attempt</b-col>
           </b-row>
+        <b-row class="mb-2">
+            <b-col>Name: {{ row.item.name }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Attemps: {{ row.item.attemps }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Score: {{ row.item.score }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Date: {{ row.item.date }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Remark: {{ row.item.remarks }}</b-col>
+          </b-row>
+         </b-col></b-col>
+    <b-col>
+      <!-- attempt 3 -->
+      <b-col>
+        <b-row class="mb-2">
+            <b-col>Third Attempt</b-col>
+          </b-row>
+        <b-row class="mb-2">
+            <b-col>Name: {{ row.item.name }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Attemps: {{ row.item.attemps }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Score: {{ row.item.score }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Date: {{ row.item.date }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Remark: {{ row.item.remarks }}</b-col>
+          </b-row>
+         </b-col></b-col>
+  </b-row>
+</b-container>
         </b-card>
       </template>
     </b-table>
@@ -201,9 +252,13 @@ export default {
 <style>
 .mb-2{
     /* width: 300px; */
-    float: inherit;
+    /* float: inherit; */
+    /* text-align: center; */
 }
 .rowDetails{
   border-collapse: collapse ;
+}
+b-row{
+  border: 1px solid black;
 }
 </style>

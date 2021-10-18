@@ -30,15 +30,15 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              MLhuillier OEx
             </p>
-            <span class="user-status">Admin</span>
+            <span class="user-status">User</span>
           </div>
           <b-avatar
             size="40"
             variant="light-primary"
             badge
-            :src="require('@/assets/images/avatars/13-small.png')"
+            :src="require('@/assets/images/logo/logo.png')"
             class="badge-minimal"
             badge-variant="success"
           />
