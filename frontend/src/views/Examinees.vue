@@ -250,11 +250,11 @@ export default {
 }
 </script>
 <style>
-.mb-2{
+/* .mb-2{ */
     /* width: 300px; */
     /* float: inherit; */
     /* text-align: center; */
-}
+/* } */
 .rowDetails{
   border-collapse: collapse ;
 }

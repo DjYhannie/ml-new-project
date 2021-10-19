@@ -9,7 +9,7 @@
       >
         Add Questionnaire
       </b-button>
-        <!-- Add Questionnaires  -->
+      <!-- Add Questionnaires  -->
       <b-modal v-model="modalShow">
         <h3>Create Questionnaire</h3>
         <b-form @submit.prevent="submitQuestionnaire">
@@ -20,8 +20,8 @@
                   <div class="input-group mb-1">
                     <label for="title">Title: </label>
                     <input
-                      name="title"
                       v-model="questionnaire.title"
+                      name="title"
                       type="text"
                       class="form-control"
                     >
@@ -31,8 +31,8 @@
                   <div class="input-group mb-1">
                     <label for="timeDuration">Time Duration: </label>
                     <input
-                      name="timeDuration"
                       v-model="questionnaire.time_duration"
+                      name="timeDuration"
                       type="number"
                       class="form-control"
                       label="Time Duration"
@@ -45,18 +45,22 @@
                     <label for="course">Course: </label>
                     <b-form-select
                       v-model="questionnaire.course"
+                    >
+                      <option
+                        v-for="course in courses"
+                        :key="course"
                       >
-                      <option v-for="course in courses"
-                      :key="course">{{ course }}</option>
-                  </b-form-select>
+                        {{ course }}
+                      </option>
+                    </b-form-select>
                   </div>
                 </b-col>
                 <b-col class="col-md-6">
                   <div class="input-group mb-1">
                     <label for="passingScore">Passing Score: </label>
                     <input
-                      name="passingScore"
                       v-model="questionnaire.passing_score"
+                      name="passingScore"
                       type="number"
                       class="form-control"
                       label="Passing Score"
@@ -65,18 +69,18 @@
                 </b-col>
               </b-row>
               <!-- divider -->
-          <div class="divider my-2">
-            <div class="divider-text">
-              Categories
-            </div>
-          </div>
+              <div class="divider my-2">
+                <div class="divider-text">
+                  Categories
+                </div>
+              </div>
               <b-row>
                 <b-col class="col-md-4">
                   <div class="input-group mb-1">
                     <label for="easy">Easy: </label>
                     <input
-                      name="easy"
                       v-model="questionnaire.easy_questions"
+                      name="easy"
                       type="text"
                       class="form-control categories"
                       label="Easy"
@@ -145,8 +149,12 @@
       <label for="filter-courses">Filter</label>
         <b-form-select
             v-model="filterCourses"
-            :options="optionsFilterCourses"
-          />
+          >
+          <option
+            v-for="course in courses"
+            :key="course">{{ course }}</option>
+        </b-form-select>
+           <!-- :options="optionsFilterCourses" -->
     </b-card>
     <!-- Edit/Delete Questions  -->
      <b-modal v-model="modalEditShow">
@@ -235,126 +243,144 @@
                       label="Intermediate"
                       id="average"
                       v-on:keyup="total()"
-                    >
-                  </div>
-                </b-col>
-                <b-col class="col-md-4">
-                  <div class="input-group mb-1">
+                      >
+                    </div>
+                  </b-col>
+                  <b-col class="col-md-4">
+                    <div class="input-group mb-1">
                     <label for="hard">Hard: </label>
                     <input
+                      id="hard"
+                      label="Hard"
+                      v-on:keyup="total()"
+                      class="form-control categories"
                       name="hard"
                       v-model="questionnaire.hard_questions"
                       type="text"
-                      class="form-control categories"
-                      label="Hard"
-                      id="hard"
-                      v-on:keyup="total()"
-                    >
-                  </div>
-                </b-col>
-                <b-col class="col-md-6">
-                  <div class="input-group mb-1">
-                    <label for="total_questions">Total Questions: </label>
-                    <input
-                      name="hard"
-                      v-model="questionnaire.total_questions"
-                      type="text"
-                      class="form-control"
-                      label="Hard"
-                      id="total"
-                    >
-                  </div>
-                </b-col>
-              </b-row>
-            </b-container>
-              <b-button
-              variant="primary"
-             type="submit"
-            >
-              Save Changes
-            </b-button>
-          </b-form-group>
-        </b-form>
-      </b-modal>
+                  >
+                </div>
+              </b-col>
+              <b-col class="col-md-6">
+                <div class="input-group mb-1">
+                  <label for="total_questions">Total Questions: </label>
+                  <input
+                    id="total"
+                    v-model="questionnaire.total_questions"
+                    name="hard"
+                    type="text"
+                    class="form-control"
+                    label="Hard"
+                  >
+                </div>
+              </b-col>
+            </b-row>
+          </b-container>
+          <b-button
+            variant="primary"
+            type="submit"
+          >
+            Save Changes
+          </b-button>
+        </b-form-group>
+      </b-form>
+    </b-modal>
     <!-- Display  -->
     <b-card>
       <div
-      v-for="questionnaire in questionnaires"
-      :key="questionnaire.id"
-      class="questionnaire-content"
-    >
-      <b-card class="border" name="questionnaire">
-        <b-button-group class="buttons">
-          <b-dropdown>
-            <b-dropdown-item
-            v-b-modal.modal-lg
-        class="modalButton"
-        @click="modalEditShow = !modalEditShow">Edit</b-dropdown-item>
-            <b-dropdown-item
-            @click="deleteButton(questionnaire.id)">Delete</b-dropdown-item>
-             <b-dropdown-item
-            @click="sendButton(questionnaire.id)">Send to</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group>
-        <div>
-          <b-card
-            v-b-toggle="'accordion-details'+ questionnaire.id" id="detailsShow"
-          >
-            {{ questionnaire.title }}
-          </b-card>
-          <div :id="questionnaire.id">
-            <b-collapse
-            v-bind:id="'accordion-details'+ questionnaire.id"
-          >
-          <!-- Display  -->
-            <b-card>
-              <hr>
-              <!-- <p>Title: {{ questionnaire.title }}</p> -->
-              <p>Course: {{ questionnaire.course }}</p>
-              <p>Time Duration: {{ questionnaire.time_duration }}</p>
-              <p>Passing Score: {{ questionnaire.passing_score }}</p>
-              <p>Easy: {{ questionnaire.easy_questions }}</p>
-              <p>Intermediate: {{ questionnaire.average_questions }}</p>
-              <p>Hard: {{ questionnaire.hard_questions }}</p>
-            </b-card>
-          </b-collapse>
-          </div>
-        </div>
-              <!-- Send Emal  -->
-      <b-card v-show="sendEmail">
-        <validation-observer ref="loginValidation">
-            <b-form class="auth-login-form mt-2" @submit.prevent>
-              <!-- email -->
-              <b-form-group label="Email" label-for="login-email">
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
-                >
-                  <b-form-input
-                    id="login-email"
-                    v-model="data.email"
-                    :state="errors.length > 0 ? false : null"
-                    name="login-email"
-                    placeholder="name.test@mlhuillier.com"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-              <!-- submit button -->
-              <b-button
-                type="submit"
-                variant="danger"
-                block
-                @click="submitEmail"
+        v-for="questionnaire in questionnaires"
+        :key="questionnaire.id"
+        class="questionnaire-content"
+      >
+        <b-card
+          class="border"
+          name="questionnaire"
+        >
+          <b-button-group class="buttons">
+            <b-dropdown>
+              <b-dropdown-item
+                v-b-modal.modal-lg
+                class="modalButton"
+                @click="modalEditShow = !modalEditShow"
               >
-                Send
-              </b-button>
-            </b-form>
-          </validation-observer>
-      </b-card>
-      </b-card>
-    </div>
+                Edit
+              </b-dropdown-item>
+              <b-dropdown-item
+                @click="deleteButton(questionnaire.id)"
+              >
+                Delete
+              </b-dropdown-item>
+              <b-dropdown-item
+                @click="sendButton(questionnaire.id)"
+              >
+                Send to
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+          <div>
+            <b-card
+              v-b-toggle="'accordion-details'+ questionnaire.id"
+            >
+              {{ questionnaire.title }}
+            </b-card>
+            <div :id="questionnaire.id">
+              <b-collapse
+                v-bind:id="'accordion-details'+ questionnaire.id"
+              >
+                <!-- Display  -->
+                <b-card>
+                  <hr>
+                  <!-- <p>Title: {{ questionnaire.title }}</p> -->
+                  <p>Course: {{ questionnaire.course }}</p>
+                  <p>Time Duration: {{ questionnaire.time_duration }}</p>
+                  <p>Passing Score: {{ questionnaire.passing_score }}</p>
+                  <p>Easy: {{ questionnaire.easy_questions }}</p>
+                  <p>Intermediate: {{ questionnaire.average_questions }}</p>
+                  <p>Hard: {{ questionnaire.hard_questions }}</p>
+                </b-card>
+              </b-collapse>
+            </div>
+          </div>
+          <!-- Send Emal  -->
+          <b-card v-show="sendEmail">
+            <validation-observer ref="loginValidation">
+              <b-form
+                class="auth-login-form mt-2"
+                @submit.prevent
+              >
+                <!-- email -->
+                <b-form-group
+                  label="Email"
+                  label-for="login-email"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Email"
+                    rules="required|email"
+                  >
+                    <b-form-input
+                      id="login-email"
+                      v-model="data.email"
+                      :state="errors.length > 0 ? false : null"
+                      name="login-email"
+                      placeholder="name.test@mlhuillier.com"
+                    />
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-form-group>
+                <!-- submit button -->
+                <b-button
+                  type="submit"
+                  variant="danger"
+                  block
+                  @click="submitEmail"
+                >
+                  Send
+                </b-button>
+              </b-form>
+            </validation-observer>
+          </b-card>
+        </b-card>
+      </div>
     </b-card>
   </div>
 </template>
@@ -378,7 +404,9 @@ import {
   BContainer,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import {
+  mapActions, mapGetters, mapMutations,
+} from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, email } from '@validations'
@@ -410,8 +438,8 @@ export default {
   data() {
     return {
       isUpdate: true,
-      questionnaireCopy: null,
-      filterCategories: null,
+      questionnairesCopy: null,
+      filterCourses: null,
       data: {
         email: '',
       },
@@ -440,13 +468,6 @@ export default {
         { value: 'Course 3', text: 'Course 3' },
         { value: 'Course 4', text: 'Course 4' },
       ],
-      optionsFilterCourses: [
-        { value: null, text: 'Select Course', disabled: true },
-        { value: 'Course 1', text: 'Course 1' },
-        { value: 'Course 2', text: 'Course 2' },
-        { value: 'Course 3', text: 'Course 3' },
-        { value: 'Course 4', text: 'Course 4' },
-      ],
       seleted: '',
       required,
       email,
@@ -458,16 +479,20 @@ export default {
       questions: 'GET_QUESTION',
       courses: 'GET_COURSES',
     }),
+    // ...mapState({
+    //   questionnaires: 'questionnaires',
+
+    // }),
   },
   watch: {
-    filterCategories() {
-      this.filterByCategories()
+    filterCourses() {
+      this.filterByCourses()
     },
   },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
     await this.GET_COURSES()
-    this.questionnaireCopy = this.questionnaires.questionnaires
+    this.questionnairesCopy = this.questionnaires
   },
   methods: {
     ...mapActions({
@@ -481,10 +506,11 @@ export default {
       DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
     filterByCourses() {
-      if (this.filterByCourses == null) {
-        this.questionnaires.questionnaires = this.questionnaireCopy
+      console.log(this.questionnairesCopy)
+      if (this.filterCourses == null) {
+        this.questionnaires = this.questionnairesCopy
       } else {
-        this.questionnaires.questionnaires = this.questionnaires.questionnaires.filter(questionnaire => questionnaire.course.toLowerCase() === this.filterByCourses)
+        this.questionnaires = this.questionnaires.filter(questionnaire => questionnaire.course.toLowerCase() === this.filterCourses)
       }
     },
     async submitQuestionnaire() {
