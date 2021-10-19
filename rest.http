@@ -43,10 +43,10 @@ Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
 
 {
-    "title" : "test",
+    "title" : "test2",
     "course": "logic",
     "time_duration": 40,
     "passing_score": 10,
@@ -57,22 +57,28 @@ Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
 }
 
 ###
-GET http://localhost:8000/api/questionnaire/1
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
+GET http://localhost:8000/api/questionnaire/3
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
 
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
 
 ####
 
 ####
 POST http://localhost:8000/api/checkanswer
 Content-Type: application/json
-Authorization: Bearer 1|g0pSPbBHXVRCyxKCzuU04QCMl5rFb9rUm8bAvVkl
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
 
 {
     "id" : 1,
-    "answers" : "[{'6':'C'},{'56':'B'},{'95':'D'},{'74':'D'},{'106':'C'},{'75':'C'},{'142':'D'},{'127':'B'},{'123':'A'},{'57':'A'},{'53':'A'},{'118':'D'},{'132':'C'},{'88':'C'},{'97':'D'}]"
+    "answers" : "[{'69':'A'},{'39':'B'},{'94':'A'},{'85':'A'},{'217':'C'},{'203':'C'},{'284':'C'},{'10':'A'},{'16':'B'},{'87':'C'},{'3':'D'},{'271':'C'},{'124':'C'},{'61':'A'},{'157':'D'}]"
 }
+
+######
+
+GET http://localhost:8000/api/result
+Content-Type: application/json
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
