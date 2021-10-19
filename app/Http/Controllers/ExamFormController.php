@@ -15,6 +15,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
+use function PHPSTORM_META\type;
+
 class ExamFormController extends Controller
 {
 
@@ -59,16 +61,16 @@ class ExamFormController extends Controller
 
         }
         catch(\Exception $e){
-            return response($e);
-            // ->json([
-            //     'error' => $e,
-            //     'status_code' => 400
-            // ]);
+            return response()->json([
+                'error' => $e->getMessage(),
+                'status_code' => 400
+            ]);
         }
     }
 
     public function chechAnswer($answer, $randomizedQuestions, $id)
     {
+        $user = Auth::user();
         $answer = collect($answer);
         $randomizedQuestions = json_decode($randomizedQuestions[0]->randomizedQuestions);
 
@@ -92,24 +94,20 @@ class ExamFormController extends Controller
                     $points = $points += 1;
                 }
                 $ctr++;
-
                array_push($result, $res);
             }
 
             $pass = $passing->passing_score;
 
             $result = json_encode($result);
-            // return $result;
 
             DB::update('update url_tokens set result = ?', array($result));
-            return "updated";
 
             if($points >= $pass){
-
-               return response()->json([
-                   'points' => $points,
-                   'remaks' => "PASS"
-               ]);
+                return response()->json([
+                    'points' => $points,
+                    'remaks' => "PASS"
+                ]);
             }
             else{
                 return response()->json([
@@ -118,13 +116,6 @@ class ExamFormController extends Controller
                 ]);
             }
 
-
-                // DB::table('url_tokens')->where('id', $id)->update(array('result' => $result));
-                return "pass";
-
-
-            // save the result here;;
-            // convert the result variable to string using json_encode();
 
             return $points;
             if($points >= $passing){
@@ -140,6 +131,39 @@ class ExamFormController extends Controller
                 'status_code' => 400
             ]);
         }
+    }
+
+    public function getResult(Request $request)
+    {
+        $user = Auth::user()->username;
+        $userId = Auth::user()->id;
+        
+        $title = DB::table('url_tokens')
+                    ->join('questionnaires', 'questionnaires.id','=', 'url_tokens.questionnaire_id')
+                    ->first('questionnaires.title');
+       $title->title;
+
+       $result = DB::table('url_tokens')
+                    ->where('user_id', $userId)
+                    ->where('questionnaire_id', $request->id)
+                    ->get();
+        
+        return $result;
+
+
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
+
+    public function getAllResult()
+    {
+        $user = Auth::user();
+        $results = DB::table('url_tokens')
+                    ->where('user_id', $user->id)
+                    ->get();
+                    
+        return $results;
     }
 
 }

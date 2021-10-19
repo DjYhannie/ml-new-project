@@ -12,7 +12,7 @@ class Admin extends Model
 
 
     protected $fillable = [
-        'username',
+        'email',
         'password',
         //modified
         'role'
@@ -26,6 +26,8 @@ class Admin extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $table = 'admin';
 
 
 

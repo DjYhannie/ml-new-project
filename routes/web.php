@@ -17,3 +17,5 @@ use App\Http\Controllers\ApplicationController;
 Route::get('/{any}', [ApplicationController::class, 'index'])->where('any', '.*');
 
 Route::view('/emailview', 'email');
+Route::view('/', 'mae');
+

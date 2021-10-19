@@ -46,23 +46,23 @@ Content-Type: application/json
 Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 {
-    "title" : "test",
+    "title" : "sample",
     "course": "logic",
     "time_duration": 40,
-    "passing_score": 10,
+    "passing_score": 15,
     "easy_questions": 5,
-    "average_questions": 5,
+    "average_questions": 10,
     "hard_questions":5,
-    "total_questions": 15
+    "total_questions": 20
 }
 
 ###
-GET http://localhost:8000/api/questionnaire/1
+GET http://localhost:8000/api/questionnaire/2
 Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 1|kxETdJyycr0Tef9JiomNqN5cszPlBxRDDMRZCQao
+Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
 
 ####
 
@@ -72,6 +72,27 @@ Content-Type: application/json
 Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 {
-    "id" : 1,
-    "answers" : "[{'42':'C'},{'27':'A'},{'20':'B'},{'21':'B'},{'143':'C'},{'148':'A'},{'89':'C'},{'99':'A'},{'57':'B'},{'77':'A'},{'63':'A'},{'36':'C'},{'83':'D'},{'141':'C'},{'12':'B'}]"
+    "id" : 2,
+    "answers" : "[{'102':'A'},{'66':'D'},{'149':'B'},{'18':'D'},{'23':'D'},{'42':'C'},{'36':'C'},{'89':'C'},{'124':'C'},{'118':'D'},{'88':'C'},{'69':'D'},{'83':'D'},{'119':'D'},{'26':'D'},{'29':'A'},{'78':'C'},{'90':'D'},{'21':'B'},{'60':'B'}]"
 }
+
+######
+
+GET http://localhost:8000/api/result
+Content-Type: application/json
+Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+
+{
+    "id" : "1"
+}
+
+###
+
+GET http://localhost:8000/api/result/all
+Content-Type: application/json
+Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+
+{
+    "id" : "1"
+}
+
