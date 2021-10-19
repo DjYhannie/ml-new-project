@@ -16,6 +16,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AdminQuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //Add a Qquestion
    public function addQuestion(Request $request)
    {

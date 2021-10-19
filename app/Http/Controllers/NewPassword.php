@@ -58,13 +58,10 @@ class NewPassword extends Controller
 
     public function emailResetLink(Request $request)
     {
-
         $rule = $request->validate(['email' => 'required|email']);
         $checked = User::where('email', '=', $rule)->first();
-
         $token = Str::random(64);
 
-        
 
         DB::table('password_resets')
             ->insert(['email' => $request->email, 'token' =>$token, 'created_at' => Carbon::now()]);
@@ -80,5 +77,6 @@ class NewPassword extends Controller
             return response($e->getMessage());
         }
     }
+
 }
 

@@ -5,18 +5,25 @@ use App\Models\Questionnaire;
 use App\Models\Questions;
 use App\Models\Invitation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Question\Question;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use App\Url;
+use App\Notifications\InviteNotification;
+use Carbon\Carbon;
 
 use function Complex\add;
 
 class QuestionnaireController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function createQuestionnaire(Request $request)
     {
             $user = Auth::user();
@@ -181,7 +188,7 @@ class QuestionnaireController extends Controller
                     'questionnaire_id' => $questionnaire->id,
                     'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
-                    'accessed_time' => Carbon::now(),
+                    'time_started' => Carbon::now(),
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
@@ -216,7 +223,10 @@ class QuestionnaireController extends Controller
             $questionnairetime = Questionnaire::find($id);
             $time = $questionnairetime->time_duration;
 
-            dd($time);
+            return response()->json([
+                'time' => $time,
+                'status_code' => 200
+            ]);
 
         }
         catch(\Exception $e){
@@ -230,7 +240,7 @@ class QuestionnaireController extends Controller
     public function invites(Request $request )
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|array'
+            'emails' => 'required|array'
         ]);
 
         // $validator->after(function ($validator) use ($request){
