@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import vuexpersistedstate from 'vuex-persistedstate'
 
 // Modules
 import questionnaire from '@/store/module/questionnaire'
@@ -23,6 +24,6 @@ export default new Vuex.Store({
     auth,
     questionnaire,
   },
-  plugins: [vuexPersistedState],
+  plugins: [vuexpersistedstate()],
   // strict: process.env.DEV,
 })

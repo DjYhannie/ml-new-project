@@ -181,6 +181,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/user/history',
+      name: 'user/history',
+      component: () => import('@/views/examinees-page/History.vue'),
+      meta: {
+        pageTitle: 'History',
+        breadcrumb: [
+          {
+            text: 'History',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
       path: '*',
       redirect: 'error-404',
     },

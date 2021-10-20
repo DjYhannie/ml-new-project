@@ -73,21 +73,76 @@
       <!-- shows data  -->
       <template #row-details="row">
         <b-card>
-          <b-row class="mb-3">
+          <b-container class="bv-example-row">
+  <b-row>
+    <b-col>
+      <!-- attempt 1 -->
+      <b-row class="mb-2">
+            <!-- <b-col>First Attemp:</b-col> -->
+          </b-row>
+      <b-row class="mb-2">
             <b-col>Name: {{ row.item.name }}</b-col>
           </b-row>
-          <b-row class="mb-3">
-            <b-col>Attemps: {{ row.item.attemps }}</b-col>
+          <b-row class="mb-2">
+            <!-- <b-col>Attemps: {{ row.item.attemps }}</b-col> -->
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Score: {{ row.item.score }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Date: {{ row.item.date }}</b-col>
           </b-row>
-          <b-row class="mb-3">
+          <b-row class="mb-2">
             <b-col>Remark: {{ row.item.remarks }}</b-col>
           </b-row>
+         </b-col>
+    <b-col>
+      <!-- attempt 2 -->
+      <!-- <b-col>
+        <b-row class="mb-2">
+            <b-col>Second Attempt</b-col>
+          </b-row>
+        <b-row class="mb-2">
+            <b-col>Name: {{ row.item.name }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Attemps: {{ row.item.attemps }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Score: {{ row.item.score }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Date: {{ row.item.date }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Remark: {{ row.item.remarks }}</b-col>
+          </b-row>
+         </b-col></b-col>
+    <b-col> -->
+      <!-- attempt 3 -->
+      <!-- <b-col>
+        <b-row class="mb-2">
+            <b-col>Third Attempt</b-col>
+          </b-row>
+        <b-row class="mb-2">
+            <b-col>Name: {{ row.item.name }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Attemps: {{ row.item.attemps }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Score: {{ row.item.score }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Date: {{ row.item.date }}</b-col>
+          </b-row>
+          <b-row class="mb-2">
+            <b-col>Remark: {{ row.item.remarks }}</b-col>
+          </b-row>
+         </b-col> -->
+         </b-col>
+  </b-row>
+</b-container>
         </b-card>
       </template>
     </b-table>
@@ -134,10 +189,10 @@ export default {
           key: 'name',
           sortable: true,
         },
-        {
-          key: 'attemps',
-          sortable: false,
-        },
+        // {
+        //   key: 'attemps',
+        //   sortable: false,
+        // },
         {
           key: 'score',
           label: 'score',
@@ -162,17 +217,21 @@ export default {
 
       items: [
         {
-          isActive: true, date: '09-01-2021', remarks: 'Passed', score: '38/40', attemps: '1', name: 'Dickerson',
+          isActive: true, date: '09-01-2021', remarks: 'Passed', score: '38/40', name: 'Dickerson',
         },
+        //  attemps: '1',
         {
-          isActive: false, date: '09-02-2021', remarks: 'Failed', score: '22/40', attemps: '2', name: 'Larsen',
+          isActive: false, date: '09-02-2021', remarks: 'Failed', score: '22/40', name: 'Larsen',
         },
+        // , attemps: '2'
         {
-          isActive: false, date: '09-03-2021', remarks: 'Passed', score: '36/40', attemps: '3', name: 'Geneva',
+          isActive: false, date: '09-03-2021', remarks: 'Passed', score: '36/40', name: 'Geneva',
         },
+        // attemps: '3',
         {
-          isActive: true, date: '09-04-2021', remarks: 'Failed', score: '20/40', attemps: '2', name: 'Jami',
+          isActive: true, date: '09-04-2021', remarks: 'Failed', score: '20/40', name: 'Jami',
         },
+        // attemps: '2',
       ],
       selectedItem: {},
     }
@@ -196,8 +255,15 @@ export default {
 }
 </script>
 <style>
-.mb-2{
-    width: 250px;
-    float: right;
+/* .mb-2{ */
+    /* width: 300px; */
+    /* float: inherit; */
+    /* text-align: center; */
+/* } */
+.rowDetails{
+  border-collapse: collapse ;
+}
+b-row{
+  border: 1px solid black;
 }
 </style>

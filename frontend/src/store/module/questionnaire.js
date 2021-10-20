@@ -1,7 +1,4 @@
-// import { axios } from 'vue/types/umd'
 import api from '../../libs/axios'
-// import * as questionnaireTypes from '../types/questionnaire'
-// import { ACTION_ADD_QUESTION } from '../types/questions'
 
 export default {
   state: {

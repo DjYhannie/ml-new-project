@@ -5,24 +5,42 @@
       <b-link class="brand-logo">
         <!-- <vuexy-logo /> -->
         <b-img :src="require('@/assets/images/logo/header-logo.png')" />
-        <h2 class="brand-text text-danger ml-1">ML OEx</h2>
+        <h2 class="brand-text text-danger ml-1">
+          ML OEx
+        </h2>
       </b-link>
       <!-- /Brand logo-->
-
       <!-- Left Text-->
-      <b-col lg="8" class="d-none d-lg-flex align-items-center p-5">
+      <b-col
+        lg="8"
+        class="d-none d-lg-flex align-items-center p-5"
+      >
         <div
           class="w-100 d-lg-flex align-items-center justify-content-center px-5"
         >
-          <b-img fluid :src="imgUrl" alt="Login V2" />
+          <b-img
+            fluid
+            :src="imgUrl"
+            alt="Login V2"
+          />
         </div>
       </b-col>
       <!-- /Left Text-->
-
       <!-- Login-->
-      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
-         <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title title-tag="h2" class="font-weight-bold mb-1">
+      <b-col
+        lg="4"
+        class="d-flex align-items-center auth-bg px-2 p-lg-5"
+      >
+        <b-col
+          sm="8"
+          md="6"
+          lg="12"
+          class="px-xl-2 mx-auto"
+        >
+          <b-card-title
+            title-tag="h2"
+            class="font-weight-bold mb-1"
+          >
             Welcome to ML OEx - MLhuillier Online Exam! 👋
           </b-card-title>
           <b-card-text class="mb-2">
@@ -31,9 +49,15 @@
 
           <!-- form -->
           <validation-observer ref="loginValidation">
-            <b-form class="auth-login-form mt-2" @submit.prevent>
+            <b-form
+              class="auth-login-form mt-2"
+              @submit.prevent
+            >
               <!-- email -->
-              <b-form-group label="Email" label-for="login-email">
+              <b-form-group
+                label="Email"
+                label-for="login-email"
+              >
                 <validation-provider
                   #default="{ errors }"
                   name="Email"
@@ -101,7 +125,12 @@
               >
                 Sign in
               </b-button>
-              <p v-if="isError" id="isError">Incorrect Credentials</p>
+              <p
+                v-if="isError"
+                id="isError"
+              >
+                Incorrect Credentials
+              </p>
             </b-form>
           </validation-observer>
           <b-card-text class="text-center mt-2">
@@ -223,7 +252,8 @@ export default {
           console.log(token)
           } else {
             console.log(token)
-            this.$router.push({ name: 'take-exam' })
+            window.location.href = `${window.location.origin}/user/take-exam`
+            // this.$router.push({ name: 'home' })
             console.log(login.data.message)
           }
           // this.$router.push({ name: 'home' })

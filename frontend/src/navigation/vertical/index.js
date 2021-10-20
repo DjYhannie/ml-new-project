@@ -1,9 +1,9 @@
 import store from '../../store/index'
 
-const admin = store.state.users.role !== 'admin'
-const user = store.state.users.role !== 'user'
-// const userRole = store.getters.StateUser
-// console.log(userRole)
+const admin = store.getters.StateUser.role !== 'admin'
+const user = store.getters.StateUser.role !== 'user'
+
+console.log(admin, user, store.getters.StateUser.role)
 
 const navigation = [
   {
@@ -11,6 +11,12 @@ const navigation = [
     route: 'user/take-exam',
     icon: 'FeatherIcon',
     // userRole: 'user',
+    hide: user,
+  },
+  {
+    title: 'History',
+    route: 'user/history',
+    icon: 'ClockIcon',
     hide: user,
   },
   {
@@ -42,9 +48,7 @@ const navigation = [
     hide: admin,
   },
 ]
-// console.log(navigation)
-// const navigate = navigation.filter(nav => nav.userRole === userRole)
-const navigate = navigation.filter(nav => nav.hide)
-// console.log(userRole, navigate)
+console.log(navigation)
+const navigate = navigation.filter(nav => !nav.hide)
 
 export default navigate

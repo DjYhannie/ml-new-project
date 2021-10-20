@@ -1,6 +1,6 @@
 <template>
   <div>
-      <!-- add-questions-button  -->
+    <!-- add-questions-button  -->
     <div>
       <b-button
         v-b-modal.modal-lg
@@ -13,19 +13,19 @@
       <b-modal v-model="modalShow">
         <h3>Create Question</h3>
         <b-form-select
-            v-model="questionDescription.category"
-            :options="optionsCategories"
-          />
-          <br><br>
-           <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.course"
-                type="text"
-                class="form-control"
-                placeholder="Course"
-                aria-describedby="basic-addon1"
-              >
-            </div>
+          v-model="questionDescription.category"
+          :options="optionsCategories"
+        />
+        <br><br>
+        <div class="input-group mb-1">
+          <input
+            v-model="questionDescription.course"
+            type="text"
+            class="form-control"
+            placeholder="Course"
+            aria-describedby="basic-addon1"
+          >
+        </div>
         <b-form @submit.prevent="submitQuestion">
           <b-form-group name="create-question">
             <div class="input-group">
@@ -38,9 +38,9 @@
             <br>
             <div class="input-group mb-1">
               <b-form-select
-            v-model="questionDescription.answer"
-            :options="optionsAnswers"
-          />
+                v-model="questionDescription.answer"
+                :options="optionsAnswers"
+              />
             </div>
             <div class="input-group mb-1">
               <input
@@ -79,7 +79,6 @@
               >
             </div>
             <b-button
-              v-show="addShow"
               variant="primary"
               type="submit"
             >
@@ -119,135 +118,148 @@
     <br>
     <b-card>
       <label for="filter-categories">Filter</label>
-        <b-form-select
-            v-model="filterCategories"
-            :options="optionsFilterCategories"
-          />
+      <b-form-select
+        v-model="filterCategories"
+        :options="optionsFilterCategories"
+      />
     </b-card>
+
     <!-- Edit Qustionnaire  -->
-      <b-modal v-model="modalEditShow">
-        <h3>Create Question</h3>
-        <b-form-select
-            v-model="questionDescription.category"
-            :options="optionsCategories"
-          />
-          <br><br>
-           <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.course"
-                type="text"
-                class="form-control"
-                placeholder="Course"
-                aria-describedby="basic-addon1"
-              >
-            </div>
-        <b-form @submit.prevent="submitEditQuestion">
-          <b-form-group name="create-question">
-            <div class="input-group">
-              <b-form-textarea
-                v-model="questionDescription.question"
-                class="form-control"
-                placeholder="Create question..."
-              />
-            </div>
-            <br>
-            <div class="input-group mb-1">
-              <b-form-select
-            v-model="questionDescription.answer"
-            :options="optionsAnswers"
-          />
-            </div>
-            <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.choices.A"
-                type="text"
-                class="form-control"
-                placeholder="A."
-                aria-describedby="basic-addon1"
-              >
-            </div>
-            <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.choices.B"
-                type="text"
-                class="form-control"
-                placeholder="B."
-                aria-describedby="basic-addon1"
-              >
-            </div>
-            <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.choices.C"
-                type="text"
-                class="form-control"
-                placeholder="C."
-                aria-describedby="basic-addon1"
-              >
-            </div>
-            <div class="input-group mb-1">
-              <input
-                v-model="questionDescription.choices.D"
-                type="text"
-                class="form-control"
-                placeholder="D."
-                aria-describedby="basic-addon1"
-              >
-            </div>
-            <b-button
-              v-show="addShow"
-              variant="primary"
-              type="submit"
+    <b-modal v-model="modalEditShow">
+      <h3>Edit Question</h3>
+      <b-form-select
+        v-model="questionDescription.category"
+        :options="optionsCategories"
+      />
+      <br><br>
+      <div class="input-group mb-1">
+        <input
+          v-model="questionDescription.course"
+          type="text"
+          class="form-control"
+          placeholder="Course"
+          aria-describedby="basic-addon1"
+        >
+      </div>
+      <b-form @submit.prevent="submitEditQuestion">
+        <b-form-group name="create-question">
+          <div class="input-group">
+            <b-form-textarea
+              v-model="questionDescription.question"
+              class="form-control"
+              placeholder="Create question..."
+            />
+          </div>
+          <br>
+          <div class="input-group mb-1">
+            <b-form-select
+              v-model="questionDescription.answer"
+              :options="optionsAnswers"
+            />
+          </div>
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.choices.A"
+              type="text"
+              class="form-control"
+              placeholder="A."
+              aria-describedby="basic-addon1"
             >
-              Save Changes
-            </b-button>
-          </b-form-group>
-        </b-form>
-      </b-modal>
+          </div>
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.choices.B"
+              type="text"
+              class="form-control"
+              placeholder="B."
+              aria-describedby="basic-addon1"
+            >
+          </div>
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.choices.C"
+              type="text"
+              class="form-control"
+              placeholder="C."
+              aria-describedby="basic-addon1"
+            >
+          </div>
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.choices.D"
+              type="text"
+              class="form-control"
+              placeholder="D."
+              aria-describedby="basic-addon1"
+            >
+          </div>
+          <b-button
+            variant="primary"
+            type="submit"
+          >
+            Save Changes
+          </b-button>
+        </b-form-group>
+      </b-form>
+    </b-modal>
     <!-- Display Questionnaire -->
     <b-card>
       <div
-      v-for="question in questions.questions"
-      :key="question.id"
-      class="question-content"
-    >
-      <b-card class="border" name="questions">
-        <b-button-group class="buttons">
-          <b-dropdown>
-            <b-dropdown-item
-              v-b-modal.modal-lg
-        class="modalButton"
-        @click="modalEditShow = !modalEditShow"
-            >Edit</b-dropdown-item>
-            <b-dropdown-item
-              @click="deleteButton(question.id)"
-            >Delete</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group>
-        <div>
-          <b-card
-            v-b-toggle="'accordion-details'+ question.id" id="detailsShow"
-          >
-            {{ question.question }}
-          </b-card>
-          <div :id="question.id">
-            <b-collapse
-            v-bind:id="'accordion-details'+ question.id"
-          >
-            <b-card>
-              <hr>
-              <p>Category: {{ question.category }}</p>
-              <p>Course Name: {{ question.course }}</p>
-              <p>Answer: {{ question.answer }}</p>
-              <p>A. {{ question.choices.A }}</p>
-              <p>B. {{ question.choices.B }}</p>
-              <p>C. {{ question.choices.C }}</p>
-              <p>D. {{ question.choices.D }}</p>
+        v-for="question in questions.questions"
+        :key="question.id"
+        class="question-content"
+      >
+        <b-card
+          class="border"
+          name="questions"
+        >
+          <b-button-group class="buttons">
+            <b-dropdown>
+              <!-- <b-dropdown-item
+                v-b-modal.modal-lg
+                class="modalButton"
+                @click="modalEditShow = !modalEditShow"
+              >
+                Edit
+              </b-dropdown-item> -->
+              <b-dropdown-item
+                @click="editButton(question.id)"
+              >
+                Edit
+              </b-dropdown-item>
+              <b-dropdown-item
+                @click="deleteButton(question.id)"
+              >
+                Delete
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+          <div>
+            <b-card
+              id="detailsShow"
+              v-b-toggle="'accordion-details'+ question.id"
+            >
+              {{ question.question }}
             </b-card>
-          </b-collapse>
+            <div :id="question.id">
+              <b-collapse
+                v-bind:id="'accordion-details'+ question.id"
+              >
+                <b-card>
+                  <hr>
+                  <p>Category: {{ question.category }}</p>
+                  <p>Course Name: {{ question.course }}</p>
+                  <p>Answer: {{ question.answer }}</p>
+                  <p>A. {{ question.choices.A }}</p>
+                  <p>B. {{ question.choices.B }}</p>
+                  <p>C. {{ question.choices.C }}</p>
+                  <p>D. {{ question.choices.D }}</p>
+                </b-card>
+              </b-collapse>
+            </div>
           </div>
-        </div>
-      </b-card>
-    </div>
+        </b-card>
+      </div>
     </b-card>
   </div>
 </template>
@@ -292,7 +304,6 @@ export default {
       questionsCopy: null,
       filterCategories: null,
       updateShow: true,
-      addShow: true,
       modalEditShow: false,
       index: null,
       visible: false,
@@ -376,6 +387,7 @@ export default {
       DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
     }),
     filterByCategories() {
+      console.log(this.questionsCopy)
       if (this.filterCategories == null) {
         this.questions.questions = this.questionsCopy
       } else {
@@ -427,7 +439,7 @@ export default {
       console.log('deleted!')
     },
     editButton() {
-      this.modalShow = true
+      this.modalEditShow = true
       this.editShow = true
       this.addShow = false
       console.log('edited!')

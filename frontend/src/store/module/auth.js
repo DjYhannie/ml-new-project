@@ -54,6 +54,7 @@ const actions = {
     console.log('USER RESPONSE', response)
     // console.log('USER', User)
     if (response.data.token) {
+      console.log(response.data.user)
       commit('setUser', response.data.user)
       commit('setToken', response.data.token)
       sessionStorage.setItem('token', response.data.token)
