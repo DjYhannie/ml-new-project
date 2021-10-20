@@ -1,18 +1,18 @@
 <template>
-<div id="outer-container">
-  <div id="outer-circle"></div>
-  <div id="inner-circle">
-    <span id="display-time">00:00:00</span>
+<div ref="outer-container">
+  <div ref="outer-circle"></div>
+  <div ref="inner-circle">
+    <span ref="display-time">00:00:00</span>
   </div>
-  <div id="progress">
-    <div id="progress-left" class="progress">
-      <div id="outer360"></div>
-      <div class="test" id="start360"></div>
-      <div class="test" id="270"></div>
+  <div ref="progress">
+    <div ref="progress-left" class="progress">
+      <div ref="outer360"></div>
+      <div class="test" ref="start360"></div>
+      <div class="test" ref="270"></div>
     </div>
-    <div id="progress-right" class="progress">
-      <div class="test" id="90"></div>
-      <div class="test" id="180"></div>
+    <div ref="progress-right" class="progress">
+      <div class="test" ref="90"></div>
+      <div class="test" ref="180"></div>
     </div>
   </div>
 </div>
@@ -45,16 +45,19 @@ export default {
   //       270: '0px 0px 0px 80px',
   //     }
 
-  //     const element = document.getElementById('start360')
-  //     const element2 = document.getElementById('outer360')
-  //     const displayTime = document.getElementById('display-time')
+  //     // const element = document.getElementById('start360')
+  //     // const element2 = document.getElementById('outer360')
+  //     // const displayTime = document.getElementById('display-time')
+  //     const element = this.$refs.start360
+  //     const element2 = this.$refs.outer360
+  //     const displayTime = this.$refs.display - time
 
   //     element.style.borderRadius = '80px 0px 0px 0px'
   //     element2.style.borderRadius = '80px 0px 0px 0px'
   //     this.displayTime.innerText = showTime(timeInSeconds)
   //     let counter = 0
 
-  //     const interval = setInterval(function () {
+  //       const interval = setInterval(function () {
   //       element.style.transform = `rotate(${counter}deg)`
   //       displayTime.innerText = showTime(timeInSeconds)
   //       counter += getProgeressIncrement(time)

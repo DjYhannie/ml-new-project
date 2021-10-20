@@ -1,22 +1,62 @@
 <template>
-  <div>
-    <b-form>
-         <b-form-input v-model="text" placeholder="Enter your name"></b-form-input>
-    <div class="mt-2">Value: {{ text }}</div>
-    </b-form>
+  <div class="content">
+    <b-card>
+      <b-form>
+        <div class="form-row">
+          <div class="form-group col-md-10">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" />
+      </div>
+          <div class="form-group col-md-5">
+            <label for="title">Title</label>
+            <input type="email" class="form-control" id="title" />
+          </div>
+          <div class="form-group col-md-5">
+            <label for="date">Date</label>
+            <input type="password" class="form-control" id="date" />
+          </div>
+          <div class="form-group col-md-5">
+            <label for="score">Score</label>
+            <input type="password" class="form-control" id="score" />
+          </div>
+          <div class="form-group col-md-5">
+            <label for="remarks">Remarks</label>
+            <input type="password" class="form-control" id="remarks" />
+          </div>
+        </div>
+        <br><br><br>
+        <b-form-group label="Radios using sub-components" />
+        <b-form-radio-group
+          id="radio-group-2"
+          v-model="selected"
+          name="radio-sub-component"
+          required
+        >
+          <!-- :aria-describedby="ariaDescribedby" -->
+          <b-form-radio value="A">A. Choice A</b-form-radio>
+          <b-form-radio value="B">B. Choice B</b-form-radio>
+          <b-form-radio value="C">C. None of the above</b-form-radio>
+          <b-form-radio value="D">D. All of the above</b-form-radio>
+        </b-form-radio-group>
+      </b-form>
+    </b-card>
   </div>
 </template>
 
 <script>
 import {
   BForm,
-  BFormInput,
+  BFormGroup,
+  BFormRadio,
+  BFormRadioGroup,
 } from 'bootstrap-vue'
 
 export default {
   components: {
     BForm,
-    BFormInput,
+    BFormGroup,
+    BFormRadio,
+    BFormRadioGroup,
   },
   data() {
     return {
@@ -25,3 +65,9 @@ export default {
   },
 }
 </script>
+
+<style>
+/* .content {
+  border: 1px solid black;
+} */
+</style>
