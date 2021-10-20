@@ -1,16 +1,16 @@
 <template>
-<div ref="outer-container">
-  <div ref="outer-circle"></div>
-  <div ref="inner-circle">
-    <span ref="display-time">00:00:00</span>
+<div ref="outer-container" id="outerCont">
+  <div ref="outer-circle" id="outerCircle"></div>
+  <div ref="inner-circle" id="innerCircle">
+    <span ref="timeDisplay" id="display-time">00:00:00</span>
   </div>
-  <div ref="progress">
-    <div ref="progress-left" class="progress">
-      <div ref="outer360"></div>
-      <div class="test" ref="start360"></div>
+  <div id="progress">
+    <div ref="progress-left" class="progress-circle">
+      <div ref="outer360" id="outer360"></div>
+      <div class="test" ref="start360" id="start360"></div>
       <div class="test" ref="270"></div>
     </div>
-    <div ref="progress-right" class="progress">
+    <div ref="progress-right" class="progress-circle">
       <div class="test" ref="90"></div>
       <div class="test" ref="180"></div>
     </div>
@@ -20,91 +20,88 @@
 
 <script>
 export default {
-  // props: {
-  //   time: {
-  //     type: Number,
-  //     required: true,
-  //   },
-  // },
-  // data() {
-  //   return {
-  //     // formattedTimeLeft: '',
-  //   }
-  // },
-  // mounted() {
-  //   this.timeDisplay()
-  // },
-  // methods: {
-  //   timeDisplay() {
-  //     console.log('timer')
-  //     const time = 65
-  //     let timeInSeconds = time * 60
-  //     const sideRadius = {
-  //       90: '0px 80px 0px 0px',
-  //       180: '0px 0px 80px 0px',
-  //       270: '0px 0px 0px 80px',
-  //     }
+  props: {
+    time: {
+      type: Number,
+      requiviolet: true,
+    },
+  },
+  data() {
+    return {
+      // formattedTimeLeft: '',
+       sideRadius: {
+            '90': '0px 80px 0px 0px',
+            '180': '0px 0px 80px 0px',
+            '270': '0px 0px 0px 80px',
+        },
+    }
+  },
+  mounted() {
+    this.timer()
+  },
+  methods: {
+    timer() {
+      const refs = this.$refs
+      const sideRadius = this.sideRadius
+      const time = this.time
+      let timeInSeconds = time * 60
+      const showTime = this.showTime
 
-  //     // const element = document.getElementById('start360')
-  //     // const element2 = document.getElementById('outer360')
-  //     // const displayTime = document.getElementById('display-time')
-  //     const element = this.$refs.start360
-  //     const element2 = this.$refs.outer360
-  //     const displayTime = this.$refs.display - time
+      const start360 = this.$refs.start360
+      const outer360 = this.$refs.outer360
+      start360.style.borderRadius = '80px 0px 0px 0px'
+      outer360.style.borderRadius = '80px 0px 0px 0px'
 
-  //     element.style.borderRadius = '80px 0px 0px 0px'
-  //     element2.style.borderRadius = '80px 0px 0px 0px'
-  //     this.displayTime.innerText = showTime(timeInSeconds)
-  //     let counter = 0
+      refs.timeDisplay.innerText = showTime(timeInSeconds)
 
-  //       const interval = setInterval(function () {
-  //       element.style.transform = `rotate(${counter}deg)`
-  //       displayTime.innerText = showTime(timeInSeconds)
-  //       counter += getProgeressIncrement(time)
-  //       timeInSeconds -= 1
-  //       if ([90, 180, 270].includes(Math.round(counter))) {
-  //         const el = document.getElementById(`${Math.round(counter)}`)
-  //         el.classList.add('progressed')
-  //         el.style.borderRadius = sideRadius[`${Math.round(counter)}`]
-  //       }
-  //       console.log(Math.round(counter))
-  //       if (Math.round(counter) > 360 && timeInSeconds <= 0) {
-  //         clearInterval(interval)
-  //       }
-  //     }, 1000)
+      let counter = 0
+      const interval = setInterval(function() {
+        start360.style.transform = `rotate(${counter}deg)`
+        refs.timeDisplay.innerText = showTime(timeInSeconds)
+        if ([90, 180, 270].includes(Math.round(counter))) {
+          refs[Math.round(counter)].classList.add('progressed')
+          refs[Math.round(counter)].style.borderRadius = sideRadius[Math.round(counter)]
+        }
 
-  //     function getProgeressIncrement(timeInMinutes) {
-  //       return 360 / (timeInMinutes * 60)
-  //     }
+        if (Math.round(counter) >= 270) {
+          outer360.style.display = 'none'
+        }
 
-  //     function showTime(timeInSeconds) {
-  //       const dateObj = new Date(timeInSeconds * 1000)
-  //       const hours = dateObj.getUTCHours()
-  //       const minutes = dateObj.getUTCMinutes()
-  //       const seconds = dateObj.getUTCSeconds()
-  //       return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
-  //     }
+        if (Math.round(counter) >= 360 && timeInSeconds <= 0) {
+          clearInterval(interval)
+        }
+        counter += (360 / (time * 60))
+        timeInSeconds -= 1
+      }, 1000)
+    },
+    showTime(timeInSeconds) {
+      const dateObj = new Date(timeInSeconds * 1000);
+      const hours = dateObj.getUTCHours();
+      const minutes = dateObj.getUTCMinutes();
+      const seconds = dateObj.getSeconds();
 
-  //     function formatTime(time) {
-  //       const singleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  //       retVal = '00'
-  //       if (time) {
-  //         if (singleNumbers.includes(time)) {
-  //           this.retVal = `0${time}`
-  //         } else {
-  //           this.retVal = time
-  //         }
-  //       }
-  //       return this.retVal
-  //     }
-  //   },
-  // },
+       function formatTime(time) {
+            const singleNumbers = [1,2,3,4,5,6,7,8,9]
+            let retVal = '00'
+            if (time) {
+                if (singleNumbers.includes(time)) {
+                    retVal = `0${time}`
+                } else {
+                    retVal = time
+                }
+            }
+            return retVal
+        }
+
+      return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
+    },
+  },
 }
 
 </script>
 
 <style>
-#outer-container{
+#outerCont{
   background-color: #4aef98;
   width: 150px;
   height: 150px;
@@ -114,7 +111,7 @@ export default {
   justify-items: center;
 }
 
-#outer-circle {
+#outerCircle {
   width: 150px;
   position: absolute;
   z-index: 2;
@@ -122,7 +119,7 @@ export default {
   border-radius: 85px;
 }
 
-#inner-circle {
+#innerCircle {
   background: white;
   width: 120px;
   height: 120px;
@@ -134,11 +131,11 @@ export default {
   align-items: center;
 }
 
-#progress {
+/* #progress {
   position: absolute;
   width: 150px;
   height: 150px;
-}
+} */
 
 #progress {
   position: absolute;
@@ -148,7 +145,7 @@ export default {
   grid-template-columns: 1fr 1fr;
 }
 
-.progress {
+.progress-circle {
   width: 75px;
   height: 150px;
   display: grid;
@@ -156,7 +153,7 @@ export default {
 }
 
 #start360, #outer360 {
-  background: red;
+  background: violet;
   transform: rotate(360deg);
   transform-origin: bottom right;
 }
@@ -170,7 +167,7 @@ export default {
 }
 
 .progressed {
-  background: red;
+  background: violet;
 }
 
 #display-time {

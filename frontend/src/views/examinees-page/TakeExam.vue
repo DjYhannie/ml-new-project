@@ -13,9 +13,9 @@
       </b-button>
       </b-card>
 <!-- Timer  -->
-  <!-- <BaseTimer v-show="isTimer"
-      :time-left="timeLeft"
-    /> -->
+  <BaseTimer v-show="isTimer"
+      :time="10"
+    />
   <!-- Test Questions  -->
   <div>
     <b-card v-show="formShow">
@@ -56,12 +56,12 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-// import BaseTimer from './BaseTimer.vue'
 import { mapActions, mapState } from 'vuex'
+import BaseTimer from './BaseTimer.vue'
 
 export default {
   components: {
-    // BaseTimer,
+    BaseTimer,
     // BFormSelect,
     // BFormSelectOption,
     BCard,
@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      // isTimer: false,
+      isTimer: true,
       formShow: false,
       helloShow: true,
       // isShow: false,
