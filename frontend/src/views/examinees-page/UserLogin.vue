@@ -223,7 +223,7 @@ export default {
           console.log(token)
           } else {
             console.log(token)
-            this.$router.push({ name: 'home' })
+            this.$router.push({ name: 'take-exam' })
             console.log(login.data.message)
           }
           // this.$router.push({ name: 'home' })

@@ -30,7 +30,7 @@ export default {
     [userTypes.GETTER_LOGIN]: state => state.user,
     [userTypes.GETTER_USERS]: state => state.users,
     getUser: state => state.user,
-    authenticated: state => state.token !== null,
+    // authenticated: state => state.token !== null,
     token: state => state.token,
 
   },

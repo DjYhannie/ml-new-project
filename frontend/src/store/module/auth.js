@@ -3,7 +3,10 @@ import axios from '../../libs/axios'
 const getters = {
   isAuthenticated: state => !!state.user,
   StatePosts: state => state.posts,
-  StateUser: state => state.user,
+  StateUser: state => {
+    console.log(state.user)
+    return state.user
+  },
   StateToken: state => state.token,
 }
 const actions = {
@@ -29,7 +32,7 @@ const actions = {
     console.log('Calling Admin...')
     const response = await axios.post('/adminlogin', User)
     console.log('ADMIN RESPONSE', response)
-    commit('setUser', response.data)
+    commit('setUser', response.data.user)
     commit('setToken', response.data.token)
     sessionStorage.setItem('token', response.data.token)
     return response
@@ -41,7 +44,7 @@ const actions = {
     console.log(Email)
     const response = await axios.post('/send/resetpassword', Email)
     console.log('RESET PASSWORD', response)
-    commit('setUser', response.data)
+    commit('setUser', response.data.user)
     return response
   },
   // NORMAL USER
@@ -51,7 +54,7 @@ const actions = {
     console.log('USER RESPONSE', response)
     // console.log('USER', User)
     if (response.data.token) {
-      commit('setUser', response.data)
+      commit('setUser', response.data.user)
       commit('setToken', response.data.token)
       sessionStorage.setItem('token', response.data.token)
     }

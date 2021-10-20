@@ -6,6 +6,7 @@ import questionnaire from '@/store/module/questionnaire'
 import auth from '@/store/module/auth'
 import questions from '@/store/module/questions'
 import users from '@/store/module/users'
+import vuexPersistedState from 'vuex-persistedstate'
 import app from './app'
 import appConfig from './app-config'
 import verticalMenu from './vertical-menu'
@@ -22,5 +23,6 @@ export default new Vuex.Store({
     auth,
     questionnaire,
   },
+  plugins: [vuexPersistedState],
   // strict: process.env.DEV,
 })

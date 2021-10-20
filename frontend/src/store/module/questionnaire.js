@@ -7,6 +7,7 @@ export default {
   state: {
     namespaced: true,
     questionnaires: {},
+    questionnaire: [],
     // courses: {},
     questions: {},
     createquestion: '',
@@ -16,6 +17,7 @@ export default {
   getters: {
     // [questionnaireTypes.GETTER_QUESTION]: state => state.questionnaires,
     GET_QUESTIONNAIRE: state => state.questionnaires,
+    GET_QUESTIONNAIRES: state => state.questionnaire,
     // GET_INDEX: state => state.index,
     // GET_COURSES: state => state.courses,
     // GET_QUESTION: state => state.questions,
@@ -34,24 +36,13 @@ export default {
       commit('GET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, questionnaires }, id) {
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, questionnaire }, id) {
       const response = await api.post(`questionnaires/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
-      await dispatch('ACTION_GET_QUESTIONNAIRES', questionnaires)
+      // await dispatch('ACTION_GET_QUESTIONNAIRES', questionnaires)
+      await dispatch('UPDATE_QUESTIONNAIRE', questionnaire)
       return response
     },
-    // async ACTION_GET_COURSES({ commit }) {
-    //   const response = await api.get('/course')
-    //   console.log(response.data.courses)
-    //   commit('SET_COURSES', response.data)
-    //   return response.data
-    // },
-    // async ACTION_GET_QUESTIONS({ commit }) {
-    //   const response = await api.get('/questions')
-    //   console.log(response.data.data)
-    //   commit('SET_QUESTIONS', response.data)
-    //   return response.data
-    // },
     async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
       const response = await api.delete(`/questionnaire/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
@@ -71,9 +62,9 @@ export default {
     SET_QUESTIONNAIRE(state, questionnaires) {
       state.questionnaires = questionnaires
     },
-    // [questionnaireTypes.MUTATION_ADD_QUESTION]: (state, questionnaires) => {
-    //   state.questionnaires.unshift(questionnaires)
-    // },
+    UPDATE_QUESTIONNAIRE(state, questionnaire) {
+      state.questionnaire = questionnaire
+    },
     // SET_COURSES(state, courses) {
     //   state.courses = courses
     // },

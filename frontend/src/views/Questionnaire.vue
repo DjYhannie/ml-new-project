@@ -286,10 +286,12 @@
       <b-card class="border" name="questionnaire">
         <b-button-group class="buttons">
           <b-dropdown>
-            <b-dropdown-item
+            <!-- <b-dropdown-item
             v-b-modal.modal-lg
         class="modalButton"
-        @click="modalEditShow = !modalEditShow">Edit</b-dropdown-item>
+        @click="modalEditShow = !modalEditShow">Edit</b-dropdown-item> -->
+        <b-dropdown-item
+            @click="editButton(questionnaire.id)">Edit</b-dropdown-item>
             <b-dropdown-item
             @click="deleteButton(questionnaire.id)">Delete</b-dropdown-item>
              <b-dropdown-item
@@ -440,13 +442,13 @@ export default {
         { value: 'Course 3', text: 'Course 3' },
         { value: 'Course 4', text: 'Course 4' },
       ],
-      optionsFilterCourses: [
-        { value: null, text: 'Select Course', disabled: true },
-        { value: 'Course 1', text: 'Course 1' },
-        { value: 'Course 2', text: 'Course 2' },
-        { value: 'Course 3', text: 'Course 3' },
-        { value: 'Course 4', text: 'Course 4' },
-      ],
+      // optionsFilterCourses: [
+      //   { value: null, text: 'Select Course', disabled: true },
+      //   { value: 'Course 1', text: 'Course 1' },
+      //   { value: 'Course 2', text: 'Course 2' },
+      //   { value: 'Course 3', text: 'Course 3' },
+      //   { value: 'Course 4', text: 'Course 4' },
+      // ],
       seleted: '',
       required,
       email,
@@ -457,6 +459,7 @@ export default {
       questionnaires: 'GET_QUESTIONNAIRE',
       questions: 'GET_QUESTION',
       courses: 'GET_COURSES',
+      questionnaire: 'GET_QUESTIONNAIRES',
     }),
   },
   watch: {
@@ -533,6 +536,11 @@ export default {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       console.log('DELETED_', response)
       return response
+    },
+    editButton(id) {
+      this.modalEditShow = true
+      console.log(id)
+      console.log(this.questionnaire)
     },
     submitEmail() {
       console.log('SEND EMAIL__')
