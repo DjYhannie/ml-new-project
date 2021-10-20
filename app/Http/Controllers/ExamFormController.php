@@ -137,7 +137,7 @@ class ExamFormController extends Controller
     {
         $user = Auth::user()->username;
         $userId = Auth::user()->id;
-        
+
         $title = DB::table('url_tokens')
                     ->join('questionnaires', 'questionnaires.id','=', 'url_tokens.questionnaire_id')
                     ->first('questionnaires.title');
@@ -147,12 +147,12 @@ class ExamFormController extends Controller
                     ->where('user_id', $userId)
                     ->where('questionnaire_id', $request->id)
                     ->get();
-        
-        return $result;
 
 
         return response()->json([
             'user' => $user,
+            'title' => $title,
+            'result' => $result
         ]);
     }
 
@@ -162,7 +162,7 @@ class ExamFormController extends Controller
         $results = DB::table('url_tokens')
                     ->where('user_id', $user->id)
                     ->get();
-                    
+
         return $results;
     }
 

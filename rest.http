@@ -96,3 +96,12 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
     "id" : "1"
 }
 
+###
+
+POST http://localhost:8000/api/send/invitation
+Content-Type: application/json
+
+{
+    "emails" : ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com"]
+}
+

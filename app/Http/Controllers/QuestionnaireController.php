@@ -19,10 +19,10 @@ use function Complex\add;
 
 class QuestionnaireController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function createQuestionnaire(Request $request)
     {
@@ -248,12 +248,15 @@ class QuestionnaireController extends Controller
         //         $validator->errors()->add('email', 'Invite exists with this email!');
         //     }
         // });
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Error',
                 'error'   => $validator->errors()
             ]);
         }
+        return $validator;
+
         do{
             $token = Str::random(20);
         }
