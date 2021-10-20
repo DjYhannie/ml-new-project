@@ -4,20 +4,20 @@ POST  http://localhost:8000/api/register
 Content-Type: application/json
 
 {
-    "username": "Shannia lee",
-    "email":"rhea.ardiente@mlhuillier.com",
+    "username": "Shannia",
+    "email":"rhea0951@gmail.com",
     "password": "test123",
     "password_confirmation": "test123"
 }
 
 #####
 
-POST http://localhost:8000/api/adminlogin
+POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "admin@admin.com",
-    "password" : "admin"
+    "email" : "rhea.ardiente@mlhuillier.com",
+    "password" : "test123"
 }
 
 ####
@@ -31,7 +31,7 @@ POST http://localhost:8000/api/send/resetpassword
 Content-Type: application/json
 
 {
-    "email" : "rhea.ardiente@mlhuillier.com"
+    "email" : "rhea0951@gmail.com"
 }
 
 #####
