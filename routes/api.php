@@ -78,7 +78,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/result/all', [ExamFormController::class, 'getAllResult']);
 
 
-    Route::post('/logout', [RegistrationController::class, 'logout']);
+    Route::post('/send/resetpassword',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
+    Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
+    Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examcode');
+    Route::post('/send/invitation', [QuestionnaireController::class, 'invites'])->name('invitation');
 
     Route::post('/logout', [RegistrationController::class, 'logout']);
 
@@ -86,10 +89,6 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 
-Route::post('/send/resetpassword',[NewPassword::class, 'emailResetLink']); //For sending email to reset password
-Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+
-Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examcode');
-Route::post('/send/invitation', [QuestionnaireController::class, 'invites'])->name('invitation');
 
 Route::post('/import', [AdminQuestionsController::class, 'import'])->name('import');
 Route::post('/sample', [NewPassword::class, 'test']);
