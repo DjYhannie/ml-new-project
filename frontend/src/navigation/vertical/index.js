@@ -13,6 +13,12 @@ const navigation = [
     hide: user,
   },
   {
+    title: 'History',
+    route: 'user/history',
+    icon: 'ClockIcon',
+    hide: user,
+  },
+  {
     title: 'Home',
     route: 'home',
     icon: 'HomeIcon',

@@ -506,7 +506,7 @@ export default {
       DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
     filterByCourses() {
-      console.log(this.questionnairesCopy)
+      console.log(this.questionnaires)
       if (this.filterCourses == null) {
         this.questionnaires = this.questionnairesCopy
       } else {

@@ -79,7 +79,6 @@
               >
             </div>
             <b-button
-              v-show="addShow"
               variant="primary"
               type="submit"
             >
@@ -124,9 +123,10 @@
         :options="optionsFilterCategories"
       />
     </b-card>
+
     <!-- Edit Qustionnaire  -->
     <b-modal v-model="modalEditShow">
-      <h3>Create Question</h3>
+      <h3>Edit Question</h3>
       <b-form-select
         v-model="questionDescription.category"
         :options="optionsCategories"
@@ -194,7 +194,6 @@
             >
           </div>
           <b-button
-            v-show="addShow"
             variant="primary"
             type="submit"
           >
@@ -216,10 +215,15 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-              <b-dropdown-item
+              <!-- <b-dropdown-item
                 v-b-modal.modal-lg
                 class="modalButton"
                 @click="modalEditShow = !modalEditShow"
+              >
+                Edit
+              </b-dropdown-item> -->
+              <b-dropdown-item
+                @click="editButton(question.id)"
               >
                 Edit
               </b-dropdown-item>
@@ -300,7 +304,6 @@ export default {
       questionsCopy: null,
       filterCategories: null,
       updateShow: true,
-      addShow: true,
       modalEditShow: false,
       index: null,
       visible: false,
@@ -436,7 +439,7 @@ export default {
       console.log('deleted!')
     },
     editButton() {
-      this.modalShow = true
+      this.modalEditShow = true
       this.editShow = true
       this.addShow = false
       console.log('edited!')

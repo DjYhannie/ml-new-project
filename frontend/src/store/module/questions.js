@@ -2,7 +2,7 @@
 import api from '../../libs/axios'
 import * as questionTypes from '../types/questions'
 
-// important ni siya
+// !important
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export default {
   state: {
