@@ -10,7 +10,7 @@ class ApplicationController extends Controller
     public function index()
     {
         // return view('application');
-        return view('welcome');
+        return view('email');
         // return view('invitation');
     }
 }

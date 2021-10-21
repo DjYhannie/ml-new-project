@@ -102,6 +102,6 @@ POST http://localhost:8000/api/send/invitation
 Content-Type: application/json
 
 {
-    "emails" : ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com"]
+    "emails" : ["rhea.ardiente@mlhuillier.com", "19104852@usc.edu.ph", "test3@gmail.com"]
 }
 
