@@ -13,9 +13,12 @@
       </b-button>
       </b-card>
 <!-- Timer  -->
-  <!-- <BaseTimer v-show="isTimer"
-      :time-left="timeLeft"
-    /> -->
+  <BaseTimer
+      class="sticky"
+      v-show="isTimer"
+      :time-left="10"
+    />
+    <br><br><br>
   <!-- Test Questions  -->
   <div>
     <b-card v-show="formShow">
@@ -24,8 +27,9 @@
       <b-form-radio-group
         id="radio-group-2"
         v-model="selected"
-        name="radio-sub-component"
+        name="radio"
         required
+        :disabled="validated ? '' : disabled"
       >
       <!-- :aria-describedby="ariaDescribedby" -->
         <b-form-radio value="A">A. Choice A</b-form-radio>
@@ -56,12 +60,12 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-// import BaseTimer from './BaseTimer.vue'
 import { mapActions, mapState } from 'vuex'
+import BaseTimer from './BaseTimer.vue'
 
 export default {
   components: {
-    // BaseTimer,
+    BaseTimer,
     // BFormSelect,
     // BFormSelectOption,
     BCard,
@@ -73,19 +77,12 @@ export default {
   },
   data() {
     return {
-      // isTimer: false,
+      disabled: 0,
+      isTimer: false,
       formShow: false,
       helloShow: true,
-      // isShow: false,
+      required: true,
       selected: null,
-      options: [
-        { value: 'A', text: 'Questionnaire 1 (from options prop)' },
-        { value: 'B', text: 'Questionnaire 2 (from options prop)' },
-      ],
-      // BaseTimer
-      // timeLimit: 20,
-      // timePassed: 0,
-      // timeInterval: null,
     }
   },
   computed: {
@@ -101,40 +98,14 @@ export default {
       GET_OEXAM: 'ACTION_GET_ONLINE_EXAM',
     }),
     start() {
-      // this.isTimer = true
+      this.isTimer = true
       this.formShow = true
       this.helloShow = false
     },
     submitExam() {
       console.log('SUBMITTED__')
     },
-    // BaseTimer
-    // startTimer() {
-    //   this.timerInterval = setInterval(() => {
-    //     this.timePassed += 1
-    //   }, 1000)
-    // },
   },
-  // BaseTimer
-  // computed: {
-  //   formattedTimeLeft() {
-  //     const { timeLeft } = this.timeLeft
-  //     // The largest round integer less than or equal to the result of time divided being by 60.
-  //     const minutes = Math.floor(timeLeft / 60)
-  //     // Seconds are the remainder of the time divided by 60 (modulus operator)
-  //     let seconds = timeLeft % 60
-  //     // If the value of seconds is less than 10,then display seconds with a leading zero
-  //     if (seconds < 10) {
-  //       seconds = `0${seconds}`
-  //     }
-  //     // The output in MM:SS format
-  //     return `${minutes}:${seconds}`
-  //   },
-  // },
-  // BaseTimer
-  // mounted() {
-  //   this.startTimer()
-  // },
 }
 </script>
 
@@ -146,5 +117,13 @@ export default {
 }
 button {
   float: right;
+}
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  padding: 50px;
+  font-size: 20px;
 }
 </style>
