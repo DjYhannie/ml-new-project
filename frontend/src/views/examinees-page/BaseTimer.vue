@@ -19,21 +19,22 @@
 </template>
 
 <script>
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+
 export default {
   props: {
     time: {
       type: Number,
-      requiviolet: true,
+      requivi: true,
     },
   },
   data() {
     return {
-      // formattedTimeLeft: '',
-       sideRadius: {
-            '90': '0px 80px 0px 0px',
-            '180': '0px 0px 80px 0px',
-            '270': '0px 0px 0px 80px',
-        },
+      sideRadius: {
+        90: '0px 80px 0px 0px',
+        180: '0px 0px 80px 0px',
+        270: '0px 0px 0px 80px',
+      },
     }
   },
   mounted() {
@@ -41,21 +42,22 @@ export default {
   },
   methods: {
     timer() {
-      const refs = this.$refs
-      const sideRadius = this.sideRadius
-      const time = this.time
+      const { refs } = { refs: this.$refs }
+      const { sideRadius } = { sideRadius: this.sideRadius }
+      const time = 1
       let timeInSeconds = time * 60
-      const showTime = this.showTime
+      const { showTime } = { showTime: this.showTime }
 
-      const start360 = this.$refs.start360
-      const outer360 = this.$refs.outer360
+      const { start360 } = { start360: this.$refs.start360 }
+      const { outer360 } = { outer360: this.$refs.outer360 }
+      console.log('start', start360)
       start360.style.borderRadius = '80px 0px 0px 0px'
       outer360.style.borderRadius = '80px 0px 0px 0px'
 
       refs.timeDisplay.innerText = showTime(timeInSeconds)
 
       let counter = 0
-      const interval = setInterval(function() {
+      const interval = setInterval(() => {
         start360.style.transform = `rotate(${counter}deg)`
         refs.timeDisplay.innerText = showTime(timeInSeconds)
         if ([90, 180, 270].includes(Math.round(counter))) {
@@ -67,32 +69,50 @@ export default {
           outer360.style.display = 'none'
         }
 
+        if (Math.round(counter) === 270) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Your running out time!',
+              icon: 'AlertOctagonIcon',
+              variant: 'warning',
+            },
+          })
+        }
+
         if (Math.round(counter) >= 360 && timeInSeconds <= 0) {
           clearInterval(interval)
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Your time is up!',
+              icon: 'XOctagonIcon',
+              variant: 'danger',
+            },
+          })
         }
         counter += (360 / (time * 60))
         timeInSeconds -= 1
       }, 1000)
     },
     showTime(timeInSeconds) {
-      const dateObj = new Date(timeInSeconds * 1000);
-      const hours = dateObj.getUTCHours();
-      const minutes = dateObj.getUTCMinutes();
-      const seconds = dateObj.getSeconds();
+      const dateObj = new Date(timeInSeconds * 1000)
+      const hours = dateObj.getUTCHours()
+      const minutes = dateObj.getMinutes()
+      const seconds = dateObj.getSeconds()
 
-       function formatTime(time) {
-            const singleNumbers = [1,2,3,4,5,6,7,8,9]
-            let retVal = '00'
-            if (time) {
-                if (singleNumbers.includes(time)) {
-                    retVal = `0${time}`
-                } else {
-                    retVal = time
-                }
-            }
-            return retVal
+      function formatTime(time) {
+        const singleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        let retVal = '00'
+        if (time) {
+          if (singleNumbers.includes(time)) {
+            retVal = `0${time}`
+          } else {
+            retVal = time
+          }
         }
-
+        return retVal
+      }
       return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
     },
   },
@@ -130,12 +150,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-/* #progress {
-  position: absolute;
-  width: 150px;
-  height: 150px;
-} */
 
 #progress {
   position: absolute;
