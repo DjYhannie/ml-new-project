@@ -44,13 +44,13 @@ class EmailNotif extends Notification
     public function toMail($notifiable)
     {
         $url = "";
-        return (new MailMessage)
-                    ->greeting('Password Reset')
-                    ->line('Please click the button below to reset your password')
-                    ->action('Reset Password', $url)
-                    ->line('If clicked!, you will be riderected to anohter page');
+        // return (new MailMessage)
+        //             ->greeting('Password Reset')
+        //             ->line('Please click the button below to reset your password')
+        //             ->action('Reset Password', $url)
+        //             ->line('If clicked!, you will be riderected to anohter page');
 
-        // return (new MailMessage)->view('email');
+        return (new MailMessage)->view('invitation');
     }
 
     /**

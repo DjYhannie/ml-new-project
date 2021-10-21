@@ -240,7 +240,7 @@ class QuestionnaireController extends Controller
     public function invites(Request $request )
     {
         $validator = Validator::make($request->all(), [
-            'emails' => 'required|array'
+            'emails' => 'required'
         ]);
 
         // $validator->after(function ($validator) use ($request){
