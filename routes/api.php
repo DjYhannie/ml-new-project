@@ -16,10 +16,10 @@ use App\Http\Controllers\QuestionnaireController;
 Headers
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
-*/
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +36,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
-Route::post('/register',[RegistrationController::class,'register']);
-Route::post('/login',[RegistrationController::class,'login']);
+Route::post('/adminlogin',[AdminController::class, 'adminLogin'])->middleware('cors');
+Route::post('/register',[RegistrationController::class,'register'])->middleware('cors');
+Route::post('/login',[RegistrationController::class,'login'])->middleware('cors');
 
 
 
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:sanctum','cors'])->group(function(){
 
     //Questions Related
     Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
