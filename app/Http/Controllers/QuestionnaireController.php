@@ -240,7 +240,7 @@ class QuestionnaireController extends Controller
     public function invites(Request $request )
     {
         $validator = Validator::make($request->all(), [
-            'emails' => 'required'
+            'emails' => 'required|array'
         ]);
 
         // $validator->after(function ($validator) use ($request){
@@ -255,18 +255,15 @@ class QuestionnaireController extends Controller
                 'error'   => $validator->errors()
             ]);
         }
-        return $validator;
 
-        do{
+        foreach ($request['emails'] as $data){
             $token = Str::random(20);
+            Invitation::create([
+                'token' => $token,
+                'email' => $request->input('email')
+            ]);
         }
-        while (Invitation::where('token', $token)->first());
 
-        $email = Invitation::create([
-            'token' => $token,
-            'email' => $request->input('email')
-        ]);
-        dd($email);
 
         $url = URL::temporarySignedRoute(
             'invitation', now()->addMinutes(30),
