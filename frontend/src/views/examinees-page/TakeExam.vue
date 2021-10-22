@@ -20,10 +20,12 @@
     />
     <br><br><br>
   <!-- Test Questions  -->
-  <div>
+  <!-- <div
+    v-for="examQuestionnaire in examQuestionnaires"
+    :key="examQuestionnaire.id"> -->
     <b-card v-show="formShow">
          <b-form @submit="submitExam">
-        <b-form-group label="Radios using sub-components" />
+        <b-form-group>Question</b-form-group>
       <b-form-radio-group
         id="radio-group-2"
         v-model="selected"
@@ -46,7 +48,7 @@
      </b-form>
   </b-card>
   </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -60,7 +62,7 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
 
 export default {
@@ -77,25 +79,31 @@ export default {
   },
   data() {
     return {
-      disabled: 0,
+      disabled: false,
       isTimer: false,
       formShow: false,
       helloShow: true,
       required: true,
       selected: null,
+      // examQuestionnaire: {
+      //   question: '',
+      //   answer: '',
+      // },
     }
   },
   computed: {
-    ...mapState({
-      exams: 'exams',
+    ...mapGetters({
+      // examQuestionnaire: 'examQuestionnaires',
+      examQuestionnaire: 'GET_EXAM_QUESTIONNAIRE',
     }),
   },
-  mounted() {
-    this.GET_OEXAM()
+  async mounted() {
+    await this.GET_EXAM_QUESTIONNAIRE()
+    console.log(this.examQuestionnaire)
   },
   methods: {
     ...mapActions({
-      GET_OEXAM: 'ACTION_GET_ONLINE_EXAM',
+      GET_EXAM_QUESTIONNAIRE: 'ACTION_GET_EXAM_QUESTIONNAIRE',
     }),
     start() {
       this.isTimer = true

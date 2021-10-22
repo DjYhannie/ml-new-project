@@ -31,10 +31,11 @@ export default {
       commit('GET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, questionnaires }, id) {
-      const response = await api.post(`questionnaires/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, questionnaire }, id) {
+      const response = await api.get(`questionnaire/update/${id}`, questionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(response)
-      await dispatch('ACTION_GET_QUESTIONNAIRES', questionnaires)
+      await dispatch('ACTION_GET_QUESTIONNAIRE', questionnaire)
+      // await commit('GET_QUESTIONNAIRE', response.data.data)
       return response
     },
     // async ACTION_GET_COURSES({ commit }) {

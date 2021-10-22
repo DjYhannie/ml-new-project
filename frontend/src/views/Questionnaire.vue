@@ -297,10 +297,15 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-              <b-dropdown-item
+              <!-- <b-dropdown-item
                 v-b-modal.modal-lg
                 class="modalButton"
                 @click="modalEditShow = !modalEditShow"
+              >
+                Edit
+              </b-dropdown-item> -->
+               <b-dropdown-item
+                @click="editButton(questionnaire.id)"
               >
                 Edit
               </b-dropdown-item>
@@ -555,10 +560,16 @@ export default {
     //   this.createquestion = ''
     // },asdf
     async deleteButton(questionnaire) {
-      console.log(questionnaire)
+      console.log('QUESTIONNAIRE_', questionnaire)
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       console.log('DELETED_', response)
       return response
+    },
+    async editButton(questionnaire) {
+      console.log('UPDATE_QUESTIONNAIRE__', questionnaire)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      console.log(response)
+      this.modalEditShow = true
     },
     submitEmail() {
       console.log('SEND EMAIL__')

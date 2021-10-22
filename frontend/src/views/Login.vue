@@ -26,7 +26,7 @@
             Welcome to ML OEx - MLhuillier Online Exam! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account to start the exam
+            Please sign-in to your account
           </b-card-text>
 
           <!-- form -->

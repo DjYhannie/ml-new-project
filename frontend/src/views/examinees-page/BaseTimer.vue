@@ -167,7 +167,7 @@ export default {
 }
 
 #start360, #outer360 {
-  background: red;
+  background: rgb(230, 86, 86);
   transform: rotate(360deg);
   transform-origin: bottom right;
 }
@@ -181,7 +181,7 @@ export default {
 }
 
 .progressed {
-  background: red;
+  background: rgb(230, 86, 86);
 }
 
 #display-time {
