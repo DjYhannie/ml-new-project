@@ -31,7 +31,7 @@ Route::middleware('cors')->group(function() {
     Route::post('/adminlogin',[AdminController::class, 'adminLogin'])->middleware('cors');
     Route::post('/register',[RegistrationController::class,'register'])->middleware('cors');
     Route::post('/login',[RegistrationController::class,'login'])->middleware('cors');
-})
+});
 
 
 Route::middleware(['auth:sanctum','cors'])->group(function(){
