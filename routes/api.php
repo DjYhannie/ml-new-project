@@ -36,13 +36,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/adminlogin',[AdminController::class, 'adminLogin'])->middleware('cors');
-Route::post('/register',[RegistrationController::class,'register'])->middleware('cors');
-Route::post('/login',[RegistrationController::class,'login'])->middleware('cors');
+Route::post('/adminlogin',[AdminController::class, 'adminLogin']);
+Route::post('/register',[RegistrationController::class,'register']);
+Route::post('/login',[RegistrationController::class,'login']);
 
 
 
-Route::middleware(['auth:sanctum','cors'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
 
     //Questions Related
     Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
