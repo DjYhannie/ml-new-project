@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import vuexpersistedstate from 'vuex-persistedstate'
 
 // Modules
+import exam from '@/store/module/exam'
 import questionnaire from '@/store/module/questionnaire'
 import auth from '@/store/module/auth'
 import questions from '@/store/module/questions'
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     users,
     auth,
     questionnaire,
+    exam,
   },
   plugins: [vuexpersistedstate()],
   // strict: process.env.DEV,

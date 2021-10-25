@@ -37,6 +37,9 @@ export default {
       },
     }
   },
+  created() {
+    this.$root.$refs.baseTimer = this
+  },
   mounted() {
     this.timer()
   },
