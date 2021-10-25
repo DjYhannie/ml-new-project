@@ -13,23 +13,36 @@
     <div class="col-5 col-s-5 container">
         <div class="row">
             <div class="col-12 col-s-12 imgs">
-                    <h1 id="headertext">MLhuillier OEX Site Notification</h1>
+                    <h1 id="headertext" style="color: rgb(233, 55, 55)">MLhuillier OEX Site Notification</h1>
             </div>
             <hr id="hr1">
             <img class="logo" src="https://play-lh.googleusercontent.com/OcV8yyAyw8x91UxgBDpYE5A-awtgaXTYOVoJUN8QQp2dtRS25xdcYwWFtYmI0LiZhSk" alt="">
             <div class="col-12 col-s-12 div2">
-                <h1 id="h1text">Password Reset</h1>
-                <p>Note: Please click the button below to reset your password.</p>
-                <button>Resset Password</button>
-                <p>If you click the button you will be redirected to another page.</p><br>
-                <p>Best Regards,</p>
-                <p style="padding-bottom: 30px;">ML EOX</p>
+                <h1 id="h1text" style="color: rgb(28, 7, 104)">Password Reset</h1>
+                <p style="font-size: 15px;">Note: Please click the button below to reset your password.</p>
+                <button style=" background-color: rgb(172, 6, 6);
+                color: white;
+                box-sizing: border-box;
+                cursor: pointer;
+                display: inline-block;
+                text-decoration: none;
+                text-align: center;
+                padding: 14px 30px;
+                cursor: pointer;
+                transition-duration: 0.4s;
+                border-radius: 2px;
+                margin: 4px 2px;
+                border: none;
+                font-size: 18px">Resset Password</button>
+                <p style="font-size: 15px;">If you click the button you will be redirected to another page.</p><br>
+                <p style="font-size: 15px">Best Regards,</p>
+                <p style="padding-bottom: 30px; font-size: 15px; font-weight:bold;"font-size: 15px">ML EOX</p>
             </div>
             <hr id="hr2">
             <div class="col-12 col-s-12 div3">
-                <p style="margin-top: 5%;">If you're having trouble clicking the "Reset Password" button, </p>
-                <p>copy and paste the URL below into your </p>
-                <p>web browser: <a href="">/localhost:8080/update-password</a></p>
+                <p style="margin-top: 5%; font-size: 15px;">If you're having trouble clicking the "Reset Password" button, </p>
+                <p style="font-size: 15px">copy and paste the URL below into your </p>
+                <p style="font-size: 15px">web browser: <a href="">/localhost:8080/update-password</a></p>
             </div>
 
         </div>

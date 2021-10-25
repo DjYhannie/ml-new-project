@@ -50,7 +50,7 @@ class EmailNotif extends Notification
         //             ->action('Reset Password', $url)
         //             ->line('If clicked!, you will be riderected to anohter page');
 
-        return (new MailMessage)->view('invitation');
+        return (new MailMessage)->view('email');
     }
 
     /**

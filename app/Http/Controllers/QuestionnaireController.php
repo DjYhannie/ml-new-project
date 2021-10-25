@@ -249,7 +249,6 @@ class QuestionnaireController extends Controller
         //     }
         // });
 
-
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Error',
