@@ -309,7 +309,7 @@
               >
                 Edit
               </b-dropdown-item> -->
-              <b-dropdown-item
+               <b-dropdown-item
                 @click="editButton(questionnaire.id)"
               >
                 Edit
@@ -566,15 +566,16 @@ export default {
     //   this.createquestion = ''
     // },asdf
     async deleteButton(questionnaire) {
-      console.log(questionnaire)
+      console.log('QUESTIONNAIRE_', questionnaire)
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       console.log('DELETED_', response)
       return response
     },
-    editButton() {
+    async editButton(questionnaire) {
+      console.log('UPDATE_QUESTIONNAIRE__', questionnaire)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      console.log(response)
       this.modalEditShow = true
-      // console.log(id)
-      // console.log(this.questionnaire)
     },
     submitEmail() {
       console.log('SEND EMAIL__')

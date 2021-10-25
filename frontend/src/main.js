@@ -15,9 +15,16 @@ import './global-components'
 import '@/libs/portal-vue'
 import '@/libs/toastification'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
-// axios.defaults.headers.get['header-name'] = 'value'
+axios.defaults.baseURL = 'https://examapp-backend.herokuapp.com/api/'
+axios.defaults.headers.get['header-name'] = 'value'
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:8080/'
+// 'Access-Control-Allow-Origin', '*'
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,POST,OPTIONS,DELETE,PUT'
+// axios.defaults.baseURL = 'https://examapp-backend.herokuapp.com/api/'
+// axios.defaults.headers.get.Accepts = 'application/json'
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+// axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)

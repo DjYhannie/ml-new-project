@@ -10,35 +10,29 @@ const getters = {
   StateToken: state => state.token,
 }
 const actions = {
-  // async Register({ commit, dispatch }, form) {
-  //   // const response =
-  //   await axios.post('/register', form)
-  //   console.log('AUTH.JS', await form)
-  //   commit('setUser', form)
-  //   await dispatch('LogIn', form)
-  // },
-  // FOR DEMO
   async Register({ commit }, form) {
-    // const response =
     const response = await axios.post('/register', form)
     console.log('REGISTRATION RESPONSE', response)
     console.log('AUTH.JS', await form)
     commit('setUser', form)
-    // await dispatch('UserLogin', form)
     return response
   },
-  // ADMIN USER
   async LogIn({ commit }, User) {
     console.log('Calling Admin...')
-    const response = await axios.post('/adminlogin', User)
+    const response = await axios.post('/adminlogin', User,
+      {
+        Headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+        },
+      })
     console.log('ADMIN RESPONSE', response)
     commit('setUser', response.data.user)
     commit('setToken', response.data.token)
     sessionStorage.setItem('token', response.data.token)
     return response
   },
-  // OK NA
-  // RESET PASSWORD
   async ResetPassword({ commit }, Email) {
     console.log('RESET__')
     console.log(Email)
@@ -47,12 +41,10 @@ const actions = {
     commit('setUser', response.data.user)
     return response
   },
-  // NORMAL USER
   async UserLogin({ commit }, User) {
     console.log('Calling Normal User...')
     const response = await axios.post('/login', User)
     console.log('USER RESPONSE', response)
-    // console.log('USER', User)
     if (response.data.token) {
       console.log(response.data.user)
       commit('setUser', response.data.user)
@@ -61,25 +53,11 @@ const actions = {
     }
     return response
   },
-  // async LogOut({ commit }, User) {
-  //   const response = await axios.post('/logout', User)
-  //   console.log('RESPONSE_', response)
-  //   window.sessionstorage.clear()
-  //   const user = null
-  //   commit('logout', user)
-  // },
   async LogOut({ commit }) {
     const token = null
     commit('logOut', token)
     console.log('TOKEN_', token)
   },
-
-  // async logOut({ commit }, state) {
-  //   state.token = null
-  //   state.isLoggedIn = false
-  //   sessionStorage.setItem('token', null)
-  //   commit('/logout', null)
-  // },
 }
 const mutations = {
   setUser(state, username) {
@@ -95,14 +73,12 @@ const mutations = {
     state.user = null
     state.posts = null
     state.token = null
-    // sessionStorage.clear()
     window.sessionStorage.clear()
   },
 }
 const state = {
   user: null,
   posts: null,
-  // token: sessionStorage.token ? sessionStorage.getItem('token') : null,
   token: sessionStorage.token ? sessionStorage.getItem('token') : null,
 }
 

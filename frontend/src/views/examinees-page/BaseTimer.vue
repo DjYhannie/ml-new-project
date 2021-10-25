@@ -37,6 +37,9 @@ export default {
       },
     }
   },
+  created() {
+    this.$root.$refs.baseTimer = this
+  },
   mounted() {
     this.timer()
   },
@@ -167,7 +170,7 @@ export default {
 }
 
 #start360, #outer360 {
-  background: violet;
+  background: rgb(230, 86, 86);
   transform: rotate(360deg);
   transform-origin: bottom right;
 }
@@ -181,7 +184,7 @@ export default {
 }
 
 .progressed {
-  background: violet;
+  background: rgb(230, 86, 86);
 }
 
 #display-time {
