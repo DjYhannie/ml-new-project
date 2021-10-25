@@ -249,6 +249,7 @@ class QuestionnaireController extends Controller
         //     }
         // });
 
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Error',
@@ -263,7 +264,6 @@ class QuestionnaireController extends Controller
                 'email' => $request->input('email')
             ]);
         }
-
 
         $url = URL::temporarySignedRoute(
             'invitation', now()->addMinutes(30),
