@@ -70,7 +70,7 @@ Route::middleware(['auth:sanctum','cors'])->group(function(){
     Route::post('/course/add',[AdminController::class, 'addCourses']);
 
     Route::post('/questionnaire/create',[QuestionnaireController::class, 'createQuestionnaire']);
-    Route::get('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
+    Route::put('/questionnaire/update/{id}',[QuestionnaireController::class, 'updateQuestionnaire']);
     Route::delete('/questionnaire/delete/{id}',[QuestionnaireController::class, 'deleteQuestionnaire']);
     Route::get('/questionnaire',[QuestionnaireController::class, 'getAllQuestionnaire']);
     Route::get('/questionnaire/{id}',[QuestionnaireController::class, 'getQuestionnaireById']);

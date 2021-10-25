@@ -12,12 +12,12 @@ Content-Type: application/json
 
 #####
 
-POST http://localhost:8000/api/login
+POST http://localhost:8000/api/adminlogin
 Content-Type: application/json
 
 {
-    "email" : "test@mlhuillier.com",
-    "password" : "test123"
+    "email" : "admin@admin.com",
+    "password" : "admin"
 }
 
 ####
@@ -37,16 +37,39 @@ Content-Type: application/json
 #####
 
 POST http://localhost:8000/api/questions/add
-Authorization: Bearer 4|gf7I2hNCWjKAlX78pQXYlmBHflqJdXlOWmlbp
+Authorization: Bearer 19|Gn5vhAEoSsA2HMGJdgGKSQHHebMalAmuB19NIo5S
+
+
+###
+
+GET  http://localhost:8000/api/questions
+Authorization: Bearer 19|Gn5vhAEoSsA2HMGJdgGKSQHHebMalAmuB19NIo5S
+
+
+###
+PUT http://localhost:8000/api/questionnaire/update/1
+Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
+Content-Type: application/json
+
+{
+    "title" : "test",
+    "course" :  "test",
+    "time_duration": 15,
+    "passing_score" : 10,
+    "easy_questions" : 5,
+    "average_questions" : 5,
+    "hard_questions" : 5,
+    "total_questions" :15
+}
 
 ####
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 4|Wiuh1ly9AcuYAx4czaYRAx9QJZ4bRZR7woZYOemb
+Authorization: Bearer 20|44rLRn36H9u0YKgOYPByZYPdN73omoEGzMUDLLOL
 
 {
-    "title" : "sample",
+    "title" : "sample1",
     "course": "logic",
     "time_duration": 40,
     "passing_score": 15,
@@ -58,12 +81,11 @@ Authorization: Bearer 4|Wiuh1ly9AcuYAx4czaYRAx9QJZ4bRZR7woZYOemb
 
 ###
 GET http://localhost:8000/api/questionnaire/2
-Authorization: Bearer 4|Wiuh1ly9AcuYAx4czaYRAx9QJZ4bRZR7woZYOemb
+Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
-
+Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
 ####
 
 ####
