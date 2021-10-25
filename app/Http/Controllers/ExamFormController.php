@@ -166,4 +166,9 @@ class ExamFormController extends Controller
         return $results;
     }
 
+    public function FunctionName()
+    {
+        # code...
+    }
+
 }

@@ -12,5 +12,6 @@ class ApplicationController extends Controller
         // return view('application');
         return view('email');
         // return view('invitation');
+        // return view('email');
     }
 }

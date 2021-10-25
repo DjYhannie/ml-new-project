@@ -4,7 +4,7 @@ POST  http://localhost:8000/api/register
 Content-Type: application/json
 
 {
-    "username": "Shannia",
+    "username": "Shannia Lee",
     "email":"rhea0951@gmail.com",
     "password": "test123",
     "password_confirmation": "test123"
@@ -16,7 +16,7 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "rhea.ardiente@mlhuillier.com",
+    "email" : "rhea0951@gmail.com",
     "password" : "test123"
 }
 
@@ -31,23 +31,46 @@ POST http://localhost:8000/api/send/resetpassword
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com"
+    "email" : "rhea.ardiente@mlhuillier.com"
 }
 
 #####
 
 POST http://localhost:8000/api/questions/add
-Authorization: Bearer 4|gf7I2hNCWjKAlX78pQXYlmBHflqJdXlOWmlbp
+Authorization: Bearer 19|Gn5vhAEoSsA2HMGJdgGKSQHHebMalAmuB19NIo5S
+
+
+###
+
+GET  http://localhost:8000/api/questions
+Authorization: Bearer 19|Gn5vhAEoSsA2HMGJdgGKSQHHebMalAmuB19NIo5S
+
+
+###
+PUT http://localhost:8000/api/questionnaire/update/1
+Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
+Content-Type: application/json
+
+{
+    "title" : "test",
+    "course" :  "test",
+    "time_duration": 15,
+    "passing_score" : 10,
+    "easy_questions" : 5,
+    "average_questions" : 5,
+    "hard_questions" : 5,
+    "total_questions" :15
+}
 
 ####
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
 
 {
-    "title" : "sample",
-    "course": "logic",
+    "title" : "sample1",
+    "course": "math",
     "time_duration": 40,
     "passing_score": 15,
     "easy_questions": 5,
@@ -57,13 +80,12 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 }
 
 ###
-GET http://localhost:8000/api/questionnaire/2
-Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+GET http://localhost:8000/api/questionnaire/8
+Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
-Authorization: Bearer 21|QQex4DIJ8imyI46Tr15aKQ3TZ4JjMuKEuZOhRdTX
-
+Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
 ####
 
 ####
@@ -100,8 +122,10 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 POST http://localhost:8000/api/send/invitation
 Content-Type: application/json
+Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
+
 
 {
-    "emails" : ["rhea.ardiente@mlhuillier.com", "19104852@usc.edu.ph", "test3@gmail.com"]
+    "emails" : ["test@gmail.com", "rhea0951@gmail.com", "test123@gmail.com"]
 }
 
