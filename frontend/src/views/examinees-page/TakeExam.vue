@@ -22,6 +22,7 @@
   <!-- Test Questions  -->
   <div>
     <b-card v-show="formShow">
+      <div>
          <b-form @submit="submitExam">
         <b-form-group label="Radios using sub-components" />
       <b-form-radio-group
@@ -44,6 +45,7 @@
         Submit
       </b-button>
      </b-form>
+      </div>
   </b-card>
   </div>
   </div>
@@ -87,20 +89,21 @@ export default {
   },
   computed: {
     ...mapState({
-      exams: 'exams',
+      examQuestionnaires: 'examQuestionnaires',
     }),
   },
   mounted() {
-    this.GET_OEXAM()
+    this.GET_EXAM_QUESTIONNAIRE()
   },
   methods: {
     ...mapActions({
-      GET_OEXAM: 'ACTION_GET_ONLINE_EXAM',
+      GET_EXAM_QUESTIONNAIRE: 'ACTION_GET_EXAM_QUESTIONNAIRE',
     }),
     start() {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
+      console.log('EXAM__', this.GET_EXAM_QUESTIONNAIRE)
     },
     submitExam() {
       console.log('SUBMITTED__')

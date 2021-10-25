@@ -159,7 +159,11 @@
     <!-- Edit/Delete Questions  -->
      <b-modal v-model="modalEditShow">
         <h3>Edit Questionnaire</h3>
-        <b-form @submit.prevent="submitEditQuestionnaire">
+        <!-- <div
+          v-for="questionnaire in questionnaires"
+          :key="questionnaire.id"
+        > -->
+          <b-form @submit.prevent="submitEditQuestionnaire">
           <b-form-group name="create-questionnaire">
             <b-container>
               <b-row>
@@ -283,6 +287,7 @@
           </b-button>
         </b-form-group>
       </b-form>
+        <!-- </div> -->
     </b-modal>
     <!-- Display  -->
     <b-card>
@@ -297,10 +302,15 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-              <b-dropdown-item
+              <!-- <b-dropdown-item
                 v-b-modal.modal-lg
                 class="modalButton"
                 @click="modalEditShow = !modalEditShow"
+              >
+                Edit
+              </b-dropdown-item> -->
+              <b-dropdown-item
+                @click="editButton(questionnaire.id)"
               >
                 Edit
               </b-dropdown-item>
@@ -561,10 +571,10 @@ export default {
       console.log('DELETED_', response)
       return response
     },
-    editButton(id) {
+    editButton() {
       this.modalEditShow = true
-      console.log(id)
-      console.log(this.questionnaire)
+      // console.log(id)
+      // console.log(this.questionnaire)
     },
     submitEmail() {
       console.log('SEND EMAIL__')
@@ -583,9 +593,26 @@ export default {
       console.log('SEND__')
     },
     async submitEditQuestionnaire(questionnaire) {
-      console.log('EDITED__', questionnaire)
+      console.log('EDITED__', questionnaire.id)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
       console.log(response)
+      this.questionnaire.title = ''
+      this.questionnaire.course = ''
+      this.questionnaire.time_duration = ''
+      this.questionnaire.passing_score = ''
+      this.questionnaire.easy_questions = ''
+      this.questionnaire.average_questions = ''
+      this.questionnaire.hard_questions = ''
+      this.questionnaire.total_questions = ''
+      this.modalShow = false
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Edit Added!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
     },
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
