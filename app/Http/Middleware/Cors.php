@@ -20,8 +20,8 @@ class Cors
         header_remove('Access-Control-Allow-Origin');
 
         return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Origin', 'http://localhost:8080')
             ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'Content-Type');
+            ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin, Authorization');
     }
 }
