@@ -10,6 +10,8 @@ Content-Type: application/json
     "password_confirmation": "test123"
 }
 
+
+
 ###
 
 POST http://localhost:8000/api/register
@@ -141,10 +143,16 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 }
 
 ###
+GET  http://localhost:8000/api/questions
+Authorization: Bearer 4|GzPJbFuKPgOyZTtTKsSlgOdnfq01rorqJFu0daOr
+
+
+
+###
 
 POST http://localhost:8000/api/send/invitation
 Content-Type: application/json
-Authorization: Bearer 1|qnJcZKJgTIIF1MQPZYTFW30HSzFrx72M8K8tFIWO
+Authorization: Bearer 9|1zdKKi9AUN3vMUsTHlLYyg4LGoZzXEDfwrySgH9w
 
 
 {

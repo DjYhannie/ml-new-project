@@ -69,14 +69,6 @@ class AdminQuestionsController extends Controller
         try
         {
 
-          $question = Questions::find($id);
-          $question->question = request('question');
-          $question->category = request('category');
-          $question->course = request('course');
-          $question->answer = request('answer');
-          $question->choices = request(['choices']);
-          $question->save();
-
             $request->validate([
                 'question' => 'required',
                 'category' => 'required',
@@ -85,11 +77,19 @@ class AdminQuestionsController extends Controller
                 'choices' => 'array|required'
             ]);
 
-            $question->update($request->all());
+            $question = Questions::find($id);
+            $question->question = request('question');
+            $question->category = request('category');
+            $question->course = request('course');
+            $question->answer = request('answer');
+            $question->choices = request(['choices']);
+
+            $question->save();
 
 
             return response()->json([
                 'message' => 'Question updated',
+                'data' => $question
             ]);
         }
         catch(\Exception $e)
@@ -121,7 +121,6 @@ class AdminQuestionsController extends Controller
         }
      }
 
-
       //Query to get all Questions
     public function getAllQuestions(Questions $question)
     {
@@ -129,7 +128,7 @@ class AdminQuestionsController extends Controller
 
             $user = Auth::user();
 
-            $questions = DB::table('questions')->get();
+            $questions = DB::table('questions')->orderBy('updated_at', "desc")->get();
 
             return response()->json([
                 'data' => $questions
@@ -138,7 +137,7 @@ class AdminQuestionsController extends Controller
         }
         catch(\Exception $e){
             return response()->json([
-                'message' => "Error",
+                'message' => $e->getMessage(),
                 'status_code' => 400
             ]);
         }

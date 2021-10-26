@@ -61,20 +61,6 @@ class QuestionnaireController extends Controller
     {
         $user = Auth::user();
         try{
-
-            $questionnaire = Questionnaire::find($id);
-            $questionnaire->title =request('title');
-            $questionnaire->course =request('course');
-            $questionnaire->time_duration =request('time_duration');
-            $questionnaire->passing_score =request('passing_score');
-            $questionnaire->easy_questions =request('easy_questions');
-            $questionnaire->average_questions =request('average_questions');
-            $questionnaire->hard_questions =request('hard_questions');
-            $questionnaire->total_questions =request('total_questions');
-
-            $questionnaire->save();
-
-
             $request->validate([
                 'title' => 'required',
                 'course' => 'required',
@@ -86,11 +72,23 @@ class QuestionnaireController extends Controller
                 'total_questions' => 'required'
             ]);
 
-            $questionnaire->update($request->all());
+            $questionnaire = Questionnaire::find($id);
+            $questionnaire->title =request('title');
+            $questionnaire->course =request('course');
+            $questionnaire->time_duration =request('time_duration');
+            $questionnaire->passing_score =request('passing_score');
+            $questionnaire->easy_questions =request('easy_questions');
+            $questionnaire->average_questions =request('average_questions');
+            $questionnaire->hard_questions =request('hard_questions');
+            $questionnaire->total_questions =request('total_questions');
+
+
+           $questionnaire->save();
 
 
             return response()->json([
-                'message' => "Updated Successfully"
+                'message' => "Updated Successfully",
+                'data' => $questionnaire
             ]);
         }
         catch (\Exception $e){
