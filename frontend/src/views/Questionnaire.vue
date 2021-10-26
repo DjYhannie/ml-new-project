@@ -292,7 +292,7 @@
     <!-- Display  -->
     <b-card>
       <div
-        v-for="questionnaire in questionnaires"
+        v-for="questionnaire in questionnairesCopy"
         :key="questionnaire.id"
         class="questionnaire-content"
       >
@@ -488,7 +488,7 @@ export default {
       questionnaires: 'GET_QUESTIONNAIRE',
       questions: 'GET_QUESTION',
       courses: 'GET_COURSES',
-      questionnaire: 'GET_QUESTIONNAIRES',
+      // questionnaire: 'GET_QUESTIONNAIRES',
     }),
     // ...mapState({
     //   questionnaires: 'questionnaires',
@@ -517,11 +517,11 @@ export default {
       DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
     filterByCourses() {
-      console.log(this.questionnaires)
+      console.log(this.questionnairesCopy)
       if (this.filterCourses == null) {
-        this.questionnaires = this.questionnairesCopy
+        this.questionnairesCopy = this.questionnaires
       } else {
-        this.questionnaires = this.questionnaires.filter(questionnaire => questionnaire.course.toLowerCase() === this.filterCourses)
+        this.questionnairesCopy = this.questionnaires.filter(questionnaire => questionnaire.course.toLowerCase() === this.filterCourses.toLowerCase())
       }
     },
     async submitQuestionnaire() {

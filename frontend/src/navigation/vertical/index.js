@@ -3,7 +3,7 @@ import store from '../../store/index'
 const admin = store.getters.StateUser.role !== 'admin'
 const user = store.getters.StateUser.role !== 'user'
 
-console.log(admin, user, store.getters.StateUser.role)
+// console.log(admin, user, store.getters.StateUser.role)
 
 const navigation = [
   {
@@ -48,7 +48,7 @@ const navigation = [
     hide: admin,
   },
 ]
-console.log(navigation)
+// console.log(navigation)
 const navigate = navigation.filter(nav => !nav.hide)
 
 export default navigate

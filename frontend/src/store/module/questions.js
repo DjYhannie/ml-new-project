@@ -7,6 +7,7 @@ export default {
   state: {
     namespaced: true,
     questions: {},
+    question: {},
     courses: [],
     show: true,
     index: null,
@@ -48,10 +49,9 @@ export default {
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
-    async ACTION_UPDATE_QUESTION({ dispatch, questions }, id) {
-      const response = await api.put(`questions/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log(response)
-      await dispatch('ACTION_GET_QUESTIONS', questions)
+    async ACTION_UPDATE_QUESTION({ dispatch }, question) {
+      const response = await api.post(`questions/update/${question.id}`, question, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
   },
@@ -66,7 +66,8 @@ export default {
       state.questions = questions
     },
     [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
-      state.questions = question
+      console.log(question)
+      state.question = question
     },
   },
 }

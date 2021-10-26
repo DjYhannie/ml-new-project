@@ -16,7 +16,8 @@
   <BaseTimer
       class="sticky"
       v-show="isTimer"
-      :time-left="10"
+      :time="10"
+      @timesUp = "timesUp"
     />
     <br><br><br>
   <!-- Test Questions  -->
@@ -87,15 +88,10 @@ export default {
       helloShow: true,
       required: true,
       selected: null,
-      // examQuestionnaire: {
-      //   question: '',
-      //   answer: '',
-      // },
     }
   },
   computed: {
     ...mapGetters({
-      // examQuestionnaire: 'examQuestionnaires',
       examQuestionnaire: 'GET_EXAM_QUESTIONNAIRE',
     }),
   },
@@ -111,10 +107,18 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
+      this.displayTimer()
       console.log('EXAM__', this.GET_EXAM_QUESTIONNAIRE)
+    },
+    displayTimer(value) {
+      console.log(value)
     },
     submitExam() {
       console.log('SUBMITTED__')
+    },
+    timesUp(value) {
+      console.log(value)
+      this.disabled = true
     },
   },
 }

@@ -25,7 +25,7 @@ export default {
   props: {
     time: {
       type: Number,
-      requivi: true,
+      required: true,
     },
   },
   data() {
@@ -37,15 +37,13 @@ export default {
       },
     }
   },
-  created() {
-    this.$root.$refs.baseTimer = this
-  },
   mounted() {
-    this.timer()
+    // this.timer()
   },
   methods: {
     timer() {
       const { refs } = { refs: this.$refs }
+      const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
       const time = 1
       let timeInSeconds = time * 60
@@ -93,10 +91,14 @@ export default {
               variant: 'danger',
             },
           })
+          passToParent()
         }
         counter += (360 / (time * 60))
         timeInSeconds -= 1
       }, 1000)
+    },
+    displayTimer() {
+      this.time()
     },
     showTime(timeInSeconds) {
       const dateObj = new Date(timeInSeconds * 1000)
@@ -117,6 +119,10 @@ export default {
         return retVal
       }
       return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
+    },
+    passToParent() {
+      this.$emit('timesUp', true)
+      // this.$emit('displayTimer', false)
     },
   },
 }

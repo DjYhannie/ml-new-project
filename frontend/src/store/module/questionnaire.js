@@ -3,7 +3,7 @@ import api from '../../libs/axios'
 export default {
   state: {
     namespaced: true,
-    questionnaires: {},
+    questionnaires: [],
     questionnaire: [],
     // courses: {},
     questions: {},

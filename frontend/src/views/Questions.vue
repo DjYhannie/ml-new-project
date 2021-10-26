@@ -223,7 +223,7 @@
                 Edit
               </b-dropdown-item> -->
               <b-dropdown-item
-                @click="editButton(question.id)"
+                @click="editButton(question)"
               >
                 Edit
               </b-dropdown-item>
@@ -243,7 +243,7 @@
             </b-card>
             <div :id="question.id">
               <b-collapse
-                v-bind:id="'accordion-details'+ question.id"
+                :id="'accordion-details'+ question.id"
               >
                 <b-card>
                   <hr>
@@ -279,7 +279,11 @@ import {
   BCollapse,
   BFormSelect,
 } from 'bootstrap-vue'
-import { mapActions, mapMutations, mapState } from 'vuex'
+import {
+  mapActions,
+  mapMutations,
+  mapState,
+} from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
@@ -375,7 +379,7 @@ export default {
   },
   mounted() {
     this.GET_QUESTIONS()
-    this.GET_COURSES()
+    // this.GET_COURSES()
     this.questionsCopy = this.questions.questions
   },
   methods: {
@@ -438,7 +442,8 @@ export default {
       })
       console.log('deleted!')
     },
-    editButton() {
+    editButton(question) {
+      this.questionDescription.id = question.id
       this.modalEditShow = true
       this.editShow = true
       this.addShow = false
