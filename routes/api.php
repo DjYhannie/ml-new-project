@@ -95,7 +95,7 @@ Route::middleware(['auth:sanctum','cors'])->group(function(){
 
 
 });
-Route::post('/send/invitation', [QuestionnaireController::class, 'invites'])->name('invitation');
+// Route::post('/send/invitation', [QuestionnaireController::class, 'invites']);
 
 
 Route::post('/reset-password',[NewPassword::class, 'updatePassword']); //link for reseet password+

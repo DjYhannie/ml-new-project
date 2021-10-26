@@ -239,41 +239,49 @@ class QuestionnaireController extends Controller
 
     public function invites(Request $request )
     {
-        
-        $validator = Validator::make($request->all(), [
-            'emails' => 'required|array'
-        ]);
+        try{
 
-        // $validator->after(function ($validator) use ($request){
-        //     if (Invitation::where('email', $request->email)->exist()){
-        //         $validator->errors()->add('email', 'Invite exists with this email!');
-        //     }
-        // });
+            $validator = Validator::make($request->all(), [
+                'emails' => 'required|array'
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Error',
+                    'error'   => $validator->errors()
+                ]);
+            }
+
+            foreach ($request['emails'] as $data) {
+                $token = Str::random(20);
+                Invitation::create([
+                    'token'=> $token,
+                    'emails' => $data
+                ]);
+
+            }
+            DB::table('invitations')
+                ->insert(['emails' => $data, 'token' => $token, 'created_at' => Carbon::now()]);
+        }
+        catch(\Exception $e){
             return response()->json([
-                'message' => 'Error',
-                'error'   => $validator->errors()
+                'status_code' => 400,
+                'error' => $e->getMessage()
             ]);
         }
 
-        
-        foreach ($request['emails'] as $data) {
-            $token = Str::random(20);
-            Invitation::create([
-                'token'=> $token,
-                'emails' => $data
-            ]);
-        }
 
-        return $request['emails'];
 
-        $url = URL::temporarySignedRoute(
-            'invitation', now()->addMinutes(30),
-            ['token' => $token]
-        );
 
-        Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
+
+        // return $request['emails'];
+
+        // $url = URL::temporarySignedRoute(
+        //     'invitation', now()->addMinutes(30),
+        //     ['token' => $token]
+        // );
+
+        // Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
 
     }
 
