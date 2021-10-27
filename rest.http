@@ -27,21 +27,21 @@ Content-Type: application/application/json
 
 #####
 
-POST https://examapp-backend.herokuapp.com/api/login
+POST https://examapp-backend.herokuapp.com/api/adminlogin
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com",
-    "password" : "test123"
+    "email" : "admin@admin.com",
+    "password" : "admin"
 }
 
 ###
-POST http://localhost:8000/api/login
+POST http://localhost:8000/api/adminlogin
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com",
-    "password" : "test123"
+    "email" : "admin@admin.com",
+    "password" : "admin"
 }
 
 ####
@@ -60,8 +60,36 @@ Content-Type: application/json
 
 #####
 
+POST https://examapp-backend.herokuapp.com/api/questions/add
+Authorization: Bearer 1|T3zGoLlE3uTpAcsROcSpCWpm2Cox9ILXzbD1azz7
+Content-Type: application/json
+
+{
+    "question" : "When what is visible to end-users is a deviation from the specific or expected behavior, this is called:",
+    "category" : "easy",
+    "course" : "ISTQB",
+    "answer": "C",
+    "choices": ["A": "an error",
+                "B" : "a fault",
+                "C": "a failure",
+                "D": "a defect",
+                "E": "a mistake"
+                ]
+}
+
+###
+
 POST http://localhost:8000/api/questions/add
-Authorization: Bearer 19|Gn5vhAEoSsA2HMGJdgGKSQHHebMalAmuB19NIo5S
+Authorization: Bearer 2|vDWqQg4ilA5wBsm9oiBD44nJVd2n0vpXhtDdkngq
+Content-Type: application/json
+
+{
+    "question" : "When what is visible to end-users is a deviation from the specific or expected behavior, this is called:",
+    "category" : "easy",
+    "course" : "ISTQB",
+    "answer": "C",
+    "choices": ["A": "an error", "B" : "a fault","C": "a failure","D": "a defect","E": "a mistake"]
+}
 
 
 ###
