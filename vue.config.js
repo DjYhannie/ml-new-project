@@ -41,7 +41,8 @@ module.exports = {
           'b-embed': 'src',
         }
         return options
-      })
+      }),
+      config.module.rules.delete('eslint')
   },
   transpileDependencies: ['vue-echarts', 'resize-detector'],
 }
