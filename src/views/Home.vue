@@ -61,14 +61,12 @@ export default {
       }
       this.seen = true
       counter += 1
-      console.log(String(id), show.id, counter)
       // if (show.style.visibility === 'none') {
       //   show.style.visibility === 'block'
       // } else {
       //   show.style.visibility === 'none'
       // }
       // counter += 1
-      // console.log(String(id), show.id, counter)
     },
   },
 }

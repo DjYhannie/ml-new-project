@@ -184,9 +184,7 @@ export default {
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('LogIn', this.data)
-          console.log('LOGIN_', login)
           const token = this.$store.getters.StateToken
-          console.log('TOKEN_', token)
           const message = login.data.message
           if (this.$store.getters.StateToken) {
             // this.$router.push({ name: 'home' })

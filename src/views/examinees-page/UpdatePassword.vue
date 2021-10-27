@@ -207,13 +207,10 @@ export default {
   },
   methods: {
     validationForm() {
-      console.log('VUE COMPONENT', this.register)
       this.$refs.registerValidation.validate().then(async success => {
-        console.log(success)
         if (success) {
           this.$router.push({ name: 'user-login' })
           const register = await this.$store.dispatch('Register', this.register)
-          console.log('Response Component', register)
           this.$toast({
             component: ToastificationContent,
             props: {

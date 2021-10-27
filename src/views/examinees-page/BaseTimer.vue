@@ -51,7 +51,6 @@ export default {
 
       const { start360 } = { start360: this.$refs.start360 }
       const { outer360 } = { outer360: this.$refs.outer360 }
-      console.log('start', start360)
       start360.style.borderRadius = '80px 0px 0px 0px'
       outer360.style.borderRadius = '80px 0px 0px 0px'
 

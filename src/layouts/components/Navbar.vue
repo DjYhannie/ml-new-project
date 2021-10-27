@@ -129,7 +129,6 @@ export default {
   },
   methods: {
     logout() {
-      console.log('LOG_OUT')
       this.$store.commit('LogOut')
       this.$router.replace({ name: 'logout' })
     },

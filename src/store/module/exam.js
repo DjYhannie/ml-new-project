@@ -11,7 +11,6 @@ export default {
   actions: {
     ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
       const response = api.get('/questionnaire/{id}', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('Exam ...', response)
       commit('SET_EXAM_QUESTIONNAIRE', response.data)
       return response
     },

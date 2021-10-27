@@ -31,21 +31,18 @@ export default {
             this.courses.push(element.course)
           })
           this.courses = [...new Set(this.courses)]
-          console.log(questions)
           commit('SET_QUESTION', questions)
           commit('SET_COURSES', this.courses)
         })
     },
     async ACTION_ADD_QUESTION({ commit, dispatch }, addQuestion) {
       const response = await api.post('/questions/add', addQuestion, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('ADD QUESTION', response.data.questions)
       commit('SET_QUESTION', response.data.questions)
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
     async ACTION_DELETE_QUESTION({ dispatch }, id) {
       const response = await api.delete(`questions/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log(response)
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
@@ -66,7 +63,6 @@ export default {
       state.questions = questions
     },
     [questionTypes.MUTATION_ADD_QUESTION]: (state, question) => {
-      console.log(question)
       state.question = question
     },
   },

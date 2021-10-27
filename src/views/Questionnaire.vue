@@ -517,7 +517,6 @@ export default {
       DELETE_QUESTIONNAIRE: 'MUTATION_DELETE_QUESTIONNAIRE',
     }),
     filterByCourses() {
-      console.log(this.questionnairesCopy)
       if (this.filterCourses == null) {
         this.questionnairesCopy = this.questionnaires
       } else {
@@ -526,9 +525,7 @@ export default {
     },
     async submitQuestionnaire() {
       this.questionnaire.total_questions = parseInt(this.questionnaire.easy_questions, 10) + parseInt(this.questionnaire.average_questions, 10) + parseInt(this.questionnaire.hard_questions, 10)
-      console.log(this.questionnaire)
       const response = await this.$store.dispatch('ACTION_ADD_QUESTIONNAIRE', this.questionnaire)
-      console.log('ADD_', response)
       this.questionnaire.title = ''
       this.questionnaire.course = ''
       this.questionnaire.time_duration = ''
@@ -562,41 +559,28 @@ export default {
     },
     // submit() {
     //   this.postQuestionnaire(this.createquestion)
-    //   console.log(this.createquestion)
     //   this.createquestion = ''
     // },asdf
     async deleteButton(questionnaire) {
-      console.log('QUESTIONNAIRE_', questionnaire)
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
-      console.log('DELETED_', response)
       return response
     },
     async editButton(questionnaire) {
-      console.log('UPDATE_QUESTIONNAIRE__', questionnaire)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
-      console.log(response)
       this.modalEditShow = true
     },
     submitEmail() {
-      console.log('SEND EMAIL__')
-      console.log(this.data)
-      console.log(this.$refs.loginValidation[0].validate())
       this.$refs.loginValidation[0].validate().then(async success => {
-        console.log(success)
         if (success) {
           const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
-          console.log(sendEmail)
         }
       })
     },
     sendButton() {
       this.sendEmail = true
-      console.log('SEND__')
     },
     async submitEditQuestionnaire(questionnaire) {
-      console.log('EDITED__', questionnaire.id)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
-      console.log(response)
       this.questionnaire.title = ''
       this.questionnaire.course = ''
       this.questionnaire.time_duration = ''

@@ -303,10 +303,8 @@ export default {
       this.filterByCategories()
     },
     // GET_QUESTIONS: e => {
-    //   console.log(e)
     // },
     // GET_COURSES: e => {
-    //   console.log('GET COURSES', e)
     // },
   },
   created() {
@@ -334,9 +332,7 @@ export default {
       }
     },
     async submitQuestion() {
-      console.log('logging...')
       const response = await this.$store.dispatch('ACTION_ADD_QUESTION', this.questionDescription)
-      console.log(response)
       this.questionDescription.course = ''
       this.questionDescription.category = ''
       this.questionDescription.question = ''
@@ -357,16 +353,12 @@ export default {
       // this.isShow = true
     },
     async submitCourse() {
-      console.log('adding course')
       const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
       this.course.name = ''
       this.isShow = false
-      console.log('VUE COMPONENT RESPONSE', response)
     },
     async deleteButton(question) {
-      console.log(question)
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
-      console.log('DELETED_', response)
       this.$toast({
         component: ToastificationContent,
         props: {
@@ -375,18 +367,14 @@ export default {
           variant: 'success',
         },
       })
-      console.log('deleted!')
     },
     editButton() {
       this.modalShow = true
       this.editShow = true
       this.addShow = false
-      console.log('edited!')
     },
     async editQuestion(question) {
-      console.log('EDITED__', question)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
-      console.log(response)
     },
   },
 }

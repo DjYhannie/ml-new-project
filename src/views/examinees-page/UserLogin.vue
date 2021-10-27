@@ -235,9 +235,7 @@ export default {
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
           const login = await this.$store.dispatch('UserLogin', this.data)
-          console.log('LOGIN_', login)
           const token = this.$store.getters.StateToken
-          console.log(token)
           const message = login.data.message
           if (!token) {
             this.$toast({
@@ -249,16 +247,12 @@ export default {
               variant: 'danger',
             },
           }) 
-          console.log(token)
           } else {
-            console.log(token)
             window.location.href = `${window.location.origin}/user/take-exam`
             // this.$router.push({ name: 'home' })
-            console.log(login.data.message)
           }
           // this.$router.push({ name: 'home' })
           // if (this.$store.getters['StateToken']) {
-          //   console.log('Token', this.$store.getters['StateToken'])
           //   setTimeout(() => {
           //     this.$router.push({ name: 'home' })
           //   },1500)

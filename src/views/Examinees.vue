@@ -245,10 +245,8 @@ export default {
     handleRowClicked(item) {
       this.show = !this.show
       this.selectedItem = item
-      console.log(item)
     },
     onRowSelected(items) {
-      console.log(items)
     },
   },
 

@@ -97,7 +97,6 @@ export default {
   },
   async mounted() {
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log(this.examQuestionnaire)
   },
   methods: {
     ...mapActions({
@@ -108,16 +107,12 @@ export default {
       this.formShow = true
       this.helloShow = false
       this.displayTimer()
-      console.log('EXAM__', this.GET_EXAM_QUESTIONNAIRE)
     },
     displayTimer(value) {
-      console.log(value)
     },
     submitExam() {
-      console.log('SUBMITTED__')
     },
     timesUp(value) {
-      console.log(value)
       this.disabled = true
     },
   },

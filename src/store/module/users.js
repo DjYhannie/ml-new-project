@@ -38,17 +38,11 @@ export default {
     async [userTypes.ACTION_SET_LOGIN]({ commit }, data) {
       axios.post('/adminlogin', data).then(response => {
         commit(userTypes.MUTATION_SET_LOGIN, response.data)
-        console.log(response)
-      }).catch(error => {
-        console.log('error', error)
       })
     },
     async [userTypes.ACTION_SET_REGISTER]({ commit }, data) {
       axios.post('/register', data).then(response => {
         commit(userTypes.ACTION_SET_LOGIN, response.data)
-        console.log(response)
-      }).catch(error => {
-        console.log('error', error)
       })
     },
   },
