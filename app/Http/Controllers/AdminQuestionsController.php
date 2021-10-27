@@ -27,6 +27,7 @@ class AdminQuestionsController extends Controller
    {
 
     // $user = Auth::user();
+    // return($request->all());
 
     try{
 

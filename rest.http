@@ -80,7 +80,7 @@ Content-Type: application/json
 ###
 
 POST http://localhost:8000/api/questions/add
-Authorization: Bearer 2|vDWqQg4ilA5wBsm9oiBD44nJVd2n0vpXhtDdkngq
+Authorization: Bearer 5|DTaHcbE7nhneizh2CxFzUwcF9qCbscEthqjsoPOg
 Content-Type: application/json
 
 {
@@ -88,7 +88,7 @@ Content-Type: application/json
     "category" : "easy",
     "course" : "ISTQB",
     "answer": "C",
-    "choices": ["A": "an error", "B" : "a fault","C": "a failure","D": "a defect","E": "a mistake"]
+    "choices": [{"A": "an error"}, {"B" : "a fault"},{"C": "a failure"},{"D": "a defect"},{"E": "a mistake"}]
 }
 
 
@@ -180,10 +180,10 @@ Authorization: Bearer 4|GzPJbFuKPgOyZTtTKsSlgOdnfq01rorqJFu0daOr
 
 POST http://localhost:8000/api/send/invitation
 Content-Type: application/json
-Authorization: Bearer 9|1zdKKi9AUN3vMUsTHlLYyg4LGoZzXEDfwrySgH9w
+Authorization: Bearer 5|DTaHcbE7nhneizh2CxFzUwcF9qCbscEthqjsoPOg
 
 
 {
-    "emails" : ["test1234@gmail.com", "rhea0951@gmail.com", "test123@gmail.com"]
+    "emails" : ["test1234518@gmail.com", "rhea0195113@gmail.com", "test1236170@gmail.com"]
 }
 
