@@ -1,9 +1,10 @@
 {
-  "name": "vuexy-vuejs-react-html-laravel-admin-dashboard-template",
+  "name": "ml-new-project",
   "version": "6.4.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "postinstall": "npm run build",
     "start": "node server.js"
