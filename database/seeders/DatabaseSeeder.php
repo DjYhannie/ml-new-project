@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         DB::table('admins')->insert([
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin'),
-            //modified
             'role' => 'admin',
         ]);
     }
