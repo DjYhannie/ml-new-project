@@ -21,37 +21,44 @@
     />
     <br><br><br>
   <!-- Test Questions  -->
-  <!-- <div
+  <!-- <div>
+    {{examQuestionnaires}}
+  </div> -->
+<b-card v-show="formShow">
+    <div
     v-for="examQuestionnaire in examQuestionnaires"
-    :key="examQuestionnaire.id"> -->
-    <b-card v-show="formShow">
+    :key="examQuestionnaire.id">
+    <b-card class="border">
       <div>
-         <b-form @submit="submitExam">
-        <b-form-group>Question</b-form-group>
-      <b-form-radio-group
+         <b-form @submit.prevent>
+        <b-form-group>{{ examQuestionnaire.question }}</b-form-group>
+        <div>
+          <b-form-radio-group
         id="radio-group-2"
         v-model="selected"
         name="radio"
         required
         :disabled="validated ? '' : disabled"
       >
-      <!-- :aria-describedby="ariaDescribedby" -->
-        <b-form-radio value="A">A. Choice A</b-form-radio>
+        <b-form-radio value="A">A. {{ a }}</b-form-radio>
         <b-form-radio value="B">B. Choice B</b-form-radio>
         <b-form-radio value="C">C. None of the above</b-form-radio>
         <b-form-radio value="D">D. All of the above</b-form-radio>
       </b-form-radio-group>
-      <b-button
-        type="submit"
-        variant="danger"
-        >
-        Submit
-      </b-button>
+        </div>
      </b-form>
       </div>
   </b-card>
   </div>
-  <!-- </div> -->
+        <b-button
+        type="submit"
+        variant="danger"
+        @click="submitExam"
+        >
+        Submit
+      </b-button>
+</b-card>
+  </div>
 </template>
 
 <script>
@@ -65,7 +72,7 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
 
 export default {
@@ -88,15 +95,28 @@ export default {
       helloShow: true,
       required: true,
       selected: null,
+      examQuestion: {
+        choices: {
+          A: '',
+          B: '',
+          C: '',
+          D: '',
+        }
+      }
     }
   },
   computed: {
+    // ...mapState({
+    //   examQuestionnaires:'examQuestionnaires'
+    // })
     ...mapGetters({
-      examQuestionnaire: 'GET_EXAM_QUESTIONNAIRE',
+      examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
     }),
   },
   async mounted() {
     await this.GET_EXAM_QUESTIONNAIRE()
+    // console.log(this.examQuestionnaires)
+
   },
   methods: {
     ...mapActions({
@@ -110,7 +130,10 @@ export default {
     },
     displayTimer(value) {
     },
-    submitExam() {
+    async submitExam() {
+      const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIR', this.examQuestion)
+      console.log('heloooooooo')
+      console.log(response)
     },
     timesUp(value) {
       this.disabled = true

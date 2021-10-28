@@ -359,31 +359,23 @@ export default {
   computed: {
     ...mapState({
       questions: 'questions',
-      // courses: 'courses',
     }),
   },
   watch: {
     filterCategories() {
       this.filterByCategories()
     },
-    // GET_QUESTIONS: e => {
-    // },
-    // GET_COURSES: e => {
-    // },
   },
   created() {
     this.GET_QUESTIONS()
-    // this.GET_COURSES()
   },
   mounted() {
     this.GET_QUESTIONS()
-    // this.GET_COURSES()
     this.questionsCopy = this.questions.questions
   },
   methods: {
     ...mapActions({
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
-      // GET_COURSES: 'ACTION_GET_COURSE',
     }),
     ...mapMutations({
       DELETE_QUESTION: 'MUTATION_DELETE_QUESTION',
@@ -414,7 +406,6 @@ export default {
           variant: 'success',
         },
       })
-      // this.isShow = true
     },
     async submitCourse() {
       const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
