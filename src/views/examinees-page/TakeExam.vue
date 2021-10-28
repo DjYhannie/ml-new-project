@@ -35,16 +35,13 @@
         <div>
           <b-form-radio-group
         id="radio-group-2"
-        v-model="selected"
+        v-model="selected[examQuestionnaire.id]"
         name="radio"
         required
         :disabled="validated ? '' : disabled"
       >
-        <b-form-radio value="A">A. {{ a }}</b-form-radio>
-        <b-form-radio value="B">B. Choice B</b-form-radio>
-        <b-form-radio value="C">C. None of the above</b-form-radio>
-        <b-form-radio value="D">D. All of the above</b-form-radio>
-      </b-form-radio-group>
+          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:name="examQuestionnaire.id" v-bind:value="Object.keys(choice)[0]">{{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}</b-form-radio>
+          </b-form-radio-group>
         </div>
      </b-form>
       </div>
@@ -94,16 +91,24 @@ export default {
       formShow: false,
       helloShow: true,
       required: true,
-      selected: null,
-      examQuestion: {
-        choices: {
-          A: '',
-          B: '',
-          C: '',
-          D: '',
-        }
-      }
+      selected: [],
+      answers: [],
+      // examQuestion: {
+      //   choices: {
+      //     A: '',
+      //     B: '',
+      //     C: '',
+      //     D: '',
+      //   }
+      // }
     }
+  },
+  watch: {
+    selected(newVal) {
+      newVal.forEach((ans, index) => {
+        this.answers[index] = `{"${index}": "${ans}"}`
+      });
+    },
   },
   computed: {
     // ...mapState({
@@ -111,12 +116,12 @@ export default {
     // })
     ...mapGetters({
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
+      id: 'get_id'
     }),
   },
   async mounted() {
     await this.GET_EXAM_QUESTIONNAIRE()
-    // console.log(this.examQuestionnaires)
-
+    console.log(this.examQuestionnaires)
   },
   methods: {
     ...mapActions({
@@ -131,8 +136,16 @@ export default {
     displayTimer(value) {
     },
     async submitExam() {
-      const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIR', this.examQuestion)
-      console.log('heloooooooo')
+      this.answers = this.answers.map(ans => {
+        ans = JSON.parse(ans)
+        return ans
+      }).filter(n => n)
+
+      const data = {answers: JSON.stringify(this.answers), id: this.id}
+
+      // console.log(JSON.stringify(this.answers))
+      const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      // console.log('heloooooooo')s
       console.log(response)
     },
     timesUp(value) {
