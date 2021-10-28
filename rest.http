@@ -65,17 +65,22 @@ Authorization: Bearer 1|T3zGoLlE3uTpAcsROcSpCWpm2Cox9ILXzbD1azz7
 Content-Type: application/json
 
 {
-    "question" : "When what is visible to end-users is a deviation from the specific or expected behavior, this is called:",
+    "question" : "Consider the following statements about early test design: i. early test design can prevent fault multiplication.  ii. faults found during early test design are more expensive to fix.    iii. early test design can find faults.   iv. early test design can cause changes to the requirements   v. early test design takes more effort",
     "category" : "easy",
     "course" : "ISTQB",
-    "answer": "C",
-    "choices": ["A": "an error",
-                "B" : "a fault",
-                "C": "a failure",
-                "D": "a defect",
-                "E": "a mistake"
+    "answer": "A",
+    "choices": [
+                {"A": "i, iii & iv are true. Ii & v are false"},
+                {"B": "iii is true, I, ii, iv & v are false"},
+                {"C": "iii & iv are true. i, ii & v are false"},
+                {"D": " i, iii, iv & v are true, ii us false"},
+                {"E": "i & iii are true, ii, iv & v are false"}
                 ]
 }
+
+###
+DELETE https://examapp-backend.herokuapp.com/api/questions/delete/6
+Authorization: Bearer 1|T3zGoLlE3uTpAcsROcSpCWpm2Cox9ILXzbD1azz7
 
 ###
 
@@ -88,7 +93,13 @@ Content-Type: application/json
     "category" : "easy",
     "course" : "ISTQB",
     "answer": "C",
-    "choices": [{"A": "an error"}, {"B" : "a fault"},{"C": "a failure"},{"D": "a defect"},{"E": "a mistake"}]
+    "choices": [
+                {"A": "an error"},
+                {"B" : "a fault"},
+                {"C": "a failure"},
+                {"D": "a defect"},
+                {"E": "a mistake"}
+                ]
 }
 
 
