@@ -109,6 +109,22 @@ Content-Type: application/json
 GET  https://examapp-backend.herokuapp.com/api/questions
 Authorization: Bearer 1|bB93KfjY638lJkPZIrCnfxmk3D2IWgn1bTGgFTO
 
+###
+POST  https://examapp-backend.herokuapp.com/api/questionnaire/create
+Authorization: Bearer 7|Pdo53cQpzRC0tUryLcmPWlb2prxqOT5Q0564WNyT
+Content-Type: application/json
+
+{
+    "title" : "TEST",
+    "course": "ISTQB",
+    "time_duration": 40,
+    "passing_score": 5,
+    "easy_questions": 10,
+    "average_questions": 0,
+    "hard_questions":0,
+    "total_questions": 10
+}
+
 
 ###
 PUT http://localhost:8000/api/questionnaire/update/1
@@ -192,10 +208,10 @@ Authorization: Bearer 4|GzPJbFuKPgOyZTtTKsSlgOdnfq01rorqJFu0daOr
 
 POST http://localhost:8000/api/send/invitation
 Content-Type: application/json
-Authorization: Bearer 5|DTaHcbE7nhneizh2CxFzUwcF9qCbscEthqjsoPOg
+Authorization: Bearer 1|59bXkC15elIXQMJHPnDUhcmEDLlJofJogPnm3Xdc
 
 
 {
-    "emails" : ["test1234518@gmail.com", "rhea0195113@gmail.com", "test1236170@gmail.com"]
+    "emails" : ["test1234518@gmail.com", "rhea.ardiente@mlhuillier.com", "test1236170@gmail.com"]
 }
 

@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use App\Models\User;
 use App\Notifications\InviteNotification;
+use App\Jobs\EmailHandler;
+
 use Carbon\Carbon;
 
 use function Complex\add;
@@ -186,7 +189,7 @@ class QuestionnaireController extends Controller
                     'questionnaire_id' => $questionnaire->id,
                     'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
-                    'time_started' => Carbon::now(),
+                    'time_started' => null,
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
@@ -250,14 +253,31 @@ class QuestionnaireController extends Controller
                 ]);
             }
 
+            $test = array();
+            
             foreach ($request['emails'] as $data) {
+                $checked = User::where('email',$data)->first();
                 $token = explode(".", (string)uniqid(time(),true))[1];
-                $emails = Invitation::create([
-                    'token'=> $token,
-                    'emails' => $data
-                ]);
+                $token_url = Str::random(18);
+                $path = "https://ml-oex-frontend.herokuapp.com/take-exam/".$request['id']."/".$token_url;
+                
+                if(!$checked){
+                    array_push($test, $data);
+                }else{
+                    $email = Invitation::create([
+                        'token'=> $token,
+                        'email' => $data
+                    ]);
+                    $this->dispatch(new EmailHandler($email, $path));
+                }
+                // $email->notify(new InviteNotification());
+            }
+            
+            if(!empty($test)){
+                return "Emails not found :".print_r($test);  
             }
 
+            return "Success";
         }
         catch(\Exception $e){
             return response()->json([

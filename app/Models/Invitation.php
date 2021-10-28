@@ -11,7 +11,7 @@ class Invitation extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'emails',
+        'email',
         'token'
     ];
     

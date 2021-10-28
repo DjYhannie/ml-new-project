@@ -8,19 +8,24 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Notifications\InviteNotification;
+
 
 class EmailHandler implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $email;
+    private $url;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($email, $url)
     {
-        //
+        $this->email = $email;
+        $this->url = $url;
     }
 
     /**
@@ -30,6 +35,6 @@ class EmailHandler implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $this->email->notify(new InviteNotification($this->url));
     }
 }
