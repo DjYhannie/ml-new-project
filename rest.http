@@ -58,29 +58,30 @@ Content-Type: application/json
     "email" : "rhea.ardiente@mlhuillier.com"
 }
 
+
 #####
 
 POST https://examapp-backend.herokuapp.com/api/questions/add
-Authorization: Bearer 1|T3zGoLlE3uTpAcsROcSpCWpm2Cox9ILXzbD1azz7
+Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
 Content-Type: application/json
 
 {
-    "question" : "Consider the following statements about early test design: i. early test design can prevent fault multiplication.  ii. faults found during early test design are more expensive to fix.    iii. early test design can find faults.   iv. early test design can cause changes to the requirements   v. early test design takes more effort",
+    "question" : "A typical commercial test execution tool would be able to perform all of the following EXCEPT:",
     "category" : "easy",
     "course" : "ISTQB",
     "answer": "A",
     "choices": [
-                {"A": "i, iii & iv are true. Ii & v are false"},
-                {"B": "iii is true, I, ii, iv & v are false"},
-                {"C": "iii & iv are true. i, ii & v are false"},
-                {"D": " i, iii, iv & v are true, ii us false"},
-                {"E": "i & iii are true, ii, iv & v are false"}
+                {"A": "generating expected outputs"},
+                {"B": "replaying inputs according to a programmed script"},
+                {"C": "comparison of expected outcomes with actual outcomes"},
+                {"D": "recording test inputs"},
+                {"E": "reading test values from a data file"}
                 ]
 }
 
 ###
-DELETE https://examapp-backend.herokuapp.com/api/questions/delete/6
-Authorization: Bearer 1|T3zGoLlE3uTpAcsROcSpCWpm2Cox9ILXzbD1azz7
+DELETE https://examapp-backend.herokuapp.com/api/questions/delete/23
+Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
 
 ###
 
@@ -106,7 +107,7 @@ Content-Type: application/json
 ###
 
 GET  https://examapp-backend.herokuapp.com/api/questions
-Authorization: Bearer 4|RsTb3nO1A5czslt32Ank6M7xId4Cah2o3onCvO7Z
+Authorization: Bearer 1|bB93KfjY638lJkPZIrCnfxmk3D2IWgn1bTGgFTO
 
 
 ###

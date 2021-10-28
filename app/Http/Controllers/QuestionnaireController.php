@@ -252,13 +252,12 @@ class QuestionnaireController extends Controller
 
             foreach ($request['emails'] as $data) {
                 $token = explode(".", (string)uniqid(time(),true))[1];
-                Invitation::create([
+                $emails = Invitation::create([
                     'token'=> $token,
                     'emails' => $data
                 ]);
             }
-            // DB::table('invitations')
-            //     ->insert(['emails' => $data, 'token' => $token, 'created_at' => Carbon::now()]);
+
         }
         catch(\Exception $e){
             return response()->json([
