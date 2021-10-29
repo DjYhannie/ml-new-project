@@ -142,7 +142,7 @@ export default {
       }).filter(n => n)
 
       const data = {answers: JSON.stringify(this.answers), id: this.id}
-
+      console.log(this.id)
       // console.log(JSON.stringify(this.answers))
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
@@ -168,8 +168,9 @@ button {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-
-  padding: 50px;
-  font-size: 20px;
+  overflow: auto;
+  z-index: 12;
+  // padding: 50px;
+  // font-size: 20px;
 }
 </style>

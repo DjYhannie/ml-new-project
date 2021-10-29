@@ -130,7 +130,7 @@ export default {
 
 <style>
 #outerCont{
-  background-color: #4aef98;
+  background-color: #209155;
   width: 150px;
   height: 150px;
   display: grid;
@@ -181,7 +181,7 @@ export default {
 }
 
 #outer360 {
-  background-color: #4aef98;
+  background-color: #209155;
   width: 75px;
   height: 75px;
   position: absolute;
