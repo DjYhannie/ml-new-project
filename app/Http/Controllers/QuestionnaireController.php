@@ -203,7 +203,7 @@ class QuestionnaireController extends Controller
 
 
             return response()->json([
-                'data'      => $url_token->questionnaire = $questionnaire,
+                'data'      => [...$url_tokenquestionnaire, ...$questionnaire],
                 'url_token' => $url_token->token
             ]);
 
