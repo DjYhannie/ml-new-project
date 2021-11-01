@@ -186,7 +186,7 @@ class QuestionnaireController extends Controller
                 $token = sha1(uniqid(time(),true));
                 $token_data = [
                     'token' => $token,
-                    'questionnaire' => $questionnaire->id,
+                    'questionnaire' => $questionnaire,
                     'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
                     'time_started' => null,
@@ -196,7 +196,7 @@ class QuestionnaireController extends Controller
 
                 DB::table('url_tokens')->insert($token_data);
                 return response()->json([
-                    'data'  => $token_data['questionnaire']'= $questionnaire,
+                    'data'  => $token_data->put('questionnaire', $questionnaire),
                     'url_token' => $token
                 ]);
             }
