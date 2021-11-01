@@ -16,7 +16,7 @@
   <BaseTimer
       class="sticky"
       v-show="isTimer"
-      :time="10"
+      :time="time"
       @timesUp = "timesUp"
     />
     <br><br><br>
@@ -37,10 +37,8 @@
         id="radio-group-2"
         v-model="selected[examQuestionnaire.id]"
         name="radio"
-        required
-        :disabled="validated ? '' : disabled"
       >
-          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:name="examQuestionnaire.id" v-bind:value="Object.keys(choice)[0]">{{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}</b-form-radio>
+          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="Object.keys(choice)[0]">{{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}</b-form-radio>
           </b-form-radio-group>
         </div>
      </b-form>
@@ -92,6 +90,7 @@ export default {
       helloShow: true,
       required: true,
       selected: [],
+      time: 0,
       answers: [],
       // examQuestion: {
       //   choices: {
@@ -111,17 +110,15 @@ export default {
     },
   },
   computed: {
-    // ...mapState({
-    //   examQuestionnaires:'examQuestionnaires'
-    // })
     ...mapGetters({
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
-      id: 'get_id'
+      examTime: 'GET_QUESTIONNAIRE_DETAILS',
+      id: 'get_id',
     }),
   },
   async mounted() {
+    this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log(this.examQuestionnaires)
   },
   methods: {
     ...mapActions({
@@ -131,9 +128,8 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.displayTimer()
-    },
-    displayTimer(value) {
+      this.time = this.examTime.time_duration
+      localStorage.setItem('examstarted', new Date())
     },
     async submitExam() {
       this.answers = this.answers.map(ans => {
@@ -146,10 +142,21 @@ export default {
       // console.log(JSON.stringify(this.answers))
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
-      console.log(response)
     },
     timesUp(value) {
       this.disabled = true
+    },
+    checkRemainingTime() {
+      const rtime = localStorage.getItem('rtime')
+      if (!rtime || rtime < 1) {
+        this.isTimer = false
+        this.formShow = false
+        this.helloShow = true
+      } else {
+        this.isTimer = true
+        this.formShow = true
+        this.helloShow = false
+      }
     },
   },
 }

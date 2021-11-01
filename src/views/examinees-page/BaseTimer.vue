@@ -20,7 +20,7 @@
 
 <script>
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-
+import { mapGetters } from 'vuex'
 export default {
   props: {
     time: {
@@ -37,17 +37,32 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters({
+      examTime: 'GET_QUESTIONNAIRE_DETAILS'
+    }),
+  },
+  watch: {
+    time(newVal) {
+      this.timer()
+    },
+  },
   mounted() {
     // this.timer()
+    const timeStarted = localStorage.getItem('examstarted')
+    if (timeStarted) {
+      console.log(new Date(timeStarted), this.examTime.time_duration)
+    }
   },
   methods: {
     timer() {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
-      const time = 1
+      const time = this.time
       let timeInSeconds = time * 60
       const { showTime } = { showTime: this.showTime }
+      const { persistTime } = { persistTime: this.setPersistedTime }
 
       const { start360 } = { start360: this.$refs.start360 }
       const { outer360 } = { outer360: this.$refs.outer360 }
@@ -60,6 +75,7 @@ export default {
       const interval = setInterval(() => {
         start360.style.transform = `rotate(${counter}deg)`
         refs.timeDisplay.innerText = showTime(timeInSeconds)
+        persistTime(counter)
         if ([90, 180, 270].includes(Math.round(counter))) {
           refs[Math.round(counter)].classList.add('progressed')
           refs[Math.round(counter)].style.borderRadius = sideRadius[Math.round(counter)]
@@ -96,9 +112,6 @@ export default {
         timeInSeconds -= 1
       }, 1000)
     },
-    displayTimer() {
-      this.time()
-    },
     showTime(timeInSeconds) {
       const dateObj = new Date(timeInSeconds * 1000)
       const hours = dateObj.getUTCHours()
@@ -123,6 +136,9 @@ export default {
       this.$emit('timesUp', true)
       // this.$emit('displayTimer', false)
     },
+    setPersistedTime(time) {
+      localStorage.setItem('rtime', time)
+    }
   },
 }
 
@@ -137,6 +153,7 @@ export default {
   border-radius: 80px;
   align-items: center;
   justify-items: center;
+  overflow: hidden;
 }
 
 #outerCircle {
