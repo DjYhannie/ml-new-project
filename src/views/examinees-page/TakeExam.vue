@@ -16,7 +16,7 @@
   <BaseTimer
       class="sticky"
       v-show="isTimer"
-      :time="10"
+      :time="examTime"
       @timesUp = "timesUp"
     />
     <br><br><br>
@@ -30,7 +30,7 @@
     :key="examQuestionnaire.id">
     <b-card class="border">
       <div>
-         <b-form @submit.prevent>
+         <b-form @submit.prevent="validateForm">
         <b-form-group>{{ examQuestionnaire.question }}</b-form-group>
         <div>
           <b-form-radio-group
@@ -38,9 +38,18 @@
         v-model="selected[examQuestionnaire.id]"
         name="radio"
         required
-        :disabled="validated ? '' : disabled"
       >
-          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:name="examQuestionnaire.id" v-bind:value="Object.keys(choice)[0]">{{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}</b-form-radio>
+      <div
+        v-for="(choice, index) in examQuestionnaire.choices"
+        v-bind:key="index"
+        class="radio-container"
+      >
+          <b-form-radio
+            v-bind:value="Object.keys(choice)[0]"
+          >
+            {{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}
+          </b-form-radio>
+      </div>
           </b-form-radio-group>
         </div>
      </b-form>
@@ -71,6 +80,8 @@ import {
 } from 'bootstrap-vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
+import questions from '@/store/module/questions'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -88,6 +99,7 @@ export default {
     return {
       disabled: false,
       isTimer: false,
+      examTime: 0,
       formShow: false,
       helloShow: true,
       required: true,
@@ -111,17 +123,15 @@ export default {
     },
   },
   computed: {
-    // ...mapState({
-    //   examQuestionnaires:'examQuestionnaires'
-    // })
     ...mapGetters({
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
       id: 'get_id'
     }),
   },
   async mounted() {
+    this.checkTimeRemaining()
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log(this.examQuestionnaires)
+
   },
   methods: {
     ...mapActions({
@@ -131,19 +141,26 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.displayTimer()
-    },
-    displayTimer(value) {
+      this.examTime = 1
     },
     async submitExam() {
       this.answers = this.answers.map(ans => {
         ans = JSON.parse(ans)
         return ans
       }).filter(n => n)
-
+      if (this.examQuestionnaires.length !== this.answers.length){
+        this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Please dont skip Question!',
+              icon: 'AlertOctagonIcon',
+              variant: 'danger',
+            },
+          })
+          return
+      }
       const data = {answers: JSON.stringify(this.answers), id: this.id}
       console.log(this.id)
-      // console.log(JSON.stringify(this.answers))
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
       console.log(response)
@@ -151,6 +168,19 @@ export default {
     timesUp(value) {
       this.disabled = true
     },
+    checkTimeRemaining() {
+      const rtime = localStorage.getItem('rtime')
+      if (!rtime || rtime > 0) {
+        this.isTimer = true
+        this.formShow = true
+        this.helloShow = false
+      } else {
+        this.isTimer = false
+        this.formShow = false
+        this.helloShow = true
+        this.examTime = 0
+      }
+    }
   },
 }
 </script>
@@ -172,5 +202,8 @@ button {
   z-index: 12;
   // padding: 50px;
   // font-size: 20px;
+}
+.radio-container {
+  padding: 15px;
 }
 </style>

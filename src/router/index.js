@@ -92,7 +92,7 @@ const router = new VueRouter({
       component: () => import('@/views/Sample.vue'),
       meta: {
         layout: 'full',
-        requiresAuth: true,
+        requiresAuth: false,
       },
     },
     {

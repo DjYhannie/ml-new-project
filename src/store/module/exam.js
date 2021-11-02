@@ -5,12 +5,14 @@ export default {
   state: {
     namespaced: true,
     examQuestionnaires: {},
+    questionnaire: {},
     examResults: [],
     id: '',
   },
   getters: {
     GET_EXAM_QUESTIONNAIRE: state => state.examQuestionnaires,
-    get_id: state => state.id
+    get_id: state => state.id,
+    GET_QUE: state => state.questionnaire
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
@@ -22,6 +24,7 @@ export default {
         question.choices = JSON.parse(question.choices)
         return question
       })
+      console.log(res)
       commit('SET_EXAM_QUESTIONNAIRE', random)
       commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
       return random
@@ -52,6 +55,9 @@ export default {
     },
     SET_EXAM_QUESTIONNAIRE_ID(state, id) {
       state.id = id
+    },
+    SET_QUESTIONNAIRE(state, questionnaire) {
+      state.questionnaire = questionnaire
     }
   },
 }

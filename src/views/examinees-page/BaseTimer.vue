@@ -37,15 +37,20 @@ export default {
       },
     }
   },
+  watch: {
+    time(newVal) {
+      console.log(newVal)
+      this.timer()
+    }
+  },
   mounted() {
-    // this.timer()
   },
   methods: {
     timer() {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
-      const time = 1
+      const time = this.time
       let timeInSeconds = time * 60
       const { showTime } = { showTime: this.showTime }
 
@@ -55,11 +60,13 @@ export default {
       outer360.style.borderRadius = '80px 0px 0px 0px'
 
       refs.timeDisplay.innerText = showTime(timeInSeconds)
+      console.log(time)
 
       let counter = 0
       const interval = setInterval(() => {
         start360.style.transform = `rotate(${counter}deg)`
         refs.timeDisplay.innerText = showTime(timeInSeconds)
+        localStorage.setItem('rtime', timeInSeconds)
         if ([90, 180, 270].includes(Math.round(counter))) {
           refs[Math.round(counter)].classList.add('progressed')
           refs[Math.round(counter)].style.borderRadius = sideRadius[Math.round(counter)]
@@ -137,6 +144,7 @@ export default {
   border-radius: 80px;
   align-items: center;
   justify-items: center;
+  overflow: hidden;
 }
 
 #outerCircle {
