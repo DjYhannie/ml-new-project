@@ -44,8 +44,10 @@ class InviteNotification extends Notification
     {
         return (new MailMessage)
                     ->greeting('Greatings of Peace and Joy!')
-                    ->line('An ivitation link.')
+                    ->line('You are invited to take an Exam.')
+                    ->line('Please click the button below to accept the invitation')
                     ->action('Accept Invitation', $this->notification_url)
+                    ->line('Note: Please copy link below to the browser if Reset Password button is not functioning.')
                     ->line('Thank you!');
     }
 

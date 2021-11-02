@@ -46,7 +46,7 @@ class ResetPass extends Notification
                     ->greeting("Hello!,")
                     ->line('This is a reset password notification.')
                     ->action('Reset Password', $url)
-                    ->line(' Note: Please copy link below to the browser if Rest Password button is not functioning.')
+                    ->line('Note: Please copy link below to the browser if Reset Password button is not functioning.')
                     ->line('https://ml-oex-portal.herokuapp.com/update-password')
                     ->line('Thank you for using our application!');
     }

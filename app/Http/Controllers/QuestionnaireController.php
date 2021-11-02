@@ -259,7 +259,7 @@ class QuestionnaireController extends Controller
                 $checked = User::where('email',$data)->first();
                 $token = explode(".", (string)uniqid(time(),true))[1];
                 $token_url = Str::random(18);
-                $path = "https://ml-oex-frontend.herokuapp.com/take-exam/".$request['id']."/".$token_url;
+                $path = "https://ml-oex-frontend.herokuapp.com/take-exam/".$request['id'];
 
                 if(!$checked){
                     array_push($test, $data);
