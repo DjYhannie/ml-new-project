@@ -189,7 +189,7 @@ class QuestionnaireController extends Controller
                     'questionnaire_id' => $questionnaire->id,
                     'randomizedQuestions' =>$shuffled,
                     'user_id' => $user->id,
-                    'time_started' => null,
+                    'time_started' => Carbon::now(),
                     'expired_time' => Carbon::now()->addMinutes($questionnaire->time_duration),
                     'is_accessed' => true,
                 ];
