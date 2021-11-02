@@ -36,12 +36,12 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8000/api/adminlogin
+POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "admin@admin.com",
-    "password" : "admin"
+    "email" : "19104865@usc.edu.ph",
+    "password" : "test123"
 }
 
 ####
@@ -128,25 +128,25 @@ Content-Type: application/json
 
 ###
 PUT http://localhost:8000/api/questionnaire/update/1
-Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
+Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
 Content-Type: application/json
 
 {
     "title" : "test",
-    "course" :  "test",
+    "course" :  "logic",
     "time_duration": 15,
-    "passing_score" : 10,
-    "easy_questions" : 5,
-    "average_questions" : 5,
-    "hard_questions" : 5,
-    "total_questions" :15
+    "passing_score" : 6,
+    "easy_questions" : 3,
+    "average_questions" : 3,
+    "hard_questions" : 4,
+    "total_questions" :10
 }
 
 ####
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
+Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
 
 {
     "title" : "sample1",
@@ -160,8 +160,8 @@ Authorization: Bearer 27|kVWJmRDPkvHrz7YLTOUlbtRm06FQJQLyfSrlIROO
 }
 
 ###
-GET http://localhost:8000/api/questionnaire/8
-Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
+GET http://localhost:8000/api/questionnaire/1
+Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1

@@ -194,14 +194,17 @@ class QuestionnaireController extends Controller
                     'is_accessed' => true,
                 ];
 
-                DB::table('url_tokens')->insert($token_data);
+                $result = DB::table('url_tokens')->insert($token_data);
+                $latestdata = DB::table('url_tokens')->orderBy('id', 'desc')->first();
+                $latestdata->questionnaire = $questionnaire;
                 return response()->json([
-                    'data'  => $token_data['questionnaire'] = $questionnaire,
+                    'data'  => $latestdata,
                     'url_token' => $token
                 ]);
             }
 
             $url_token->questionnaire = $questionnaire;
+            
             return response()->json([
                 'data'      => $url_token,
                 'url_token' => $url_token->token

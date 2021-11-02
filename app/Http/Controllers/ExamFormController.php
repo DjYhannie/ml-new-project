@@ -166,9 +166,29 @@ class ExamFormController extends Controller
         return $results;
     }
 
-    public function FunctionName()
+    public function updateURL(Request $request)
     {
-        # code...
+        try{
+            $user = Auth::user();
+            $data = DB::table('url_token')->find('id', $request->id);
+            $data->update(['time_duration' => $request->timeDuration]);
+
+            return response()->json([
+                'data' => $data,
+                'message' => "Successfully Updated!",
+                'status_code' => 200
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status_code' => 400
+            ]);
+        }
+
+
     }
+
+    
 
 }
