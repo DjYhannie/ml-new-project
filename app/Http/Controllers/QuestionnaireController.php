@@ -196,7 +196,7 @@ class QuestionnaireController extends Controller
 
                 DB::table('url_tokens')->insert($token_data);
                 return response()->json([
-                    'data'  => $token_data->put('questionnaire', $questionnaire),
+                    'data'  => $token_data['questionnaire'] = $questionnaire,
                     'url_token' => $token
                 ]);
             }
@@ -254,13 +254,13 @@ class QuestionnaireController extends Controller
             }
 
             $test = array();
-            
+
             foreach ($request['emails'] as $data) {
                 $checked = User::where('email',$data)->first();
                 $token = explode(".", (string)uniqid(time(),true))[1];
                 $token_url = Str::random(18);
                 $path = "https://ml-oex-frontend.herokuapp.com/take-exam/".$request['id']."/".$token_url;
-                
+
                 if(!$checked){
                     array_push($test, $data);
                 }else{
@@ -272,9 +272,9 @@ class QuestionnaireController extends Controller
                 }
                 // $email->notify(new InviteNotification());
             }
-            
+
             if(!empty($test)){
-                return "Emails not found :".print_r($test);  
+                return "Emails not found :".print_r($test);
             }
 
             return "Success";

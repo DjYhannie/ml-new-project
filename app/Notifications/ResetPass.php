@@ -6,20 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use PhpParser\Node\Scalar\MagicConst\Line;
 
-class ExamLink extends Notification
+class ResetPass extends Notification
 {
     use Queueable;
-    public $data;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->user = $data;
+        //
     }
 
     /**
@@ -41,13 +41,14 @@ class ExamLink extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = '/';
+        $url = "https://ml-oex-portal.herokuapp.com/update-password";
         return (new MailMessage)
-        ->greeting("Good Day!,")
-        ->line('This is an exam invitation notification')
-        ->line('Please copy link in the browser to proceed: ')
-        ->line('https://examapp-backend.herokuapp.com/')
-        ->line('Thank you for using our application!');
+                    ->greeting("Hello!,")
+                    ->line('This is a reset password notification.')
+                    ->action('Reset Password', $url)
+                    ->line(' Note: Please copy link below to the browser if Rest Password button is not functioning.')
+                    ->line('https://ml-oex-portal.herokuapp.com/update-password')
+                    ->line('Thank you for using our application!');
     }
 
     /**

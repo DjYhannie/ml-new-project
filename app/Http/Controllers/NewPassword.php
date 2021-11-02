@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\ResetPass;
 use App\Notifications\EmailNotif;
+use App\Notifications\ExamLink;
 use Carbon\Carbon;
 use Dotenv\Exception\ValidationException;
 use GuzzleHttp\Psr7\Message;
@@ -67,7 +69,7 @@ class NewPassword extends Controller
             ->insert(['email' => $request->email, 'token' =>$token, 'created_at' => Carbon::now()]);
 
         try{
-            $checked->notify(new EmailNotif($checked));
+            $checked->notify(new ResetPass($checked));
             return response()->json([
                 'message' => 'Email Sent',
                 'token' => $token

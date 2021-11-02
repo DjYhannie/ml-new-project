@@ -20,20 +20,7 @@
             <div class="col-12 col-s-12 div2">
                 <h1 id="h1text" style="color: rgb(28, 7, 104)">Password Reset</h1>
                 <p style="font-size: 15px;">Note: Please click the button below to reset your password.</p>
-                <button style=" background-color: rgb(172, 6, 6);
-                color: white;
-                box-sizing: border-box;
-                cursor: pointer;
-                display: inline-block;
-                text-decoration: none;
-                text-align: center;
-                padding: 14px 30px;
-                cursor: pointer;
-                transition-duration: 0.4s;
-                border-radius: 2px;
-                margin: 4px 2px;
-                border: none;
-                font-size: 18px">Resset Password</button>
+                <a href="{{url('https://examapp-backend.herokuapp.com/')}}">https://examapp-backend.herokuapp.com/</a>
                 <p style="font-size: 15px;">If you click the button you will be redirected to another page.</p><br>
                 <p style="font-size: 15px">Best Regards,</p>
                 <p style="padding-bottom: 30px; font-size: 15px; font-weight:bold;"font-size: 15px">ML EOX</p>

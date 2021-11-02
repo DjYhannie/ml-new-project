@@ -13,7 +13,6 @@ class EmailNotif extends Notification
 
     public $data;
 
-
     /**
      * Create a new notification instance.
      *
@@ -43,7 +42,7 @@ class EmailNotif extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = "";
+        // $url = "https://www.google.com/";
         // return (new MailMessage)
         //             ->greeting('Password Reset')
         //             ->line('Please click the button below to reset your password')

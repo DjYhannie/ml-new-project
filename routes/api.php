@@ -42,7 +42,7 @@ Route::post('/login',[RegistrationController::class,'login'])->middleware('cors'
 
 
 
-Route::middleware(['auth:sanctum','cors'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
 
     //Questions Related
     Route::post('/questions/add',[AdminQuestionsController::class, 'addQuestion']);
