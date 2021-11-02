@@ -78,6 +78,15 @@
                 aria-describedby="basic-addon1"
               >
             </div>
+            <div class="input-group mb-1">
+              <input
+                v-model="questionDescription.choices.E"
+                type="text"
+                class="form-control"
+                placeholder="E."
+                aria-describedby="basic-addon1"
+              >
+            </div>
             <b-button
               variant="primary"
               type="submit"
@@ -254,6 +263,7 @@
                   <p>B. {{ question.choices.B }}</p>
                   <p>C. {{ question.choices.C }}</p>
                   <p>D. {{ question.choices.D }}</p>
+                  <p>E. {{ question.choices.E }}</p>
                 </b-card>
               </b-collapse>
             </div>
@@ -323,6 +333,7 @@ export default {
           B: '',
           C: '',
           D: '',
+          E: '',
         },
       },
       course: {

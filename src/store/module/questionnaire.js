@@ -23,7 +23,7 @@ export default {
     async ACTION_ADD_QUESTIONNAIRE({ commit, dispatch }, questionnaire) {
       const response = await api.post('/questionnaire/create', questionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       dispatch('ACTION_GET_QUESTIONNAIRE')
-      commit('GET_QUESTIONNAIRE', response.data.data)
+      commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
     async ACTION_UPDATE_QUESTIONNAIRE({ dispatch }, id) {

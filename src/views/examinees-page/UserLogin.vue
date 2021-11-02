@@ -123,6 +123,7 @@
                 block
                 @click="validationForm"
               >
+              <b-spinner small v-show="loader"></b-spinner>
                 Sign in
               </b-button>
               <p
@@ -154,6 +155,7 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
+  BSpinner,
   BRow,
   BCol,
   BLink,
@@ -178,6 +180,7 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 
 export default {
   components: {
+    BSpinner,
     BRow,
     BCol,
     BLink,
@@ -197,6 +200,7 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      loader: false,
       isError: false,
       status: '',
       data: {
@@ -234,10 +238,12 @@ export default {
     
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
+          this.loader = true
           const login = await this.$store.dispatch('UserLogin', this.data)
           const token = this.$store.getters.StateToken
           const message = login.data.message
           if (!token) {
+            this.loader = false
             this.$toast({
             component: ToastificationContent,
             props: {

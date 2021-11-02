@@ -88,6 +88,7 @@
                 block
                 @click="validationForm"
               >
+              <b-spinner small v-show="loader"></b-spinner>
                 Sign in
               </b-button>
             </b-form>
@@ -107,6 +108,7 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
+  BSpinner,
   BRow,
   BCol,
   BLink,
@@ -127,10 +129,12 @@ import ToastificationContent from '@core/components/toastification/Toastificatio
 import { mapActions } from 'vuex'
 import * as userTypes from '../store/types/users'
 import * as auth from '../store/module/auth'
+import { SpinnerPlugin } from 'bootstrap-vue'
 
 
 export default {
   components: {
+    BSpinner,
     BRow,
     BCol,
     BLink,
@@ -150,6 +154,7 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+      loader: false,
       isError: false,
       status: '',
       data: {
@@ -180,9 +185,9 @@ export default {
   },
   methods: {
         validationForm() {
-    
       this.$refs.loginValidation.validate().then(async success => {
         if (success) {
+          this.loader = true
           const login = await this.$store.dispatch('LogIn', this.data)
           const token = this.$store.getters.StateToken
           const message = login.data.message
@@ -190,6 +195,7 @@ export default {
             // this.$router.push({ name: 'home' })
             window.location.href = `${location.origin}/home`
           } else {
+            this.loader = false
             this.$toast({
             component: ToastificationContent,
             props: {

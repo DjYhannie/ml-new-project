@@ -7,6 +7,7 @@ import axios from 'axios'
 import router from './router'
 import store from './store/index'
 import App from './App.vue'
+import $ from 'jquery'
 
 // Global Components
 import './global-components'
@@ -32,6 +33,10 @@ Vue.use(BootstrapVueIcons)
 
 // Composition API
 Vue.use(VueCompositionAPI)
+
+//jquery
+// var $ = require('jquery')
+Vue.use($)
 
 // import core styles
 require('@core/scss/core.scss')

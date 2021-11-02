@@ -96,8 +96,8 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/',
-      name: 'login',
+      path: '/admin-login',
+      name: 'admin-login',
       component: () => import('@/views/Login.vue'),
       meta: {
         layout: 'full',
@@ -115,7 +115,7 @@ const router = new VueRouter({
     },
     // Examinees Pages
     {
-      path: '/user-login',
+      path: '/',
       name: 'user-login',
       component: () => import('@/views/examinees-page/UserLogin.vue'),
       meta: {

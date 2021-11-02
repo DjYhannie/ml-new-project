@@ -352,31 +352,17 @@
           </div>
           <!-- Send Emal  -->
           <b-card v-show="sendEmail">
-            <validation-observer ref="loginValidation">
               <b-form
                 class="auth-login-form mt-2"
                 @submit.prevent
               >
-                <!-- email -->
-                <b-form-group
-                  label="Email"
-                  label-for="login-email"
-                >
-                  <validation-provider
-                    #default="{ errors }"
-                    name="Email"
-                    rules="required|email"
-                  >
-                    <b-form-input
-                      id="login-email"
-                      v-model="data.email"
-                      :state="errors.length > 0 ? false : null"
-                      name="login-email"
-                      placeholder="name.test@mlhuillier.com"
-                    />
-                    <small class="text-danger">{{ errors[0] }}</small>
-                  </validation-provider>
-                </b-form-group>
+              <!-- emails  -->
+                <b-form-select
+          v-model="chosen"
+          multiple
+          class="chosen-select"
+          :options="optionsEmails"
+        />
                 <!-- submit button -->
                 <b-button
                   type="submit"
@@ -386,8 +372,11 @@
                 >
                   Send
                 </b-button>
+                <b-form-select
+                  data-placeholder="Choose a country..."
+                  multiple class="chosen-select"
+                  :options="optionsEmails"/>
               </b-form>
-            </validation-observer>
           </b-card>
         </b-card>
       </div>
@@ -420,6 +409,7 @@ import {
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, email } from '@validations'
+import { $ } from 'jquery'
 // import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
@@ -447,6 +437,7 @@ export default {
   },
   data() {
     return {
+      chosen: '',
       isUpdate: true,
       questionnairesCopy: null,
       filterCourses: null,
@@ -478,6 +469,12 @@ export default {
         { value: 'Course 3', text: 'Course 3' },
         { value: 'Course 4', text: 'Course 4' },
       ],
+      optionsEmails: [
+        { value: null, text: 'Select Category', disabled: true },
+        { value: 'easy', text: 'Easy' },
+        { value: 'average', text: 'Average' },
+        { value: 'hard', text: 'Hard' },
+      ],
       seleted: '',
       required,
       email,
@@ -492,7 +489,6 @@ export default {
     }),
     // ...mapState({
     //   questionnaires: 'questionnaires',
-
     // }),
   },
   watch: {
@@ -503,6 +499,7 @@ export default {
   async mounted() {
     await this.GET_QUESTIONNAIRES()
     await this.GET_COURSES()
+    // await this.chosen()
     this.questionnairesCopy = this.questionnaires
   },
   methods: {
@@ -538,7 +535,7 @@ export default {
       this.$toast({
         component: ToastificationContent,
         props: {
-          title: 'Successfully Added!',
+          title: 'Added Successfully!',
           icon: 'EditIcon',
           variant: 'success',
         },
@@ -563,6 +560,14 @@ export default {
     // },asdf
     async deleteButton(questionnaire) {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Deleted Successfully!',
+          icon: 'DeleteIcon',
+          variant: 'success',
+        },
+      })
       return response
     },
     async editButton(questionnaire) {
@@ -570,13 +575,15 @@ export default {
       this.modalEditShow = true
     },
     submitEmail() {
-      this.$refs.loginValidation[0].validate().then(async success => {
+      this.$refs.emailValidation[0].validate().then(async success => {
         if (success) {
           const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
+          console.log(sendEmail)
+          return sendEmail
         }
       })
     },
-    sendButton() {
+    async sendButton() {
       this.sendEmail = true
     },
     async submitEditQuestionnaire(questionnaire) {
@@ -593,7 +600,7 @@ export default {
       this.$toast({
         component: ToastificationContent,
         props: {
-          title: 'Edit Added!',
+          title: 'Edited Successfuly!',
           icon: 'EditIcon',
           variant: 'success',
         },
@@ -602,6 +609,16 @@ export default {
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
     },
+    //Choosen
+    // var $ = jQuery
+    // $(document).ready(function() {})
+    async chosen() {
+      $(".chosen-select").chosen({rtl: true})
+    },
+      // $(function() {
+        // $('.chosen-select').chosen()
+        // $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+      // }),
   },
 }
 
