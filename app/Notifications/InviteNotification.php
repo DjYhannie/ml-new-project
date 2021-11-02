@@ -47,8 +47,7 @@ class InviteNotification extends Notification
                     ->line('You are invited to take an Exam.')
                     ->line('Please click the button below to accept the invitation')
                     ->action('Accept Invitation', $this->notification_url)
-                    ->line('Note: Please copy link below to the browser if Reset Password button is not functioning.')
-                    ->line('Thank you!');
+                    ->line('Thank you for using our application!');
     }
 
     /**
