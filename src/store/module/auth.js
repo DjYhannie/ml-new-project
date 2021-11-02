@@ -7,8 +7,15 @@ const getters = {
     return state.user
   },
   StateToken: state => state.token,
+  GET_USER: state => state.users,
 }
 const actions = {
+  async ACTION_GET_USERS({ commit }) {
+    const response = await api.get('/users')
+    commit('GET_USER', response.data.data)
+    console.log('USERS__', response)
+    return response
+  },
   async Register({ commit }, form) {
     const response = await axios.post('/register', form)
     commit('setUser', form)
@@ -65,6 +72,7 @@ const mutations = {
   },
 }
 const state = {
+  users: [],
   user: null,
   posts: null,
   token: sessionStorage.token ? sessionStorage.getItem('token') : null,

@@ -225,17 +225,10 @@
           <b-button-group class="buttons">
             <b-dropdown>
               <!-- <b-dropdown-item
-                v-b-modal.modal-lg
-                class="modalButton"
-                @click="modalEditShow = !modalEditShow"
-              >
-                Edit
-              </b-dropdown-item> -->
-              <b-dropdown-item
                 @click="editButton(question)"
               >
                 Edit
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item
                 @click="deleteButton(question.id)"
               >
