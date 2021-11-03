@@ -5,6 +5,8 @@ export default {
     namespaced: true,
     questionnaires: [],
     questionnaire: [],
+    emails: [],
+    // sendQuestionnaire: [],
     // courses: {},
     questions: {},
     createquestion: '',
@@ -13,6 +15,7 @@ export default {
   },
   getters: {
     GET_QUESTIONNAIRE: state => state.questionnaires,
+    GET_EMAILS: state => state.emails,
   },
   actions: {
     async ACTION_GET_QUESTIONNAIRE({ commit }) {
@@ -36,14 +39,19 @@ export default {
       await dispatch('ACTION_GET_QUESTIONNAIRE')
       return response
     },
-    async ACTION_SEND_QUESTIONNAIRE(sendQuestionnaire) {
-      const response = await api.post('/send/invitation', sendQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_SEND_QUESTIONNAIRE({ commit }, emails) {
+      const response = await api.post('/send/invitation', emails, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      commit('SET_USER')
+      console.log('SEND_INVITATION__', response)
       return response
     },
   },
   mutations: {
     SET_QUESTIONNAIRE(state, questionnaires) {
       state.questionnaires = questionnaires
+    },
+    SET_USER(state, emails) {
+      state.emails = emails
     },
   },
 }

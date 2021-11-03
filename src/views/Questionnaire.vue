@@ -302,18 +302,11 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-              <!-- <b-dropdown-item
-                v-b-modal.modal-lg
-                class="modalButton"
-                @click="modalEditShow = !modalEditShow"
-              >
-                Edit
-              </b-dropdown-item> -->
-               <b-dropdown-item
+               <!-- <b-dropdown-item
                 @click="editButton(questionnaire.id)"
               >
                 Edit
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item
                 @click="deleteButton(questionnaire.id)"
               >
@@ -351,18 +344,41 @@
             </div>
           </div>
           <!-- Send Emal  -->
-          <b-card v-show="sendEmail">
+          <!-- v-show="sendEmail" -->
+          <b-card id="target" style="display:none;">
               <b-form
                 class="auth-login-form mt-2"
                 @submit.prevent
               >
               <!-- emails  -->
-                <b-form-select
+                <!-- <b-form-select
           v-model="chosen"
           multiple
           class="chosen-select"
           :options="optionsEmails"
-        />
+        /> -->
+         <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-2>Select Emails</b-button>
+      </b-card-header>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>
+            <div
+              v-for="user in users"
+              :key="user.id">
+              <b-form-checkbox
+              v-model="user.emails"
+              name="some-radios"
+              value="user.id"
+            >
+              {{ user.email }}
+              </b-form-checkbox>
+            </div>
+            </b-card-text>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
                 <!-- submit button -->
                 <b-button
                   type="submit"
@@ -372,10 +388,10 @@
                 >
                   Send
                 </b-button>
-                <b-form-select
+                <!-- <b-form-select
                   data-placeholder="Choose a country..."
                   multiple class="chosen-select"
-                  :options="optionsEmails"/>
+                  :options="optionsEmails"/> -->
               </b-form>
           </b-card>
         </b-card>
@@ -386,6 +402,7 @@
 
 <script>
 import {
+  BFormCheckbox,
   VBToggle,
   BFormGroup,
   BFormInput,
@@ -414,6 +431,7 @@ import { $ } from 'jquery'
 
 export default {
   components: {
+    BFormCheckbox,
     BCard,
     BFormInput,
     // BFormTextarea,
@@ -437,12 +455,13 @@ export default {
   },
   data() {
     return {
+      // emails: [],
       chosen: '',
       isUpdate: true,
       questionnairesCopy: null,
       filterCourses: null,
       data: {
-        email: '',
+        emails: [],
       },
       sendEmail: false,
       visible: false,
@@ -453,7 +472,7 @@ export default {
       {
         title: '',
         course: '',
-        // selected: '',
+        selected: [],
         time_duration: '',
         passing_score: '',
         easy_questions: '',
@@ -475,9 +494,10 @@ export default {
         { value: 'average', text: 'Average' },
         { value: 'hard', text: 'Hard' },
       ],
-      seleted: '',
+      seleted: null,
       required,
       email,
+      text: `email@email.com`
     }
   },
   computed: {
@@ -485,6 +505,7 @@ export default {
       questionnaires: 'GET_QUESTIONNAIRE',
       questions: 'GET_QUESTION',
       courses: 'GET_COURSES',
+      users: 'GET_USER',
       // questionnaire: 'GET_QUESTIONNAIRES',
     }),
     // ...mapState({
@@ -499,6 +520,7 @@ export default {
   async mounted() {
     await this.GET_QUESTIONNAIRES()
     await this.GET_COURSES()
+    await this.GET_USERS()
     // await this.chosen()
     this.questionnairesCopy = this.questionnaires
   },
@@ -507,6 +529,7 @@ export default {
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
       GET_COURSES: 'ACTION_GET_QUESTIONS',
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
+      GET_USERS: 'ACTION_GET_USER',
       // getQuestionnaires: questionnaireTypes.ACTION_SET_QUESTIONS,
       // postQuestionnaire: questionnaireTypes.ACTION_ADD_QUESTION,
     }),
@@ -574,17 +597,27 @@ export default {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
       this.modalEditShow = true
     },
-    submitEmail() {
-      this.$refs.emailValidation[0].validate().then(async success => {
-        if (success) {
-          const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
-          console.log(sendEmail)
-          return sendEmail
-        }
-      })
+    async submitEmail(emails) {
+      const response = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', {emails:emails})
+      console.log('EMAILS__RESPONSE', response)
+      return response
+      // this.$refs.emailValidation[0].validate().then(async success => {
+      //   if (success) {
+      //     const sendEmail = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
+      //     console.log(sendEmail)
+      //     return sendEmail
+      //   }
+      // })
     },
-    async sendButton() {
-      this.sendEmail = true
+    async sendButton(id) {
+      // this.sendEmail = true
+      var target = document.getElementById('target').style.display = 'block';
+      if (target == 'block') {
+        console.log('TARGETED__', id)
+        
+      }
+      
+      // `${"#target-card"}.show()`
     },
     async submitEditQuestionnaire(questionnaire) {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)

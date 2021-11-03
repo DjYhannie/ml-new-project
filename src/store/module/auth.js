@@ -10,9 +10,9 @@ const getters = {
   GET_USER: state => state.users,
 }
 const actions = {
-  async ACTION_GET_USERS({ commit }) {
-    const response = await api.get('/users')
-    commit('GET_USER', response.data.data)
+  async ACTION_GET_USER({ commit }) {
+    const response = await axios.get('/users')
+    commit('SET_USER', response.data.users)
     console.log('USERS__', response)
     return response
   },
@@ -55,6 +55,9 @@ const actions = {
   },
 }
 const mutations = {
+  SET_USER(state,users) {
+    state.users = users
+  },
   setUser(state, username) {
     state.user = username
   },
