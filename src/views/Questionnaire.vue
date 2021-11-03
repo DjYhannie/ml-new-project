@@ -302,11 +302,18 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-               <!-- <b-dropdown-item
-                @click="editButton(questionnaire.id)"
+              <!-- <b-dropdown-item
+                v-b-modal.modal-lg
+                class="modalButton"
+                @click="modalEditShow = !modalEditShow"
               >
                 Edit
               </b-dropdown-item> -->
+               <b-dropdown-item
+                @click="editButton(questionnaire.id)"
+              >
+                Edit
+              </b-dropdown-item>
               <b-dropdown-item
                 @click="deleteButton(questionnaire.id)"
               >
@@ -350,36 +357,12 @@
                 @submit.prevent
               >
               <!-- emails  -->
-                <!-- <b-form-select
+                <b-form-select
           v-model="chosen"
-          ref="chosenSelect"
+          multiple
           class="chosen-select"
           :options="optionsEmails"
-        /> -->
-    <b-card no-body class="mb-1">
-      <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle.accordion-3>Select Emails</b-button>
-      </b-card-header>
-      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
-        <b-card-body>
-          <b-card-text>
-            <!-- radio  -->
-      <!-- <div
-        v-for="user in users"
-        :key="user"> -->
-          <div class="form-check">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-  <label class="form-check-label" for="exampleRadios1">
-    <!-- {{ user.email }} -->
-    {{ text }}
-  </label>
-<!-- </div> -->
-      </div>
-          </b-card-text>
-        </b-card-body>
-      </b-collapse>
-    </b-card>
-        
+        />
                 <!-- submit button -->
                 <b-button
                   type="submit"
@@ -389,10 +372,10 @@
                 >
                   Send
                 </b-button>
-                <!-- <b-form-select
+                <b-form-select
                   data-placeholder="Choose a country..."
                   multiple class="chosen-select"
-                  :options="optionsEmails"/> -->
+                  :options="optionsEmails"/>
               </b-form>
           </b-card>
         </b-card>
@@ -454,7 +437,7 @@ export default {
   },
   data() {
     return {
-      // chosen: '',
+      chosen: '',
       isUpdate: true,
       questionnairesCopy: null,
       filterCourses: null,
@@ -495,21 +478,10 @@ export default {
       seleted: '',
       required,
       email,
-     text: `
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-          richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-          brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
-          tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-          assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
-          wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-          vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-          synth nesciunt you probably haven't heard of them accusamus labore VHS.
-        `
     }
   },
   computed: {
     ...mapGetters({
-      users: 'GET_USER',
       questionnaires: 'GET_QUESTIONNAIRE',
       questions: 'GET_QUESTION',
       courses: 'GET_COURSES',
@@ -525,16 +497,13 @@ export default {
     },
   },
   async mounted() {
-    this.GET_USERS()
-    console.log(this.users)
     await this.GET_QUESTIONNAIRES()
     await this.GET_COURSES()
-    this.chosen()
+    // await this.chosen()
     this.questionnairesCopy = this.questionnaires
   },
   methods: {
     ...mapActions({
-      GET_USERS: 'ACTION_GET_USERS',
       GET_QUESTIONNAIRES: 'ACTION_GET_QUESTIONNAIRE',
       GET_COURSES: 'ACTION_GET_QUESTIONS',
       GET_QUESTIONS: 'ACTION_GET_QUESTIONS',
@@ -614,8 +583,8 @@ export default {
         }
       })
     },
-    async sendButton(id) {
-      this.sendEmail = id
+    async sendButton() {
+      this.sendEmail = true
     },
     async submitEditQuestionnaire(questionnaire) {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
@@ -643,9 +612,8 @@ export default {
     //Choosen
     // var $ = jQuery
     // $(document).ready(function() {})
-    chosen() {
-      // $(".chosen-select").chosen({rtl: true})
-      console.log($)
+    async chosen() {
+      $(".chosen-select").chosen({rtl: true})
     },
       // $(function() {
         // $('.chosen-select').chosen()

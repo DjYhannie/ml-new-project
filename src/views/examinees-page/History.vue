@@ -35,8 +35,9 @@
           <!-- :aria-describedby="ariaDescribedby" -->
           <b-form-radio value="A">A. Choice A</b-form-radio>
           <b-form-radio value="B">B. Choice B</b-form-radio>
-          <b-form-radio value="C">C. None of the above</b-form-radio>
-          <b-form-radio value="D">D. All of the above</b-form-radio>
+          <b-form-radio value="C">C. Choice C</b-form-radio>
+          <b-form-radio value="D">D. None of the above</b-form-radio>
+          <b-form-radio value="D">E. All of the above</b-form-radio>
         </b-form-radio-group>
       </b-form>
     </b-card>
