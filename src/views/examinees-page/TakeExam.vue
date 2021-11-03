@@ -121,7 +121,6 @@ export default {
   async mounted() {
     this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
-    this.afterExam = this.getCounterByDateTime(this.examTime.time_duration)
   },
   methods: {
     ...mapActions({
@@ -131,10 +130,10 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      // this.time = 2
       this.time = this.examTime.time_duration
       localStorage.setItem('examstarted', new Date())
     },
+
     async submitExam() {
       this.answers = this.answers.map(ans => {
         ans = JSON.parse(ans)
@@ -147,11 +146,13 @@ export default {
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
     },
+
     timesUp(value) {
       this.disabled = true
     },
+
     checkRemainingTime() {
-      const rtime = localStorage.getItem('rtime')
+      const rtime = localStorage.getItem('seconds')
       if (!rtime || rtime < 1) {
         this.isTimer = false
         this.formShow = false
@@ -160,8 +161,11 @@ export default {
         this.isTimer = true
         this.formShow = true
         this.helloShow = false
+        this.time = this.examTime.time_duration
+        // this.afterExam = this.getCounterByDateTime(this.examTime.time_duration)
       }
     },
+
     getCounterByDateTime(duration) {
       const startTime = localStorage.getItem("examstarted");
       const endTime = new Date(
@@ -170,9 +174,7 @@ export default {
         )
       );
       let timeNow = new Date();
-      console.log(startTime, timeNow, endTime)
       if (timeNow > endTime) {
-        console.log("test")
         return 0
       } 
       
