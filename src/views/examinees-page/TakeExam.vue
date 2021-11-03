@@ -17,7 +17,7 @@
       class="sticky"
       v-show="isTimer"
       :time="time"
-      :timeAfterRefresh="0"
+      :timeAfterRefresh="afterExam"
       @timesUp = "timesUp"
     />
     <br><br><br>
@@ -39,7 +39,7 @@
         v-model="selected[examQuestionnaire.id]"
         name="radio"
       >
-          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">{{`${index} ${choice}`}}</b-form-radio>
+          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="index">{{`${index} ${choice}`}}</b-form-radio>
           </b-form-radio-group>
         </div>
      </b-form>
@@ -91,6 +91,7 @@ export default {
       helloShow: true,
       required: true,
       selected: [],
+      afterExam: 0,
       time: 0,
       answers: [],
       // examQuestion: {
@@ -120,6 +121,7 @@ export default {
   async mounted() {
     this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
+    this.afterExam = this.getCounterByDateTime(this.examTime.time_duration)
   },
   methods: {
     ...mapActions({
@@ -129,8 +131,8 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.time = 100
-      // this.time = this.examTime.time_duration
+      // this.time = 2
+      this.time = this.examTime.time_duration
       localStorage.setItem('examstarted', new Date())
     },
     async submitExam() {
@@ -167,13 +169,15 @@ export default {
           new Date(startTime).getMinutes() + duration
         )
       );
-      const timeNow = new Date();
+      let timeNow = new Date();
+      console.log(startTime, timeNow, endTime)
       if (timeNow > endTime) {
+        console.log("test")
         return 0
       } 
-
+      
       return Math.floor(
-        (timeNow.getTime() - new Date(startTime).getTime()) / 60000
+        ((new Date()).getTime() - new Date(startTime).getTime()) / 1000
       );
     },
   },

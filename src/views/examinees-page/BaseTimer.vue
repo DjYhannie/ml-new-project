@@ -27,7 +27,7 @@ export default {
       type: Number,
       required: true,
     },
-    timeAfterRefresh: Number
+    timeAfterRefresh: Number,
   },
   data() {
     return {
@@ -37,6 +37,8 @@ export default {
         270: "0px 0px 0px 80px",
       },
       counter: 0,
+      timeInSeconds: 0,
+      interval: {},
     };
   },
   computed: {
@@ -46,16 +48,17 @@ export default {
   },
   watch: {
     time(newVal) {
+      this.timeInSeconds = this.time * 60
       this.timer();
     },
     timeAfterRefresh(newVal) {
-      a
-    }
-  },
-  mounted() {
-    const timeStarted = localStorage.getItem("examstarted");
-    if (timeStarted) {
-      console.log(new Date(timeStarted), this.examTime.time_duration);
+      if (newVal) {
+        clearInterval(this.interval)
+        this.timeInSeconds = newVal
+        const counterAdditional = newVal * (360 / (this.examTime.time_duration * 60))
+        this.counter = 360 - counterAdditional
+        this.timer()
+      }
     }
   },
   methods: {
@@ -72,15 +75,13 @@ export default {
       start360.style.borderRadius = "80px 0px 0px 0px";
       outer360.style.borderRadius = "80px 0px 0px 0px";
 
-      let timeInSeconds = time * 60;
-      let counter = 0;
-      console.log(showTime(timeInSeconds));
+      let { timeInSeconds } = { timeInSeconds: this.timeInSeconds };
+      let { counter } = { counter: this.counter };
       refs.timeDisplay.innerText = showTime(timeInSeconds);
 
-      const interval = setInterval(() => {
+      this.interval = setInterval(() => {
         start360.style.transform = `rotate(${counter}deg)`;
-        refs.timeDisplay.innerText = showTime(timeInSeconds);
-        persistTime(counter);
+        refs.timeDisplay.innerText = showTime(timeInSeconds);        
 
         if (Math.floor(counter / 90) > 0) {
           let times = Math.floor(counter / 90);
@@ -107,8 +108,9 @@ export default {
         }
 
         if (Math.round(counter) >= 360) {
-          console.log("the time has ended");
           clearInterval(interval);
+          localStorage.removeItem('examstarted')
+          localStorage.removeItem('rtime')
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -129,7 +131,7 @@ export default {
       const hours = dateObj.getUTCHours();
       const minutes = dateObj.getMinutes();
       const seconds = dateObj.getSeconds();
-      console.log(timeInSeconds, dateObj)
+
       function formatTime(time) {
         const singleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         let retVal = "00";
@@ -148,7 +150,6 @@ export default {
     },
     passToParent() {
       this.$emit("timesUp", true);
-      // this.$emit('displayTimer', false)
     },
     setPersistedTime(time) {
       localStorage.setItem("rtime", time);
