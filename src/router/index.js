@@ -96,6 +96,21 @@ const router = new VueRouter({
       },
     },
     {
+      path : 'https://ml-oex-portal.herokuapp.com/user/take-exam/:id',
+      name : 'token-exam',
+      component: () => import('@/views/examinees-page/TakeExam.vue'),
+      meta: {
+        pageTitle: 'Take Exam',
+        breadcrumb: [
+          {
+            text: 'Take Examination',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/admin-login',
       name: 'admin-login',
       component: () => import('@/views/Login.vue'),
@@ -212,11 +227,12 @@ router.afterEach(() => {
   }
 })
 router.beforeEach((to, from, next) => {
-  const token = auth.getters.StateToken
+  const token = sessionStorage.getItem('token') ? auth.getters.StateToken : sessionStorage.getItem('token');
   if (to.matched.some(route => route.meta.requiresAuth)) {
     if (token) {
+      console.log('here');
     } else {
-      next({ name: 'login' })
+      next({ path: '/' })
     }
   }
   next()

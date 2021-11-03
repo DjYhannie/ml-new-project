@@ -18,8 +18,8 @@ export default {
     GET_EMAILS: state => state.emails,
   },
   actions: {
-    async ACTION_GET_QUESTIONNAIRE({ commit }) {
-      const response = await api.get('/questionnaire', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_GET_QUESTIONNAIRE({ commit }, id) {
+      const response = await api.get(`/questionnaire/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
@@ -41,8 +41,8 @@ export default {
     },
     async ACTION_SEND_QUESTIONNAIRE({ commit }, emails) {
       const response = await api.post('/send/invitation', emails, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('SET_USER')
       console.log('SEND_INVITATION__', response)
+      commit('SET_USER')
       return response
     },
   },

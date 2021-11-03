@@ -343,9 +343,9 @@
               </b-collapse>
             </div>
           </div>
-          <!-- Send Emal  -->
+          <!-- Send Email  -->
           <!-- v-show="sendEmail" -->
-          <b-card id="target" style="display:none;">
+          <b-card :id="'target'+questionnaire.id" style="display:none;">
               <b-form
                 class="auth-login-form mt-2"
                 @submit.prevent
@@ -371,6 +371,7 @@
               v-model="user.emails"
               name="some-radios"
               value="user.id"
+              @change="clickMe(user.email)"
             >
               {{ user.email }}
               </b-form-checkbox>
@@ -384,7 +385,7 @@
                   type="submit"
                   variant="danger"
                   block
-                  @click="submitEmail"
+                  @click="submitEmail($event)"
                 >
                   Send
                 </b-button>
@@ -402,6 +403,9 @@
 
 <script>
 import {
+  BCardHeader,
+  BCardBody,
+  BCardText,
   BFormCheckbox,
   VBToggle,
   BFormGroup,
@@ -426,11 +430,14 @@ import {
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, email } from '@validations'
-import { $ } from 'jquery'
+// import { $ } from 'jquery'
 // import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
   components: {
+    BCardHeader,
+    BCardBody,
+    BCardText,
     BFormCheckbox,
     BCard,
     BFormInput,
@@ -457,6 +464,7 @@ export default {
     return {
       // emails: [],
       chosen: '',
+      id: null,
       isUpdate: true,
       questionnairesCopy: null,
       filterCourses: null,
@@ -598,8 +606,16 @@ export default {
       this.modalEditShow = true
     },
     async submitEmail(emails) {
-      const response = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', {emails:emails})
+      const response = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
       console.log('EMAILS__RESPONSE', response)
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Successfully Sent!',
+          icon: 'EditIcon',
+          variant: 'success',
+        },
+      })
       return response
       // this.$refs.emailValidation[0].validate().then(async success => {
       //   if (success) {
@@ -609,15 +625,26 @@ export default {
       //   }
       // })
     },
-    async sendButton(id) {
-      // this.sendEmail = true
-      var target = document.getElementById('target').style.display = 'block';
-      if (target == 'block') {
-        console.log('TARGETED__', id)
-        
+  
+    clickMe(email){
+      if(this.data.emails.includes(email)){
+        this.data.emails.forEach((element, index)=>{
+          this.data.emails.splice(index, 1);
+        })
+      }else{
+          this.data.emails.push(email);
+          this.data.append('id', this.id);  
       }
       
-      // `${"#target-card"}.show()`
+    },
+
+    async sendButton(id) {
+      // this.sendEmail = true
+      var target = document.getElementById('target'+id).style.display = 'block';
+      this.id = id;
+      if (target == 'block') {
+        console.log('TARGETED__')
+      }
     },
     async submitEditQuestionnaire(questionnaire) {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
@@ -642,16 +669,6 @@ export default {
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
     },
-    //Choosen
-    // var $ = jQuery
-    // $(document).ready(function() {})
-    async chosen() {
-      $(".chosen-select").chosen({rtl: true})
-    },
-      // $(function() {
-        // $('.chosen-select').chosen()
-        // $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
-      // }),
   },
 }
 
