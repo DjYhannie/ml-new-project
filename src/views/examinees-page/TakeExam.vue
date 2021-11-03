@@ -17,6 +17,7 @@
       class="sticky"
       v-show="isTimer"
       :time="time"
+      :timeAfterRefresh="0"
       @timesUp = "timesUp"
     />
     <br><br><br>
@@ -38,7 +39,7 @@
         v-model="selected[examQuestionnaire.id]"
         name="radio"
       >
-          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="Object.keys(choice)[0]">{{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}</b-form-radio>
+          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">{{`${index} ${choice}`}}</b-form-radio>
           </b-form-radio-group>
         </div>
      </b-form>
@@ -128,7 +129,7 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.time = 1
+      this.time = 100
       // this.time = this.examTime.time_duration
       localStorage.setItem('examstarted', new Date())
     },
@@ -158,6 +159,22 @@ export default {
         this.formShow = true
         this.helloShow = false
       }
+    },
+    getCounterByDateTime(duration) {
+      const startTime = localStorage.getItem("examstarted");
+      const endTime = new Date(
+        new Date(startTime).setMinutes(
+          new Date(startTime).getMinutes() + duration
+        )
+      );
+      const timeNow = new Date();
+      if (timeNow > endTime) {
+        return 0
+      } 
+
+      return Math.floor(
+        (timeNow.getTime() - new Date(startTime).getTime()) / 60000
+      );
     },
   },
 }

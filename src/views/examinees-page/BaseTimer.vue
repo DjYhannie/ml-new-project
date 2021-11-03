@@ -1,165 +1,164 @@
 <template>
-<div ref="outer-container" id="outerCont">
-  <div ref="outer-circle" id="outerCircle"></div>
-  <div ref="inner-circle" id="innerCircle">
-    <span ref="timeDisplay" id="display-time">00:00:00</span>
-  </div>
-  <div id="progress">
-    <div ref="progress-left" class="progress-circle">
-      <div ref="outer360" id="outer360"></div>
-      <div class="test" ref="start360" id="start360"></div>
-      <div class="test" ref="270"></div>
+  <div ref="outer-container" id="outerCont">
+    <div ref="outer-circle" id="outerCircle"></div>
+    <div ref="inner-circle" id="innerCircle">
+      <span ref="timeDisplay" id="display-time">00:00:00</span>
     </div>
-    <div ref="progress-right" class="progress-circle">
-      <div class="test" ref="90"></div>
-      <div class="test" ref="180"></div>
+    <div id="progress">
+      <div ref="progress-left" class="progress-circle">
+        <div ref="outer360" id="outer360"></div>
+        <div class="test" ref="start360" id="start360"></div>
+        <div class="test" ref="270"></div>
+      </div>
+      <div ref="progress-right" class="progress-circle">
+        <div class="test" ref="90"></div>
+        <div class="test" ref="180"></div>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import { mapGetters } from 'vuex'
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import { mapGetters } from "vuex";
 export default {
   props: {
     time: {
       type: Number,
       required: true,
     },
+    timeAfterRefresh: Number
   },
   data() {
     return {
       sideRadius: {
-        90: '0px 80px 0px 0px',
-        180: '0px 0px 80px 0px',
-        270: '0px 0px 0px 80px',
+        90: "0px 80px 0px 0px",
+        180: "0px 0px 80px 0px",
+        270: "0px 0px 0px 80px",
       },
-    }
+      counter: 0,
+    };
   },
   computed: {
     ...mapGetters({
-      examTime: 'GET_QUESTIONNAIRE_DETAILS'
+      examTime: "GET_QUESTIONNAIRE_DETAILS",
     }),
   },
   watch: {
     time(newVal) {
-      this.timer()
+      this.timer();
     },
+    timeAfterRefresh(newVal) {
+      a
+    }
   },
   mounted() {
-    const timeStarted = localStorage.getItem('examstarted')
+    const timeStarted = localStorage.getItem("examstarted");
     if (timeStarted) {
-      console.log(new Date(timeStarted), this.examTime.time_duration)
+      console.log(new Date(timeStarted), this.examTime.time_duration);
     }
   },
   methods: {
     timer() {
-      console.log(this.getCounterByDateTime(this.examTime.time_duration))
-      const { refs } = { refs: this.$refs }
-      const { passToParent } = { passToParent: this.passToParent }
-      const { sideRadius } = { sideRadius: this.sideRadius }
-      const time = this.time
-      let timeInSeconds = time * 60
-      const { showTime } = { showTime: this.showTime }
-      const { persistTime } = { persistTime: this.setPersistedTime }
+      const { refs } = { refs: this.$refs };
+      const { passToParent } = { passToParent: this.passToParent };
+      const { sideRadius } = { sideRadius: this.sideRadius };
+      const time = this.time;
+      const { showTime } = { showTime: this.showTime };
+      const { persistTime } = { persistTime: this.setPersistedTime };
 
-      const { start360 } = { start360: this.$refs.start360 }
-      const { outer360 } = { outer360: this.$refs.outer360 }
-      start360.style.borderRadius = '80px 0px 0px 0px'
-      outer360.style.borderRadius = '80px 0px 0px 0px'
+      const { start360 } = { start360: this.$refs.start360 };
+      const { outer360 } = { outer360: this.$refs.outer360 };
+      start360.style.borderRadius = "80px 0px 0px 0px";
+      outer360.style.borderRadius = "80px 0px 0px 0px";
 
-      refs.timeDisplay.innerText = showTime(timeInSeconds)
+      let timeInSeconds = time * 60;
+      let counter = 0;
+      console.log(showTime(timeInSeconds));
+      refs.timeDisplay.innerText = showTime(timeInSeconds);
 
-      let counter = 0
       const interval = setInterval(() => {
-        start360.style.transform = `rotate(${counter}deg)`
-        refs.timeDisplay.innerText = showTime(timeInSeconds)
-        persistTime(counter)
-        
-        if (Math.floor(counter/90) > 0) {
-          let times = Math.floor(counter/90)
-          while(times > 0) {
-            refs[times * 90].classList.add('progressed')
-            refs[times * 90].style.borderRadius = sideRadius[times * 90]
-            times=times-1
+        start360.style.transform = `rotate(${counter}deg)`;
+        refs.timeDisplay.innerText = showTime(timeInSeconds);
+        persistTime(counter);
+
+        if (Math.floor(counter / 90) > 0) {
+          let times = Math.floor(counter / 90);
+          while (times > 0) {
+            refs[times * 90].classList.add("progressed");
+            refs[times * 90].style.borderRadius = sideRadius[times * 90];
+            times = times - 1;
           }
         }
 
         if (Math.round(counter) >= 270) {
-          outer360.style.display = 'none'
+          outer360.style.display = "none";
         }
 
         if (Math.round(counter) === 270) {
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Your running out time!',
-              icon: 'AlertOctagonIcon',
-              variant: 'warning',
+              title: "Your running out time!",
+              icon: "AlertOctagonIcon",
+              variant: "warning",
             },
-          })
+          });
         }
 
-        if (Math.round(counter) >= 360 && timeInSeconds <= 0) {
-          clearInterval(interval)
+        if (Math.round(counter) >= 360) {
+          console.log("the time has ended");
+          clearInterval(interval);
           this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Your time is up!',
-              icon: 'XOctagonIcon',
-              variant: 'danger',
+              title: "Your time is up!",
+              icon: "XOctagonIcon",
+              variant: "danger",
             },
-          })
-          passToParent()
+          });
+          passToParent();
         }
-        counter += (360 / (time * 60))
-        timeInSeconds -= 1
-      }, 1000)
+        counter += 360 / (time * 60);
+        timeInSeconds -= 1;
+      }, 1000);
     },
     showTime(timeInSeconds) {
-      const dateObj = new Date(timeInSeconds * 1000)
-      const hours = dateObj.getUTCHours()
-      const minutes = dateObj.getMinutes()
-      const seconds = dateObj.getSeconds()
-
+      const defDate = new Date('2021/01/01 08:00:00');
+      const dateObj = new Date(defDate.setSeconds(defDate.getSeconds() + timeInSeconds))
+      const hours = dateObj.getUTCHours();
+      const minutes = dateObj.getMinutes();
+      const seconds = dateObj.getSeconds();
+      console.log(timeInSeconds, dateObj)
       function formatTime(time) {
-        const singleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        let retVal = '00'
+        const singleNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        let retVal = "00";
         if (time) {
           if (singleNumbers.includes(time)) {
-            retVal = `0${time}`
+            retVal = `0${time}`;
           } else {
-            retVal = time
+            retVal = time;
           }
         }
-        return retVal
+        return retVal;
       }
-      return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
+      return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(
+        seconds
+      )}`;
     },
     passToParent() {
-      this.$emit('timesUp', true)
+      this.$emit("timesUp", true);
       // this.$emit('displayTimer', false)
     },
     setPersistedTime(time) {
-      localStorage.setItem('rtime', time)
+      localStorage.setItem("rtime", time);
     },
-    getCounterByDateTime(duration) {
-      const startTime = localStorage.getItem('examstarted');
-      const endTime = new Date((new Date(startTime))
-                        .setMinutes((new Date(startTime))
-                        .getMinutes()+ duration))
-      const timeNow = new Date()
-
-      return Math.floor((timeNow.getTime() - (new Date(startTime)).getTime())/60000)
-    }
   },
-}
-
+};
 </script>
 
 <style>
-#outerCont{
+#outerCont {
   background-color: #209155;
   width: 150px;
   height: 150px;
@@ -205,7 +204,8 @@ export default {
   grid-template-columns: 1fr;
 }
 
-#start360, #outer360 {
+#start360,
+#outer360 {
   background: rgb(230, 86, 86);
   transform: rotate(360deg);
   transform-origin: bottom right;
