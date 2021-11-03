@@ -128,7 +128,8 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.time = this.examTime.time_duration
+      this.time = 1
+      // this.time = this.examTime.time_duration
       localStorage.setItem('examstarted', new Date())
     },
     async submitExam() {

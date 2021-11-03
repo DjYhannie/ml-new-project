@@ -48,7 +48,6 @@ export default {
     },
   },
   mounted() {
-    // this.timer()
     const timeStarted = localStorage.getItem('examstarted')
     if (timeStarted) {
       console.log(new Date(timeStarted), this.examTime.time_duration)
@@ -56,6 +55,7 @@ export default {
   },
   methods: {
     timer() {
+      console.log(this.getCounterByDateTime(this.examTime.time_duration))
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
@@ -76,9 +76,14 @@ export default {
         start360.style.transform = `rotate(${counter}deg)`
         refs.timeDisplay.innerText = showTime(timeInSeconds)
         persistTime(counter)
-        if ([90, 180, 270].includes(Math.round(counter))) {
-          refs[Math.round(counter)].classList.add('progressed')
-          refs[Math.round(counter)].style.borderRadius = sideRadius[Math.round(counter)]
+        
+        if (Math.floor(counter/90) > 0) {
+          let times = Math.floor(counter/90)
+          while(times > 0) {
+            refs[times * 90].classList.add('progressed')
+            refs[times * 90].style.borderRadius = sideRadius[times * 90]
+            times=times-1
+          }
         }
 
         if (Math.round(counter) >= 270) {
@@ -138,6 +143,15 @@ export default {
     },
     setPersistedTime(time) {
       localStorage.setItem('rtime', time)
+    },
+    getCounterByDateTime(duration) {
+      const startTime = localStorage.getItem('examstarted');
+      const endTime = new Date((new Date(startTime))
+                        .setMinutes((new Date(startTime))
+                        .getMinutes()+ duration))
+      const timeNow = new Date()
+
+      return Math.floor((timeNow.getTime() - (new Date(startTime)).getTime())/60000)
     }
   },
 }
