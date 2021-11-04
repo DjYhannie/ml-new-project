@@ -12,12 +12,13 @@ export default {
   getters: {
     GET_EXAM_QUESTIONNAIRE: state => state.examQuestionnaires,
     get_id: state => state.id,
-    GET_QUE: state => state.questionnaire
+    GET_QUE: state => state.questionnaire,
+    GET_EXAM_RESULT: state => state.examResults,
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
       console.log(store.getters.get_id);
-      const res = await api.get(`/questionnaire/3`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      const res = await api.get(`/questionnaire/1`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(res)
       let random = res.data.data.randomizedQuestions
       random = (JSON.parse(random)).map(question => {
@@ -28,6 +29,12 @@ export default {
       commit('SET_EXAM_QUESTIONNAIRE', random)
       commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
       return random
+    },
+    async ACTION_GET_RESULTS({ commit }) {
+      const response = await api.get('/result/all', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log('RESULTS_ALL', response)
+      commit('SET_EXAM_RESULT', response.data)
+      return response
     },
     async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit, dispatch }, addExamQuestionnaire) {
       const response = await api.post('/checkanswer', addExamQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
@@ -58,6 +65,9 @@ export default {
     },
     SET_QUESTIONNAIRE(state, questionnaire) {
       state.questionnaire = questionnaire
-    }
+    },
+    SET_EXAM_RESULT(state, examResults) {
+      state.examResults = examResults
+    },
   },
 }

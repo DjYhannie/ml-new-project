@@ -12,6 +12,17 @@
       Start
       </b-button>
       </b-card>
+      <!-- After Submit  -->
+      <b-card class="card w-50 align-center" v-show="examShow">
+        <h3>Exam Submitted!</h3>
+        <p>Thank you for your kind participation. You may check your result in History.</p>
+        <b-button
+      id="show-btn"
+      @click="close()"
+      variant="danger">
+      Close
+      </b-button>
+      </b-card>
 <!-- Timer  -->
   <BaseTimer
       class="sticky"
@@ -101,6 +112,7 @@ export default {
       isTimer: false,
       examTime: 0,
       formShow: false,
+      examShow: false,
       helloShow: true,
       required: true,
       selected: [],
@@ -152,7 +164,7 @@ export default {
         this.$toast({
             component: ToastificationContent,
             props: {
-              title: 'Please dont skip Question!',
+              title: 'Please dont skip a Question!',
               icon: 'AlertOctagonIcon',
               variant: 'danger',
             },
@@ -164,6 +176,10 @@ export default {
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
       console.log(response)
+      this.examShow = true
+    },
+    close() {
+      this.examShow = false
     },
     timesUp(value) {
       this.disabled = true

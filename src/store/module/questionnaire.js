@@ -18,8 +18,8 @@ export default {
     GET_EMAILS: state => state.emails,
   },
   actions: {
-    async ACTION_GET_QUESTIONNAIRE({ commit }, id) {
-      const response = await api.get(`/questionnaire/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_GET_QUESTIONNAIRE({ commit }) {
+      const response = await api.get('/questionnaire', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
