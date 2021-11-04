@@ -184,8 +184,6 @@ class ExamFormController extends Controller
                 'status_code' => 400
             ]);
         }
-
-
     }
 
 
