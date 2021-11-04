@@ -38,6 +38,7 @@
     "prismjs": "1.19.0",
     "serve": "^11.3.2",
     "serve-static": "^1.14.1",
+    "sweetalert2": "^11.1.9",
     "swiper": "5.4.5",
     "uuid": "8.3.2",
     "vee-validate": "3.4.5",

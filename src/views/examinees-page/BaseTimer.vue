@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import Swal from 'sweetalert2'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -154,15 +154,42 @@ export default {
           refs[270].style.borderRadius = sideRadius[270]
         }
 
+        // swal alert 10 mins
         if (Math.round(test) === 270) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Your running out time!',
-              icon: 'AlertOctagonIcon',
-              variant: 'warning',
-            },
+          const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-danger',
+              cancelButton: 'btn btn-success'
+          },
+            buttonsStyling: false
           })
+
+          swalWithBootstrapButtons.fire({
+            title: '10 mis left!',
+            text: "Do you want to continue or submit anyway?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Continue',
+            reverseButtons: true
+          }).then((result) => {
+          if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      })
         }
 
         timeInSeconds -= 1

@@ -13,7 +13,7 @@
       </b-button>
       </b-card>
       <!-- After Submit  -->
-      <b-card class="card w-50 align-center" v-show="examShow">
+      <!-- <b-card class="card w-50 align-center" v-show="examShow">
         <h3>Exam Submitted!</h3>
         <p>Thank you for your kind participation. You may check your result in History.</p>
         <b-button
@@ -22,7 +22,7 @@
       variant="danger">
       Close
       </b-button>
-      </b-card>
+      </b-card> -->
 <!-- Timer  -->
   <BaseTimer
       class="sticky"
@@ -42,18 +42,30 @@
     :key="examQuestionnaire.id">
     <b-card class="border">
       <div>
-         <b-form @submit.prevent="validateForm">
-        <b-form-group>{{ examQuestionnaire.question }}</b-form-group>
+         <validation-observer ref="radioValidation">
+           <b-form @submit.prevent="validateForm">
+        <b-form-group
+        >{{ examQuestionnaire.question }}
         <div>
+          <validation-provider
+            #default="{ errors }"
+            name="Required"
+            rules="required"
+          >
           <b-form-radio-group
-        id="radio-group-2"
-        v-model="selected[examQuestionnaire.id]"
-        name="radio"
-      >
+            :state="errors.length > 0 ? false : null"
+            id="radio-group-2"
+            v-model="selected[examQuestionnaire.id]"
+            name="radio"
+            required
+          >
           <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="index">{{`${index} ${choice}`}}</b-form-radio>
           </b-form-radio-group>
+          </validation-provider>
         </div>
+          </b-form-group>
      </b-form>
+         </validation-observer>
       </div>
   </b-card>
   </div>
@@ -79,13 +91,17 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
 import questions from '@/store/module/questions'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import Swal from 'sweetalert2'
 
 export default {
   components: {
+    ValidationProvider,
+    ValidationObserver,
     BaseTimer,
     // BFormSelect,
     // BFormSelectOption,
@@ -98,6 +114,7 @@ export default {
   },
   data() {
     return {
+      required,
       disabled: false,
       isTimer: false,
       examTime: 0,
@@ -168,7 +185,35 @@ export default {
       const data = {answers: JSON.stringify(this.answers), id: this.id}
       console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
-      // console.log('heloooooooo')s
+      console.log('SUBMIT_EXAM__', response)
+      this.examShow = true
+      this.formShow = false
+      this.isTimer = false
+      this.helloShow = true
+      // swal if PASSED!
+//       Swal.fire({
+//   title: 'Congratulations!',
+//   text: 'You may check your result in the History',
+//   width: 600,
+//   padding: '3em',
+//   background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
+//   backdrop: `
+//     rgba(0,0,123,0.4)
+//     no-repeat
+//   `
+// })
+        // swal if FAILED!
+      Swal.fire({
+  title: 'Were Sorry ;(',
+  text: 'You may check your result in the History.',
+  width: 600,
+  padding: '3em',
+  background: '#fff url(https://c.tenor.com/0awKksC4vx0AAAAM/peachandgoma-iloveyou.gif)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    no-repeat
+  `
+})
     },
 
     timesUp(value) {

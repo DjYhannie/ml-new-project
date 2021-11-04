@@ -84,11 +84,12 @@
             <b-col>Name: {{ row.item.name }}</b-col>
           </b-row>
           <b-row class="mb-2">
-            <!-- <b-col>Attemps: {{ row.item.attemps }}</b-col> -->
+            <b-col>Attemps: {{ row.item.attemps }}</b-col>
           </b-row>
           <b-row class="mb-2">
             <b-col>Score: {{ row.item.score }}</b-col>
           </b-row>
+          <!-- //with time  -->
           <b-row class="mb-2">
             <b-col>Date: {{ row.item.date }}</b-col>
           </b-row>
@@ -189,10 +190,10 @@ export default {
           key: 'name',
           sortable: true,
         },
-        // {
-        //   key: 'attemps',
-        //   sortable: false,
-        // },
+        {
+          key: 'attemps',
+          sortable: false,
+        },
         {
           key: 'score',
           label: 'score',
@@ -217,19 +218,19 @@ export default {
 
       items: [
         {
-          isActive: true, date: '09-01-2021', remarks: 'Passed', score: '38/40', name: 'Dickerson',
+          isActive: true, attemps: '1', date: '09-01-2021', remarks: 'Passed', score: '38/40', name: 'Dickerson',
         },
         //  attemps: '1',
         {
-          isActive: false, date: '09-02-2021', remarks: 'Failed', score: '22/40', name: 'Larsen',
+          isActive: false, attemps: '2', date: '09-02-2021', remarks: 'Failed', score: '22/40', name: 'Larsen',
         },
         // , attemps: '2'
         {
-          isActive: false, date: '09-03-2021', remarks: 'Passed', score: '36/40', name: 'Geneva',
+          isActive: false, attemps: '3', date: '09-03-2021', remarks: 'Passed', score: '36/40', name: 'Geneva',
         },
         // attemps: '3',
         {
-          isActive: true, date: '09-04-2021', remarks: 'Failed', score: '20/40', name: 'Jami',
+          isActive: true, attemps: '2', date: '09-04-2021', remarks: 'Failed', score: '20/40', name: 'Jami',
         },
         // attemps: '2',
       ],

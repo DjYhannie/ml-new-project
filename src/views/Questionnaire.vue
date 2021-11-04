@@ -347,19 +347,24 @@
           <!-- v-show="sendEmail" -->
           <b-card :id="'target'+questionnaire.id" style="display:none;">
               <b-form
-                class="auth-login-form mt-2"
+                class="send-email-form"
                 @submit.prevent
               >
               <!-- emails  -->
-                <!-- <b-form-select
+                <b-form-select
           v-model="chosen"
-          multiple
           class="chosen-select"
-          :options="optionsEmails"
-        /> -->
+        >
+          <option
+            v-for="user in users"
+              :key="user.id"
+          >
+            {{ user.email }}
+          </option>
+        </b-form-select>
          <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle.accordion-2>Select Emails</b-button>
+        <b-button v-b-toggle.accordion-2>Select Emails</b-button>
       </b-card-header>
       <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
         <b-card-body>
@@ -384,7 +389,6 @@
                 <b-button
                   type="submit"
                   variant="danger"
-                  block
                   @click="submitEmail($event)"
                 >
                   Send
@@ -428,6 +432,7 @@ import {
   mapActions, mapGetters, mapMutations,
 } from 'vuex'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import Swal from 'sweetalert2'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, email } from '@validations'
 // import { $ } from 'jquery'
@@ -563,14 +568,20 @@ export default {
       this.questionnaire.hard_questions = ''
       this.questionnaire.total_questions = ''
       this.modalShow = false
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Added Successfully!',
-          icon: 'EditIcon',
-          variant: 'success',
-        },
-      })
+      // this.$toast({
+      //   component: ToastificationContent,
+      //   props: {
+      //     title: 'Added Successfully!',
+      //     icon: 'EditIcon',
+      //     variant: 'success',
+      //   },
+      // })
+      Swal.fire({
+  icon: 'success',
+  title: 'Added Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
     },
     total() {
       let total = 0
@@ -591,13 +602,11 @@ export default {
     // },asdf
     async deleteButton(questionnaire) {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Deleted Successfully!',
-          icon: 'DeleteIcon',
-          variant: 'success',
-        },
+      Swal.fire({
+        icon: 'success',
+        title: 'Deleted Succesfully',
+        showConfirmButton: false,
+        timer: 1500
       })
       return response
     },
@@ -675,10 +684,9 @@ export default {
 </script>
 
 <style>
-button{
+/* button{
     margin: 10px;
-    float: right;
-}
+} */
 #textarea{
   border: none;
   overflow: hidden;
@@ -706,5 +714,14 @@ button{
 .buttons{
   float: right;
   margin-top: 0;
+}
+.send-email-form{
+  width: 800px;
+  border: 1px solid lightgray;
+  box-shadow: 5px 5px 5px lightgray;
+  padding: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

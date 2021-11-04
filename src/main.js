@@ -9,6 +9,7 @@ import store from './store/index'
 import App from './App.vue'
 import $ from 'jquery'
 
+
 // Global Components
 import './global-components'
 

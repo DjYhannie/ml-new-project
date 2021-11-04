@@ -7,11 +7,11 @@
       <!-- <b-card @click="showDetails"> -->
       <b-card class="border" v-b-toggle="'accordion-details'+ questionnaire.id" id="detailsShow">
         <!-- <b-button @click="showDetails(questionnaire.id) == !showDetails(questionnaire.id)" id="detailsShow">Show Details</b-button> -->
-      <h5>{{ questionnaire.title }}</h5>
+      <h5>{{ questionnaire.course }}</h5>
       <!-- toggle  -->
       <div :id="questionnaire.id">
       <b-collapse v-bind:id="'accordion-details'+ questionnaire.id">
-      <h3>{{ questionnaire.course }}</h3>
+      <h3>{{ questionnaire.title }}</h3>
     </b-collapse>
       </div>
     </b-card>

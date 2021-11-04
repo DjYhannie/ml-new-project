@@ -287,7 +287,7 @@ import {
   mapMutations,
   mapState,
 } from 'vuex'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -402,14 +402,12 @@ export default {
       this.questionDescription.choices.C = ''
       this.questionDescription.choices.D = ''
       this.modalShow = false
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Successfully Added!',
-          icon: 'EditIcon',
-          variant: 'success',
-        },
-      })
+            Swal.fire({
+  icon: 'success',
+  title: 'Added Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
     },
     async submitCourse() {
       const response = await this.$store.dispatch('ACTION_ADD_COURSE', this.course)
@@ -418,14 +416,12 @@ export default {
     },
     async deleteButton(question) {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Successfully Deleted!',
-          icon: 'EditIcon',
-          variant: 'success',
-        },
-      })
+           Swal.fire({
+  icon: 'success',
+  title: 'Deleted Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
     },
     editButton(question) {
       this.questionDescription.id = question.id
