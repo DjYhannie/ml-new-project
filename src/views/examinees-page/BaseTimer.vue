@@ -123,7 +123,6 @@ export default {
         persistTime(timeInSeconds)
 
         if (Math.round(test) >= 360) {
-          console.log(counter)
           clearInterval(intervalInner)
           localStorage.removeItem('seconds')
           this.$toast({
@@ -137,26 +136,21 @@ export default {
           passToParent()
         }
 
-        if (1 > timeInSeconds) {
-          refKey = 360
+     
+        if (Math.round(test) >= 90) {
+          refs[90].classList.add('progressed')
+          refs[90].style.borderRadius = sideRadius[90]
         }
-        if (quotient >= timeInSeconds) {
-          refKey = 270
-        }
-        if (quotient * 2 >= timeInSeconds) {
-          refKey = 180
-        }
-        if (quotient * 3 >= timeInSeconds) {
-          refKey = 90
-        }
-        if (refKey) {
-          console.log(quotient, timeInSeconds, refKey)
-          refs[refKey].classList.add('progressed')
-          refs[refKey].style.borderRadius = sideRadius[refKey]
+
+        if (Math.round(test) >= 180) {
+          refs[180].classList.add('progressed')
+          refs[180].style.borderRadius = sideRadius[180]
         }
 
         if (Math.round(test) >= 270) {
           outer360.style.display = 'none'
+          refs[270].classList.add('progressed')
+          refs[270].style.borderRadius = sideRadius[270]
         }
 
         if (Math.round(test) === 270) {
@@ -281,3 +275,21 @@ export default {
   color: #322;
 }
 </style>
+
+   // if (1 > timeInSeconds) {
+        //   refKey = 360
+        // }
+        // if (quotient >= timeInSeconds && (quotient * 2) < timeInSeconds) {
+        //   refKey = 270
+        // }
+        // if (quotient * 2 >= timeInSeconds && (quotient * 3) < timeInSeconds) {
+        //   refKey = 180
+        // }
+        // if (quotient * 3 >= timeInSeconds) {
+        //   refKey = 90
+        // }
+        // if (refKey) {
+        //   console.log(quotient, timeInSeconds, refKey)
+        //   refs[refKey].classList.add('progressed')
+        //   refs[refKey].style.borderRadius = sideRadius[refKey]
+        // }
