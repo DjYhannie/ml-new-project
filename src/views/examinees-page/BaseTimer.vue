@@ -1,25 +1,60 @@
 <template>
-<div ref="outer-container" id="outerCont">
-  <div ref="outer-circle" id="outerCircle"></div>
-  <div ref="inner-circle" id="innerCircle">
-    <span ref="timeDisplay" id="display-time">00:00:00</span>
-  </div>
-  <div id="progress">
-    <div ref="progress-left" class="progress-circle">
-      <div ref="outer360" id="outer360"></div>
-      <div class="test" ref="start360" id="start360"></div>
-      <div class="test" ref="270"></div>
+  <div
+    id="outerCont"
+    ref="outer-container"
+  >
+    <div
+      id="outerCircle"
+      ref="outer-circle"
+    />
+    <div
+      id="innerCircle"
+      ref="inner-circle"
+    >
+      <span
+        id="display-time"
+        ref="timeDisplay"
+      >00:00:00</span>
     </div>
-    <div ref="progress-right" class="progress-circle">
-      <div class="test" ref="90"></div>
-      <div class="test" ref="180"></div>
+    <div id="progress">
+      <div
+        ref="progress-left"
+        class="progress-circle"
+      >
+        <div
+          id="outer360"
+          ref="outer360"
+        />
+        <div
+          id="start360"
+          ref="start360"
+          class="test"
+        />
+        <div
+          ref="270"
+          class="test"
+        />
+      </div>
+      <div
+        ref="progress-right"
+        class="progress-circle"
+      >
+        <div
+          ref="90"
+          class="test"
+        />
+        <div
+          ref="180"
+          class="test"
+        />
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -27,6 +62,7 @@ export default {
       type: Number,
       required: true,
     },
+    timeAfterRefresh: Number,
   },
   data() {
     return {
@@ -35,60 +71,62 @@ export default {
         180: '0px 0px 80px 0px',
         270: '0px 0px 0px 80px',
       },
+      counter: 0,
+      timeInSeconds: 0,
+      interval: {},
     }
+  },
+  computed: {
+    ...mapGetters({
+      examTime: 'GET_QUESTIONNAIRE_DETAILS',
+    }),
   },
   watch: {
     time(newVal) {
-      console.log(newVal)
+      this.timeInSeconds = this.time * 60
+      localStorage.setItem('time', newVal)
       this.timer()
-    }
-  },
-  mounted() {
+    },
+    timeAfterRefresh(newVal) {
+      this.timer()
+    },
   },
   methods: {
     timer() {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
-      const time = this.time
-      let timeInSeconds = time * 60
+      let { time } = this.time
       const { showTime } = { showTime: this.showTime }
+      const { persistTime } = { persistTime: this.setPersistedTime }
 
       const { start360 } = { start360: this.$refs.start360 }
       const { outer360 } = { outer360: this.$refs.outer360 }
+
       start360.style.borderRadius = '80px 0px 0px 0px'
       outer360.style.borderRadius = '80px 0px 0px 0px'
+
+      let { timeInSeconds } = { timeInSeconds: this.timeInSeconds }
+      const quotient = Math.round(timeInSeconds / 4)
+      let refKey = 0
 
       refs.timeDisplay.innerText = showTime(timeInSeconds)
       console.log(time)
 
-      let counter = 0
-      const interval = setInterval(() => {
-        start360.style.transform = `rotate(${counter}deg)`
+      timeInSeconds = parseInt(localStorage.getItem('seconds')) || timeInSeconds
+
+      const intervalInner = setInterval(() => {
+        time = localStorage.getItem('time')
+        const test = (360 / (time * 60)) * ((time * 60) - timeInSeconds)
+        console.log(time)
+        start360.style.transform = `rotate(${test}deg)`
         refs.timeDisplay.innerText = showTime(timeInSeconds)
-        localStorage.setItem('rtime', timeInSeconds)
-        if ([90, 180, 270].includes(Math.round(counter))) {
-          refs[Math.round(counter)].classList.add('progressed')
-          refs[Math.round(counter)].style.borderRadius = sideRadius[Math.round(counter)]
-        }
+        persistTime(timeInSeconds)
 
-        if (Math.round(counter) >= 270) {
-          outer360.style.display = 'none'
-        }
-
-        if (Math.round(counter) === 270) {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Your running out time!',
-              icon: 'AlertOctagonIcon',
-              variant: 'warning',
-            },
-          })
-        }
-
-        if (Math.round(counter) >= 360 && timeInSeconds <= 0) {
-          clearInterval(interval)
+        if (Math.round(test) >= 360) {
+          console.log(counter)
+          clearInterval(intervalInner)
+          localStorage.removeItem('seconds')
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -99,15 +137,48 @@ export default {
           })
           passToParent()
         }
-        counter += (360 / (time * 60))
+
+        if (1 > timeInSeconds) {
+          refKey = 360
+        }
+        if (quotient >= timeInSeconds) {
+          refKey = 270
+        }
+        if (quotient * 2 >= timeInSeconds) {
+          refKey = 180
+        }
+        if (quotient * 3 >= timeInSeconds) {
+          refKey = 90
+        }
+        if (refKey) {
+          console.log(quotient, timeInSeconds, refKey)
+          refs[refKey].classList.add('progressed')
+          refs[refKey].style.borderRadius = sideRadius[refKey]
+        }
+
+        if (Math.round(test) >= 270) {
+          outer360.style.display = 'none'
+        }
+
+        if (Math.round(test) === 270) {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Your running out time!',
+              icon: 'AlertOctagonIcon',
+              variant: 'warning',
+            },
+          })
+        }
+
         timeInSeconds -= 1
       }, 1000)
     },
-    displayTimer() {
-      this.time()
-    },
     showTime(timeInSeconds) {
-      const dateObj = new Date(timeInSeconds * 1000)
+      const defDate = new Date('2021/01/01 08:00:00')
+      const dateObj = new Date(
+        defDate.setSeconds(defDate.getSeconds() + timeInSeconds),
+      )
       const hours = dateObj.getUTCHours()
       const minutes = dateObj.getMinutes()
       const seconds = dateObj.getSeconds()
@@ -124,19 +195,22 @@ export default {
         }
         return retVal
       }
-      return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`
+      return `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(
+        seconds,
+      )}`
     },
     passToParent() {
       this.$emit('timesUp', true)
-      // this.$emit('displayTimer', false)
+    },
+    setPersistedTime(seconds) {
+      localStorage.setItem('seconds', seconds)
     },
   },
 }
-
 </script>
 
 <style>
-#outerCont{
+#outerCont {
   background-color: #209155;
   width: 150px;
   height: 150px;
@@ -182,7 +256,8 @@ export default {
   grid-template-columns: 1fr;
 }
 
-#start360, #outer360 {
+#start360,
+#outer360 {
   background: rgb(230, 86, 86);
   transform: rotate(360deg);
   transform-origin: bottom right;

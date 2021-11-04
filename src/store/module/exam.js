@@ -7,17 +7,16 @@ export default {
     examQuestionnaires: {},
     questionnaire: {},
     examResults: [],
+    exam: {},
     id: '',
   },
   getters: {
     GET_EXAM_QUESTIONNAIRE: state => state.examQuestionnaires,
     get_id: state => state.id,
-    GET_QUE: state => state.questionnaire,
-    GET_EXAM_RESULT: state => state.examResults,
+    GET_QUESTIONNAIRE_DETAILS: state => state.exam,
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
-      console.log(store.getters.get_id);
       const res = await api.get(`/questionnaire/1`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(res)
       let random = res.data.data.randomizedQuestions
@@ -25,7 +24,7 @@ export default {
         question.choices = JSON.parse(question.choices)
         return question
       })
-      console.log(res)
+      commit('SET_QUESTIONNAIRE', res.data.data.questionnaire)
       commit('SET_EXAM_QUESTIONNAIRE', random)
       commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
       return random
@@ -64,10 +63,7 @@ export default {
       state.id = id
     },
     SET_QUESTIONNAIRE(state, questionnaire) {
-      state.questionnaire = questionnaire
-    },
-    SET_EXAM_RESULT(state, examResults) {
-      state.examResults = examResults
-    },
+      state.exam = questionnaire
+    }
   },
 }

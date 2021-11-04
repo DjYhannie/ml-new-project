@@ -27,7 +27,8 @@
   <BaseTimer
       class="sticky"
       v-show="isTimer"
-      :time="examTime"
+      :time="time"
+      :timeAfterRefresh="afterExam"
       @timesUp = "timesUp"
     />
     <br><br><br>
@@ -48,19 +49,8 @@
         id="radio-group-2"
         v-model="selected[examQuestionnaire.id]"
         name="radio"
-        required
       >
-      <div
-        v-for="(choice, index) in examQuestionnaire.choices"
-        v-bind:key="index"
-        class="radio-container"
-      >
-          <b-form-radio
-            v-bind:value="Object.keys(choice)[0]"
-          >
-            {{ `${Object.keys(choice)[0]}. ${Object.values(choice)}` }}
-          </b-form-radio>
-      </div>
+          <b-form-radio v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="index">{{`${index} ${choice}`}}</b-form-radio>
           </b-form-radio-group>
         </div>
      </b-form>
@@ -116,6 +106,8 @@ export default {
       helloShow: true,
       required: true,
       selected: [],
+      afterExam: 0,
+      time: 0,
       answers: [],
       // examQuestion: {
       //   choices: {
@@ -137,13 +129,13 @@ export default {
   computed: {
     ...mapGetters({
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
-      id: 'get_id'
+      examTime: 'GET_QUESTIONNAIRE_DETAILS',
+      id: 'get_id',
     }),
   },
   async mounted() {
-    this.checkTimeRemaining()
+    this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
-
   },
   methods: {
     ...mapActions({
@@ -153,8 +145,10 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.examTime = 1
+      this.time = this.examTime.time_duration
+      localStorage.setItem('examstarted', new Date())
     },
+
     async submitExam() {
       this.answers = this.answers.map(ans => {
         ans = JSON.parse(ans)
@@ -175,28 +169,43 @@ export default {
       console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('heloooooooo')s
-      console.log(response)
-      this.examShow = true
     },
-    close() {
-      this.examShow = false
-    },
+
     timesUp(value) {
       this.disabled = true
     },
-    checkTimeRemaining() {
-      const rtime = localStorage.getItem('rtime')
-      if (!rtime || rtime > 0) {
-        this.isTimer = true
-        this.formShow = true
-        this.helloShow = false
-      } else {
+
+    checkRemainingTime() {
+      const rtime = localStorage.getItem('seconds')
+      if (!rtime || rtime < 1) {
         this.isTimer = false
         this.formShow = false
         this.helloShow = true
-        this.examTime = 0
+      } else {
+        this.isTimer = true
+        this.formShow = true
+        this.helloShow = false
+        this.time = this.examTime.time_duration
+        // this.afterExam = this.getCounterByDateTime(this.examTime.time_duration)
       }
-    }
+    },
+
+    getCounterByDateTime(duration) {
+      const startTime = localStorage.getItem("examstarted");
+      const endTime = new Date(
+        new Date(startTime).setMinutes(
+          new Date(startTime).getMinutes() + duration
+        )
+      );
+      let timeNow = new Date();
+      if (timeNow > endTime) {
+        return 0
+      } 
+      
+      return Math.floor(
+        ((new Date()).getTime() - new Date(startTime).getTime()) / 1000
+      );
+    },
   },
 }
 </script>
