@@ -95,21 +95,21 @@ const router = new VueRouter({
         requiresAuth: false,
       },
     },
-    {
-      path : 'https://ml-oex-portal.herokuapp.com/user/take-exam/:id',
-      name : 'token-exam',
-      component: () => import('@/views/examinees-page/TakeExam.vue'),
-      meta: {
-        pageTitle: 'Take Exam',
-        breadcrumb: [
-          {
-            text: 'Take Examination',
-            active: true,
-          },
-        ],
-        requiresAuth: true,
-      },
-    },
+    // {
+    //   path : 'https://ml-oex-portal.herokuapp.com/user/take-exam/:id',
+    //   name : 'token-exam',
+    //   component: () => import('@/views/examinees-page/TakeExam.vue'),
+    //   meta: {
+    //     pageTitle: 'Take Exam',
+    //     breadcrumb: [
+    //       {
+    //         text: 'Take Examination',
+    //         active: true,
+    //       },
+    //     ],
+    //     requiresAuth: true,
+    //   },
+    // },
     {
       path: '/admin-login',
       name: 'admin-login',

@@ -17,7 +17,7 @@ export default {
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
-      const res = await api.get(`/questionnaire/1`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      const res = await api.get(`/questionnaire/3`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log(res)
       let random = res.data.data.randomizedQuestions
       random = (JSON.parse(random)).map(question => {
@@ -38,6 +38,7 @@ export default {
     async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit, dispatch }, addExamQuestionnaire) {
       const response = await api.post('/checkanswer', addExamQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       commit('SET_EXAM_QUESTIONNAIRE', response.data.data)
+      console.log('CHACK_ANSWER__', response)
       await dispatch('ACTION_GET_EXAM_QUESTIONNAIRE')
       return response
     },
