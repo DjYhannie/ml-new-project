@@ -24,11 +24,6 @@ class NewPassword extends Controller
 {
     use Notifiable;
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     public function updatePassword(Request $request)
     {
         $request->validate([

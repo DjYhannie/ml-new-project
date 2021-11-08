@@ -22,7 +22,6 @@ class ExamFormController extends Controller
 
     public function examLink()
     {
-         // $link = URL::temporarySignedRoute('examcode', now()->addMinutes(30));
         try{
 
             $token = sha1(uniqid(time(),true));
@@ -185,10 +184,8 @@ class ExamFormController extends Controller
                 'status_code' => 400
             ]);
         }
-
-
     }
 
-    
+
 
 }

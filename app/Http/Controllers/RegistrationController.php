@@ -36,51 +36,30 @@ class RegistrationController extends Controller
 
     public function login(Request $request)
     {
-    //    $request->validate([
-    //        'email' => 'required',
-    //        'password' => 'required'
-    //    ]);
-    $validator = Validator::make($request->all(),[
-        'password' => 'required',
-        'email' => 'required'
-    ]);
+        $validator = Validator::make($request->all(),[
+            'password' => 'required',
+            'email' => 'required'
+        ]);
 
-    //    if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
-    //     {
-    //        $user = Auth::user();
-    //        $name = $user->name;
-    //        $token = Auth::user()->createToken('my-app-token')->plainTextToken;
+        if ($validator ->fails()) {
+            return response()->json(['status_code'=>400, 'message'=>$validator -> errors()]);
 
-    //        return response()->json([
-    //         'name' => $name,
-    //         'token' => $token,
-    //         'message' => 'Successfully Login'
-    //     ]);
-    //    }
-    //    else{
-    //     return response()->json([
-    //         'message' => 'Credential does not match!!.'
-    //     ]);
-    //    }
-    if ($validator ->fails()) {
-        return response()->json(['status_code'=>400, 'message'=>$validator -> errors()]);
+        }else{
+            $user= User::where('email', $request->email)->first();
 
-    }else{
-        $user= User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([
-                'message' => ['These credentials do not match our records.'],
-            ], 200);
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response([
+                    'message' => ['These credentials do not match our records.'],
+                ], 200);
+            }
+            $token = $user->createToken('my-app-token')->plainTextToken;
+            $response = [
+                'user' => $user,
+                'message' => 'Login Succesfully!',
+                'token' => $token
+            ];
+            return response($response, 200);
         }
-        $token = $user->createToken('my-app-token')->plainTextToken;
-        $response = [
-            'user' => $user,
-            'message' => 'Login Succesfully!',
-            'token' => $token
-        ];
-        return response($response, 200);
-    }
     }
 
     public function logout(){

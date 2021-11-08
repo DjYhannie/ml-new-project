@@ -206,7 +206,7 @@ class QuestionnaireController extends Controller
             }
 
             $url_token->questionnaire = $questionnaire;
-            
+
             return response()->json([
                 'data'      => $url_token,
                 'url_token' => $url_token->token
@@ -260,11 +260,15 @@ class QuestionnaireController extends Controller
 
             $test = array();
 
+            $questionnaire = Questionnaire::where('id', $request['id'])->first ();
+
             foreach ($request['emails'] as $data) {
                 $checked = User::where('email',$data)->first();
                 $token = explode(".", (string)uniqid(time(),true))[1];
                 $token_url = Str::random(18);
-                $path = "https://ml-oex-frontend.herokuapp.com/take-exam/".$request['id'];
+                // $path = "https://ml-oex-portal.herokuapp.com/".$request['id'];
+                $path = "https://ml-oex-portal.herokuapp.com/";
+
 
                 if(!$checked){
                     array_push($test, $data);
@@ -275,7 +279,7 @@ class QuestionnaireController extends Controller
                     ]);
                     $this->dispatch(new EmailHandler($email, $path));
                 }
-                // $email->notify(new InviteNotification());
+
             }
 
             if(!empty($test)){
@@ -290,19 +294,6 @@ class QuestionnaireController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
-
-
-
-
-
-        // return $request['emails'];
-
-        // $url = URL::temporarySignedRoute(
-        //     'invitation', now()->addMinutes(30),
-        //     ['token' => $token]
-        // );
-
-        // Notification::route('mail', $request->input('email'))->notify(new InviteNotification($url));
 
     }
 
