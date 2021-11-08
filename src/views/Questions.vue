@@ -209,6 +209,15 @@
               aria-describedby="basic-addon1"
             >
           </div>
+          <div class="input-group mb-1">
+            <input
+              v-model="questionDescription.choices.E"
+              type="text"
+              class="form-control"
+              placeholder="E."
+              aria-describedby="basic-addon1"
+            >
+          </div>
           <b-button
             variant="primary"
             type="submit"
@@ -361,6 +370,7 @@ export default {
         { value: 'B', text: 'B' },
         { value: 'C', text: 'C' },
         { value: 'D', text: 'D' },
+        { value: 'E', text: 'E' },
       ],
       optionsFilterCategories: [
         { value: null, text: 'Select Category', disabled: true },
@@ -423,6 +433,7 @@ export default {
       this.questionDescription.choices.B = ''
       this.questionDescription.choices.C = ''
       this.questionDescription.choices.D = ''
+      this.questionDescription.choices.E = ''
       this.modalShow = false
             Swal.fire({
   icon: 'success',

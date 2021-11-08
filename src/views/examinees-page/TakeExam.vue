@@ -27,28 +27,28 @@
   </div> -->
 <b-card v-show="formShow">
     <div
-    v-for="examQuestionnaire in examQuestionnaires"
+    v-for="(examQuestionnaire, index) in examQuestionnaires"
     :key="examQuestionnaire.id">
     <b-card class="border">
       <div>
            <b-form @submit.prevent="validateForm">
-        <b-form-group
-        >
-        <ol>
-          <li>
-        {{ examQuestionnaire.question }}
-          </li>
-        </ol>
+        <b-form-group>
+          {{index+1}} . {{ examQuestionnaire.question }} {{examQuestionnaire.answer}} {{examQuestionnaire.id}}
         <div>
+          <span v-show="showRequired"><b>This is required*</b></span>
           <b-form-radio-group
             id="radio-group-2"
             v-model="selected[examQuestionnaire.id]"
             name="radio"
             required
           >
-          <div 
-            v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index" v-bind:value="index">
-          <b-form-radio>{{`${index} . ${choice}`}}</b-form-radio>
+          <div v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">
+            <p>
+          {{ examQuestionnaire.choices }}
+            </p>
+          <b-form-radio v-bind:value="index" @change="clicked()">
+            {{`${index} . ${choice}`}}
+          </b-form-radio>
           </div>
           </b-form-radio-group>
         </div>
@@ -79,6 +79,7 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
 import questions from '@/store/module/questions'
@@ -87,6 +88,8 @@ import Swal from 'sweetalert2'
 
 export default {
   components: {
+    ValidationProvider,
+    ValidationObserver,
     BaseTimer,
     // BFormSelect,
     // BFormSelectOption,
@@ -99,6 +102,8 @@ export default {
   },
   data() {
     return {
+      click: true,
+      showRequired: false,
       disabled: false,
       isTimer: false,
       examTime: 0,
@@ -137,6 +142,7 @@ export default {
   async mounted() {
     this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
+    console.log('EXAM_ID__', examQuestionnaire.id)
   },
   methods: {
     ...mapActions({
@@ -156,6 +162,7 @@ export default {
         return ans
       }).filter(n => n)
       if (this.examQuestionnaires.length !== this.answers.length){
+        this.showRequired = true
         this.$toast({
             component: ToastificationContent,
             props: {
@@ -187,17 +194,17 @@ export default {
 //   `
 // })
         // swal if FAILED!
-//       Swal.fire({
-//   title: 'Were Sorry ;(',
-//   text: 'You may check your result in the History.',
-//   width: 600,
-//   padding: '3em',
-//   background: '#fff url(https://c.tenor.com/0awKksC4vx0AAAAM/peachandgoma-iloveyou.gif)',
-//   backdrop: `
-//     rgba(0,0,123,0.4)
-//     no-repeat
-//   `
-// })
+      Swal.fire({
+  title: 'Were Sorry ;(',
+  text: 'You may check your result in the History.',
+  width: 600,
+  padding: '3em',
+  background: '#fff url(https://c.tenor.com/0awKksC4vx0AAAAM/peachandgoma-iloveyou.gif)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    no-repeat
+  `
+})
     },
 
     timesUp(value) {
@@ -235,6 +242,16 @@ export default {
         ((new Date()).getTime() - new Date(startTime).getTime()) / 1000
       );
     },
+
+    clicked() {
+      console.log('IS_CLICKED!', this.click)
+      const click = this.click
+        console.log('ID__', id)
+        if (click == true) {
+        this.showRequired = true
+        console.log('FALSE')
+      }
+    },
   },
 }
 </script>
@@ -259,5 +276,9 @@ button {
 }
 .radio-container {
   padding: 15px;
+}
+span {
+  color: rgb(187, 85, 85);
+  // color: transparent;
 }
 </style>

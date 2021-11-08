@@ -351,7 +351,7 @@
                 @submit.prevent
               >
               <!-- emails  -->
-                <b-form-select
+                <!-- <b-form-select
           v-model="chosen"
           class="chosen-select"
         >
@@ -361,7 +361,7 @@
           >
             {{ user.email }}
           </option>
-        </b-form-select>
+        </b-form-select> -->
          <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button v-b-toggle.accordion-2>Select Emails</b-button>
@@ -494,13 +494,13 @@ export default {
         total_questions: '',
       },
       createquestion: '',
-      options: [
-        { value: null, text: 'Select Course', disabled: true },
-        { value: 'Course 1', text: 'Course 1' },
-        { value: 'Course 2', text: 'Course 2' },
-        { value: 'Course 3', text: 'Course 3' },
-        { value: 'Course 4', text: 'Course 4' },
-      ],
+      // options: [
+      //   { value: null, text: 'Select Course', disabled: true },
+      //   { value: 'Course 1', text: 'Course 1' },
+      //   { value: 'Course 2', text: 'Course 2' },
+      //   { value: 'Course 3', text: 'Course 3' },
+      //   { value: 'Course 4', text: 'Course 4' },
+      // ],
       optionsEmails: [
         { value: null, text: 'Select Category', disabled: true },
         { value: 'easy', text: 'Easy' },
@@ -562,6 +562,7 @@ export default {
     async submitQuestionnaire() {
       this.questionnaire.total_questions = parseInt(this.questionnaire.easy_questions, 10) + parseInt(this.questionnaire.average_questions, 10) + parseInt(this.questionnaire.hard_questions, 10)
       const response = await this.$store.dispatch('ACTION_ADD_QUESTIONNAIRE', this.questionnaire)
+      location.reload()
       this.questionnaire.title = ''
       this.questionnaire.course = ''
       this.questionnaire.time_duration = ''
@@ -577,6 +578,7 @@ export default {
   showConfirmButton: false,
   timer: 1500
 })
+      return response
     },
     total() {
       let total = 0
@@ -603,6 +605,7 @@ export default {
         showConfirmButton: false,
         timer: 1500
       })
+        location.reload()
       return response
     },
     async editButton(questionnaire) {

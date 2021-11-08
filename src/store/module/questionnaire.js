@@ -29,11 +29,10 @@ export default {
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_UPDATE_QUESTIONNAIRE({ commit, dispatch }, id) {
-      const response = await api.put(`questionnaire/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log(response)
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch }, id) {
+      const response = await api.put(`/questionnaire/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log('EDIT__', response)
       await dispatch('ACTION_GET_QUESTIONNAIRE')
-      commit('SET_QUESTIONNAIRE', response)
       return response
     },
     async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
