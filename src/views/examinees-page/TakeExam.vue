@@ -33,9 +33,9 @@
       <div>
            <b-form @submit.prevent="validateForm">
         <b-form-group>
-          {{index+1}} . {{ examQuestionnaire.question }} {{examQuestionnaire.answer}} {{examQuestionnaire.id}}
+          {{index+1}} . {{ examQuestionnaire.question }}
         <div>
-          <span v-show="showRequired"><b>This is required*</b></span>
+          <span style="display: none;" :ref="examQuestionnaire.id"><b>This is required*</b></span>
           <b-form-radio-group
             id="radio-group-2"
             v-model="selected[examQuestionnaire.id]"
@@ -43,9 +43,6 @@
             required
           >
           <div v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">
-            <p>
-          {{ examQuestionnaire.choices }}
-            </p>
           <b-form-radio v-bind:value="index" @change="clicked()">
             {{`${index} . ${choice}`}}
           </b-form-radio>
@@ -106,7 +103,7 @@ export default {
       showRequired: false,
       disabled: false,
       isTimer: false,
-      examTime: 0,
+      // testTime: 0,
       formShow: false,
       examShow: false,
       helloShow: true,
@@ -135,14 +132,14 @@ export default {
   computed: {
     ...mapGetters({
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
-      examTime: 'GET_QUESTIONNAIRE_DETAILS',
+      testTime: 'GET_QUESTIONNAIRE_DETAILS',
       id: 'get_id',
-    }),
+    })
   },
   async mounted() {
     this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log('EXAM_ID__', examQuestionnaire.id)
+    console.log(this.testTime)
   },
   methods: {
     ...mapActions({
@@ -152,7 +149,8 @@ export default {
       this.isTimer = true
       this.formShow = true
       this.helloShow = false
-      this.time = this.examTime.time_duration
+      this.time = this.testTime.time_duration
+      // console.log(this.testTime)
       localStorage.setItem('examstarted', new Date())
     },
 
@@ -160,9 +158,21 @@ export default {
       this.answers = this.answers.map(ans => {
         ans = JSON.parse(ans)
         return ans
-      }).filter(n => n)
+      })
+      const ids = this.examQuestionnaires.map(question => question.id)
+      const ansIds = Object.entries(this.answers).map(ans => parseInt(ans[0]))
+
+      ids.forEach(id => {
+        if (!ansIds.includes(id)) {
+          this.$refs[id][0].style = "display: block;"
+        } else {
+          this.$refs[id][0].style = "display: none;"
+        }
+      }) 
+      this.answers = this.answers.filter(n => n)
+  
       if (this.examQuestionnaires.length !== this.answers.length){
-        this.showRequired = true
+        // this.showRequired = true
         this.$toast({
             component: ToastificationContent,
             props: {
@@ -221,8 +231,8 @@ export default {
         this.isTimer = true
         this.formShow = true
         this.helloShow = false
-        this.time = this.examTime.time_duration
-        // this.afterExam = this.getCounterByDateTime(this.examTime.time_duration)
+        this.time = this.testTime.time_duration
+        // this.afterExam = this.getCounterByDateTime(this.testTime.time_duration)
       }
     },
 
@@ -243,15 +253,15 @@ export default {
       );
     },
 
-    clicked() {
-      console.log('IS_CLICKED!', this.click)
-      const click = this.click
-        console.log('ID__', id)
-        if (click == true) {
-        this.showRequired = true
-        console.log('FALSE')
-      }
-    },
+    // clicked() {
+    //   console.log('IS_CLICKED!', this.click)
+    //   const click = this.click
+    //     console.log('ID__', id)
+    //     if (click == true) {
+    //     this.showRequired = true
+    //     console.log('FALSE')
+    //   }
+    // },
   },
 }
 </script>

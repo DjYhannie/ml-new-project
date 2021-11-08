@@ -17,9 +17,9 @@ export default {
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }, id) {
-      const res = await api.get(`/questionnaire/1`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      const res = await api.get(`/questionnaire/50`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log('QUESTIONNAIRE/ID', res)
-      let random = res.data.data
+      let random = res.data.data.randomizedQuestion
       random = (JSON.parse(random)).map(question => {
         question.choices = JSON.parse(question.choices)
         return question
