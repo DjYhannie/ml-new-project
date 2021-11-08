@@ -131,6 +131,13 @@
         v-model="filterCategories"
         :options="optionsFilterCategories"
       />
+      <br><br>
+      <b-form-select
+        v-model="filterCourses"
+      ><option
+            v-for="question in questions.questions"
+            :key="question">{{ question.course }}</option>
+      </b-form-select>
     </b-card>
 
     <!-- Edit Qustionnaire  -->
@@ -308,7 +315,10 @@ export default {
   },
   data() {
     return {
-      questionsCopy: null,
+      coursesCopy: null,
+      categoriesCopy: null,
+      question: null,
+      filterCourses: null,
       filterCategories: null,
       updateShow: true,
       modalEditShow: false,
@@ -369,13 +379,18 @@ export default {
     filterCategories() {
       this.filterByCategories()
     },
+    filterCourses() {
+      this.filterByCourses()
+    },
   },
   created() {
     this.GET_QUESTIONS()
   },
   mounted() {
     this.GET_QUESTIONS()
-    this.questionsCopy = this.questions.questions
+    this.categoriesCopy = this.questions.questions
+    this.coursesCopy = this.questions.course
+
   },
   methods: {
     ...mapActions({
@@ -386,9 +401,16 @@ export default {
     }),
     filterByCategories() {
       if (this.filterCategories == null) {
-        this.questions.questions = this.questionsCopy
+        this.questions.questions = this.categoriesCopy
       } else {
         this.questions.questions = this.questions.questions.filter(question => question.category.toLowerCase() === this.filterCategories)
+      }
+    },
+    filterByCourses() {
+      if (this.filterCourses == null) {
+        this.questionsCopy = this.questions
+      } else {
+        this.questionsCopy = this.questions.questions.filter(questions => questions.course.toLowerCase() === this.filterQuestions.toLowerCase())
       }
     },
     async submitQuestion() {

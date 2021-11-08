@@ -302,11 +302,11 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-               <!-- <b-dropdown-item
+               <b-dropdown-item
                 @click="editButton(questionnaire.id)"
               >
                 Edit
-              </b-dropdown-item> -->
+              </b-dropdown-item>
               <b-dropdown-item
                 @click="deleteButton(questionnaire.id)"
               >
@@ -529,6 +529,9 @@ export default {
     filterCourses() {
       this.filterByCourses()
     },
+  created() {
+    this.GET_QUESTIONNAIRES()
+  },
   },
   async mounted() {
     await this.GET_QUESTIONNAIRES()
@@ -568,14 +571,6 @@ export default {
       this.questionnaire.hard_questions = ''
       this.questionnaire.total_questions = ''
       this.modalShow = false
-      // this.$toast({
-      //   component: ToastificationContent,
-      //   props: {
-      //     title: 'Added Successfully!',
-      //     icon: 'EditIcon',
-      //     variant: 'success',
-      //   },
-      // })
       Swal.fire({
   icon: 'success',
   title: 'Added Succesfully',
@@ -656,7 +651,8 @@ export default {
       }
     },
     async submitEditQuestionnaire(questionnaire) {
-      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionDescription)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      console.log('EDIT', response)
       this.questionnaire.title = ''
       this.questionnaire.course = ''
       this.questionnaire.time_duration = ''

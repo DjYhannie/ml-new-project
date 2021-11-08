@@ -16,10 +16,10 @@ export default {
     GET_QUESTIONNAIRE_DETAILS: state => state.exam,
   },
   actions: {
-    async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }) {
-      const res = await api.get(`/questionnaire/61`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log(res)
-      let random = res.data.data.randomizedQuestions
+    async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }, id) {
+      const res = await api.get(`/questionnaire/1`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log('QUESTIONNAIRE/ID', res)
+      let random = res.data.data
       random = (JSON.parse(random)).map(question => {
         question.choices = JSON.parse(question.choices)
         return question
@@ -27,6 +27,7 @@ export default {
       commit('SET_QUESTIONNAIRE', res.data.data.questionnaire)
       commit('SET_EXAM_QUESTIONNAIRE', random)
       commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
+      console.log('RANDOM', random)
       return random
     },
     async ACTION_GET_RESULTS({ commit }) {

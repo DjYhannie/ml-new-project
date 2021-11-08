@@ -22,14 +22,7 @@ const actions = {
     return response
   },
   async LogIn({ commit }, User) {
-    const response = await axios.post('/adminlogin', User,
-      {
-        Headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-        },
-      })
+    const response = await axios.post('/adminlogin', User)
     commit('setUser', response.data.user)
     commit('setToken', response.data.token)
     sessionStorage.setItem('token', response.data.token)

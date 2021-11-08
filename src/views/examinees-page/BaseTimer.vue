@@ -96,7 +96,7 @@ export default {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
       const { sideRadius } = { sideRadius: this.sideRadius }
-      let { time } = this.time
+      let time = this.time
       const { showTime } = { showTime: this.showTime }
       const { persistTime } = { persistTime: this.setPersistedTime }
 
