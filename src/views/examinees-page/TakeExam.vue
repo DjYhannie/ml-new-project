@@ -43,7 +43,7 @@
             required
           >
           <div v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">
-          <b-form-radio v-bind:value="index" @change="clicked()">
+          <b-form-radio v-bind:value="index">
             {{`${index} . ${choice}`}}
           </b-form-radio>
           </div>
@@ -77,7 +77,7 @@ import {
   BFormRadioGroup,
 } from 'bootstrap-vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import BaseTimer from './BaseTimer.vue'
 import questions from '@/store/module/questions'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
@@ -134,22 +134,24 @@ export default {
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
       testTime: 'GET_QUESTIONNAIRE_DETAILS',
       id: 'get_id',
-      // checkResults: 'GET_EXAM_QUESTIONNAIRE',
+      checkResults: 'GET_EXAM_QUESTIONNAIRE_RESULT',
     })
   },
   async mounted() {
     this.checkRemainingTime()
+    this.set_id(location.pathname.split('/').pop())
+    console.log(location.pathname.split('/').pop())
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log('QUESTIONNAIRE_DETAILS', this.testTime)
-    // this.GET_QUESTIONNAIRE_DETAILS()
-    // this.ACTION_ADD_EXAM_QUESTIONNAIRE()
-    // console.log('CHECK_RESULTS', this.checkResults)
+    console.log(this.examQuestionnaires)
   },
   methods: {
+    ...mapMutations({
+      set_id: 'SET_EXAM_QUESTIONNAIRE_ID',
+    }),
     ...mapActions({
       GET_EXAM_QUESTIONNAIRE: 'ACTION_GET_EXAM_QUESTIONNAIRE',
       // GET_QUESTIONNAIRE_DETAILS: 'GET_QUESTIONNAIRE_DETAILS',
-      // ACTION_ADD_EXAM_QUESTIONNAIRE: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
+      GET_EXAM_RESULT: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
     }),
     start() {
       this.isTimer = true
@@ -161,9 +163,17 @@ export default {
     },
 
     async submitExam() {
+      localStorage.setItem('seconds', 0)
+      this.time = 0
+      console.log(this.answers)
       this.answers = this.answers.map(ans => {
-        ans = JSON.parse(ans)
-        return ans
+        try {
+          ans = JSON.parse(ans)
+          return ans
+        }
+        catch {
+          return ans
+        }
       })
       const ids = this.examQuestionnaires.map(question => question.id)
       const ansIds = Object.entries(this.answers).map(ans => parseInt(ans[0]))
@@ -190,13 +200,14 @@ export default {
           return
       }
       const data = {answers: JSON.stringify(this.answers), id: this.id}
-      console.log(this.id)
+      // console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
-      console.log('SUBMIT_EXAM__', response)
+      // console.log('SUBMIT_EXAM__', response.data)
       this.examShow = true
       this.formShow = false
       this.isTimer = false
       this.helloShow = true
+      console.log('RESULTS', this.checkResults);
       // swal if PASSED!
 //       Swal.fire({
 //   title: 'PASSED!',
@@ -211,11 +222,11 @@ export default {
 // })
         // swal if FAILED!
       Swal.fire({
-  title: 'YOU FAILED!',
+  title: `You ${this.checkResults.remaks}`,
   text: 'You may check your result in the History.',
   width: 600,
   padding: '3em',
-  background: '#fff url(https://c.tenor.com/0awKksC4vx0AAAAM/peachandgoma-iloveyou.gif)',
+  background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
   backdrop: `
     rgba(0,0,123,0.4)
     no-repeat

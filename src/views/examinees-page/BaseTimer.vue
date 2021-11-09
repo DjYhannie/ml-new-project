@@ -73,7 +73,7 @@ export default {
       },
       counter: 0,
       timeInSeconds: 0,
-      interval: {},
+      interval: 0,
     }
   },
   computed: {
@@ -83,9 +83,13 @@ export default {
   },
   watch: {
     time(newVal) {
-      this.timeInSeconds = this.time * 60
-      localStorage.setItem('time', newVal)
-      this.timer()
+      if (newVal < 1) {
+        clearInterval(this.interval)
+      } else {
+        this.timeInSeconds = this.time * 60
+        localStorage.setItem('time', newVal)
+        this.timer()
+      }
     },
     timeAfterRefresh(newVal) {
       this.timer()
@@ -195,6 +199,7 @@ export default {
 
         timeInSeconds -= 1
       }, 1000)
+      this.interval = intervalInner
     },
     showTime(timeInSeconds) {
       const defDate = new Date('2021/01/01 08:00:00')

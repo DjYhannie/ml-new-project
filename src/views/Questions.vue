@@ -135,8 +135,8 @@
       <b-form-select
         v-model="filterCourses"
       ><option
-            v-for="question in questions.questions"
-            :key="question">{{ question.course }}</option>
+            v-for="course in thisCourses"
+            :key="course">{{ course }}</option>
       </b-form-select>
     </b-card>
 
@@ -325,6 +325,7 @@ export default {
   data() {
     return {
       coursesCopy: null,
+      thisCourses : [],
       categoriesCopy: null,
       question: null,
       filterCourses: null,
@@ -400,7 +401,7 @@ export default {
     this.GET_QUESTIONS()
     this.categoriesCopy = this.questions.questions
     this.coursesCopy = this.questions.course
-
+    this.test()
   },
   methods: {
     ...mapActions({
@@ -415,6 +416,13 @@ export default {
       } else {
         this.questions.questions = this.questions.questions.filter(question => question.category.toLowerCase() === this.filterCategories)
       }
+    },
+    test(){
+      this.questions.questions.forEach(element => {
+        if (!this.thisCourses.includes(element.course)) {
+          this.thisCourses.push(element.course)
+        }
+      });
     },
     filterByCourses() {
       // const newCourse = new Set()

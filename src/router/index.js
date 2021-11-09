@@ -166,7 +166,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/user/take-exam',
+      path: '/user/take-exam/:id?',
       name: 'user/take-exam',
       component: () => import('@/views/examinees-page/TakeExam.vue'),
       meta: {

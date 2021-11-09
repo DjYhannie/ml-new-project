@@ -14,11 +14,11 @@ export default {
     GET_EXAM_QUESTIONNAIRE: state => state.examQuestionnaires,
     get_id: state => state.id,
     GET_QUESTIONNAIRE_DETAILS: state => state.exam,
-    GET_EXAM_QUESTIONNAIRE: state => state.examResults,
+    GET_EXAM_QUESTIONNAIRE_RESULT: state => state.examResults,
   },
   actions: {
-    async ACTION_GET_EXAM_QUESTIONNAIRE({ commit }, id) {
-      const res = await api.get(`/questionnaire/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_GET_EXAM_QUESTIONNAIRE({ commit, getters }) {
+      const res = await api.get(`/questionnaire/${getters.get_id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log('QUESTIONNAIRE/ID', res)
       let random = res.data.data.randomizedQuestions
       random = (JSON.parse(random)).map(question => {
@@ -28,7 +28,7 @@ export default {
       })
       commit('SET_QUESTIONNAIRE', res.data.data.questionnaire)
       commit('SET_EXAM_QUESTIONNAIRE', random)
-      commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
+      // commit('SET_EXAM_QUESTIONNAIRE_ID', res.data.data.id)
       console.log('RANDOM', random)
       return random
     },
@@ -38,11 +38,11 @@ export default {
       commit('SET_EXAM_RESULT', response.data)
       return response
     },
-    async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit, dispatch }, addExamQuestionnaire) {
+    async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit }, addExamQuestionnaire) {
       const response = await api.post('/checkanswer', addExamQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('SET_EXAM_QUESTIONNAIRE', response.data.data)
+      // commit('SET_EXAM_QUESTIONNAIRE', response.data.data)
       console.log('CHACK_ANSWER__', response)
-      await dispatch('ACTION_GET_EXAM_QUESTIONNAIRE')
+      await commit('SET_EXAM_RESULT', response.data)
       return response
     },
     // async ACTION_GET_EXAM_RESULT({ commit }) {
@@ -68,6 +68,9 @@ export default {
     },
     SET_QUESTIONNAIRE(state, questionnaire) {
       state.exam = questionnaire
-    }
+    },
+    SET_EXAM_RESULT(state, remarks) {
+      state.examResults = remarks
+    },
   },
 }
