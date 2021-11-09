@@ -165,7 +165,7 @@ export default {
           })
 
           swalWithBootstrapButtons.fire({
-            title: '10 mis left!',
+            title: '45 secs. left!',
             text: "Do you want to continue or submit anyway?",
             icon: 'warning',
             showCancelButton: true,
@@ -175,19 +175,20 @@ export default {
           }).then((result) => {
           if (result.isConfirmed) {
             swalWithBootstrapButtons.fire(
-              'Deleted!',
-              'Your file has been deleted.',
+              'Submitted!',
+              'Your file has been submitted.',
               'success'
             )
           } else if (
             /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel
-          ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
           )
+           {
+          // swalWithBootstrapButtons.fire(
+          //   'Cancelled',
+          //   'Your imaginary file is safe :)',
+          //   'error'
+          // )
         }
       })
         }

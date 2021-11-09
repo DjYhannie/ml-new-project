@@ -417,6 +417,7 @@ export default {
       }
     },
     filterByCourses() {
+      // const newCourse = new Set()
       if (this.filterCourses == null) {
         this.questionsCopy = this.questions
       } else {
@@ -457,7 +458,7 @@ export default {
 })
     },
     editButton(question) {
-      this.questionDescription.id = question.id
+      this.questionDescription.question = question.id
       this.modalEditShow = true
       this.editShow = true
       this.addShow = false

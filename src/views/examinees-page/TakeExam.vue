@@ -134,16 +134,22 @@ export default {
       examQuestionnaires: 'GET_EXAM_QUESTIONNAIRE',
       testTime: 'GET_QUESTIONNAIRE_DETAILS',
       id: 'get_id',
+      // checkResults: 'GET_EXAM_QUESTIONNAIRE',
     })
   },
   async mounted() {
     this.checkRemainingTime()
     await this.GET_EXAM_QUESTIONNAIRE()
-    console.log(this.testTime)
+    console.log('QUESTIONNAIRE_DETAILS', this.testTime)
+    // this.GET_QUESTIONNAIRE_DETAILS()
+    // this.ACTION_ADD_EXAM_QUESTIONNAIRE()
+    // console.log('CHECK_RESULTS', this.checkResults)
   },
   methods: {
     ...mapActions({
       GET_EXAM_QUESTIONNAIRE: 'ACTION_GET_EXAM_QUESTIONNAIRE',
+      // GET_QUESTIONNAIRE_DETAILS: 'GET_QUESTIONNAIRE_DETAILS',
+      // ACTION_ADD_EXAM_QUESTIONNAIRE: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
     }),
     start() {
       this.isTimer = true
@@ -193,8 +199,8 @@ export default {
       this.helloShow = true
       // swal if PASSED!
 //       Swal.fire({
-//   title: 'Congratulations!',
-//   text: 'You may check your result in the History',
+//   title: 'PASSED!',
+//   text: 'Congratulations. You may check your result in the History',
 //   width: 600,
 //   padding: '3em',
 //   background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
@@ -205,7 +211,7 @@ export default {
 // })
         // swal if FAILED!
       Swal.fire({
-  title: 'Were Sorry ;(',
+  title: 'YOU FAILED!',
   text: 'You may check your result in the History.',
   width: 600,
   padding: '3em',
@@ -290,5 +296,8 @@ button {
 span {
   color: rgb(187, 85, 85);
   // color: transparent;
+}
+* {
+      font-weight: bold;
 }
 </style>

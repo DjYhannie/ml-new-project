@@ -494,13 +494,13 @@ export default {
         total_questions: '',
       },
       createquestion: '',
-      options: [
-        { value: null, text: 'Select Course', disabled: true },
-        { value: 'Course 1', text: 'Course 1' },
-        { value: 'Course 2', text: 'Course 2' },
-        { value: 'Course 3', text: 'Course 3' },
-        { value: 'Course 4', text: 'Course 4' },
-      ],
+      // options: [
+      //   { value: null, text: 'Select Course', disabled: true },
+      //   { value: 'Course 1', text: 'Course 1' },
+      //   { value: 'Course 2', text: 'Course 2' },
+      //   { value: 'Course 3', text: 'Course 3' },
+      //   { value: 'Course 4', text: 'Course 4' },
+      // ],
       optionsEmails: [
         { value: null, text: 'Select Category', disabled: true },
         { value: 'easy', text: 'Easy' },
@@ -640,9 +640,8 @@ export default {
         })
       }else{
           this.data.emails.push(email);
-          this.data.append('id', this.id);  
+          this.data.append('id', this.id);  //.append is not a function daw
       }
-      
     },
 
     async sendButton(id) {

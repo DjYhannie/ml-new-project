@@ -56,7 +56,7 @@
           </router-link>
         </b-dropdown-item>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
+        <!-- <b-dropdown-item link-class="d-flex align-items-center">
           <feather-icon
             size="16"
             icon="MailIcon"
@@ -81,7 +81,7 @@
             class="mr-50"
           />
           <span>Chat</span>
-        </b-dropdown-item>
+        </b-dropdown-item> -->
 
         <b-dropdown-divider />
 

@@ -162,6 +162,7 @@
 import {
   BTable, BButton, BCol, BRow, BCard, BPagination, BFormGroup, BFormInput, BInputGroupPrepend, BIcon, BInputGroup, BFormSelect,
 } from 'bootstrap-vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -241,8 +242,26 @@ export default {
     rows() {
       return this.items.length
     },
+    ...mapState({
+      examResults: 'examResults',
+      exams: 'exam',
+    }),
+  },
+  created() {
+    this.GET_RESULTS(),
+    this.EXAM_QUESTIONNAIRE()
+  },
+  mounted() {
+    this.GET_RESULTS(),
+    console.log('RESULTS__', this.examResults),
+    this.EXAM_QUESTIONNAIRE()
+    console.log('CHECK_ANSWERS__', this.exams) 
   },
   methods: {
+    ...mapActions({
+      GET_RESULTS: 'ACTION_GET_RESULTS',
+      EXAM_QUESTIONNAIRE: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
+    }),
     handleRowClicked(item) {
       this.show = !this.show
       this.selectedItem = item

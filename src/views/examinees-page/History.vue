@@ -51,7 +51,7 @@ import {
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: {
@@ -65,9 +65,17 @@ export default {
       text: '',
     }
   },
+  computed: {
+    ...mapState({
+      examResults: 'examResults',
+    }),
+  },
+  created() {
+    this.GET_RESULTS()
+  },
   mounted() {
     this.GET_RESULTS()
-    console.log('RESULTS__', this.GET_RESULTS)
+    console.log('RESULTS__', this.examResults)
   },
   methods: {
     ...mapActions({
