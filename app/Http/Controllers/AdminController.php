@@ -107,6 +107,11 @@ class AdminController extends Controller
     {
         try{
             $get = DB::table('users')->get();
+            $get->map(function($user) {
+                $user = $user->attempts = DB::table('url_tokens')->where('user_id', $user->id)->count();
+                return $user;
+            });
+
             return response()->json([
                 'users' => $get
             ]);

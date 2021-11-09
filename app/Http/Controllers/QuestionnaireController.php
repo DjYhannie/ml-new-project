@@ -178,8 +178,10 @@ class QuestionnaireController extends Controller
 
 
             $url_token = DB::table('url_tokens')->select('*')
+                        ->orderBy('id', 'desc')
                         ->where('questionnaire_id', $questionnaire->id)
                         ->where('user_id', $user->id)
+                        ->whereNull('result')
                         ->first();
 
             if (!$url_token) {
