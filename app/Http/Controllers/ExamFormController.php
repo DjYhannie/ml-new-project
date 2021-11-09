@@ -157,12 +157,26 @@ class ExamFormController extends Controller
 
     public function getAllResult()
     {
-        $user = Auth::user();
-        $results = DB::table('url_tokens')
-                    ->where('user_id', $user->id)
-                    ->get();
+        try{
 
-        return $results;
+            $user = Auth::user();
+            $username = DB::table('url_tokens')->join('users', 'users.id', '=', 'url_tokens.user_id')->first('users.username');
+            $results = DB::table('url_tokens')
+                        ->where('user_id', $user->id)
+                        ->get();
+
+            return response()->json([
+                'username' => $username,
+                'results' => $results,
+                'status_code' => 200
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status_code' => 400
+            ]);
+        }
     }
 
     public function updateURL(Request $request)
