@@ -206,15 +206,7 @@ export default {
             reverseButtons: true
           }).then((result) => {
           if (result.isConfirmed) {
-            const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE')
-            console.log('BASE', response);
-            localStorage.setItem('seconds', 0)
-            // this.time = 0
-            swalWithBootstrapButtons.fire(
-              `You ${this.checkResults.remaks}`,
-              'Your Exam Has Been Submitted.',
-              'success'
-            )
+            this.$emit('submitted', true)
           } else if (
             /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel

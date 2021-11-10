@@ -4,13 +4,14 @@ export default {
   state: {
     namespaced: true,
     questionnaires: {},
-    questionnaire: {},
+    questionnaire: [],
     emails: [],
     // sendQuestionnaire: [],
     // courses: {},
     questions: {},
     createquestion: '',
     show: true,
+    questionnaireID: '',
     // index: null,
   },
   getters: {
@@ -29,9 +30,9 @@ export default {
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, commit }, id) {
-      const response = await api.put(`/questionnaire/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('UPDATED_QUESTIONNAIRE', response)
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, commit }, questionnaire) {
+      const response = await api.put(`/questionnaire/update/${questionnaire.id}`, questionnaire,{ headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      commit('SET_ID', response)
       await dispatch('ACTION_GET_QUESTIONNAIRE')
       console.log('EDIT__', response)
       return response
@@ -52,8 +53,8 @@ export default {
     SET_QUESTIONNAIRE(state, questionnaires) {
       state.questionnaires = questionnaires
     },
-    UPDATED_QUESTIONNAIRE(state, questionnaire) {
-      state.questionnaire = questionnaire
+    SET_ID(state, questionnaireID) {
+      state.questionnaireID = questionnaireID
     },
     SET_USER(state, emails) {
       state.emails = emails

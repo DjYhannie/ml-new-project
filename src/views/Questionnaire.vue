@@ -303,17 +303,17 @@
           <b-button-group class="buttons">
             <b-dropdown>
                <b-dropdown-item
-                @click="editButton(questionnaire.id)"
+                @click="editButton(questionnaire)"
               >
                 Edit
               </b-dropdown-item>
               <b-dropdown-item
-                @click="deleteButton(questionnaire.id)"
+                @click="deleteButton(questionnaire)"
               >
                 Delete
               </b-dropdown-item>
               <b-dropdown-item
-                @click="sendButton(questionnaire.id)"
+                @click="sendButton(questionnaire)"
               >
                 Send to
               </b-dropdown-item>
@@ -649,11 +649,14 @@ export default {
       }
     },
     async editButton(questionnaire) {
-      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      // const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      console.log(questionnaire)
+      this.questionnaire = questionnaire
       this.modalEditShow = true
     },
-    async submitEditQuestionnaire(questionnaire) {
-      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+    async submitEditQuestionnaire() {
+      console.log(this.questionnaire)
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionnaire)
       console.log('EDIT', response)
       this.questionnaire.title = ''
       this.questionnaire.course = ''

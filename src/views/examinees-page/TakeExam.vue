@@ -16,9 +16,10 @@
   <BaseTimer
       class="sticky"
       v-show="isTimer"
-      :time="time"
+      :time="time || 0"
       :timeAfterRefresh="afterExam"
       @timesUp = "timesUp"
+      @submitted = "on45Seconds"
     />
     <br><br><br>
   <!-- Test Questions  -->
@@ -110,7 +111,7 @@ export default {
       required: true,
       selected: [],
       afterExam: 0,
-      // time: 0,
+      time: 0,
       answers: [],
       // examQuestion: {
       //   choices: {
@@ -163,8 +164,6 @@ export default {
     },
 
     async submitExam() {
-      localStorage.setItem('seconds', 0)
-      this.time = 0
       console.log(this.answers)
       this.answers = this.answers.map(ans => {
         try {
@@ -190,7 +189,7 @@ export default {
       if (this.examQuestionnaires.length !== this.answers.length){
         // this.showRequired = true
         this.$toast({
-            component: ToastificationContent,
+          component: ToastificationContent,
             props: {
               title: 'Please dont skip a Question!',
               icon: 'AlertOctagonIcon',
@@ -199,6 +198,9 @@ export default {
           })
           return
       }
+        localStorage.setItem('seconds', 0)
+        this.time = 0
+
       const data = {answers: JSON.stringify(this.answers), id: this.id}
       // console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
@@ -210,7 +212,7 @@ export default {
       console.log('RESULTS', this.checkResults);
       // swal
       Swal.fire({
-  title: `You ${this.checkResults.remaks}`,
+        title: `You ${this.checkResults.remaks}`,
   text: 'Thank You For Participating. You May Check Your Result in the History.',
   width: 600,
   padding: '3em',
@@ -224,6 +226,53 @@ export default {
 
     timesUp(value) {
       this.disabled = true
+      console.log(value)
+      this.answers = this.answers.map(ans => {
+        try {
+          ans = JSON.parse(ans)
+          return ans
+        }
+        catch {
+          return ans
+        }
+      })
+      this.answers = this.answers.filter(n => n)
+       const data = {answers: JSON.stringify(this.answers), id: this.id}
+      const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      consle.log('SUBMIT', response)
+      this.time=0
+      localStorage.setItem('seconds', 0)
+            Swal.fire({
+              title: `You ${this.checkResults.remaks}`,
+              text: 'Your Exam Has Been Submitted.',
+              showConfirmButton: false,
+              timer: 1500
+           })
+    },
+    on45Seconds(value) {
+      localStorage.setItem('seconds', 0)
+        this.time = 0
+      this.disabled = true
+      console.log(value)
+      this.answers = this.answers.map(ans => {
+        try {
+          ans = JSON.parse(ans)
+          return ans
+        }
+        catch {
+          return ans
+        }
+      })
+      this.answers = this.answers.filter(n => n)
+       const data = {answers: JSON.stringify(this.answers), id: this.id}
+      const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      consle.log('SUBMIT', response)
+            Swal.fire({
+              title: `You ${this.checkResults.remaks}`,
+              text: 'Your Exam Has Been Submitted.',
+              showConfirmButton: false,
+              timer: 1500
+           })
     },
 
     checkRemainingTime() {
