@@ -10,8 +10,6 @@ Content-Type: application/json
     "password_confirmation": "test123"
 }
 
-
-
 ###
 
 POST http://localhost:8000/api/register
@@ -223,5 +221,9 @@ Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
 {
     "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
 }
+
+
+POST https://examapp-backend.herokuapp.com/api/users
+Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
 
 

@@ -85,26 +85,32 @@ class ExamFormController extends Controller
 
             foreach($answer as $ans){
                 $question = $randomizedQuestions[$ctr];
-                $res['question_id'] = $question->id;
-                $res['is_correct'] = ($ans[1] == $question->answer);
-                $res['user_answer'] = $ans[1];
-                $res['correct_answer'] = $question->answer;
+
                 if($ans[1] == $question->answer){
                     $points = $points += 1;
+                }else{
+                    $res['question_id'] = $question->id;
+                    $res['is_correct'] = ($ans[1] == $question->answer);
+                    $res['user_answer'] = $ans[1];
+                    $res['correct_answer'] = $question->answer;
+
+                    array_push($result, $res);
                 }
                 $ctr++;
-               array_push($result, $res);
+
             }
 
             $pass = $passing->passing_score;
 
             $result = json_encode($result);
 
+
             DB::update('update url_tokens set result = ?', array($result));
 
             if($points >= $pass){
                 return response()->json([
                     'points' => $points,
+                    'data' => $result,
                     'remaks' => "PASS"
                 ]);
             }
