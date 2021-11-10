@@ -608,10 +608,6 @@ export default {
         location.reload()
       return response
     },
-    async editButton(questionnaire) {
-      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
-      this.modalEditShow = true
-    },
     async submitEmail(emails) {
       const response = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
       console.log('EMAILS__RESPONSE', response)
@@ -651,6 +647,10 @@ export default {
       if (target == 'block') {
         console.log('TARGETED__')
       }
+    },
+    async editButton(questionnaire) {
+      const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)
+      this.modalEditShow = true
     },
     async submitEditQuestionnaire(questionnaire) {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', questionnaire)

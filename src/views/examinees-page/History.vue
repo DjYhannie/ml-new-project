@@ -32,6 +32,7 @@
           name="radio-sub-component"
           required
         >
+        <p>{{this.checkResults}}</p>
           <!-- :aria-describedby="ariaDescribedby" -->
           <b-form-radio value="A">A. Choice A</b-form-radio>
           <b-form-radio value="B">B. Choice B</b-form-radio>
@@ -46,15 +47,17 @@
 
 <script>
 import {
+  BCard,
   BForm,
   BFormGroup,
   BFormRadio,
   BFormRadioGroup,
 } from 'bootstrap-vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   components: {
+    BCard,
     BForm,
     BFormGroup,
     BFormRadio,
@@ -63,23 +66,21 @@ export default {
   data() {
     return {
       text: '',
+      selected: '',
     }
   },
   computed: {
-    ...mapState({
-      examResults: 'examResults',
+    ...mapGetters({
+      checkResults: 'GET_EXAM_QUESTIONNAIRE_RESULT',
     }),
   },
-  created() {
-    this.GET_RESULTS()
-  },
   mounted() {
-    this.GET_RESULTS()
-    console.log('RESULTS__', this.examResults)
+    // this.GET_RESULTS()
+    // console.log('RESULTS__', this.examResults)
   },
   methods: {
     ...mapActions({
-      GET_RESULTS: 'ACTION_GET_RESULTS',
+      GET_EXAM_RESULT: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
     }),
   },
 }

@@ -3,8 +3,8 @@ import api from '../../libs/axios'
 export default {
   state: {
     namespaced: true,
-    questionnaires: [],
-    questionnaire: [],
+    questionnaires: {},
+    questionnaire: {},
     emails: [],
     // sendQuestionnaire: [],
     // courses: {},
@@ -29,10 +29,11 @@ export default {
       commit('SET_QUESTIONNAIRE', response.data.data)
       return response
     },
-    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch }, id) {
+    async ACTION_UPDATE_QUESTIONNAIRE({ dispatch, commit }, id) {
       const response = await api.put(`/questionnaire/update/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('EDIT__', response)
+      commit('UPDATED_QUESTIONNAIRE', response)
       await dispatch('ACTION_GET_QUESTIONNAIRE')
+      console.log('EDIT__', response)
       return response
     },
     async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
@@ -50,6 +51,9 @@ export default {
   mutations: {
     SET_QUESTIONNAIRE(state, questionnaires) {
       state.questionnaires = questionnaires
+    },
+    UPDATED_QUESTIONNAIRE(state, questionnaire) {
+      state.questionnaire = questionnaire
     },
     SET_USER(state, emails) {
       state.emails = emails

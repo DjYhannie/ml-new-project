@@ -54,7 +54,8 @@
 
 <script>
 import Swal from 'sweetalert2'
-import { mapGetters } from 'vuex'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -66,6 +67,7 @@ export default {
   },
   data() {
     return {
+      answers: [],
       sideRadius: {
         90: '0px 80px 0px 0px',
         180: '0px 0px 80px 0px',
@@ -79,6 +81,7 @@ export default {
   computed: {
     ...mapGetters({
       examTime: 'GET_QUESTIONNAIRE_DETAILS',
+      checkResults: 'GET_EXAM_QUESTIONNAIRE_RESULT',
     }),
   },
   watch: {
@@ -95,7 +98,13 @@ export default {
       this.timer()
     },
   },
+  created() {
+    this.GET_EXAM_RESULT()
+  },
   methods: {
+    ...mapActions({
+      GET_EXAM_RESULT: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
+    }),
     timer() {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
@@ -138,7 +147,26 @@ export default {
               variant: 'danger',
             },
           })
-          passToParent()
+      //     passToParent()
+      //     this.answers = this.answers.map(ans => {
+      //   try {
+      //     ans = JSON.parse(ans)
+      //     return ans
+      //   }
+      //   catch {
+      //     return ans
+      //   }
+      // })
+      this.answers = this.answers.filter(n => n)
+      const data = {answers: JSON.stringify(this.answers), id: this.id}
+          const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+            console.log('RESULTS', this.checkResults);
+            Swal.fire({
+              title: `You ${this.checkResults.remaks}`,
+              text: 'Your Exam Has Been Submitted.',
+              showConfirmButton: false,
+              timer: 1500
+           })
         }
 
      
@@ -178,9 +206,13 @@ export default {
             reverseButtons: true
           }).then((result) => {
           if (result.isConfirmed) {
+            const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE')
+            console.log('BASE', response);
+            localStorage.setItem('seconds', 0)
+            // this.time = 0
             swalWithBootstrapButtons.fire(
-              'Submitted!',
-              'Your file has been submitted.',
+              `You ${this.checkResults.remaks}`,
+              'Your Exam Has Been Submitted.',
               'success'
             )
           } else if (
@@ -310,20 +342,20 @@ export default {
 }
 </style>
 
-   // if (1 > timeInSeconds) {
-        //   refKey = 360
-        // }
-        // if (quotient >= timeInSeconds && (quotient * 2) < timeInSeconds) {
-        //   refKey = 270
-        // }
-        // if (quotient * 2 >= timeInSeconds && (quotient * 3) < timeInSeconds) {
-        //   refKey = 180
-        // }
-        // if (quotient * 3 >= timeInSeconds) {
-        //   refKey = 90
-        // }
-        // if (refKey) {
-        //   console.log(quotient, timeInSeconds, refKey)
-        //   refs[refKey].classList.add('progressed')
-        //   refs[refKey].style.borderRadius = sideRadius[refKey]
-        // }
+  //  if (1 > timeInSeconds) {
+  //         refKey = 360
+  //       }
+  //       if (quotient >= timeInSeconds && (quotient * 2) < timeInSeconds) {
+  //         refKey = 270
+  //       }
+  //       if (quotient * 2 >= timeInSeconds && (quotient * 3) < timeInSeconds) {
+  //         refKey = 180
+  //       }
+  //       if (quotient * 3 >= timeInSeconds) {
+  //         refKey = 90
+  //       }
+  //       if (refKey) {
+  //         console.log(quotient, timeInSeconds, refKey)
+  //         refs[refKey].classList.add('progressed')
+  //         refs[refKey].style.borderRadius = sideRadius[refKey]
+  //       }

@@ -110,7 +110,7 @@ export default {
       required: true,
       selected: [],
       afterExam: 0,
-      time: 0,
+      // time: 0,
       answers: [],
       // examQuestion: {
       //   choices: {
@@ -208,22 +208,10 @@ export default {
       this.isTimer = false
       this.helloShow = true
       console.log('RESULTS', this.checkResults);
-      // swal if PASSED!
-//       Swal.fire({
-//   title: 'PASSED!',
-//   text: 'Congratulations. You may check your result in the History',
-//   width: 600,
-//   padding: '3em',
-//   background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
-//   backdrop: `
-//     rgba(0,0,123,0.4)
-//     no-repeat
-//   `
-// })
-        // swal if FAILED!
+      // swal
       Swal.fire({
   title: `You ${this.checkResults.remaks}`,
-  text: 'You may check your result in the History.',
+  text: 'Thank You For Participating. You May Check Your Result in the History.',
   width: 600,
   padding: '3em',
   background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
