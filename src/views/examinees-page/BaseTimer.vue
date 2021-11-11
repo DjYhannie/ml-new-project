@@ -147,7 +147,7 @@ export default {
               variant: 'danger',
             },
           })
-      //     passToParent()
+          passToParent()
       //     this.answers = this.answers.map(ans => {
       //   try {
       //     ans = JSON.parse(ans)
@@ -157,16 +157,16 @@ export default {
       //     return ans
       //   }
       // })
-      this.answers = this.answers.filter(n => n)
-      const data = {answers: JSON.stringify(this.answers), id: this.id}
-          const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
-            console.log('RESULTS', this.checkResults);
-            Swal.fire({
-              title: `You ${this.checkResults.remaks}`,
-              text: 'Your Exam Has Been Submitted.',
-              showConfirmButton: false,
-              timer: 1500
-           })
+      // this.answers = this.answers.filter(n => n)
+      // const data = {answers: JSON.stringify(this.answers), id: this.id}
+      //     const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      //       console.log('RESULTS', this.checkResults);
+      //       Swal.fire({
+      //         title: `You ${this.checkResults.remaks}`,
+      //         text: 'Your Exam Has Been Submitted.',
+      //         showConfirmButton: false,
+      //         timer: 1500
+      //      })
         }
 
      
@@ -186,40 +186,19 @@ export default {
           refs[270].style.borderRadius = sideRadius[270]
         }
 
-        // swal alert 10 mins
-        if (Math.round(test) === 270) {
-          const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-              confirmButton: 'btn btn-danger',
-              cancelButton: 'btn btn-success'
-          },
-            buttonsStyling: false
-          })
-
-          swalWithBootstrapButtons.fire({
-            title: '45 secs. left!',
-            text: "Do you want to continue or submit anyway?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Submit',
-            cancelButtonText: 'Continue',
-            reverseButtons: true
-          }).then((result) => {
-          if (result.isConfirmed) {
-            this.$emit('submitted', true)
-          } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-          )
-           {
-          // swalWithBootstrapButtons.fire(
-          //   'Cancelled',
-          //   'Your imaginary file is safe :)',
-          //   'error'
-          // )
-        }
-      })
-        }
+        // toast alert 10 mins
+        // if (Math.round(test) >= 270) {
+          this.$toast.warning({
+              component: ToastificationContent,
+              props: {
+                title: '15 Mins Left',
+                icon: 'XOctagonIcon',
+                variant: 'danger',
+                timeout: 25000,
+                position: 'top-start',
+              },
+            })
+        // }
 
         timeInSeconds -= 1
       }, 1000)
@@ -262,7 +241,7 @@ export default {
 
 <style>
 #outerCont {
-  background-color: #209155;
+  background-color: rgb(41, 153, 41);
   width: 150px;
   height: 150px;
   display: grid;
@@ -309,13 +288,13 @@ export default {
 
 #start360,
 #outer360 {
-  background: rgb(230, 86, 86);
+  background: rgb(224, 63, 63);
   transform: rotate(360deg);
   transform-origin: bottom right;
 }
 
 #outer360 {
-  background-color: #209155;
+  background-color: rgb(41, 153, 41);
   width: 75px;
   height: 75px;
   position: absolute;
@@ -323,7 +302,7 @@ export default {
 }
 
 .progressed {
-  background: rgb(230, 86, 86);
+  background: rgb(224, 63, 63);
 }
 
 #display-time {

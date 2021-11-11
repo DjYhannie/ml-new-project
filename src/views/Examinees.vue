@@ -208,7 +208,7 @@ export default {
         },
         {
           key: 'date',
-          label: 'date',
+          label: 'date & time',
           sortable: true,
         },
         {

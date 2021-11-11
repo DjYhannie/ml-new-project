@@ -12,6 +12,7 @@ export default {
     show: true,
     index: null,
     token: sessionStorage.getItem('token'),
+    questionID: '',
   },
   getters: {
     GET_INDEX: state => state.index,
@@ -41,14 +42,15 @@ export default {
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
-    async ACTION_DELETE_QUESTION({ dispatch }, id) {
-      const response = await api.delete(`questions/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_DELETE_QUESTION({ dispatch }, question) {
+      const response = await api.delete(`questions/delete/${question.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       await dispatch('ACTION_GET_QUESTIONS')
       return response
     },
-    async ACTION_UPDATE_QUESTION({ dispatch }, question) {
+    async ACTION_UPDATE_QUESTION({ dispatch, commit }, question) {
       const response = await api.post(`questions/update/${question.id}`, question, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       await dispatch('ACTION_GET_QUESTIONS')
+      commit('SET_ID', response)
       return response
     },
   },
@@ -58,6 +60,9 @@ export default {
     },
     SET_COURSES(state, courses) {
       state.courses = courses
+    },
+    SET_ID(state, questionID) {
+      state.questionID = questionID
     },
     [questionTypes.MUTATION_SET_QUESTIONS]: (state, questions) => {
       state.questions = questions

@@ -600,11 +600,11 @@ export default {
     async deleteButton(questionnaire) {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
       Swal.fire({
-        icon: 'success',
-        title: 'Deleted Succesfully',
-        showConfirmButton: false,
-        timer: 1500
-      })
+  icon: 'success',
+  title: 'Deleted Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
         location.reload()
       return response
     },
@@ -642,7 +642,7 @@ export default {
 
     async sendButton(id) {
       // this.sendEmail = true
-      var target = document.getElementById('target'+id).style.display = 'block';
+      var target = document.getElementById('target'+questionnaire.id).style.display = 'block';
       this.id = id;
       if (target == 'block') {
         console.log('TARGETED__')
@@ -657,6 +657,7 @@ export default {
     async submitEditQuestionnaire() {
       console.log(this.questionnaire)
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTIONNAIRE', this.questionnaire)
+        location.reload()
       console.log('EDIT', response)
       this.questionnaire.title = ''
       this.questionnaire.course = ''
@@ -667,14 +668,12 @@ export default {
       this.questionnaire.hard_questions = ''
       this.questionnaire.total_questions = ''
       this.modalShow = false
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Edited Successfuly!',
-          icon: 'EditIcon',
-          variant: 'success',
-        },
-      })
+      Swal.fire({
+  icon: 'success',
+  title: 'Edited Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
     },
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'

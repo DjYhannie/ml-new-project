@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span class="blinking">Am I blinking?</span>
     <!-- Take Exam  -->
       <b-card class="card w-50 align-center" v-show="helloShow">
         <h3>Hello there!</h3>
@@ -61,6 +62,13 @@
         @click="submitExam"
         >
         Submit
+      </b-button>
+      <b-button
+        type="submit"
+        variant="success"
+        @click="submitExam"
+        >
+        Flagged Questions
       </b-button>
 </b-card>
   </div>
@@ -176,7 +184,6 @@ export default {
       })
       const ids = this.examQuestionnaires.map(question => question.id)
       const ansIds = Object.entries(this.answers).map(ans => parseInt(ans[0]))
-
       ids.forEach(id => {
         if (!ansIds.includes(id)) {
           this.$refs[id][0].style = "display: block;"
@@ -200,7 +207,6 @@ export default {
       }
         localStorage.setItem('seconds', 0)
         this.time = 0
-
       const data = {answers: JSON.stringify(this.answers), id: this.id}
       // console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
@@ -239,20 +245,28 @@ export default {
       this.answers = this.answers.filter(n => n)
        const data = {answers: JSON.stringify(this.answers), id: this.id}
       const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
-      consle.log('SUBMIT', response)
+      console.log('SUBMIT', response)
       this.time=0
       localStorage.setItem('seconds', 0)
+      this.examShow = true
+      this.formShow = false
+      this.isTimer = false
+      this.helloShow = true
             Swal.fire({
-              title: `You ${this.checkResults.remaks}`,
+              // title: `You ${this.checkResults.remaks}`,
               text: 'Your Exam Has Been Submitted.',
-              showConfirmButton: false,
               timer: 1500
            })
     },
     on45Seconds(value) {
-      localStorage.setItem('seconds', 0)
-        this.time = 0
       this.disabled = true
+          localStorage.setItem('seconds', 0)
+            this.time = 0
+        Swal.fire({
+          // title: `You ${this.checkResults.remaks}`,
+          text: 'Your Exam Has Been Submitted.',
+          timer: 1500
+       })
       console.log(value)
       this.answers = this.answers.map(ans => {
         try {
@@ -266,13 +280,12 @@ export default {
       this.answers = this.answers.filter(n => n)
        const data = {answers: JSON.stringify(this.answers), id: this.id}
       const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
-      consle.log('SUBMIT', response)
-            Swal.fire({
-              title: `You ${this.checkResults.remaks}`,
-              text: 'Your Exam Has Been Submitted.',
-              showConfirmButton: false,
-              timer: 1500
-           })
+      this.examShow = true
+      this.formShow = false
+      this.isTimer = false
+      this.helloShow = true
+      console.log('SUBMIT', response)
+      return response
     },
 
     checkRemainingTime() {
@@ -326,9 +339,6 @@ export default {
         float: none; /* Added */
         margin-bottom: 10px; /* Added */
 }
-button {
-  float: right;
-}
 .sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -347,5 +357,18 @@ span {
 }
 * {
       font-weight: bold;
+}
+button {
+  margin: 5;
+}
+.blinking{
+    animation:blinkingText 1.2s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: #000;    }
+    49%{    color: #000; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #000;    }
 }
 </style>

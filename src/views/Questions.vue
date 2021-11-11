@@ -126,12 +126,13 @@
     <hr>
     <br>
     <b-card>
-      <label for="filter-categories">Filter</label>
+      <label for="filter-categories">Filter by Categories</label>
       <b-form-select
         v-model="filterCategories"
         :options="optionsFilterCategories"
       />
       <br><br>
+      <label for="filter-categories">Filter by Courses</label>
       <b-form-select
         v-model="filterCourses"
       ><option
@@ -240,13 +241,13 @@
         >
           <b-button-group class="buttons">
             <b-dropdown>
-              <!-- <b-dropdown-item
+              <b-dropdown-item
                 @click="editButton(question)"
               >
                 Edit
-              </b-dropdown-item> -->
+              </b-dropdown-item>
               <b-dropdown-item
-                @click="deleteButton(question.id)"
+                @click="deleteButton(question)"
               >
                 Delete
               </b-dropdown-item>
@@ -458,21 +459,43 @@ export default {
     },
     async deleteButton(question) {
       const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
-           Swal.fire({
+      console.log(response);
+      Swal.fire({
   icon: 'success',
   title: 'Deleted Succesfully',
   showConfirmButton: false,
   timer: 1500
 })
+        return response
     },
+
+    
     editButton(question) {
-      this.questionDescription.question = question.id
+      this.questionDescription = question
       this.modalEditShow = true
-      this.editShow = true
-      this.addShow = false
+      // this.editShow = true
+      // this.addShow = false
     },
-    async submitEditQuestion(question) {
+    async submitEditQuestion() {
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
+      this.questionDescription.course = ''
+      this.questionDescription.category = ''
+      this.questionDescription.question = ''
+      this.questionDescription.answer = ''
+      this.questionDescription.choices.A = ''
+      this.questionDescription.choices.B = ''
+      this.questionDescription.choices.C = ''
+      this.questionDescription.choices.D = ''
+      this.questionDescription.choices.E = ''
+      this.modalShow = false
+      Swal.fire({
+  icon: 'success',
+  title: 'Updated Succesfully',
+  showConfirmButton: false,
+  timer: 1500
+})
+    },
+    cancel() {
     },
   },
 }

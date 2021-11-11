@@ -37,8 +37,8 @@ export default {
       console.log('EDIT__', response)
       return response
     },
-    async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, id) {
-      const response = await api.delete(`/questionnaire/delete/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_DELETE_QUESTIONNAIRE({ dispatch }, questionnaire) {
+      const response = await api.delete(`/questionnaire/delete/${questionnaire.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       await dispatch('ACTION_GET_QUESTIONNAIRE')
       return response
     },
