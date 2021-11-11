@@ -10,6 +10,81 @@ Content-Type: application/json
     "password_confirmation": "test123"
 }
 
+#####
+
+POST https://examapp-backend.herokuapp.com/api/adminlogin
+Content-Type: application/json
+
+{
+    "email" : "admin@admin.com",
+    "password" : "admin"
+}
+
+
+#####
+
+POST https://examapp-backend.herokuapp.com/api/questions/add
+Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
+Content-Type: application/json
+
+{
+    "question" : "A typical commercial test execution tool would be able to perform all of the following EXCEPT:",
+    "category" : "easy",
+    "course" : "ISTQB",
+    "answer": "A",
+    "choices": [
+                {"A": "generating expected outputs"},
+                {"B": "replaying inputs according to a programmed script"},
+                {"C": "comparison of expected outcomes with actual outcomes"},
+                {"D": "recording test inputs"},
+                {"E": "reading test values from a data file"}
+                ]
+}
+
+
+###
+DELETE https://examapp-backend.herokuapp.com/api/questions/delete/23
+Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
+
+
+###
+
+GET  https://examapp-backend.herokuapp.com/api/questions
+Authorization: Bearer 1|bB93KfjY638lJkPZIrCnfxmk3D2IWgn1bTGgFTO
+
+###
+POST  https://examapp-backend.herokuapp.com/api/questionnaire/create
+Authorization: Bearer 7|Pdo53cQpzRC0tUryLcmPWlb2prxqOT5Q0564WNyT
+Content-Type: application/json
+
+{
+    "title" : "TEST",
+    "course": "ISTQB",
+    "time_duration": 40,
+    "passing_score": 5,
+    "easy_questions": 10,
+    "average_questions": 0,
+    "hard_questions":0,
+    "total_questions": 10
+}
+
+
+###
+POST  https://examapp-backend.herokuapp.com/api/send/invitation
+Content-Type: application/json
+Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
+
+{
+    "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
+}
+
+
+POST https://examapp-backend.herokuapp.com/api/users
+Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
+
+
+
+
 ###
 
 POST http://localhost:8000/api/register
@@ -20,17 +95,6 @@ Content-Type: application/application/json
     "email":"19104865@usc.edu.ph",
     "password": "test123",
     "password_confirmation": "test123"
-}
-
-
-#####
-
-POST https://examapp-backend.herokuapp.com/api/adminlogin
-Content-Type: application/json
-
-{
-    "email" : "admin@admin.com",
-    "password" : "admin"
 }
 
 ###
@@ -56,31 +120,6 @@ Content-Type: application/json
     "email" : "rhea0951@gmail.com"
 }
 
-
-#####
-
-POST https://examapp-backend.herokuapp.com/api/questions/add
-Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
-Content-Type: application/json
-
-{
-    "question" : "A typical commercial test execution tool would be able to perform all of the following EXCEPT:",
-    "category" : "easy",
-    "course" : "ISTQB",
-    "answer": "A",
-    "choices": [
-                {"A": "generating expected outputs"},
-                {"B": "replaying inputs according to a programmed script"},
-                {"C": "comparison of expected outcomes with actual outcomes"},
-                {"D": "recording test inputs"},
-                {"E": "reading test values from a data file"}
-                ]
-}
-
-###
-DELETE https://examapp-backend.herokuapp.com/api/questions/delete/23
-Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
-
 ###
 
 POST http://localhost:8000/api/questions/add
@@ -100,29 +139,6 @@ Content-Type: application/json
                 {"E": "a mistake"}
                 ]
 }
-
-
-###
-
-GET  https://examapp-backend.herokuapp.com/api/questions
-Authorization: Bearer 1|bB93KfjY638lJkPZIrCnfxmk3D2IWgn1bTGgFTO
-
-###
-POST  https://examapp-backend.herokuapp.com/api/questionnaire/create
-Authorization: Bearer 7|Pdo53cQpzRC0tUryLcmPWlb2prxqOT5Q0564WNyT
-Content-Type: application/json
-
-{
-    "title" : "TEST",
-    "course": "ISTQB",
-    "time_duration": 40,
-    "passing_score": 5,
-    "easy_questions": 10,
-    "average_questions": 0,
-    "hard_questions":0,
-    "total_questions": 10
-}
-
 
 ###
 PUT http://localhost:8000/api/questionnaire/update/1
@@ -201,7 +217,6 @@ GET  http://localhost:8000/api/questions
 Authorization: Bearer 4|GzPJbFuKPgOyZTtTKsSlgOdnfq01rorqJFu0daOr
 
 
-
 ###
 
 POST http://localhost:8000/api/send/invitation
@@ -214,16 +229,8 @@ Authorization: Bearer 1|59bXkC15elIXQMJHPnDUhcmEDLlJofJogPnm3Xdc
 }
 
 ###
-POST  https://examapp-backend.herokuapp.com/api/send/invitation
-Content-Type: application/json
-Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
 
-{
-    "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
-}
-
-
-POST https://examapp-backend.herokuapp.com/api/users
-Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
+GET http://localhost:8000/api/result/all
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 
