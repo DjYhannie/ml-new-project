@@ -351,9 +351,10 @@
                 @submit.prevent
               >
               <!-- emails  -->
-                <!-- <b-form-select
-          v-model="chosen"
+                <b-form-select
+          v-model="chosenEmails"
           class="chosen-select"
+          @change="ChosenJs($event)"
         >
           <option
             v-for="user in users"
@@ -361,7 +362,7 @@
           >
             {{ user.email }}
           </option>
-        </b-form-select> -->
+        </b-form-select>
          <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button v-b-toggle.accordion-2>Select Emails</b-button>
@@ -397,6 +398,7 @@
                   data-placeholder="Choose a country..."
                   multiple class="chosen-select"
                   :options="optionsEmails"/> -->
+                  <!-- <b-form-select></b-form-select> -->
               </b-form>
           </b-card>
         </b-card>
@@ -436,6 +438,8 @@ import Swal from 'sweetalert2'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { required, email } from '@validations'
 // import { $ } from 'jquery'
+import * as $ from 'jquery'
+import chosen from 'chosen-js'
 // import * as questionnaireTypes from '../store/types/questionnaire'
 
 export default {
@@ -468,7 +472,8 @@ export default {
   data() {
     return {
       // emails: [],
-      chosen: '',
+      chosenEmails: [],
+      test : [],
       id: null,
       isUpdate: true,
       questionnairesCopy: null,
@@ -640,10 +645,10 @@ export default {
       }
     },
 
-    async sendButton(id) {
-      // this.sendEmail = true
+    sendButton(questionnaire) {
+      this.sendEmail = true
       var target = document.getElementById('target'+questionnaire.id).style.display = 'block';
-      this.id = id;
+      this.id = questionnaire.id;
       if (target == 'block') {
         console.log('TARGETED__')
       }
@@ -678,6 +683,29 @@ export default {
     cancel() {
       // document.getElementById(questions.id).style.display = 'none'
     },
+
+    ChosenJs(event){
+      console.log(this.test.length);
+      if(this.test.length > 0){
+        this.test.forEach((element, index)=>{
+          console.log(element == event);
+          if(element == event){
+            this.test.splice(index, 1)
+          }else{
+            this.test.push(event)
+          }
+        })  
+      }else{
+        this.test.push(event)
+      }
+        
+      var opt = document.createElement('option');
+      opt.innerHTML = this.test
+      opt.setAttribute('selected','true')
+      opt.setAttribute('hidden','true')
+      let testing = document.querySelector('.chosen-select').appendChild(opt);
+      console.log(testing);      
+    },  
   },
 }
 
@@ -724,4 +752,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
+/* .chosen-select {
+  border: 1px solid gray;
+} */
 </style>

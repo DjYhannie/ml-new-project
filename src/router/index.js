@@ -232,6 +232,9 @@ router.beforeEach((to, from, next) => {
     if (token) {
       console.log('here');
     } else {
+      if (to.name == 'user/take-exam') {
+        localStorage.setItem('take_exam', JSON.stringify(to))
+      }
       next({ path: '/' })
     }
   }

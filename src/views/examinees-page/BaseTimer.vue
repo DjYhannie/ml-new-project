@@ -187,18 +187,18 @@ export default {
         }
 
         // toast alert 10 mins
-        // if (Math.round(test) >= 270) {
-          this.$toast.warning({
+        if (Math.round(test) == 270) {
+          this.$toast({
               component: ToastificationContent,
               props: {
+                position: 'top-center',
                 title: '15 Mins Left',
-                icon: 'XOctagonIcon',
+                icon: 'AlertOctagonIcon',
                 variant: 'danger',
-                timeout: 25000,
-                position: 'top-start',
+                timeout: 15000,
               },
             })
-        // }
+        }
 
         timeInSeconds -= 1
       }, 1000)

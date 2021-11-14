@@ -39,6 +39,7 @@ Vue.use(VueCompositionAPI)
 // var $ = require('jquery')
 Vue.use($)
 
+
 // import core styles
 require('@core/scss/core.scss')
 

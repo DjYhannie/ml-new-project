@@ -241,6 +241,7 @@ export default {
           this.loader = true
           const login = await this.$store.dispatch('UserLogin', this.data)
           const token = this.$store.getters.StateToken
+          sessionStorage.setItem('token', token)
           const message = login.data.message
           if (!token) {
             this.loader = false
@@ -254,7 +255,14 @@ export default {
             },
           }) 
           } else {
-            window.location.href = `${window.location.origin}/user/take-exam`
+            let to = localStorage.getItem('take_exam')
+            
+            if (to) {
+              to = JSON.parse(to)
+              console.log(to)
+              window.location.href = `${window.location.origin}/user/take-exam/${to.params.id}`
+            }
+            // window.location.href = `${window.location.origin}/user/take-exam`
             // this.$router.push({ name: 'home' })
           }
           // this.$router.push({ name: 'home' })

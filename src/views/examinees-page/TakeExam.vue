@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="blinking">Am I blinking?</span>
+    <!-- <span class="blinking">Am I blinking?</span> -->
     <!-- Take Exam  -->
       <b-card class="card w-50 align-center" v-show="helloShow">
         <h3>Hello there!</h3>
@@ -37,7 +37,7 @@
         <b-form-group>
           {{index+1}} . {{ examQuestionnaire.question }}
         <div>
-          <span style="display: none;" :ref="examQuestionnaire.id"><b>This is required*</b></span>
+          <span style="display: none;" :ref="examQuestionnaire.id"><b>*</b></span>
           <b-form-radio-group
             id="radio-group-2"
             v-model="selected[examQuestionnaire.id]"
@@ -45,7 +45,7 @@
             required
           >
           <div v-for="(choice, index) in examQuestionnaire.choices" v-bind:key="index">
-          <b-form-radio v-bind:value="index">
+          <b-form-radio class="radio" v-bind:value="index">
             {{`${index} . ${choice}`}}
           </b-form-radio>
           </div>
@@ -63,13 +63,13 @@
         >
         Submit
       </b-button>
-      <b-button
+      <!-- <b-button
         type="submit"
         variant="success"
         @click="submitExam"
         >
         Flagged Questions
-      </b-button>
+      </b-button> -->
 </b-card>
   </div>
 </template>
@@ -152,6 +152,9 @@ export default {
     console.log(location.pathname.split('/').pop())
     await this.GET_EXAM_QUESTIONNAIRE()
     console.log(this.examQuestionnaires)
+
+    // remove take_exam in localstorage
+    localStorage.removeItem('take_exam')
   },
   methods: {
     ...mapMutations({
@@ -172,7 +175,6 @@ export default {
     },
 
     async submitExam() {
-      console.log(this.answers)
       this.answers = this.answers.map(ans => {
         try {
           ans = JSON.parse(ans)
@@ -195,9 +197,11 @@ export default {
   
       if (this.examQuestionnaires.length !== this.answers.length){
         // this.showRequired = true
+        this.answers = []
         this.$toast({
           component: ToastificationContent,
             props: {
+              position: 'top-center',
               title: 'Please dont skip a Question!',
               icon: 'AlertOctagonIcon',
               variant: 'danger',
@@ -211,6 +215,7 @@ export default {
       // console.log(this.id)
       const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
       // console.log('SUBMIT_EXAM__', response.data)
+      this.answers = [] 
       this.examShow = true
       this.formShow = false
       this.isTimer = false
@@ -218,19 +223,24 @@ export default {
       console.log('RESULTS', this.checkResults);
       // swal
       Swal.fire({
-        title: `You ${this.checkResults.remaks}`,
+        title: `You ${this.checkResults.remaks} Score: ${this.checkResults.points} / ${this.examQuestionnaires.length}`,
+        // text: `Score: ${this.checkResults.points}`,
   text: 'Thank You For Participating. You May Check Your Result in the History.',
   width: 600,
   padding: '3em',
-  background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
+  // background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
   backdrop: `
     rgba(0,0,123,0.4)
     no-repeat
   `
+}).then((result) => {
+  if (result.isConfirmed) {
+    this.$router.push({ name: 'user/history' })
+  }
 })
     },
 
-    timesUp(value) {
+    async timesUp(value) {
       this.disabled = true
       console.log(value)
       this.answers = this.answers.map(ans => {
@@ -243,8 +253,10 @@ export default {
         }
       })
       this.answers = this.answers.filter(n => n)
+       console.log(this.answers)
        const data = {answers: JSON.stringify(this.answers), id: this.id}
-      const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      this.answers = []
       console.log('SUBMIT', response)
       this.time=0
       localStorage.setItem('seconds', 0)
@@ -252,21 +264,26 @@ export default {
       this.formShow = false
       this.isTimer = false
       this.helloShow = true
-            Swal.fire({
-              // title: `You ${this.checkResults.remaks}`,
-              text: 'Your Exam Has Been Submitted.',
-              timer: 1500
-           })
+  Swal.fire({
+        title: `You ${this.checkResults.remaks}`,
+  text: 'Thank You For Participating. You May Check Your Result in the History.',
+  width: 600,
+  padding: '3em',
+  // background: '#fff url(https://acegif.com/wp-content/gif/confetti-4.gif)',
+  backdrop: `
+    rgba(0,0,123,0.4)
+    no-repeat
+  `
+}).then((result) => {
+  if (result.isConfirmed) {
+    this.$router.push({ name: 'user/history' })
+  }
+})
     },
-    on45Seconds(value) {
+    async on45Seconds(value) {
       this.disabled = true
           localStorage.setItem('seconds', 0)
             this.time = 0
-        Swal.fire({
-          // title: `You ${this.checkResults.remaks}`,
-          text: 'Your Exam Has Been Submitted.',
-          timer: 1500
-       })
       console.log(value)
       this.answers = this.answers.map(ans => {
         try {
@@ -279,11 +296,21 @@ export default {
       })
       this.answers = this.answers.filter(n => n)
        const data = {answers: JSON.stringify(this.answers), id: this.id}
-      const response = this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      const response = await this.$store.dispatch('ACTION_ADD_EXAM_QUESTIONNAIRE', data)
+      this.answers = []
       this.examShow = true
       this.formShow = false
       this.isTimer = false
       this.helloShow = true
+      Swal.fire({
+          title: `You ${this.checkResults.remaks}`,
+          text: 'Your Exam Has Been Submitted.',
+          timer: 1500
+       }).then((result) => {
+  if (result.isConfirmed) {
+    this.$router.push({ name: 'user/history' })
+  }
+})
       console.log('SUBMIT', response)
       return response
     },
@@ -350,6 +377,9 @@ export default {
 }
 .radio-container {
   padding: 15px;
+}
+.radio:hover {
+  color: black;
 }
 span {
   color: rgb(187, 85, 85);
