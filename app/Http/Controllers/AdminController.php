@@ -142,4 +142,25 @@ class AdminController extends Controller
         }
     }
 
+    public function getUserById($id)
+    {
+        try{
+
+            $user = Auth::user();
+            $user = User::find($id) ;
+            
+            return response()->json([
+                'message'=> $user,
+                'status_code' => 200
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status_code' => 404
+            ]);
+        }
+        
+    }
+
 }

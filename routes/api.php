@@ -79,6 +79,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     //Get Users
     Route::get('/users',[AdminController::class, 'getAllUsers']);
+    Route::get('/users/{id}', [AdminController::class, 'getUserById']);
     Route::post('/users/name',[AdminController::class, 'getUserByName']);
 
     Route::post('/answers',[ExamFormController::class, 'examForm']);

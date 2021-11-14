@@ -104,6 +104,11 @@ Content-Type: application/json
 }
 
 
+####
+GET http://localhost:8000/api/users/2
+Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
+
+
 ###
 
 GET  https://examapp-backend.herokuapp.com/api/questions
@@ -223,5 +228,7 @@ Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
 {
     "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
 }
+
+
 
 
