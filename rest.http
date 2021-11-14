@@ -10,21 +10,6 @@ Content-Type: application/json
     "password_confirmation": "test123"
 }
 
-
-
-###
-
-POST http://localhost:8000/api/register
-Content-Type: application/application/json
-
-{
-    "username": "Shannia Lee",
-    "email":"19104865@usc.edu.ph",
-    "password": "test123",
-    "password_confirmation": "test123"
-}
-
-
 #####
 
 POST https://examapp-backend.herokuapp.com/api/adminlogin
@@ -33,29 +18,6 @@ Content-Type: application/json
 {
     "email" : "admin@admin.com",
     "password" : "admin"
-}
-
-###
-POST http://localhost:8000/api/login
-Content-Type: application/json
-
-{
-    "email" : "19104865@usc.edu.ph",
-    "password" : "test123"
-}
-
-####
-POST http://localhost:8000/api/logout
-Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
-
-####
-
-POST http://localhost:8000/api/send/resetpassword
-# Authorization: Bearer 2|BW7YMI8WzhkfNrXhvphouzG6cURmf5vimPKt1QA9
-Content-Type: application/json
-
-{
-    "email" : "rhea0951@gmail.com"
 }
 
 
@@ -79,29 +41,10 @@ Content-Type: application/json
                 ]
 }
 
+
 ###
 DELETE https://examapp-backend.herokuapp.com/api/questions/delete/23
 Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
-
-###
-
-POST http://localhost:8000/api/questions/add
-Authorization: Bearer 5|DTaHcbE7nhneizh2CxFzUwcF9qCbscEthqjsoPOg
-Content-Type: application/json
-
-{
-    "question" : "When what is visible to end-users is a deviation from the specific or expected behavior, this is called:",
-    "category" : "easy",
-    "course" : "ISTQB",
-    "answer": "C",
-    "choices": [
-                {"A": "an error"},
-                {"B" : "a fault"},
-                {"C": "a failure"},
-                {"D": "a defect"},
-                {"E": "a mistake"}
-                ]
-}
 
 
 ####
@@ -132,6 +75,77 @@ Content-Type: application/json
 
 
 ###
+POST  https://examapp-backend.herokuapp.com/api/send/invitation
+Content-Type: application/json
+Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
+
+{
+    "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
+}
+
+
+POST https://examapp-backend.herokuapp.com/api/users
+Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
+
+
+
+
+###
+
+POST http://localhost:8000/api/register
+Content-Type: application/application/json
+
+{
+    "username": "Shannia Lee",
+    "email":"19104865@usc.edu.ph",
+    "password": "test123",
+    "password_confirmation": "test123"
+}
+
+###
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+    "email" : "rhea0951@gmail.com",
+    "password" : "test123"
+}
+
+####
+POST http://localhost:8000/api/logout
+Authorization: Bearer 1|roO6r6iYlN3NUNmreg13Eyro2rcLgCEcFAtzXPRj
+
+####
+
+POST http://localhost:8000/api/send/resetpassword
+# Authorization: Bearer 2|BW7YMI8WzhkfNrXhvphouzG6cURmf5vimPKt1QA9
+Content-Type: application/json
+
+{
+    "email" : "rhea0951@gmail.com"
+}
+
+###
+
+POST http://localhost:8000/api/questions/add
+Authorization: Bearer 5|DTaHcbE7nhneizh2CxFzUwcF9qCbscEthqjsoPOg
+Content-Type: application/json
+
+{
+    "question" : "When what is visible to end-users is a deviation from the specific or expected behavior, this is called:",
+    "category" : "easy",
+    "course" : "ISTQB",
+    "answer": "C",
+    "choices": [
+                {"A": "an error"},
+                {"B" : "a fault"},
+                {"C": "a failure"},
+                {"D": "a defect"},
+                {"E": "a mistake"}
+                ]
+}
+
+###
 PUT http://localhost:8000/api/questionnaire/update/1
 Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
 Content-Type: application/json
@@ -151,7 +165,7 @@ Content-Type: application/json
 
 POST http://localhost:8000/api/questionnaire/create
 Content-Type: application/json
-Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 {
     "title" : "sample1",
@@ -166,7 +180,7 @@ Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
 
 ###
 GET http://localhost:8000/api/questionnaire/1
-Authorization: Bearer 1|Z0fEgtKVgqA3zeDAL4G1tonJWXdP53vUY0i7u65w
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 ####
 GET  http://localhost:8000/api/questionnaire/time/1
@@ -176,11 +190,11 @@ Authorization: Bearer 25|5R0XFu8EKA3Vs36iZ8pUEjqZxiE4V7mQOMJGw0fk
 ####
 POST http://localhost:8000/api/checkanswer
 Content-Type: application/json
-Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 {
-    "id" : 2,
-    "answers" : "[{'102':'A'},{'66':'D'},{'149':'B'},{'18':'D'},{'23':'D'},{'42':'C'},{'36':'C'},{'89':'C'},{'124':'C'},{'118':'D'},{'88':'C'},{'69':'D'},{'83':'D'},{'119':'D'},{'26':'D'},{'29':'A'},{'78':'C'},{'90':'D'},{'21':'B'},{'60':'B'}]"
+    "id" : 1,
+    "answers" : "[{'25':'C'},{'83':'D'},{'37':'D'},{'92':'B'},{'57':'B'},{'36':'B'},{'138':'C'},{'112':'D'},{'48':'B'},{'64':'B'},{'23':'C'},{'28':'D'},{'4':'A'},{'82':'D'},{'96':'A'},{'115':'B'},{'94':'B'},{'105':'C'},{'24':'C'},{'148':'C'}]"
 }
 
 ######
@@ -197,7 +211,7 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 
 GET http://localhost:8000/api/result/all
 Content-Type: application/json
-Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 {
     "id" : "1"
@@ -206,7 +220,6 @@ Authorization: Bearer 1|Cb7qgOWCEkuzCRRlE39shxup5t940aJ0ZUMNYknf
 ###
 GET  http://localhost:8000/api/questions
 Authorization: Bearer 4|GzPJbFuKPgOyZTtTKsSlgOdnfq01rorqJFu0daOr
-
 
 
 ###
@@ -221,13 +234,9 @@ Authorization: Bearer 1|59bXkC15elIXQMJHPnDUhcmEDLlJofJogPnm3Xdc
 }
 
 ###
-POST  https://examapp-backend.herokuapp.com/api/send/invitation
-Content-Type: application/json
-Authorization: Bearer 10|m3SjyRHtZGqIjM1RO6iiHDbajsBuKDbWt0D08Dcg
 
-{
-    "emails" : ["quency.atacador@mlhuillier.com", "rhea.ardiente@mlhuillier.com", "reina.mates@mlhuillier.com"]
-}
+GET http://localhost:8000/api/result/all
+Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
 
 
 

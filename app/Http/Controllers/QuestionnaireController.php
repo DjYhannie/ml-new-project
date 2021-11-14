@@ -127,7 +127,7 @@ class QuestionnaireController extends Controller
         try{
             $user = Auth::user();
 
-            $questionnaire = DB::table('questionnaires')->get();
+            $questionnaire = DB::table('questionnaires')->orderBy('updated_at', "desc")->get();
 
             return response()->json([
                 'data' => $questionnaire
