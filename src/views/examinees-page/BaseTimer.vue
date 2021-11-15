@@ -216,11 +216,29 @@ export default {
         // if (15*60 == this.timeInSeconds--) {
         //   console.log('1 min left');
         //   this.alert15 = true
+        // this.$toast({
+        //   component: ToastificationContent,
+        //     props: {
+        //       position: 'top-center',
+        //       title: '15 Mins Left!',
+        //       icon: 'AlertOctagonIcon',
+        //       variant: 'danger',
+        //     },
+        //   })
         // }
         //alert 10 min
         // if (10*60 == this.timeInSeconds--) {
         //   console.log('1 min left');
         //   this.alert10 = true
+        // this.$toast({
+        //   component: ToastificationContent,
+        //     props: {
+        //       position: 'top-center',
+        //       title: '10 Mins Left!',
+        //       icon: 'AlertOctagonIcon',
+        //       variant: 'danger',
+        //     },
+        //   })
         // }
 
         //alert 1 min

@@ -211,6 +211,21 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/user/view-details',
+      name: 'user/view-details',
+      component: () => import('@/views/examinees-page/ViewDetails.vue'),
+      meta: {
+        pageTitle: 'View Details',
+        breadcrumb: [
+          {
+            text: 'View Details',
+            active: true,
+          },
+        ],
+        requiresAuth: true,
+      },
+    },
+    {
       path: '*',
       redirect: 'error-404',
     },

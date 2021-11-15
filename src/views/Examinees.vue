@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="row">
-    <div class="col-sm">
-      <!-- searchbar name  -->
+    <!-- <div class="col-sm">
         <b-form-group
         label="Search by Name"
           label-for="filter-input"
@@ -22,11 +21,10 @@
             />
           </b-input-group>
         </b-form-group>
-    </div>
+    </div> -->
     <div class="col-sm">
       <!-- searchbar remarks  -->
         <b-form-group
-        label="Search by Remarks"
           label-for="filter-input"
           label-cols-sm="9"
           label-align-sm="right"
@@ -213,7 +211,7 @@ export default {
           sortable: true,
         },
         {
-          key: 'attemps',
+          key: 'attempts',
           sortable: false,
         },
         {
@@ -230,7 +228,6 @@ export default {
           key: 'remarks',
           label: 'remarks',
           sortable: true,
-          variant: 'danger',
         },
         {
           key: 'action',
@@ -240,19 +237,19 @@ export default {
 
       items: [
         {
-          isActive: true, attemps: '1', date: '09-01-2021', remarks: 'Passed', score: '38/40', name: 'Dickerson',
+          isActive: true, attempts: '1', date: '09-01-2021', remarks: 'Passed', score: '38/40', name: 'Dickerson',
         },
         //  attemps: '1',
         {
-          isActive: false, attemps: '2', date: '09-02-2021', remarks: 'Failed', score: '22/40', name: 'Larsen',
+          isActive: false, attempts: '2', date: '09-02-2021', remarks: 'Failed', score: '22/40', name: 'Larsen',
         },
         // , attemps: '2'
         {
-          isActive: false, attemps: '3', date: '09-03-2021', remarks: 'Passed', score: '36/40', name: 'Geneva',
+          isActive: false, attempts: '3', date: '09-03-2021', remarks: 'Passed', score: '36/40', name: 'Geneva',
         },
         // attemps: '3',
         {
-          isActive: true, attemps: '2', date: '09-04-2021', remarks: 'Failed', score: '20/40', name: 'Jami',
+          isActive: true, attempts: '2', date: '09-04-2021', remarks: 'Failed', score: '20/40', name: 'Jami',
         },
         // attemps: '2',
       ],

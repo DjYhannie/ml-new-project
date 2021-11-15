@@ -486,12 +486,12 @@ export default {
     
     editButton(question) {
       this.questionDescription = question
+      console.log(this.questions)
       this.modalEditShow = true
       // this.editShow = true
       // this.addShow = false
     },
     async submitEditQuestion() {
-      console.log('EDIT', this.questionDescription);
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
       this.questionDescription.course = ''
       this.questionDescription.category = ''

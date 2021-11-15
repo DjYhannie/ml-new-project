@@ -22,11 +22,13 @@ export default {
   actions: {
     ACTION_GET_QUESTIONS({ commit }) {
       api.get('/questions', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-        .then(res => res).then(choice => {
+        .then(choice => {
           const questions = choice.data.data.map(c => {
             c.choices = JSON.parse(c.choices)
             return c
           })
+          
+          console.log(questions)
           this.courses = []
           questions.forEach(element => {
             this.courses.push(element.course)
@@ -48,23 +50,13 @@ export default {
       return response
     },
     async ACTION_UPDATE_QUESTION({ dispatch, commit }, question) {
-      const response = await api.post(`questions/update/${question.id}`, question, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log(question)
+      const response = api.post(`questions/update/${question.id}`, question, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       .then(res => res).then(choice => {
-        const questions = choice.data.data.map(c => {
-          c.choices = JSON.parse(c.choices)
-          return c
-        })
-        this.courses = []
-        questions.forEach(element => {
-          this.courses.push(element.course)
-        })
-        this.courses = [...new Set(this.courses)]
-        commit('SET_QUESTION', questions)
-        commit('SET_COURSES', this.courses)
+        dispatch('ACTION_GET_QUESTIONS')
+        // commit('SET_ID', response)
+        // console.log('EDIT',response);
       })
-      // await dispatch('ACTION_GET_QUESTIONS')
-      // commit('SET_ID', response)
-      // console.log('EDIT',response);
       return response
     },
   },

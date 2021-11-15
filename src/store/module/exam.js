@@ -10,7 +10,7 @@ export default {
     exam: {},
     result: {},
     users: {},
-    user: [],
+    resultByUserId: {},
     id: '',
   },
   getters: {
@@ -20,6 +20,7 @@ export default {
     GET_EXAM_QUESTIONNAIRE_RESULT: state => state.examResults,
     GET_RESULT: state => state.result,
     GET_USERS: state => state.users,
+    GET_RESULT_BY_USERID: state => state.resultByUserId,
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit, getters }) {
@@ -28,7 +29,7 @@ export default {
       let random = res.data.data.randomizedQuestions
       random = (JSON.parse(random)).map(question => {
         question.choices = JSON.parse(question.choices)
-        console.log(random)
+        // console.log(random)
         return question
       })
       commit('SET_QUESTIONNAIRE', res.data.data.questionnaire)
@@ -37,12 +38,19 @@ export default {
       console.log('RANDOM', random)
       return random
     },
-    async ACTION_GET_USERS({ commit }, user) {
-      const response = await api.get('/users/${user.id}', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    async ACTION_GET_USERS({ getters, commit }) {
+      console.log('ID', getters.StateUser.id)
+      const response = await api.get(`/users/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log('USERS', response)
       commit('SET_RESULT', response.data)
       return response
     },
+    async ACTION_GET_RESULT_BY_USERID({ getters, commit}) {
+      const response = await api.get(`/result/user/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+       console.log('RESULT_BY_USERID', response);
+       commit('SET_RESULT_BY_USERID', response)
+    },
+
     async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit }, addExamQuestionnaire) {
       const response = await api.post('/checkanswer', addExamQuestionnaire, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // commit('SET_EXAM_QUESTIONNAIRE', response.data.data)
@@ -82,6 +90,9 @@ export default {
     },
     SET_USER(state, users) {
       state.users= users
+    },
+    SET_RESULT_BY_USERID(state, resultByUserId) {
+      state.resultByUserId = resultByUserId
     }
   },
 }
