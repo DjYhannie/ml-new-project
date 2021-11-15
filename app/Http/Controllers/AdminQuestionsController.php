@@ -81,7 +81,7 @@ class AdminQuestionsController extends Controller
             $question->category = request('category');
             $question->course = request('course');
             $question->answer = request('answer');
-            $question->choices = request(['choices']);
+            $question->choices = request('choices');
 
             $question->save();
 
