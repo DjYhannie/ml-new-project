@@ -161,6 +161,27 @@ class ExamFormController extends Controller
         ]);
     }
 
+    public function getResultByUserId($id)
+    {
+        try{
+            $user = Auth::user();
+            $results = DB::table('url_tokens')
+                        ->where('user_id', $id)
+                        ->get();
+            return response()->json([
+                'data' => $results,
+                'status_code' => 200
+            ]);
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'message' => $e->getMessage(),
+                'status_code' => 400
+            ]);
+        }
+    }
+
     public function getAllResult()
     {
         try{

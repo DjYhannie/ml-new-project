@@ -47,11 +47,6 @@ DELETE https://examapp-backend.herokuapp.com/api/questions/delete/23
 Authorization: Bearer 3|9H7OkH2c0ENuhNXfowBqTsAuwBJ5XbtGPFKYLjlJ
 
 
-####
-GET http://localhost:8000/api/users/2
-Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
-
-
 ###
 
 GET  https://examapp-backend.herokuapp.com/api/questions
@@ -237,6 +232,17 @@ Authorization: Bearer 1|59bXkC15elIXQMJHPnDUhcmEDLlJofJogPnm3Xdc
 
 GET http://localhost:8000/api/result/all
 Authorization: Bearer 3|99G8K4wA6QhQmACEpN4JSNvlegj7T6QwfedEtQS0
+
+####
+GET http://localhost:8000/api/users/2
+Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
+
+
+####
+GET http://localhost:8000/api/result/user/1
+Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
+
+
 
 
 

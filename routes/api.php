@@ -88,6 +88,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/result', [ExamFormController::class, 'getResult']);
     Route::get('/result/all', [ExamFormController::class, 'getAllResult']);
     Route::put('/data/updaete', [ExamFormController::class, 'updateURL']);
+    Route::get('/result/user/{id}', [ExamFormController::class, 'getResultByUserId']);
 
 
     Route::get('/generate-link', [ExamFormController::class, 'examLink'])->name('examcode');
