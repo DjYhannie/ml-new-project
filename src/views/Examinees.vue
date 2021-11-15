@@ -1,13 +1,10 @@
 <template>
   <div>
-    <b-row>
-      <b-col
-        sm="5"
-        md="6"
-        class="my-1"
-      >
-        <!-- searchbar   -->
+    <div class="row">
+    <div class="col-sm">
+      <!-- searchbar name  -->
         <b-form-group
+        label="Search by Name"
           label-for="filter-input"
           label-cols-sm="9"
           label-align-sm="right"
@@ -25,13 +22,31 @@
             />
           </b-input-group>
         </b-form-group>
-      </b-col>
-      <b-col
-        sm="7"
-        md="6"
-        class="my-1"
-      >
-        <!-- per page  -->
+    </div>
+    <div class="col-sm">
+      <!-- searchbar remarks  -->
+        <b-form-group
+        label="Search by Remarks"
+          label-for="filter-input"
+          label-cols-sm="9"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-input-group>
+            <b-input-group-prepend is-text>
+              <b-icon icon="search" />
+            </b-input-group-prepend>
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+            />
+          </b-input-group>
+        </b-form-group>
+    </div>
+    <div class="col-sm">
+      <!-- per page  -->
         <b-form-group
           label="Per Page"
           label-for="per-page-select"
@@ -47,8 +62,8 @@
             width="15px"
           />
         </b-form-group>
-      </b-col>
-    </b-row>
+    </div>
+  </div>
 
     <br>
 

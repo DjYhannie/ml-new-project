@@ -74,17 +74,17 @@ export default {
   computed: {
     ...mapGetters({
       checkResults: 'GET_EXAM_QUESTIONNAIRE_RESULT',
-      result: 'GET_RESULT',
+      users: 'GET_USERS',
     }),
   },
   mounted() {
-    // this.GET_RESULTS()
+    this.GET_USERS()
     // console.log('RESULTS__', this.examResults)
   },
   methods: {
     ...mapActions({
       GET_EXAM_RESULT: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
-      GET_RESULT: 'ACTION_GET_RESULTS',
+      GET_USERS: 'ACTION_GET_USERS',
     }),
   },
 }

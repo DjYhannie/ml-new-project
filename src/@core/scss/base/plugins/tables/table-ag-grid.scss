@@ -18,7 +18,7 @@
   // Checkbox Color
   .ag-icon-checkbox-checked,
   .ag-icon-checkbox-indeterminate {
-    color: $primary !important;
+    color: $danger !important;
   }
 
   /*** TABLE BODY HEIGHT - FOOTER HEIGHT ***/
@@ -89,7 +89,7 @@
     }
 
     span[ref='lbCurrent'] {
-      background-color: $primary;
+      background-color: $danger;
     }
 
     span[ref='lbTotal'] {

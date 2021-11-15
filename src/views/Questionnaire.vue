@@ -351,6 +351,7 @@
                 @submit.prevent
               >
               <!-- emails  -->
+              <label for="select-emails">Select Emails</label>
                 <b-form-select
           v-model="chosenEmails"
           class="chosen-select"
@@ -363,6 +364,8 @@
             {{ user.email }}
           </option>
         </b-form-select>
+        <br>
+        <!-- prev send invitations -->
          <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button v-b-toggle.accordion-2>Select Emails</b-button>
@@ -386,6 +389,7 @@
         </b-card-body>
       </b-collapse>
     </b-card>
+    <br>
                 <!-- submit button -->
                 <b-button
                   type="submit"
@@ -394,11 +398,6 @@
                 >
                   Send
                 </b-button>
-                <!-- <b-form-select
-                  data-placeholder="Choose a country..."
-                  multiple class="chosen-select"
-                  :options="optionsEmails"/> -->
-                  <!-- <b-form-select></b-form-select> -->
               </b-form>
           </b-card>
         </b-card>
@@ -598,21 +597,31 @@ export default {
         Display.value = total
       }
     },
-    // submit() {
-    //   this.postQuestionnaire(this.createquestion)
-    //   this.createquestion = ''
-    // },asdf
-    async deleteButton(questionnaire) {
-      const response = await this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
+    async deleteButton(questionnaire){
       Swal.fire({
-  icon: 'success',
-  title: 'Deleted Succesfully',
-  showConfirmButton: false,
-  timer: 1500
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: 'red',
+  cancelButtonColor: 'green',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    const response = this.$store.dispatch('ACTION_DELETE_QUESTIONNAIRE', questionnaire)
+    console.log(response);
+    Swal.fire(
+      
+      'Deleted!',
+      'Questionnaire has been deleted.',
+      'success'
+    )
+    location.reload()
+    return response
+  }
 })
-        location.reload()
-      return response
     },
+
     async submitEmail(emails) {
       const response = await this.$store.dispatch('ACTION_SEND_QUESTIONNAIRE', this.data)
       console.log('EMAILS__RESPONSE', response)

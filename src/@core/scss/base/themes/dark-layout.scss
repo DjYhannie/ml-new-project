@@ -42,7 +42,7 @@
   // other tags
   a {
     &:hover {
-      color: $primary;
+      color: $danger;
     }
   }
 
@@ -338,7 +338,7 @@
     }
 
     .collapse-toggle-icon {
-      color: $primary !important;
+      color: $danger !important;
     }
   }
 
@@ -599,7 +599,7 @@
 
   .btn-group-toggle {
     label[class*='btn-outline-'] {
-      color: $primary !important;
+      color: $danger !important;
     }
   }
 
@@ -667,7 +667,7 @@
           background-color: $theme-dark-pagination-bg;
 
           .page-link {
-            background-color: $primary;
+            background-color: $danger;
 
             &:hover {
               color: $white;
@@ -680,7 +680,7 @@
           color: $theme-dark-body-color;
 
           &:hover {
-            color: $primary;
+            color: $danger;
           }
         }
 
@@ -779,7 +779,7 @@
         color: $theme-dark-headings-color;
         &.active {
           background-color: $theme-dark-card-bg;
-          color: $primary;
+          color: $danger;
         }
 
         &.disabled {
@@ -800,7 +800,7 @@
       .nav-link {
         &.active {
           color: $white;
-          background-color: $primary;
+          background-color: $danger;
         }
       }
     }
@@ -891,7 +891,7 @@
         }
         &.active,
         &:active {
-          background-color: $primary;
+          background-color: $danger;
           color: $white;
         }
       }
@@ -1167,7 +1167,7 @@
       opacity: 0.5;
     }
     &:focus {
-      border-color: $primary;
+      border-color: $danger;
     }
   }
 
@@ -1226,7 +1226,7 @@
     &:focus-within {
       .form-control,
       .input-group-text {
-        border-color: $primary;
+        border-color: $danger;
         box-shadow: none;
       }
     }
@@ -1389,7 +1389,7 @@
       [class*='buttons-'] {
         background-color: $theme-dark-body-bg !important;
         &:active {
-          background-color: $primary !important;
+          background-color: $danger !important;
           color: $white;
         }
       }
@@ -1524,7 +1524,7 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: $primary;
+      background: $danger;
     }
   }
 
@@ -1633,7 +1633,7 @@
             }
 
             &.selected-row-bg {
-              background-color: rgba($primary, 0.06);
+              background-color: rgba($danger, 0.06);
               border-color: $theme-dark-border-color;
             }
           }
@@ -2247,7 +2247,7 @@
   // Users Application
   .app-user-view {
     .plan-card {
-      border-color: $primary !important;
+      border-color: $danger !important;
     }
   }
   .app-user-edit {
@@ -2367,7 +2367,7 @@
               background: $theme-dark-body-bg !important;
               color: $theme-dark-body-color;
               &:hover {
-                color: $primary !important;
+                color: $danger !important;
               }
             }
           }

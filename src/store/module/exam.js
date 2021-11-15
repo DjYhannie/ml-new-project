@@ -9,6 +9,8 @@ export default {
     examResults: {},
     exam: {},
     result: {},
+    users: {},
+    user: [],
     id: '',
   },
   getters: {
@@ -17,6 +19,7 @@ export default {
     GET_QUESTIONNAIRE_DETAILS: state => state.exam,
     GET_EXAM_QUESTIONNAIRE_RESULT: state => state.examResults,
     GET_RESULT: state => state.result,
+    GET_USERS: state => state.users,
   },
   actions: {
     async ACTION_GET_EXAM_QUESTIONNAIRE({ commit, getters }) {
@@ -34,9 +37,9 @@ export default {
       console.log('RANDOM', random)
       return random
     },
-    async ACTION_GET_RESULTS({ commit }) {
-      const response = await api.get('/result', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('RESULTS_ALL', response)
+    async ACTION_GET_USERS({ commit }, user) {
+      const response = await api.get('/users/${user.id}', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log('USERS', response)
       commit('SET_RESULT', response.data)
       return response
     },
@@ -77,5 +80,8 @@ export default {
     SET_RESULT(state, result) {
       state.result = result
     },
+    SET_USER(state, users) {
+      state.users= users
+    }
   },
 }

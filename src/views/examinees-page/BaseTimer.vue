@@ -1,5 +1,27 @@
 <template>
-  <div
+<div>
+   <!-- alert2  -->
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert2">
+  <h3 class="blinking">2 Mins Left!</h3>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- alert10  -->
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert10">
+  <h3 class="blinking">10 Mins Left!</h3>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- alert15  -->
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert15">
+  <h3 class="blinking">15 Mins Left!</h3>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+ <div
     id="outerCont"
     ref="outer-container"
   >
@@ -50,6 +72,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -67,6 +90,9 @@ export default {
   },
   data() {
     return {
+      alert15: false,
+      alert10: false,
+      alert2: false,
       answers: [],
       sideRadius: {
         90: '0px 80px 0px 0px',
@@ -186,18 +212,21 @@ export default {
           refs[270].style.borderRadius = sideRadius[270]
         }
 
-        // toast alert 10 mins
-        if (Math.round(test) == 270) {
-          this.$toast({
-              component: ToastificationContent,
-              props: {
-                position: 'top-center',
-                title: '15 Mins Left',
-                icon: 'AlertOctagonIcon',
-                variant: 'danger',
-                timeout: 15000,
-              },
-            })
+        // alert 15 mins
+        // if (15*60 == this.timeInSeconds--) {
+        //   console.log('1 min left');
+        //   this.alert15 = true
+        // }
+        //alert 10 min
+        // if (10*60 == this.timeInSeconds--) {
+        //   console.log('1 min left');
+        //   this.alert10 = true
+        // }
+
+        //alert 1 min
+        if (1*60 == this.timeInSeconds--) {
+          console.log('1 min left');
+          this.alert2 = true
         }
 
         timeInSeconds -= 1
@@ -310,6 +339,17 @@ export default {
   font-family: sans-serif;
   font-weight: 700;
   color: #322;
+}
+.blinking{
+    animation:blinkingText 1.2s infinite;
+    padding: 35px;
+}
+@keyframes blinkingText{
+    0%{     color: red;    }
+    49%{    color: red; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: red;    }
 }
 </style>
 

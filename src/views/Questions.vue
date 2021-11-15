@@ -36,6 +36,7 @@
               />
             </div>
             <br>
+            <label for="answer">Correct Answer</label>
             <div class="input-group mb-1">
               <b-form-select
                 v-model="questionDescription.answer"
@@ -168,6 +169,7 @@
             />
           </div>
           <br>
+            <label for="answer">Correct Answer</label>
           <div class="input-group mb-1">
             <b-form-select
               v-model="questionDescription.answer"
@@ -428,9 +430,9 @@ export default {
     filterByCourses() {
       // const newCourse = new Set()
       if (this.filterCourses == null) {
-        this.questionsCopy = this.questions
+        this.questions.questions = this.coursesCopy
       } else {
-        this.questionsCopy = this.questions.questions.filter(questions => questions.course.toLowerCase() === this.filterQuestions.toLowerCase())
+        this.questions.questions = this.questions.questions.filter(questions => questions.course.toLowerCase() === this.filterCourses.toLowerCase())
       }
     },
     async submitQuestion() {
@@ -457,18 +459,30 @@ export default {
       this.course.name = ''
       this.isShow = false
     },
-    async deleteButton(question) {
-      const response = await this.$store.dispatch('ACTION_DELETE_QUESTION', question)
-      console.log(response);
-      Swal.fire({
-  icon: 'success',
-  title: 'Deleted Succesfully',
-  showConfirmButton: false,
-  timer: 1500
-})
-        return response
-    },
 
+    async deleteButton(question){
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: 'red',
+  cancelButtonColor: 'green',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    const response = this.$store.dispatch('ACTION_DELETE_QUESTION', question)
+    console.log(response);
+    Swal.fire(
+      
+      'Deleted!',
+      'Question has been deleted.',
+      'success'
+    )
+    return response
+  }
+})
+    },
     
     editButton(question) {
       this.questionDescription = question
@@ -477,6 +491,7 @@ export default {
       // this.addShow = false
     },
     async submitEditQuestion() {
+      console.log('EDIT', this.questionDescription);
       const response = await this.$store.dispatch('ACTION_UPDATE_QUESTION', this.questionDescription)
       this.questionDescription.course = ''
       this.questionDescription.category = ''
@@ -487,9 +502,9 @@ export default {
       this.questionDescription.choices.C = ''
       this.questionDescription.choices.D = ''
       this.questionDescription.choices.E = ''
-      this.modalShow = false
+        this.modalShow = false
       Swal.fire({
-  icon: 'success',
+        icon: 'success',
   title: 'Updated Succesfully',
   showConfirmButton: false,
   timer: 1500
