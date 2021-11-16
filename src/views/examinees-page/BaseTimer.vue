@@ -8,19 +8,39 @@
   </button>
 </div>
 <!-- alert10  -->
-  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert10">
-  <h3 class="blinking">10 Mins Left!</h3>
+   <b-alert
+      class="alerts"
+      v-show="alert10"
+     :show="dismissCountDown"
+     dismissible
+     fade
+     @dismiss-count-down="countDownChanged"
+    >
+     <h1 class="blinking ml-5"><strong>10 Mins Left!</strong></h1>
+   </b-alert>
+  <!-- <div class="alert alert-dismissible fade show" role="alert" v-show="alert10">
+  <h1 class="blinking ml-5"><strong>10 Mins Left!</strong></h1>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-</div>
+</div> -->
 <!-- alert15  -->
-  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert15">
-  <h3 class="blinking">15 Mins Left!</h3>
+<b-alert
+      class="alerts"
+      v-show="alert15"
+     :show="dismissCountDown"
+     dismissible
+     fade
+     @dismiss-count-down="countDownChanged"
+    >
+     <h1 class="blinking ml-5"><strong>15 Mins Left!</strong></h1>
+   </b-alert>
+  <!-- <div class="alert alert-dismissible fade show" role="alert" v-show="alert15">
+  <h1 class="blinking ml-5"><strong>15 Mins Left!</strong></h1>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-</div>
+</div> -->
  <div
     id="outerCont"
     ref="outer-container"
@@ -76,11 +96,15 @@
 </template>
 
 <script>
+import { BAlert, } from 'bootstrap-vue'
 import Swal from 'sweetalert2'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  components: {
+    BAlert,
+  },
   props: {
     time: {
       type: Number,
@@ -90,6 +114,9 @@ export default {
   },
   data() {
     return {
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
       alert15: false,
       alert10: false,
       alert2: false,
@@ -131,6 +158,9 @@ export default {
     ...mapActions({
       GET_EXAM_RESULT: 'ACTION_ADD_EXAM_QUESTIONNAIRE',
     }),
+    countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
     timer() {
       const { refs } = { refs: this.$refs }
       const { passToParent } = { passToParent: this.passToParent }
@@ -216,35 +246,21 @@ export default {
         // if (15*60 == this.timeInSeconds--) {
         //   console.log('1 min left');
         //   this.alert15 = true
-        // this.$toast({
-        //   component: ToastificationContent,
-        //     props: {
-        //       position: 'top-center',
-        //       title: '15 Mins Left!',
-        //       icon: 'AlertOctagonIcon',
-        //       variant: 'danger',
-        //     },
-        //   })
+        // this.dismissCountDown = this.dismissSecs
         // }
+
         //alert 10 min
         // if (10*60 == this.timeInSeconds--) {
         //   console.log('1 min left');
         //   this.alert10 = true
-        // this.$toast({
-        //   component: ToastificationContent,
-        //     props: {
-        //       position: 'top-center',
-        //       title: '10 Mins Left!',
-        //       icon: 'AlertOctagonIcon',
-        //       variant: 'danger',
-        //     },
-        //   })
+        // this.dismissCountDown = this.dismissSecs
         // }
 
         //alert 1 min
         if (1*60 == this.timeInSeconds--) {
           console.log('1 min left');
-          this.alert2 = true
+          this.alert10 = true
+          this.dismissCountDown = this.dismissSecs
         }
 
         timeInSeconds -= 1
@@ -341,7 +357,7 @@ export default {
 
 #start360,
 #outer360 {
-  background: rgb(224, 63, 63);
+  background: red;
   transform: rotate(360deg);
   transform-origin: bottom right;
   /* overflow-y: hidden; */
@@ -357,7 +373,7 @@ export default {
 }
 
 .progressed {
-  background: rgb(224, 63, 63);
+  background: red;
   /* overflow-y: hidden; */
 }
 
@@ -367,6 +383,9 @@ export default {
   font-weight: 700;
   color: #322;
   /* overflow-y: hidden; */
+}
+.alerts{
+  background-color: transparent;
 }
 .blinking{
     animation:blinkingText 1.2s infinite;

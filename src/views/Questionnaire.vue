@@ -354,7 +354,7 @@
                 @submit.prevent
               >
               <!-- emails  -->
-              <label for="select-emails">Select Emails</label>
+              <!-- <label for="select-emails">Select Emails</label>
                 <b-form-select
           v-model="chosenEmails"
           class="chosen-select"
@@ -366,12 +366,12 @@
           >
             {{ user.email }}
           </option>
-        </b-form-select>
+        </b-form-select> -->
         <br>
         <!-- prev send invitations -->
          <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button v-b-toggle.accordion-2>Select Emails</b-button>
+        <b-button blockF v-b-toggle.accordion-2>Select Emails</b-button>
       </b-card-header>
       <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
         <b-card-body>
@@ -698,28 +698,26 @@ export default {
       // document.getElementById(questions.id).style.display = 'none'
     },
 
-    ChosenJs(event){
-      console.log(this.test.length);
-      if(this.test.length > 0){
-        this.test.forEach((element, index)=>{
-          console.log(element == event);
-          if(element == event){
-            this.test.splice(index, 1)
-          }else{
-            this.test.push(event)
-          }
-        })  
-      }else{
-        this.test.push(event)
-      }
+    // ChosenJs(event){
+    //   if(this.test.length > 0){
+    //     this.test.forEach((element, index)=>{
+    //       if(element == event){
+    //         this.test.splice(index, 1)
+    //       }else{
+    //         this.test.push(event)
+    //       }
+    //     })  
+    //   }else{
+    //     this.test.push(event)
+    //   }
         
-      var opt = document.createElement('option');
-      opt.innerHTML = this.test
-      opt.setAttribute('selected','true')
-      opt.setAttribute('hidden','true')
-      let testing = document.querySelector('.chosen-select').appendChild(opt);
-      console.log(testing);      
-    },  
+    //   var opt = document.createElement('option');
+    //   opt.innerHTML = this.test
+    //   opt.setAttribute('selected','true')
+    //   opt.setAttribute('hidden','true')
+    //   let testing = document.querySelector('.chosen-select').appendChild(opt);
+    //   console.log(testing);      
+    // },  
   },
 }
 

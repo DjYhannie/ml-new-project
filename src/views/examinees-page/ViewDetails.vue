@@ -12,11 +12,7 @@
       text-field="name"
       disabled-field="notEnabled"
     >
-    <div>
-        <b-form-radio class="radio">
         {{ result.result}}
-    </b-form-radio>
-    </div>
     </b-form-radio-group>
             </div>
         </b-card>
