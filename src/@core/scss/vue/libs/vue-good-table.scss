@@ -22,12 +22,12 @@ $thead-bg-color-2: transparent;
       th {
         &.sorting-desc {
           &::before {
-            border-top-color: $primary;
+            border-top-color: $danger;
           }
         }
         &.sorting-asc {
           &::after {
-            border-bottom-color: $primary;
+            border-bottom-color: $danger;
           }
         }
       }
@@ -98,10 +98,10 @@ body {
           }
         }
         thead th.sorting-desc::before {
-          border-top-color: $primary;
+          border-top-color: $danger;
         }
         thead th.sorting-asc::after {
-          border-bottom-color: $primary;
+          border-bottom-color: $danger;
         }
       }
     }

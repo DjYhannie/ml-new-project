@@ -61,7 +61,7 @@
       }
       &:active,
       &:hover {
-        background-color: $primary !important;
+        background-color: $danger !important;
         &:before {
           background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23')) !important;
         }
@@ -120,7 +120,7 @@
       }
       &:active,
       &:hover {
-        background-color: $primary !important;
+        background-color: $danger !important;
         &:after {
           background-image: url(str-replace(
             str-replace($chevron-right, 'currentColor', $white),
@@ -196,7 +196,7 @@
       &:hover {
         &:after {
           background-image: url(str-replace(
-            str-replace($chevron-right, 'currentColor', $primary),
+            str-replace($chevron-right, 'currentColor', $danger),
             '#',
             '%23'
           )) !important;
@@ -235,7 +235,7 @@
     }
 
     &:hover {
-      color: $primary;
+      color: $danger;
     }
   }
 
@@ -247,7 +247,7 @@
     .page-link {
       z-index: 3;
       border-radius: 5rem;
-      background-color: $primary;
+      background-color: $danger;
       color: $white !important;
       font-weight: 600;
     }

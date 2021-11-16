@@ -57,7 +57,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'primary',
+      default: 'danger',
     },
     chartData: {
       type: Array,
@@ -84,10 +84,10 @@ export default {
   methods: {
     gradientToColor(color) {
       const gradientToColors = {
+        danger: '#F97794',
         primary: '#A9A2F6',
         success: '#55DD92',
         warning: '#ffc085',
-        danger: '#F97794',
         info: '#59E0F0',
         secondary: '#B4B9BF',
         light: '#D0D4DB',

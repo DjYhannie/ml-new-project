@@ -1,8 +1,8 @@
 <template>
 <div>
    <!-- alert2  -->
-  <div class="alert alert-danger alert-dismissible fade show" role="alert" v-show="alert2">
-  <h3 class="blinking">2 Mins Left!</h3>
+  <div class="alert alert-dismissible fade show" role="alert" v-show="alert2">
+  <h1 class="blinking ml-5"><strong>2 Mins Left!</strong></h1>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -295,7 +295,8 @@ export default {
   border-radius: 80px;
   align-items: center;
   justify-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-y: hidden;
 }
 
 #outerCircle {
@@ -304,6 +305,7 @@ export default {
   z-index: 2;
   height: 150px;
   border-radius: 85px;
+  overflow-y: hidden;
 }
 
 #innerCircle {
@@ -316,6 +318,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
 }
 
 #progress {
@@ -324,6 +327,8 @@ export default {
   height: 150px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .progress-circle {
@@ -331,6 +336,7 @@ export default {
   height: 150px;
   display: grid;
   grid-template-columns: 1fr;
+  /* overflow-y: hidden; */
 }
 
 #start360,
@@ -338,6 +344,7 @@ export default {
   background: rgb(224, 63, 63);
   transform: rotate(360deg);
   transform-origin: bottom right;
+  /* overflow-y: hidden; */
 }
 
 #outer360 {
@@ -346,10 +353,12 @@ export default {
   height: 75px;
   position: absolute;
   z-index: 1;
+  /* overflow-y: hidden; */
 }
 
 .progressed {
   background: rgb(224, 63, 63);
+  /* overflow-y: hidden; */
 }
 
 #display-time {
@@ -357,6 +366,7 @@ export default {
   font-family: sans-serif;
   font-weight: 700;
   color: #322;
+  /* overflow-y: hidden; */
 }
 .blinking{
     animation:blinkingText 1.2s infinite;

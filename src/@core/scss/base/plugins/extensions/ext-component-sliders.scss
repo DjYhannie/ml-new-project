@@ -5,7 +5,7 @@ $slider_width: 6px;
 $handle-size: 1rem;
 
 .noUi-target {
-  background-color: rgba($primary, 0.12);
+  background-color: rgba($danger, 0.12);
   border-width: 0;
   box-shadow: none;
   border-radius: 1rem;
@@ -54,12 +54,12 @@ $handle-size: 1rem;
   }
   border-radius: 50%;
   background: $white;
-  border: 2px solid $primary;
+  border: 2px solid $danger;
 }
 
 // default selected slide area style
 .noUi-connect {
-  background: $primary;
+  background: $danger;
   box-shadow: none;
 }
 

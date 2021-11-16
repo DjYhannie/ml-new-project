@@ -50,7 +50,7 @@ export default {
   props: {
     variant: {
       type: String,
-      default: 'primary',
+      default: 'danger',
     },
     icon: {
       type: String,

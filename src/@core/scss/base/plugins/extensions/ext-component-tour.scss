@@ -7,7 +7,7 @@
   &[data-popper-placement='bottom'] {
     margin-top: 1rem !important;
     .shepherd-arrow:before {
-      background-color: $primary !important;
+      background-color: $danger !important;
     }
   }
   &[data-popper-placement='top'] {
@@ -24,7 +24,7 @@
     border-radius: $border-radius;
     // header
     .shepherd-header {
-      background-color: $primary;
+      background-color: $danger;
       padding: 0.38rem 1.2rem;
       border-radius: $border-radius $border-radius 0 0;
       .shepherd-title {

@@ -105,8 +105,8 @@ $file-manager-logo-height: 7.5rem;
         }
         .active {
           background-color: transparent;
-          border-color: $primary;
-          color: $primary;
+          border-color: $danger;
+          color: $danger;
         }
       }
     }
@@ -212,7 +212,7 @@ $file-manager-logo-height: 7.5rem;
             }
 
             &.selected {
-              border-color: $primary;
+              border-color: $danger;
             }
           }
 

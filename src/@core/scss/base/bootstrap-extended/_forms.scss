@@ -56,7 +56,7 @@ label {
     border-radius: $input-border-radius;
     .form-control,
     .input-group-text {
-      border-color: $primary;
+      border-color: $danger;
       box-shadow: none;
 
       &.is-valid {
@@ -339,8 +339,8 @@ select.form-control {
 .custom-control-input:not(:disabled) {
   &:active ~ .custom-control-label {
     &::before {
-      background-color: $primary;
-      border-color: $primary;
+      background-color: $danger;
+      border-color: $danger;
     }
   }
 }
@@ -379,7 +379,7 @@ select.form-control {
     &:focus,
     &:not(:active) {
       &:not(:placeholder-shown) ~ label {
-        color: rgba($primary, 1) !important;
+        color: rgba($danger, 1) !important;
         transition: all 0.25s ease-in-out;
         opacity: 1;
       }
@@ -526,7 +526,7 @@ select.form-control {
 
 /* Textarea with Counter */
 .textarea-counter-value {
-  background-color: $primary;
+  background-color: $danger;
   color: $white;
   padding: 1px 6px;
   font-size: 0.6rem;

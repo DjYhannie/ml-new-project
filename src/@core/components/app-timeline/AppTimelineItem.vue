@@ -37,7 +37,7 @@ export default {
   props: {
     variant: {
       type: String,
-      default: 'primary',
+      default: 'danger',
     },
     title: {
       type: String,

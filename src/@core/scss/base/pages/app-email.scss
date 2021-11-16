@@ -55,7 +55,7 @@ $email_details_header_height: 5rem;
         &:focus,
         &.active {
           background: transparent;
-          color: $primary;
+          color: $danger;
         }
         &.active {
           border-color: #7367f0;
@@ -154,7 +154,7 @@ $email_details_header_height: 5rem;
           }
           // selected email
           &.selected-row-bg {
-            background-color: rgba($primary, 0.06);
+            background-color: rgba($danger, 0.06);
             &:not(:first-child) {
               border-color: $email_selected_border;
             }

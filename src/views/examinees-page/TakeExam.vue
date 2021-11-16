@@ -219,7 +219,7 @@ export default {
       this.examShow = true
       this.formShow = false
       this.isTimer = false
-      this.helloShow = true
+      this.helloShow = false
       console.log('RESULTS', this.checkResults);
       // swal
       Swal.fire({

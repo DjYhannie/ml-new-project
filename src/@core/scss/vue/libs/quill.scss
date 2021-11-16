@@ -10,17 +10,17 @@
     a,
     button:hover,
     .ql-picker:hover {
-      color: $primary;
+      color: $danger;
       .ql-fill {
-        fill: $primary;
+        fill: $danger;
       }
       .ql-stroke {
-        stroke: $primary;
+        stroke: $danger;
       }
       .ql-picker-label:hover {
-        color: $primary;
+        color: $danger;
         .ql-stroke {
-          stroke: $primary;
+          stroke: $danger;
         }
       }
     }

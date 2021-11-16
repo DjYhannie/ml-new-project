@@ -34,6 +34,7 @@ $info: $blue !default;
 $warning: $orange !default;
 $light: $gray-50 !default;
 $dark: #4b4b4b !default;
+$danger: $red !default;
 
 // Spacing
 //
@@ -251,7 +252,7 @@ $custom-checkbox-indicator-icon-checked: url("data:image/svg+xml;charset=utf8,%3
 
 $custom-checkbox-indicator-icon-indeterminate: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{$custom-checkbox-indicator-indeterminate-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-minus'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3C/svg%3E");
 
-$custom-control-indicator-checked-disabled-bg: rgba($primary, 0.65);
+$custom-control-indicator-checked-disabled-bg: rgba($danger, 0.65);
 
 $custom-radio-indicator-icon-checked: none;
 

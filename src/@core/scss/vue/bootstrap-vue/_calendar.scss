@@ -22,9 +22,9 @@
       border-color: $gray-200;
     }
   }
-  .table-primary,
-  .table-primary > th,
-  .table-primary > td {
-    background-color: rgba($primary, 0.2);
+  .table-danger,
+  .table-danger > th,
+  .table-danger > td {
+    background-color: rgba($danger, 0.2);
   }
 }

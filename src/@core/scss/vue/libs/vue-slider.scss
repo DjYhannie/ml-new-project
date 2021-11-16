@@ -5,19 +5,19 @@
 @import '~@core/scss/base/components/include';
 
 /* Set the theme color of the component */
-$themeColor: $primary;
-$bgColor: rgba($primary, 0.12);
+$themeColor: $danger;
+$bgColor: rgba($danger, 0.12);
 $dotShadow: none;
 /* import theme style */
 @import '~vue-slider-component/lib/theme/default.scss';
 
 .vue-slider-dot-handle {
-  border: 2px solid $primary;
+  border: 2px solid $danger;
 }
 
 .vue-slider-dot-tooltip-inner {
-  background-color: $primary;
-  border-color: $primary;
+  background-color: $danger;
+  border-color: $danger;
 }
 
 /* Generate:

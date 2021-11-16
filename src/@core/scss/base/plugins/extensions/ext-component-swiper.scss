@@ -27,14 +27,14 @@
       outline: none;
     }
     &.swiper-pagination-bullet-active {
-      background-color: $primary;
+      background-color: $danger;
     }
   }
 
   // progress bar pagination
   &.swiper-pagination-progressbar {
     .swiper-pagination-progressbar-fill {
-      background-color: $primary;
+      background-color: $danger;
     }
   }
 }
@@ -52,11 +52,11 @@
       cursor: pointer;
 
       &.swiper-slide-active {
-        border: 2px solid $primary;
+        border: 2px solid $danger;
 
         i,
         svg {
-          color: $primary;
+          color: $danger;
         }
       }
     }
@@ -79,7 +79,7 @@
 
     &:after {
       border-radius: 50%;
-      background-color: $primary;
+      background-color: $danger;
       box-shadow: 0 2px 4px 0 rgba($black, 0.5) !important;
       background-size: 24px !important;
       height: 40px !important;
@@ -114,8 +114,8 @@
 
       &.swiper-slide-active {
         color: $white;
-        background-color: $primary !important;
-        box-shadow: 0 3px 6px 0 rgba($primary, 0.5) !important;
+        background-color: $danger !important;
+        box-shadow: 0 3px 6px 0 rgba($danger, 0.5) !important;
       }
     }
   }
@@ -206,7 +206,7 @@
 
 .swiper-button-prev {
   &:after {
-    background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+    background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $danger), '#', '%23'));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 44px;
@@ -220,7 +220,7 @@
 
 .swiper-button-next {
   &:after {
-    background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+    background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $danger), '#', '%23'));
     background-repeat: no-repeat;
     background-position: center;
     background-size: 44px;
@@ -235,7 +235,7 @@
 .swiper-container-rtl {
   .swiper-button-prev {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $danger), '#', '%23'));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;
@@ -248,7 +248,7 @@
 
   .swiper-button-next {
     &:after {
-      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $primary), '#', '%23'));
+      background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $danger), '#', '%23'));
       background-repeat: no-repeat;
       background-position: center;
       background-size: 44px;

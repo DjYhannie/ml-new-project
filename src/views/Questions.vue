@@ -5,6 +5,7 @@
       <b-button
         v-b-modal.modal-lg
         class="modalButton"
+        variant="danger"
         @click="modalShow = !modalShow"
       >
         Add Question
@@ -89,7 +90,7 @@
               >
             </div>
             <b-button
-              variant="primary"
+              variant="danger"
               type="submit"
             >
               Add
@@ -112,7 +113,7 @@
               >
             </div>
             <b-button
-              variant="primary"
+              variant="danger"
               type="submit"
             >
               Add
@@ -222,7 +223,7 @@
             >
           </div>
           <b-button
-            variant="primary"
+            variant="danger"
             type="submit"
           >
             Save Changes
@@ -467,7 +468,7 @@ export default {
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: 'red',
-  cancelButtonColor: 'green',
+  cancelButtonColor: 'blue-violet',
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
   if (result.isConfirmed) {

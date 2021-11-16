@@ -13,14 +13,14 @@
     text-align: left;
 
     .v-step__arrow {
-      border-color: $primary;
+      border-color: $danger;
       border-left-color: transparent;
       border-right-color: transparent;
     }
 
     // --- Header ----- //
     .v-step__header {
-      background-color: $primary;
+      background-color: $danger;
       border-top-left-radius: $card-border-radius;
       border-top-right-radius: $card-border-radius;
       font-weight: 500;

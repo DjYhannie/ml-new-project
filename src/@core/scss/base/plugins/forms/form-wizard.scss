@@ -75,13 +75,13 @@ $step-box-width: 38px;
       &.active {
         .step-trigger {
           .bs-stepper-box {
-            background-color: $primary;
+            background-color: $danger;
             color: $white;
-            box-shadow: 0 3px 6px 0 rgba($primary, 0.4);
+            box-shadow: 0 3px 6px 0 rgba($danger, 0.4);
           }
           .bs-stepper-label {
             .bs-stepper-title {
-              color: $primary;
+              color: $danger;
             }
           }
         }
@@ -90,8 +90,8 @@ $step-box-width: 38px;
       &.crossed {
         .step-trigger {
           .bs-stepper-box {
-            background-color: rgba($color: $primary, $alpha: 0.12);
-            color: $primary !important;
+            background-color: rgba($color: $danger, $alpha: 0.12);
+            color: $danger !important;
           }
           .bs-stepper-label {
             .bs-stepper-title {
@@ -100,7 +100,7 @@ $step-box-width: 38px;
           }
         }
         & + .line {
-          color: $primary;
+          color: $danger;
         }
       }
 
@@ -209,13 +209,13 @@ $step-box-width: 38px;
         &.active {
           .step-trigger {
             .bs-stepper-box {
-              background-color: $primary;
+              background-color: $danger;
               color: $white;
-              box-shadow: 0 3px 6px 0 rgba($primary, 0.4);
+              box-shadow: 0 3px 6px 0 rgba($danger, 0.4);
             }
             .bs-stepper-label {
               .bs-stepper-title {
-                color: $primary;
+                color: $danger;
               }
             }
           }

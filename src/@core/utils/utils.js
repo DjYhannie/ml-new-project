@@ -19,7 +19,7 @@ const getRandomFromArray = array => array[Math.floor(Math.random() * array.lengt
 
 // ? Light and Dark variant is not included
 // prettier-ignore
-export const getRandomBsVariant = () => getRandomFromArray(['primary', 'secondary', 'success', 'warning', 'danger', 'info'])
+export const getRandomBsVariant = () => getRandomFromArray(['danger', 'secondary', 'success', 'warning', 'primary', 'info'])
 
 export const isDynamicRouteActive = route => {
   const { route: resolvedRoute } = router.resolve(route)

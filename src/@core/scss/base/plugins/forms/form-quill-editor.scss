@@ -51,28 +51,28 @@
     button {
       &:hover,
       &:focus {
-        color: $primary !important;
+        color: $danger !important;
         .ql-stroke {
-          stroke: $primary !important;
+          stroke: $danger !important;
         }
         .ql-fill {
-          fill: $primary !important;
+          fill: $danger !important;
         }
       }
       &.ql-active {
-        color: $primary !important;
+        color: $danger !important;
       }
     }
     .ql-picker-item.ql-selected {
-      color: $primary !important;
+      color: $danger !important;
     }
     // quill dropdown item hover
     .ql-picker-options {
       .ql-picker-item:hover {
-        color: $primary !important;
+        color: $danger !important;
       }
       .ql-active {
-        color: $primary !important;
+        color: $danger !important;
       }
     }
   }
@@ -96,7 +96,7 @@
 }
 .ql-editor {
   a {
-    color: $primary;
+    color: $danger;
   }
 }
 // default picker options
@@ -109,10 +109,10 @@
 }
 .ql-active {
   .ql-stroke {
-    stroke: $primary !important;
+    stroke: $danger !important;
   }
   .ql-fill {
-    fill: $primary !important;
+    fill: $danger !important;
   }
 }
 // fill options color
@@ -163,16 +163,16 @@
     .ql-picker-label {
       background-color: $theme-dark-input-bg;
       .ql-active {
-        color: $primary !important;
+        color: $danger !important;
       }
     }
   }
   .ql-active {
     .ql-stroke {
-      stroke: $primary !important;
+      stroke: $danger !important;
     }
     .ql-fill {
-      fill: $primary !important;
+      fill: $danger !important;
     }
   }
   .ql-bubble {

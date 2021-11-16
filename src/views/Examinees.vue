@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div class="row">
-    <!-- <div class="col-sm">
+    <div>
+      <!-- searchbar  -->
         <b-form-group
-        label="Search by Name"
           label-for="filter-input"
-          label-cols-sm="9"
-          label-align-sm="right"
+          label-cols-sm="11"
           label-size="sm"
           class="mb-0"
         >
@@ -21,46 +19,23 @@
             />
           </b-input-group>
         </b-form-group>
-    </div> -->
-    <div class="col-sm">
-      <!-- searchbar remarks  -->
+
+        <!-- per page  -->
         <b-form-group
-          label-for="filter-input"
-          label-cols-sm="9"
-          label-align-sm="right"
-          label-size="sm"
-          class="mb-0"
-        >
-          <b-input-group>
-            <b-input-group-prepend is-text>
-              <b-icon icon="search" />
-            </b-input-group-prepend>
-            <b-form-input
-              id="filter-input"
-              v-model="filter"
-              type="search"
-            />
-          </b-input-group>
-        </b-form-group>
-    </div>
-    <div class="col-sm">
-      <!-- per page  -->
-        <b-form-group
-          label="Per Page"
           label-for="per-page-select"
-          label-cols-sm="9"
-          label-align-sm="right"
+          label-cols-sm="8"
           label-size="sm"
-          class="mb-0"
+          class="mb-1"
         >
+        <label for="per-page">Per Page</label>
           <b-form-select
             id="per-page-select"
             v-model="perPage"
             :options="pageOptions"
-            width="15px"
           />
         </b-form-group>
-    </div>
+
+        <!-- <br> -->
   </div>
 
     <br>
@@ -301,5 +276,14 @@ export default {
 }
 b-row{
   border: 1px solid black;
+}
+/* .mb-0{
+  
+} */
+.mb-0{
+  float: left;
+}
+.m-1{
+  margin-bottom: 5px;
 }
 </style>

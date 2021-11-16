@@ -2,7 +2,8 @@
     <div>
         <b-card>
             <h4>Questions:</h4>
-            <div>
+            <div v-for="result in results"
+            :key="result">
                 <b-form-radio-group
       v-model="selected"
       :options="options"
@@ -10,7 +11,13 @@
       value-field="item"
       text-field="name"
       disabled-field="notEnabled"
-    ></b-form-radio-group>
+    >
+    <div>
+        <b-form-radio class="radio">
+        {{ result.result}}
+    </b-form-radio>
+    </div>
+    </b-form-radio-group>
             </div>
         </b-card>
     </div>
@@ -18,6 +25,7 @@
 
 <script>
 import { BCard, BFormRadioGroup, } from 'bootstrap-vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -35,8 +43,28 @@ export default {
         ]
         }
     },
+    computed: {
+        ...mapGetters({
+            results:'GET_RESULT_BY_USERID',
+        }),
+    },
+    mounted() {
+        this.GET_RESULT_BY_USERID()
+    console.log('RESULTS__', this.results)
+    },
+    methods: {
+        ...mapActions({
+            GET_RESULT_BY_USERID: 'ACTION_GET_RESULT_BY_USERID',
+        }),
+    },
 }
 </script>
 
 <style>
+.mb-3{
+    box-shadow: black;
+}
+.radio:hover{
+    background-color: black;
+}
 </style>

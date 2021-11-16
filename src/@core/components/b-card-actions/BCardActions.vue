@@ -3,7 +3,7 @@
     v-if="!cardClosed"
     variant="white"
     :show="showLoading"
-    spinner-variant="primary"
+    spinner-variant="danger"
     blur="0"
     opacity=".75"
     rounded="sm"

@@ -32,7 +32,7 @@
         padding-bottom: 2rem;
         &.active {
           a {
-            color: $primary;
+            color: $danger;
             .wizard-icon-circle {
               .wizard-icon-container {
                 .wizard-icon {
@@ -66,9 +66,9 @@
             }
           }
           &.checked {
-            background-color: rgba($primary, $alpha: 0.08);
+            background-color: rgba($danger, $alpha: 0.08);
             .wizard-icon {
-              color: $primary;
+              color: $danger;
             }
           }
         }
@@ -140,7 +140,7 @@
       .wizard-btn {
         font-weight: 400;
         &:hover {
-          box-shadow: 0 8px 25px -8px $primary;
+          box-shadow: 0 8px 25px -8px $danger;
         }
         &::after {
           content: '\e844';
@@ -348,9 +348,9 @@ body {
             .wizard-icon-circle {
               background-color: rgba($gray-100, 0.12);
               &.checked {
-                background-color: rgba($primary, $alpha: 0.08);
+                background-color: rgba($danger, $alpha: 0.08);
                 .wizard-icon {
-                  color: $primary;
+                  color: $danger;
                 }
               }
             }
@@ -378,7 +378,7 @@ body {
           li.active {
             a {
               &::before {
-                color: $primary;
+                color: $danger;
               }
             }
           }

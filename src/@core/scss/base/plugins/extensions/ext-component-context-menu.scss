@@ -23,10 +23,10 @@
     &:hover,
     &:focus {
       background-color: $dropdown-link-hover-bg !important;
-      color: $primary;
+      color: $danger;
 
       &.context-menu-submenu:after {
-        border-color: transparent transparent transparent $primary !important;
+        border-color: transparent transparent transparent $danger !important;
       }
     }
 
@@ -51,7 +51,7 @@
 
       &.context-menu-hover {
         > span {
-          color: $primary;
+          color: $danger;
         }
       }
 
@@ -78,7 +78,7 @@
 
       &.context-menu-hover {
         &.context-menu-submenu:after {
-          border-color: transparent $primary transparent transparent !important;
+          border-color: transparent $danger transparent transparent !important;
         }
       }
 

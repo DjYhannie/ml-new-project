@@ -129,7 +129,7 @@ $chat-profile-sidebar-head-height: 200px;
       }
     }
     .chat-list-title {
-      color: $primary;
+      color: $danger;
       margin: 2rem 1.286rem 0.5rem;
     }
     // Sidebar chat list
@@ -184,7 +184,7 @@ $chat-profile-sidebar-head-height: 200px;
           background: $body-bg;
         }
         &.active {
-          @include gradient-directional(map-get($primary-color, 'base'), map-get($primary-color, 'lighten-2'), 80deg);
+          @include gradient-directional(map-get($danger-color, 'base'), map-get($danger-color, 'lighten-2'), 80deg);
           h1,
           h2,
           h3,

@@ -5,7 +5,7 @@
   .flatpickr-day {
     color: $body-color;
     &.today {
-      border-color: $primary;
+      border-color: $danger;
       &:hover {
         background: transparent;
         color: $body-color;
@@ -14,30 +14,30 @@
 
     &.selected,
     &.selected:hover {
-      background: $primary;
+      background: $danger;
       color: $white;
-      border-color: $primary;
+      border-color: $danger;
     }
 
     &.inRange,
     &.inRange:hover {
-      background: lighten($color: $primary, $amount: 30%);
-      border-color: lighten($color: $primary, $amount: 30%);
-      box-shadow: -5px 0 0 lighten($color: $primary, $amount: 30%), 5px 0 0 lighten($color: $primary, $amount: 30%);
+      background: lighten($color: $danger, $amount: 30%);
+      border-color: lighten($color: $danger, $amount: 30%);
+      box-shadow: -5px 0 0 lighten($color: $danger, $amount: 30%), 5px 0 0 lighten($color: $danger, $amount: 30%);
     }
     &.startRange,
     &.endRange,
     &.startRange:hover,
     &.endRange:hover {
-      background: $primary;
+      background: $danger;
       color: $white;
-      border-color: $primary;
+      border-color: $danger;
     }
 
     &.selected.startRange + .endRange:not(:nth-child(7n + 1)),
     &.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
     &.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
-      box-shadow: -10px 0 0 $primary;
+      box-shadow: -10px 0 0 $danger;
     }
 
     &.flatpickr-disabled,
@@ -61,7 +61,7 @@
       top: -5px;
       &:hover i,
       &:hover svg {
-        fill: $primary;
+        fill: $danger;
       }
     }
   }

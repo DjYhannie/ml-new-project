@@ -5,6 +5,7 @@
       <b-button
         v-b-modal.modal-lg
         class="modalButton"
+        variant="danger"
         @click="modalShow = !modalShow"
       >
         Add Questionnaire
@@ -133,7 +134,7 @@
               </b-row>
             </b-container>
               <b-button
-              variant="primary"
+              variant="danger"
              type="submit"
             >
               Add
@@ -280,7 +281,7 @@
             </b-row>
           </b-container>
           <b-button
-            variant="primary"
+            variant="danger"
             type="submit"
           >
             Save Changes
@@ -343,6 +344,8 @@
               </b-collapse>
             </div>
           </div>
+
+          
           <!-- Send Email  -->
           <!-- v-show="sendEmail" -->
           <b-card :id="'target'+questionnaire.id" style="display:none;">
@@ -389,9 +392,10 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-    <br>
+    <!-- <br> -->
                 <!-- submit button -->
                 <b-button
+                  block
                   type="submit"
                   variant="danger"
                   @click="submitEmail($event)"
@@ -400,6 +404,7 @@
                 </b-button>
               </b-form>
           </b-card>
+
         </b-card>
       </div>
     </b-card>
@@ -604,7 +609,7 @@ export default {
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: 'red',
-  cancelButtonColor: 'green',
+  cancelButtonColor: 'blue-violet',
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
   if (result.isConfirmed) {
@@ -752,7 +757,7 @@ export default {
   float: right;
   margin-top: 0;
 }
-.send-email-form{
+/* .send-email-form{
   width: 800px;
   border: 1px solid lightgray;
   box-shadow: 5px 5px 5px lightgray;
@@ -760,7 +765,7 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
+} */
 /* .chosen-select {
   border: 1px solid gray;
 } */

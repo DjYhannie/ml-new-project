@@ -18,10 +18,10 @@
 .icon-card {
   border: 1px solid transparent;
   &.active {
-    border-color: $primary;
+    border-color: $danger;
     i,
     svg {
-      color: $primary;
+      color: $danger;
     }
   }
 }

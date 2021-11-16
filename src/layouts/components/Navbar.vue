@@ -36,7 +36,7 @@
           </div>
           <b-avatar
             size="40"
-            variant="light-primary"
+            variant="light-danger"
             badge
             :src="require('@/assets/images/logo/logo.png')"
             class="badge-minimal"

@@ -25,7 +25,7 @@
     // Border color on focus
     &:focus {
       outline: 0;
-      border-color: $primary !important;
+      border-color: $danger !important;
       box-shadow: $input-focus-box-shadow !important;
     }
 
@@ -58,7 +58,7 @@
   &.select2-container--open {
     box-shadow: $dropdown-box-shadow;
     .select2-selection--single {
-      border-color: $primary !important;
+      border-color: $danger !important;
       outline: 0;
     }
   }
@@ -67,7 +67,7 @@
   &.select2-container--focus {
     outline: 0;
     .select2-selection--multiple {
-      border-color: $primary !important;
+      border-color: $danger !important;
       outline: 0;
     }
   }
@@ -92,13 +92,13 @@
     border: 1px solid $input-border-color;
     &:focus {
       outline: 0;
-      border-color: $primary !important;
+      border-color: $danger !important;
       box-shadow: $input-focus-box-shadow !important;
     }
     // selected items bg color for multiple selection
     .select2-selection__choice {
-      background-color: $primary !important;
-      border-color: $primary !important;
+      background-color: $danger !important;
+      border-color: $danger !important;
       color: $white;
       padding: 2px 5px;
     }
@@ -157,7 +157,7 @@
       padding: 0;
     }
     &[aria-selected='true'] {
-      background-color: $primary !important;
+      background-color: $danger !important;
       color: white !important;
     }
     i,
@@ -170,8 +170,8 @@
   }
 
   .select2-results__option--highlighted {
-    background-color: rgba($primary, 0.12) !important;
-    color: $primary !important;
+    background-color: rgba($danger, 0.12) !important;
+    color: $danger !important;
   }
 
   //Loading Remote Data Image Size
@@ -285,15 +285,15 @@
 
     .select2-selection--multiple {
       .select2-selection__choice {
-        background: rgba($primary, 0.12) !important;
-        color: $primary !important;
+        background: rgba($danger, 0.12) !important;
+        color: $danger !important;
         border: none;
         .select2-selection__choice__remove {
-          color: $primary !important;
+          color: $danger !important;
         }
       }
       .select2-selection__choice__remove:before {
-        background-image: url(str-replace(str-replace($remove, 'currentColor', $primary), '#', '%23'));
+        background-image: url(str-replace(str-replace($remove, 'currentColor', $danger), '#', '%23'));
       }
     }
 

@@ -36,7 +36,7 @@
             <b-button
               v-if="tour.currentStep != tour.steps.length - 1"
               size="sm"
-              variant="outline-primary"
+              variant="outline-danger"
               class="btn-tour-skip mr-1"
               @click="tour.stop"
             >
@@ -51,7 +51,7 @@
             <b-button
               v-if="tour.currentStep"
               size="sm"
-              variant="outline-primary mr-1"
+              variant="outline-danger mr-1"
               @click="tour.previousStep"
             >
               <feather-icon
@@ -65,7 +65,7 @@
             <b-button
               v-if="tour.currentStep != tour.steps.length - 1"
               size="sm"
-              variant="primary"
+              variant="danger"
               class="btn-tour-next"
               @click="tour.nextStep"
             >
@@ -80,7 +80,7 @@
             <b-button
               v-if="tour.currentStep == tour.steps.length - 1"
               size="sm"
-              variant="primary"
+              variant="danger"
               class="btn-tour-finish"
               @click="tour.stop"
             >

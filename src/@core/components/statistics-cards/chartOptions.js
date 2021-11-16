@@ -59,7 +59,7 @@ export const areaChartOptions = {
   theme: {
     monochrome: {
       enabled: true,
-      color: $themeColors.primary,
+      color: $themeColors.danger,
       shadeTo: 'light',
       shadeIntensity: 0.65,
     },
@@ -97,7 +97,7 @@ export const lineChartOptions = {
   xaxis: {
     type: 'numeric',
   },
-  colors: [$themeColors.primary],
+  colors: [$themeColors.danger],
   fill: {
     type: 'gradient',
     gradient: {

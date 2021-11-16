@@ -152,7 +152,7 @@ export default {
   border-bottom: 1px solid transparent;
 
   &[aria-expanded='false'] {
-    border-bottom-color: $primary;
+    border-bottom-color: $danger;
   }
 }
 
