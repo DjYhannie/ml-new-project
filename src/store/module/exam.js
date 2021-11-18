@@ -1,4 +1,3 @@
-import store from '..';
 import api from '../../libs/axios'
 
 export default {
@@ -8,9 +7,9 @@ export default {
     questionnaire: {},
     examResults: {},
     exam: {},
+    resultByUserId: [],
     result: {},
     users: {},
-    resultByUserId: {},
     id: '',
   },
   getters: {
@@ -38,17 +37,16 @@ export default {
       console.log('RANDOM', random)
       return random
     },
-    async ACTION_GET_USERS({ getters, commit }) {
+    async ACTION_GET_USERS({ getters }) {
       console.log('ID', getters.StateUser.id)
       const response = await api.get(`/users/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       console.log('USERS', response)
-      commit('SET_RESULT', response.data)
       return response
     },
     async ACTION_GET_RESULT_BY_USERID({ getters, commit}) {
       const response = await api.get(`/result/user/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
        console.log('RESULT_BY_USERID', response);
-       commit('SET_RESULT_BY_USERID', response)
+       commit('SET_RESULT_BY_USERID', response.data.data)
     },
 
     async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit }, addExamQuestionnaire) {

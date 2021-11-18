@@ -9,8 +9,8 @@
 </div>
 <!-- alert10  -->
    <b-alert
-      class="alerts"
       v-show="alert10"
+      variant="light"
      :show="dismissCountDown"
      dismissible
      fade
@@ -18,7 +18,12 @@
     >
      <h1 class="blinking ml-5"><strong>10 Mins Left!</strong></h1>
    </b-alert>
-  <!-- <div class="alert alert-dismissible fade show" role="alert" v-show="alert10">
+  <!-- <div
+  class="alert alert-dismissible fade show"
+  role="alert"
+  v-show="alert10"
+  :show="dismissCountDown"
+  @dismiss-count-down="countDownChanged">
   <h1 class="blinking ml-5"><strong>10 Mins Left!</strong></h1>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -26,9 +31,8 @@
 </div> -->
 <!-- alert15  -->
 <b-alert
-      class="alerts"
       v-show="alert15"
-     :show="dismissCountDown"
+      variant="danger"
      dismissible
      fade
      @dismiss-count-down="countDownChanged"
@@ -259,7 +263,7 @@ export default {
         //alert 1 min
         if (1*60 == this.timeInSeconds--) {
           console.log('1 min left');
-          this.alert10 = true
+          this.alert2 = true
           this.dismissCountDown = this.dismissSecs
         }
 

@@ -18,6 +18,7 @@ export default {
     GET_INDEX: state => state.index,
     GET_QUESTION: state => state.questions,
     GET_COURSES: state => state.courses,
+    // GET_QUESTIONID: state => state.questionID,
   },
   actions: {
     ACTION_GET_QUESTIONS({ commit }) {
@@ -28,7 +29,7 @@ export default {
             return c
           })
           
-          // console.log(questions)
+          console.log(questions)
           this.courses = []
           questions.forEach(element => {
             this.courses.push(element.course)

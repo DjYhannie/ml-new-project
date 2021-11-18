@@ -63,79 +63,13 @@
         <b-card>
           <b-container class="bv-example-row">
   <b-row>
-    <!-- <b-col> -->
-      <!-- attempt 1 -->
-      <!-- <b-row class="mb-2"> -->
-            <!-- <b-col>First Attemp:</b-col> -->
-          <!-- </b-row>
-      <b-row class="mb-2">
-            <b-col>Name: {{ row.item.name }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Attemps: {{ row.item.attemps }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Score: {{ row.item.score }}</b-col>
-          </b-row> -->
-          <!-- //with time  -->
-          <!-- <b-row class="mb-2">
-            <b-col>Date: {{ row.item.date }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Remark: {{ row.item.remarks }}</b-col>
-          </b-row>
-         </b-col> -->
            <div class="col">{{ row.item.name }}</div>
            <div class="col">{{ row.item.attemps }}</div>
            <div class="col">{{ row.item.score }}</div>
            <div class="col">{{ row.item.date }}</div>
            <div class="col">Remark: {{ row.item.remarks }}</div>
            <div class="col"></div>
-    <!-- <b-col> -->
-      <!-- attempt 2 -->
-      <!-- <b-col>
-        <b-row class="mb-2">
-            <b-col>Second Attempt</b-col>
-          </b-row>
-        <b-row class="mb-2">
-            <b-col>Name: {{ row.item.name }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Attemps: {{ row.item.attemps }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Score: {{ row.item.score }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Date: {{ row.item.date }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Remark: {{ row.item.remarks }}</b-col>
-          </b-row>
-         </b-col></b-col>
-    <b-col> -->
-      <!-- attempt 3 -->
-      <!-- <b-col>
-        <b-row class="mb-2">
-            <b-col>Third Attempt</b-col>
-          </b-row>
-        <b-row class="mb-2">
-            <b-col>Name: {{ row.item.name }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Attemps: {{ row.item.attemps }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Score: {{ row.item.score }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Date: {{ row.item.date }}</b-col>
-          </b-row>
-          <b-row class="mb-2">
-            <b-col>Remark: {{ row.item.remarks }}</b-col>
-          </b-row>
-         </b-col> -->
-         <!-- </b-col> -->
+
   </b-row>
 </b-container>
         </b-card>
