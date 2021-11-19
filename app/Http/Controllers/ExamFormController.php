@@ -102,7 +102,7 @@ class ExamFormController extends Controller
 
             $pass = $passing->passing_score;
 
-            $result = json_encode($result);
+            $result = json_encode(['data' => $result, 'score' => $points, 'is_pass' => $pass <= $points]);
 
 
             DB::update('update url_tokens set result = ?', array($result));
@@ -161,13 +161,15 @@ class ExamFormController extends Controller
         ]);
     }
 
-    public function getResultByUserId($id)
+    public function getResultByUserId()
     {
         try{
             $user = Auth::user();
             $results = DB::table('url_tokens')
-                        ->where('user_id', $id)
+                        ->join('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
+                        ->where('user_id', $user->id)
                         ->get();
+
             return response()->json([
                 'data' => $results,
                 'status_code' => 200
@@ -226,7 +228,4 @@ class ExamFormController extends Controller
             ]);
         }
     }
-
-
-
 }
