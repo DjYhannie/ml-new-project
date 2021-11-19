@@ -166,7 +166,8 @@ class ExamFormController extends Controller
         try{
             $user = Auth::user();
             $results = DB::table('url_tokens')
-                        ->join('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
+                        ->select('url_tokens.*')
+                        ->leftJoin('questionnaires', 'questionnaires.id', '=', 'url_tokens.questionnaire_id')
                         ->where('user_id', $user->id)
                         ->get();
 

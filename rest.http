@@ -245,3 +245,38 @@ Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
 
 ####
 GET http://127.0.0.1:12344/api/test?id=1
+
+
+
+
+[
+    {
+        current: {current exam result},
+        data: [
+            {old exams},
+            {old exams},
+            {old exams},
+            {old exams}
+        ],
+    },
+    {
+        current: {current exam result},
+        data: [
+            {old exams},
+            {old exams},
+            {old exams},
+            {old exams}
+        ],
+    },
+    {
+        current: {current exam result},
+        data: [
+            {old exams},
+            {old exams},
+            {old exams},
+            {old exams}
+        ],
+    },
+]
+
+
