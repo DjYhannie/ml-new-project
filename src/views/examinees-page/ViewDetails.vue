@@ -3,13 +3,13 @@
         <b-card>
             <!-- <p>{{questions}}</p> -->
             <h4>Questions:</h4>
-            <div style="display: inline-block;">
+            <!-- <div style="display: inline-block;">
             <ul>
                 <i id="check" class="fa fa-check-circle fa-lg"/>check
                 <br>
                 <i id="wrong" class="fa fa-times-circle fa-lg"/>wrong
             </ul>
-            </div>
+            </div> -->
             <div v-for="result in results" :key="result">
                 <b-form-radio-group
                   :options="options"
@@ -18,7 +18,7 @@
                   text-field="name"
                   disabled-field="notEnabled"
                 >
-        {{ result}}
+        <!-- {{ result }} -->
     </b-form-radio-group>
             </div>
         </b-card>

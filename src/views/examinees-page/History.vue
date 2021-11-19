@@ -161,16 +161,16 @@ export default {
 
       items: [
         {
-          title: 'sample6', score: '2/6', remarks: 'failed', attempts: 2, 
+          title: 'sample6', score: '2/6', remarks: 'Failed', attempts: 1, 
         },
         {
-          title: 'sample3', score: '3/6', remarks: 'failed', attempts: 1, 
+          title: 'sample3', score: '3/6', remarks: 'Failed', attempts: 1, 
         },
         {
-          title: 'sample8', score: '5/6', remarks: 'passed', attempts: 1, 
+          title: 'sample8', score: '5/6', remarks: 'Passed', attempts: 1, 
         },
         {
-          title: 'sample7', score: '4/6', remarks: 'passed', attempts: 1, 
+          title: 'sample7', score: '4/6', remarks: 'Passed', attempts: 1, 
         },
       ],
       selectedItem: {},
@@ -190,7 +190,7 @@ export default {
     this.attempts()
     this.GET_USERS()
     this.GET_RESULT_BY_USERID()
-    console.log('RESULTS__', this.results)
+    console.log('RESULTS__', this.checkResults)
   },
   methods: {
     ...mapActions({
@@ -207,7 +207,8 @@ export default {
     },
     attempts(){
             let results = this.results
-            let questionnaireIds = results.map(result => result.questionnaire_id)
+            let questionnaireIds = results.mapActions(result => result.questionnaire_id)
+            console.log('ID', questionnaireIds);
             let uniqueQuestionnaireId = questionnaireIds.filter((val, i, self) => self.indexOf(val) === i)
             console.log('ID', uniqueQuestionnaireId)
 
@@ -215,7 +216,6 @@ export default {
               console.log(uniqueQuestionnaireId ,questionnaireIds.filter(n => {return uniqueQuestionnaireId == n}).length);
             });
         },
-
   },
 }
 </script>
@@ -224,4 +224,10 @@ export default {
 /* .content {
   border: 1px solid black;
 } */
+.mb-0{
+  float: left;
+}
+.m-1{
+  margin-bottom: 5px;
+}
 </style>

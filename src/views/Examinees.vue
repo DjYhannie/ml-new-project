@@ -212,7 +212,6 @@ b-row{
   border: 1px solid black;
 }
 /* .mb-0{
-  
 } */
 .mb-0{
   float: left;

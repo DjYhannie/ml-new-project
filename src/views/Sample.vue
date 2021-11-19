@@ -11,7 +11,7 @@
             </ul>
             </div>
             <div>
-                <!-- <b-form-radio-group
+                <b-form-radio-group
                   :options="options"
                   class="mb-3"
                   value-field="item"
@@ -19,8 +19,8 @@
                   disabled-field="notEnabled"
                 >
         {{ result}}
-    </b-form-radio-group> -->
-    <label class="container"> A.
+    </b-form-radio-group>
+    <!-- <label class="container"> A.
   <input type="radio" checked="checked" name="radio">
   <span class="checkmark"></span>
 </label>
@@ -39,7 +39,7 @@
 <label class="container"> E.
   <input type="radio" checked="checked" name="radio">
   <span class="checkmark"></span>
-</label>
+</label> -->
             </div>
         </b-card>
     </div>
