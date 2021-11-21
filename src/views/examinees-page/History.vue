@@ -44,6 +44,9 @@
       hover
       :items="items"
       :fields="fields"
+      :filter="filter"
+      show-empty
+      empty-text="No matching records found"
     >
     <!-- triggers to show data  -->
       <template #cell(action)="row">
@@ -128,6 +131,7 @@ export default {
       currentPage: 1,
       filter: null,
       pageOptions: [5, 10, 15, { value: 100, text: 'Show a lot' }],
+      // historyData: [],
       // historyFields: [
       //   // 'name',
       //   'title',
@@ -186,11 +190,11 @@ export default {
       results:'GET_RESULT_BY_USERID',
     }),
   },
-  mounted() {
-    this.attempts()
+  async mounted() {
     this.GET_USERS()
-    this.GET_RESULT_BY_USERID()
-    console.log('RESULTS__', this.checkResults)
+    await this.GET_RESULT_BY_USERID()
+    this.attempts()
+    this.testing()
   },
   methods: {
     ...mapActions({
@@ -207,7 +211,8 @@ export default {
     },
     attempts(){
             let results = this.results
-            let questionnaireIds = results.mapActions(result => result.questionnaire_id)
+            console.log(this.results);
+            let questionnaireIds = results.map(result => result.questionnaire_id)
             console.log('ID', questionnaireIds);
             let uniqueQuestionnaireId = questionnaireIds.filter((val, i, self) => self.indexOf(val) === i)
             console.log('ID', uniqueQuestionnaireId)
@@ -216,6 +221,22 @@ export default {
               console.log(uniqueQuestionnaireId ,questionnaireIds.filter(n => {return uniqueQuestionnaireId == n}).length);
             });
         },
+    testing() {
+      let questionnaireIds = this.results.map(result => result.questionnaire_id)
+      let uniqueQuestionnaireId = questionnaireIds.filter((val, i, self) => self.indexOf(val) === i)
+
+      const structData = uniqueQuestionnaireId.map(uniqueId => {
+        const examResult = this.results.filter(result => {
+          return result.questionnaire_id == uniqueId
+        })
+        const sortedExamResult = examResult.sort((a, b) => b.id - a.id)
+        return {
+          current: sortedExamResult[0],
+          data: sortedExamResult
+        }
+      })
+      console.log('DATA', structData);
+s    }
   },
 }
 </script>

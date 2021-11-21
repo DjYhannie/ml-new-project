@@ -43,10 +43,11 @@ export default {
       console.log('USERS', response)
       return response
     },
-    async ACTION_GET_RESULT_BY_USERID({ getters, commit}) {
-      const response = await api.get(`/result/user/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-       console.log('RESULT_BY_USERID', response);
-       commit('SET_RESULT_BY_USERID', response.data.data)
+    async ACTION_GET_RESULT_BY_USERID({ commit}) {
+      const response = await api.get(`/result/user`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      // let userReesult =   response.data.data.result
+      commit('SET_RESULT_BY_USERID', response.data.data)
+      console.log('RESULT_BY_USERID', response);
     },
 
     async ACTION_ADD_EXAM_QUESTIONNAIRE({ commit }, addExamQuestionnaire) {

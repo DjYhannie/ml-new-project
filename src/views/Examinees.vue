@@ -51,6 +51,8 @@
       :per-page="perPage"
       :current-page="currentPage"
       @row-clicked="handleRowClicked"
+      show-empty
+      empty-text="No matching records found"
     >
       <!-- triggers to show data  -->
       <template #cell(action)="row">
