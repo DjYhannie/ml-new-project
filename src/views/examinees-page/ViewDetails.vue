@@ -1,25 +1,24 @@
 <template>
     <div>
         <b-card>
-            <!-- <p>{{questions}}</p> -->
-            <h4>Questions:</h4>
-            <!-- <div style="display: inline-block;">
+            <div v-for="result in examResult.result.data" :key="result.id">
+            <h4>{{ result.question[0].question }}</h4>
+                <b-form-radio-group
+                  :options="result.question[0].choices"
+                  class="mb-3"
+                  value-field="item"
+                  text-field="name"
+                  disabled-field="notEnabled"
+                >
+    </b-form-radio-group>
+    <!-- <div style="display: inline-block;">
             <ul>
                 <i id="check" class="fa fa-check-circle fa-lg"/>check
                 <br>
                 <i id="wrong" class="fa fa-times-circle fa-lg"/>wrong
             </ul>
             </div> -->
-            <div v-for="result in results" :key="result">
-                <b-form-radio-group
-                  :options="options"
-                  class="mb-3"
-                  value-field="item"
-                  text-field="name"
-                  disabled-field="notEnabled"
-                >
-        <!-- {{ result }} -->
-    </b-form-radio-group>
+
             </div>
         </b-card>
     </div>
@@ -36,6 +35,7 @@ export default {
     },
     data() {
         return {
+            examResult: [],
             options: [
           { item: 'A', name: 'Option A' },
           { item: 'B', name: 'Option B' },
@@ -54,11 +54,22 @@ export default {
     },
     mounted() {
         this.GET_QUESTIONS()
-
-        // #for development
-        this.SET_RESULT(this.results[0])
-        // #for development
-
+        this.examResult = this.result
+        try {
+            if (this.examResult.randomizedQuestions) {
+                this.examResult.randomizedQuestions = JSON.parse(this.examResult.randomizedQuestions)
+            }
+            this.examResult.result = JSON.parse(this.result.result)
+        } catch {
+            this.examResult.result = this.result.result
+            this.examResult.randomizedQuestions = this.examResult.randomizedQuestions
+        }
+        this.examResult.result.data = this.examResult.result.data.map(data => {
+            console.log(this.examResult.randomizedQuestions)
+            data['question'] = this.questions.filter(question => question.id == data.question_id)
+            // console.log(this.questions.question);
+            return data
+        }) 
     },
     methods: {
         ...mapActions({

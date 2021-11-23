@@ -29,7 +29,7 @@ export default {
             return c
           })
           
-          console.log(questions)
+          // console.log(questions)
           this.courses = []
           questions.forEach(element => {
             this.courses.push(element.course)

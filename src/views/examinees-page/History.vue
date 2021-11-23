@@ -91,7 +91,7 @@
               <br>
              <!-- <div class="col">{{ row.item.data }}</div> -->
               <div class="col">
-              <b-button @click="view(data)">View</b-button>
+              <b-button @click="view(rowData)">View</b-button>
               <br><br>
               </div>
               <br>
@@ -181,27 +181,12 @@ export default {
           key: 'action',
         },
       ],
-
-      items: [
-        {
-          title: 'sample6', score: '2/6', remarks: 'Failed', attempts: 1, 
-        },
-        {
-          title: 'sample3', score: '3/6', remarks: 'Failed', attempts: 1, 
-        },
-        {
-          title: 'sample8', score: '5/6', remarks: 'Passed', attempts: 1, 
-        },
-        {
-          title: 'sample7', score: '4/6', remarks: 'Passed', attempts: 1, 
-        },
-      ],
       selectedItem: {},
     }
   },
   computed: {
     rows() {
-      return this.items.length
+      return this.historyData.length
     },
     ...mapGetters({
       checkResults: 'GET_EXAM_QUESTIONNAIRE_RESULT',
