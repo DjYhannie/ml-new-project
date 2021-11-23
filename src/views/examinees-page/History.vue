@@ -1,5 +1,12 @@
 <template>
     <div>
+      <!-- <div v-show="request">
+        <b-card>
+          <h1>
+              WAITING FOR REQUEST...
+          </h1>
+        </b-card>
+      </div> -->
       <div>
         <!-- searchbar  -->
         <b-form-group
@@ -34,7 +41,6 @@
             :options="pageOptions"
           />
         </b-form-group>
-
         <!-- <br> -->
       </div>
     <b-table
@@ -42,46 +48,56 @@
       bordered
       striped
       hover
-      :items="items"
+      :items="historyData"
       :fields="fields"
       :filter="filter"
       show-empty
       empty-text="No matching records found"
     >
-    <!-- triggers to show data  -->
+    <template #cell(title)="data">
+      <p>{{ data.item.current.title }}</p>
+    </template>
+    <br>
+    <template #cell(score)="data">
+      <p>{{ data.item.current.score }}/ {{data.item.current.randomizedQuestions.length}}</p>
+    </template>
+    <br>
+    <template #cell(remarks)="data">
+      <p>{{ data.item.current.remarks }}</p>
+    </template>
+    <br>
+    <!-- triggers to show data -->
       <template #cell(action)="row">
         <b-button @click="row.toggleDetails">
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-button>
       </template>
+      <br>
       <!-- shows data  -->
       <template #row-details="row">
         <b-card>
           <!-- attempt1 -->
           <b-container class="bv-example-row">
 <!-- data  -->
-<div class="row">
-  <div class="col">{{ row.item.title }}</div>
-           <div class="col">{{ row.item.score }}</div>
-           <div class="col">{{ row.item.remarks }}</div>
-           <div class="col">{{ row.item.attempts }}</div>
-           <div class="col">
-             <b-button @click="view(data)">View</b-button>
-</div>
-</div>
-</b-container>
-<!-- attempt2 -->
-<!-- <b-container class="bv-example-row">
-<div class="row">
-  <div class="col">{{ row.item.title }}</div>
-           <div class="col">{{ row.item.score }}</div>
-           <div class="col">{{ row.item.remarks }}</div>
-           <div class="col">{{ row.item.attempts }}</div>
-           <div class="col">
-             <b-button @click="view(data)">View</b-button>
-</div>
-</div>
-</b-container> -->
+            <div class="row" v-for="rowData in row.item.data" :key="rowData">
+              <!-- {{row}} -->
+              <div class="col">{{ rowData.title }}</div>
+              <br>
+              <div class="col">{{ rowData.score }}</div>
+              <br>
+              <div class="col">{{ rowData.remarks }}</div>
+              <br>
+              <div class="col">{{ rowData.attempts }}</div>
+              <br>
+             <!-- <div class="col">{{ row.item.data }}</div> -->
+              <div class="col">
+              <b-button @click="view(data)">View</b-button>
+              <br><br>
+              </div>
+              <br>
+            </div>
+            </b-container>
+            <br><br><br>
         </b-card>
       </template>
       <!-- shows data  -->
@@ -105,7 +121,7 @@
 
 <script>
 import {
-  BTable, BButton, BCol, BRow, BCard, BPagination, BFormGroup, BFormInput, BInputGroupPrepend, BIcon, BInputGroup, BFormSelect,
+  BTable, BButton, BCol, BRow, BCard, BPagination, BFormGroup, BFormInput, BInputGroupPrepend, BIcon, BInputGroup, BFormSelect, BContainer,
 } from 'bootstrap-vue'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
@@ -123,15 +139,18 @@ export default {
     BInputGroup,
     BIcon,
     BFormSelect,
+    BContainer,
   },
   data() {
     return {
+      // request: false,
       show: true,
       perPage: 3,
       currentPage: 1,
       filter: null,
       pageOptions: [5, 10, 15, { value: 100, text: 'Show a lot' }],
-      // historyData: [],
+      historyData: [],
+      attempts_data: [],
       // historyFields: [
       //   // 'name',
       //   'title',
@@ -211,11 +230,11 @@ export default {
     },
     attempts(){
             let results = this.results
-            console.log(this.results);
+            // console.log(this.results)
             let questionnaireIds = results.map(result => result.questionnaire_id)
-            console.log('ID', questionnaireIds);
+            // console.log('ID', questionnaireIds)
             let uniqueQuestionnaireId = questionnaireIds.filter((val, i, self) => self.indexOf(val) === i)
-            console.log('ID', uniqueQuestionnaireId)
+            // console.log('ID', uniqueQuestionnaireId)
 
             uniqueQuestionnaireId.forEach(uniqueQuestionnaireId => {
               console.log(uniqueQuestionnaireId ,questionnaireIds.filter(n => {return uniqueQuestionnaireId == n}).length);
@@ -235,8 +254,34 @@ export default {
           data: sortedExamResult
         }
       })
-      console.log('DATA', structData);
-s    }
+      let array_data = [];
+      array_data.push(structData)
+        // console.log('CURRENT', structData);
+
+      array_data[0].map(data => {
+        console.log('DATA',data);
+        this.attempts_data.push(data.data)
+
+        let score = JSON.parse(data.current.result)
+        data.current['attempts'] = data.data.length
+
+        if (!score) {
+          // console.log('SCORE', score);
+        }else{
+          data.current['score'] = score.score
+          if (score.is_pass) {
+            data.current['remarks'] = 'passed'
+          }
+          else{
+            data.current['remarks'] = 'failed'
+          }
+        }
+        this.historyData.push(data)
+        // this.historyData.push(data.current)
+      })
+      // console.log('ATTEMPTS', this.attempts_data);
+      console.log('HISTORY DATA', this.historyData);
+    },
   },
 }
 </script>
