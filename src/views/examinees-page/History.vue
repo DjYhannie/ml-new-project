@@ -51,6 +51,7 @@
       :items="historyData"
       :fields="fields"
       :filter="filter"
+      :current-page="currentPage"
       show-empty
       empty-text="No matching records found"
     >
@@ -59,11 +60,15 @@
     </template>
     <br>
     <template #cell(score)="data">
-      <p>{{ data.item.current.score }}/ {{data.item.current.randomizedQuestions.length}}</p>
+      <p>{{ data.item.current.score }} / 6</p>
     </template>
     <br>
     <template #cell(remarks)="data">
       <p>{{ data.item.current.remarks }}</p>
+    </template>
+    <br>
+    <template #cell(attempts)="data">
+      <p>{{ data.item.current.attempts }}</p>
     </template>
     <br>
     <!-- triggers to show data -->
@@ -100,19 +105,12 @@
             <br><br><br>
         </b-card>
       </template>
-      <!-- shows data  -->
-      <!-- <template #cell(action)="data">
-        <b-button>
-          View
-        </b-button>
-      </template> -->
     </b-table>
     <!-- pagination  -->
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      :current-page="currentPage"
       aria-controls="table"
     />
 
@@ -198,7 +196,7 @@ export default {
     this.GET_USERS()
     await this.GET_RESULT_BY_USERID()
     this.attempts()
-    this.testing()
+    this.history()
   },
   methods: {
     ...mapActions({
@@ -225,7 +223,7 @@ export default {
               console.log(uniqueQuestionnaireId ,questionnaireIds.filter(n => {return uniqueQuestionnaireId == n}).length);
             });
         },
-    testing() {
+    history() {
       let questionnaireIds = this.results.map(result => result.questionnaire_id)
       let uniqueQuestionnaireId = questionnaireIds.filter((val, i, self) => self.indexOf(val) === i)
 
