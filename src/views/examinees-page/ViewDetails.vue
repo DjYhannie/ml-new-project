@@ -11,9 +11,9 @@
             </ul>
 
           <div v-for="(result, index) in result.question[0].choices" v-bind:key="result.id">
-            <b-form-radio disabled v-bind:value="index">
+            <!-- <b-form-radio disabled v-bind:value="index"> -->
               {{`${index} . ${result}`}}    
-            </b-form-radio>
+            <!-- </b-form-radio> -->
           </div>
           <br><br>
             </div>

@@ -229,8 +229,9 @@ export default {
 
       const structData = uniqueQuestionnaireId.map(uniqueId => {
         const examResult = this.results.filter(result => {
-          return result.questionnaire_id == uniqueId
+          return result.questionnaire_id === uniqueId
         })
+        console.log(uniqueId, examResult)
         const sortedExamResult = examResult.sort((a, b) => b.id - a.id)
         return {
           current: sortedExamResult[0],
