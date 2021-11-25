@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <span class="blinking">Am I blinking?</span> -->
     <!-- Take Exam  -->
       <b-card class="card w-50 align-center" v-show="helloShow">
         <h3>Hello there!</h3>
@@ -344,15 +343,6 @@ export default {
       );
     },
 
-    // clicked() {
-    //   console.log('IS_CLICKED!', this.click)
-    //   const click = this.click
-    //     console.log('ID__', id)
-    //     if (click == true) {
-    //     this.showRequired = true
-    //     console.log('FALSE')
-    //   }
-    // },
   },
 }
 </script>
