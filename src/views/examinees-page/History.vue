@@ -47,6 +47,7 @@
       :items="historyData"
       :fields="fields"
       :filter="filter"
+      :current-page="currentPage"
       show-empty
       empty-text="No matching records found"
     >
@@ -55,11 +56,15 @@
       </template>
       <br />
       <template #cell(score)="data">
-        <p>{{ data.item.current.score }}/ 6</p>
+        <p>{{ data.item.current.score }} / 6</p>
       </template>
       <br />
       <template #cell(remarks)="data">
         <p>{{ data.item.current.remarks }}</p>
+      </template>
+      <br />
+      <template #cell(attempts)="data">
+        <p>{{ data.item.current.attempts }}</p>
       </template>
       <br />
       <!-- triggers to show data -->
@@ -96,19 +101,12 @@
           <br /><br /><br />
         </b-card>
       </template>
-      <!-- shows data  -->
-      <!-- <template #cell(action)="data">
-        <b-button>
-          View
-        </b-button>
-      </template> -->
     </b-table>
     <!-- pagination  -->
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      :current-page="currentPage"
       aria-controls="table"
     />
   </div>
@@ -205,7 +203,7 @@ export default {
     this.GET_USERS();
     await this.GET_RESULT_BY_USERID();
     this.attempts();
-    this.testing();
+    this.history();
   },
   methods: {
     ...mapActions({
@@ -239,7 +237,7 @@ export default {
         );
       });
     },
-    testing() {
+    history() {
       let questionnaireIds = this.results.map(
         (result) => result.questionnaire_id
       );
@@ -249,8 +247,9 @@ export default {
 
       const structData = uniqueQuestionnaireId.map((uniqueId) => {
         const examResult = this.results.filter((result) => {
-          return result.questionnaire_id == uniqueId;
+          return result.questionnaire_id === uniqueId;
         });
+        console.log(uniqueId, examResult);
         const sortedExamResult = examResult.sort((a, b) => b.id - a.id);
         return {
           current: sortedExamResult[0],

@@ -2,22 +2,21 @@
     <div>
         <b-card>
             <div v-for="result in examResult.result.data" :key="result.id">
+    <div style="display: inline-block;">
             <h4>{{ result.question[0].question }}</h4>
-                <b-form-radio-group
-                  :options="result.question[0].choices"
-                  class="mb-3"
-                  value-field="item"
-                  text-field="name"
-                  disabled-field="notEnabled"
-                >
-    </b-form-radio-group>
-    <!-- <div style="display: inline-block;">
             <ul>
-                <i id="check" class="fa fa-check-circle fa-lg"/>check
+                <i id="check" class="fa fa-check-circle fa-lg"/>{{result.user_answer}}
                 <br>
-                <i id="wrong" class="fa fa-times-circle fa-lg"/>wrong
+                <i id="wrong" class="fa fa-times-circle fa-lg"/>{{result.correct_answer}}
             </ul>
-            </div> -->
+
+          <div v-for="(result, index) in result.question[0].choices" v-bind:key="result.id">
+            <!-- <b-form-radio disabled v-bind:value="index"> -->
+              {{`${index} . ${result}`}}    
+            <!-- </b-form-radio> -->
+          </div>
+          <br><br>
+            </div>
 
             </div>
         </b-card>
@@ -25,13 +24,14 @@
 </template>
 
 <script>
-import { BCard, BFormRadioGroup, } from 'bootstrap-vue'
+import { BCard, BFormRadioGroup, BFormRadio, } from 'bootstrap-vue'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
     components: {
         BCard,
         BFormRadioGroup,
+        BFormRadio,
     },
     data() {
         return {
@@ -54,6 +54,7 @@ export default {
     },
     mounted() {
         this.GET_QUESTIONS()
+        this.answer()
         this.examResult = this.result
         try {
             if (this.examResult.randomizedQuestions) {
@@ -78,7 +79,11 @@ export default {
         }),
         ...mapMutations({
             SET_RESULT: 'SET_RESULT',
-        })
+        }),
+        answer() {
+            let answer = this.result.result.data
+            console.log('ANSWER', answer);
+        }
     },
 }
 </script>
@@ -101,5 +106,9 @@ export default {
 }
 #wrong{
     color: red;
+}
+ol.A+ {list-style-type: upper-alpha;}
+b-form-radio-group:options{
+    display: block;
 }
 </style>
