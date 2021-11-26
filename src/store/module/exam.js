@@ -88,7 +88,7 @@ export default {
       state.result = result
     },
     SET_USER(state, users) {
-      state.users= users
+      state.users = users
     },
     SET_RESULT_BY_USERID(state, resultByUserId) {
       state.resultByUserId = resultByUserId
