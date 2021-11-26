@@ -43,7 +43,7 @@ export default {
       console.log('USERS', response)
       return response
     },
-    async ACTION_GET_RESULT_BY_USERID({ commit}) {
+    async ACTION_GET_RESULT_BY_USERID({ commit }) {
       const response = await api.get(`/result/user`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // let userReesult =   response.data.data.result
       commit('SET_RESULT_BY_USERID', response.data.data)
@@ -88,7 +88,7 @@ export default {
       state.result = result
     },
     SET_USER(state, users) {
-      state.users= users
+      state.users = users
     },
     SET_RESULT_BY_USERID(state, resultByUserId) {
       state.resultByUserId = resultByUserId
