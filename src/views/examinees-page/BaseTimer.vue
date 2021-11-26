@@ -247,22 +247,22 @@ export default {
         }
 
         // alert 15 mins
-        // if (15*60 == this.timeInSeconds--) {
-        //   console.log('1 min left');
-        //   this.alert15 = true
-        // this.dismissCountDown = this.dismissSecs
-        // }
+        if (15*60 == this.timeInSeconds--) {
+          console.log('1 min left');
+          this.alert15 = true
+        this.dismissCountDown = this.dismissSecs
+        }
 
         //alert 10 min
-        // if (10*60 == this.timeInSeconds--) {
-        //   console.log('1 min left');
-        //   this.alert10 = true
-        // this.dismissCountDown = this.dismissSecs
-        // }
-
-        //alert 1 min
-        if (1*60 == this.timeInSeconds--) {
+        if (10*60 == this.timeInSeconds--) {
           console.log('1 min left');
+          this.alert10 = true
+        this.dismissCountDown = this.dismissSecs
+        }
+
+        //alert 2 min
+        if (1*60 == this.timeInSeconds--) {
+          console.log('2 min left');
           this.alert2 = true
           this.dismissCountDown = this.dismissSecs
         }
