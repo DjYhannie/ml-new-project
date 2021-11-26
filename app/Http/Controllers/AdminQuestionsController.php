@@ -321,7 +321,6 @@ class AdminQuestionsController extends Controller
         }
     }
 
-
     //Query to get all hard questions with answers
     public function hardQuestionswithAnswers()
     {

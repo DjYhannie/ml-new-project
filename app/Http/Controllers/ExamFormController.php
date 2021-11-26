@@ -89,7 +89,7 @@ class ExamFormController extends Controller
                         $points = $points += 1;
                     }
                     else{
-                        
+
                         $res['question_id'] = $question->id;
                         $res['is_correct'] = ($ans[1] == $question->answer);
                         $res['user_answer'] = $ans[1];
@@ -97,7 +97,7 @@ class ExamFormController extends Controller
 
                     array_push($result, $res);
                     }
-                    $ctr++;  
+                    $ctr++;
                 }
 
             $pass = $passing->passing_score;
@@ -105,7 +105,7 @@ class ExamFormController extends Controller
             $result = json_encode($result);
 
 
-            DB::update('update url_tokens set result = ?', array($result));
+            DB::update('update url_tokens set result = ? where id = ?', array($result, $id));
 
             if($points >= $pass){
                 return response()->json([
