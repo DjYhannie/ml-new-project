@@ -91,8 +91,8 @@ POST http://localhost:8000/api/register
 Content-Type: application/application/json
 
 {
-    "username": "Shannia Lee",
-    "email":"19104865@usc.edu.ph",
+    "username": "Shannia",
+    "email":"19104@usc.edu.ph",
     "password": "test123",
     "password_confirmation": "test123"
 }
@@ -102,7 +102,7 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email" : "rhea0951@gmail.com",
+    "email" : "19104865@usc.edu.ph",
     "password" : "test123"
 }
 
@@ -239,8 +239,12 @@ Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
 
 
 ####
-GET http://localhost:8000/api/result/user/1
+GET http://localhost:8000/api/users/1
 Authorization: Bearer 2|KHFtGa6IL3i25pCEvu9KD4WDEBAOnNxDFeLOaU3v
+
+###
+GET http://localhost:8000/api/users
+Authorization: Bearer 1|YvJZwad7qQM2m5iUDaIj7sT0VbjCTx56QGnwzoGo
 
 
 ####

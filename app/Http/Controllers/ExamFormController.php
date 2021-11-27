@@ -194,7 +194,7 @@ class ExamFormController extends Controller
             $results = DB::table('url_tokens')
                         ->where('user_id', $user->id)
                         ->get();
-
+                        
             return response()->json([
                 'username' => $username,
                 'results' => $results,
