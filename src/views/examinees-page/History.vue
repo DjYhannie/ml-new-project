@@ -51,6 +51,7 @@
       show-empty
       empty-text="No matching records found"
     >
+      <!-- current data  -->
       <template #cell(title)="data">
         <p>{{ data.item.current.title }}</p>
       </template>
@@ -73,8 +74,9 @@
           {{ row.detailsShowing ? "Hide" : "Show" }} Details
         </b-button>
       </template>
+
       <br />
-      <!-- shows data  -->
+      <!-- shows all data  -->
       <template #row-details="row">
         <b-card>
           <!-- attempt1 -->

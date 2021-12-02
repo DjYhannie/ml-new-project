@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      <!-- searchbar  -->
       <b-form-group
         label-for="filter-input"
         label-cols-sm="11"
@@ -30,49 +29,74 @@
           :options="pageOptions"
         />
       </b-form-group>
-
       <!-- <br> -->
     </div>
-
-    <br />
-
     <b-table
       id="table"
       bordered
       striped
       hover
-      :items="items"
+      :items="examineesData"
       :fields="fields"
       :filter="filter"
-      :per-page="perPage"
       :current-page="currentPage"
-      @row-clicked="handleRowClicked"
       show-empty
       empty-text="No matching records found"
     >
-      <!-- triggers to show data  -->
+      <!-- current data  -->
+      <template #cell(users)="data">
+        <p>{{ data.item.current.users }}</p>
+      </template>
+      <br />
+      <template #cell(attempts)="data">
+        <p>{{ data.item.current.attempts }}</p>
+      </template>
+      <br />
+      <template #cell(score)="data">
+        <p>{{ data.item.current.score }}</p>
+      </template>
+      <br />
+      <template #cell(date)="data">
+        <p>{{ data.item.current.date }}</p>
+      </template>
+      <br />
+      <template #cell(remarks)="data">
+        <p>{{ data.item.current.remarks }}</p>
+      </template>
+      <br />
+
       <template #cell(action)="row">
         <b-button @click="row.toggleDetails">
           {{ row.detailsShowing ? "Hide" : "Show" }} Details
         </b-button>
       </template>
-      <!-- shows data  -->
+
+      <br />
       <template #row-details="row">
         <b-card>
           <b-container class="bv-example-row">
-            <b-row>
-              <div class="col">{{ row.item.name }}</div>
-              <div class="col">{{ row.item.attempts }}</div>
-              <div class="col">{{ row.item.score }}</div>
-              <div class="col">{{ row.item.date }}</div>
-              <div class="col">{{ row.item.remarks }}</div>
-              <div class="col"></div>
-            </b-row>
+            <div class="row" v-for="rowData in row.item.data" :key="rowData">
+              <div class="col">{{ rowData.users }}</div>
+
+              <div class="col">{{ rowData.attempts }}</div>
+
+              <div class="col">{{ rowData.score }} / 6</div>
+
+              <div class="col">{{ rowData.date }}</div>
+
+              <div class="col">{{ rowData.remarks }}</div>
+
+              <div class="col">
+                <b-button @click="view(rowData)">View</b-button>
+                <br /><br />
+              </div>
+              <br />
+            </div>
           </b-container>
+          <br /><br /><br />
         </b-card>
       </template>
     </b-table>
-    <!-- pagination  -->
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
@@ -80,8 +104,8 @@
       aria-controls="table"
     />
   </div>
-  <!-- </div> -->
 </template>
+
 <script>
 import {
   BTable,
@@ -96,8 +120,9 @@ import {
   BIcon,
   BInputGroup,
   BFormSelect,
+  BContainer,
 } from "bootstrap-vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -113,6 +138,7 @@ export default {
     BInputGroup,
     BIcon,
     BFormSelect,
+    BContainer,
   },
   data() {
     return {
@@ -121,10 +147,12 @@ export default {
       currentPage: 1,
       filter: null,
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
+      examineesData: [],
+      attempts_data: [],
       fields: [
         {
           key: "name",
-          sortable: true,
+          sortable: false,
         },
         {
           key: "attempts",
@@ -132,111 +160,120 @@ export default {
         },
         {
           key: "score",
-          label: "score",
-          sortable: true,
+          sortable: false,
         },
         {
-          key: "date",
-          label: "date & time",
-          sortable: true,
+          key: "date & time",
+          sortable: false,
         },
         {
           key: "remarks",
-          label: "remarks",
-          sortable: true,
+          sortable: false,
+        },
+        {
+          key: "score",
+          sortable: false,
         },
         {
           key: "action",
-          label: "action",
         },
-      ],
-
-      items: [
-        {
-          isActive: true,
-          attempts: "1",
-          date: "09-01-2021",
-          remarks: "Passed",
-          score: "38/40",
-          name: "Dickerson",
-        },
-        //  attemps: '1',
-        {
-          isActive: false,
-          attempts: "2",
-          date: "09-02-2021",
-          remarks: "Failed",
-          score: "22/40",
-          name: "Larsen",
-        },
-        // , attemps: '2'
-        {
-          isActive: false,
-          attempts: "3",
-          date: "09-03-2021",
-          remarks: "Passed",
-          score: "36/40",
-          name: "Geneva",
-        },
-        // attemps: '3',
-        {
-          isActive: true,
-          attempts: "2",
-          date: "09-04-2021",
-          remarks: "Failed",
-          score: "20/40",
-          name: "Jami",
-        },
-        // attemps: '2',
       ],
       selectedItem: {},
     };
   },
   computed: {
     rows() {
-      return this.items.length;
+      return this.examineesData.length;
     },
-    ...mapState({
-      examResults: "examResults",
-      exams: "exam",
+    ...mapGetters({
+      checkResults: "GET_EXAM_QUESTIONNAIRE_RESULT",
+      results: "GET_RESULT_BY_USERID",
+      users: "GET_USERS",
     }),
   },
-  created() {
-    this.GET_RESULTS(), this.EXAM_QUESTIONNAIRE();
-  },
-  mounted() {
-    this.GET_RESULTS(),
-      console.log("RESULTS__", this.examResults),
-      this.EXAM_QUESTIONNAIRE();
-    console.log("CHECK_ANSWERS__", this.exams);
+  async mounted() {
+    this.GET_USERS();
+    await this.GET_RESULT_BY_USERID();
+    this.attempts();
+    this.examineesRemarks();
   },
   methods: {
     ...mapActions({
-      GET_RESULTS: "ACTION_GET_RESULTS",
-      EXAM_QUESTIONNAIRE: "ACTION_ADD_EXAM_QUESTIONNAIRE",
+      GET_EXAM_RESULT: "ACTION_ADD_EXAM_QUESTIONNAIRE",
+      GET_USERS: "ACTION_GET_USERS",
+      GET_RESULT_BY_USERID: "ACTION_GET_RESULT_BY_USERID",
     }),
-    handleRowClicked(item) {
-      this.show = !this.show;
-      this.selectedItem = item;
+    ...mapMutations({
+      SET_RESULT: "SET_RESULT",
+    }),
+    view(data) {
+      this.SET_RESULT(data);
+      this.$router.push({ name: "user/view-details" });
     },
-    onRowSelected(items) {},
+
+    attempts() {
+      let results = this.results;
+      let questionnaireIds = results.map((result) => result.questionnaire_id);
+      let uniqueQuestionnaireId = questionnaireIds.filter(
+        (val, i, self) => self.indexOf(val) === i
+      );
+
+      uniqueQuestionnaireId.forEach((uniqueQuestionnaireId) => {
+        console.log(
+          uniqueQuestionnaireId,
+          questionnaireIds.filter((n) => {
+            return uniqueQuestionnaireId == n;
+          }).length
+        );
+      });
+    },
+
+    examineesRemarks() {
+      let questionnaireIds = this.results.map(
+        (result) => result.questionnaire_id
+      );
+      let uniqueQuestionnaireId = questionnaireIds.filter(
+        (val, i, self) => self.indexOf(val) === i
+      );
+
+      const structData = uniqueQuestionnaireId.map((uniqueId) => {
+        const examResult = this.results.filter((result) => {
+          return result.questionnaire_id === uniqueId;
+        });
+        console.log(uniqueId, examResult);
+        const sortedExamResult = examResult.sort((a, b) => b.id - a.id);
+        return {
+          current: sortedExamResult[0],
+          data: sortedExamResult,
+        };
+      });
+      let array_data = [];
+      array_data.push(structData);
+
+      array_data[0].map((data) => {
+        console.log("DATA", data);
+        this.attempts_data.push(data.data);
+
+        let score = JSON.parse(data.current.result);
+        data.current["attempts"] = data.data.length;
+
+        if (!score) {
+        } else {
+          data.current["score"] = score.score;
+          if (score.is_pass) {
+            data.current["remarks"] = "PASSED";
+          } else {
+            data.current["remarks"] = "FAILED";
+          }
+        }
+        this.examineesData.push(data);
+      });
+    },
   },
 };
 </script>
+
 <style>
-/* .mb-2{ */
-/* width: 300px; */
-/* float: inherit; */
-/* text-align: center; */
-/* } */
-.rowDetails {
-  border-collapse: collapse;
-}
-b-row {
-  border: 1px solid black;
-}
-/* .mb-0{
-} */
 .mb-0 {
   float: left;
 }

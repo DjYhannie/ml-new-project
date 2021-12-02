@@ -43,6 +43,7 @@ export default {
       console.log('USERS', response)
       return response
     },
+
     async ACTION_GET_RESULT_BY_USERID({ commit }) {
       const response = await api.get(`/result/user`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
       // let userReesult =   response.data.data.result

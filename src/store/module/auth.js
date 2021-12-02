@@ -48,7 +48,7 @@ const actions = {
   },
 }
 const mutations = {
-  SET_USER(state,users) {
+  SET_USER(state, users) {
     state.users = users
   },
   setUser(state, username) {
