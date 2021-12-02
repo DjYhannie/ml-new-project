@@ -189,9 +189,12 @@ export default {
       checkResults: "GET_EXAM_QUESTIONNAIRE_RESULT",
       results: "GET_RESULT_BY_USERID",
       users: "GET_USERS",
+      allusers: "GET_ALL_USERS",
     }),
   },
   async mounted() {
+    this.GET_ALL_USERS();
+    console.log("All Users", this.allusers);
     this.GET_USERS();
     await this.GET_RESULT_BY_USERID();
     this.attempts();
@@ -201,6 +204,7 @@ export default {
     ...mapActions({
       GET_EXAM_RESULT: "ACTION_ADD_EXAM_QUESTIONNAIRE",
       GET_USERS: "ACTION_GET_USERS",
+      GET_ALL_USERS: "ACTION_GET_ALL_USERS",
       GET_RESULT_BY_USERID: "ACTION_GET_RESULT_BY_USERID",
     }),
     ...mapMutations({

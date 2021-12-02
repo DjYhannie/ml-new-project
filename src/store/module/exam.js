@@ -10,6 +10,7 @@ export default {
     resultByUserId: [],
     result: {},
     users: {},
+    allusers: {},
     id: '',
   },
   getters: {
@@ -19,6 +20,7 @@ export default {
     GET_EXAM_QUESTIONNAIRE_RESULT: state => state.examResults,
     GET_RESULT: state => state.result,
     GET_USERS: state => state.users,
+    GET_ALL_USERS: state => state.allusers,
     GET_RESULT_BY_USERID: state => state.resultByUserId,
   },
   actions: {
@@ -40,6 +42,13 @@ export default {
     async ACTION_GET_USERS({ getters }) {
       console.log('ID', getters.StateUser.id)
       const response = await api.get(`/users/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      console.log('USERS', response)
+      return response
+    },
+
+    async ACTION_GET_ALL_USERS({ commit }) {
+      const response = await api.get('/users', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+      commit('SET_ALL_USERS')
       console.log('USERS', response)
       return response
     },
