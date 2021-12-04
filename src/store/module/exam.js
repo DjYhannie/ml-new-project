@@ -100,7 +100,7 @@ export default {
     SET_USER(state, users) {
       state.users = users
     },
-    SET_ALL_USERS(state, users) {
+    SET_ALL_USERS(state, allusers) {
       state.allusers = allusers
     },
     SET_RESULT_BY_USERID(state, resultByUserId) {
