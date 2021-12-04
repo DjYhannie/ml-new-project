@@ -125,7 +125,6 @@ import {
   BContainer,
 } from "bootstrap-vue";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-
 export default {
   components: {
     BTable,
@@ -222,7 +221,6 @@ export default {
       let uniqueQuestionnaireId = questionnaireIds.filter(
         (val, i, self) => self.indexOf(val) === i
       );
-
       uniqueQuestionnaireId.forEach((uniqueQuestionnaireId) => {
         console.log(
           uniqueQuestionnaireId,
@@ -232,7 +230,6 @@ export default {
         );
       });
     },
-
     examineesRemarks() {
       let questionnaireIds = this.results.map(
         (result) => result.questionnaire_id
@@ -240,7 +237,6 @@ export default {
       let uniqueQuestionnaireId = questionnaireIds.filter(
         (val, i, self) => self.indexOf(val) === i
       );
-
       const structData = uniqueQuestionnaireId.map((uniqueId) => {
         const examResult = this.results.filter((result) => {
           return result.questionnaire_id === uniqueId;
@@ -254,14 +250,11 @@ export default {
       });
       let array_data = [];
       array_data.push(structData);
-
       array_data[0].map((data) => {
         // console.log("DATA", data);
         this.attempts_data.push(data.data);
-
         let score = JSON.parse(data.current.result);
         data.current["attempts"] = data.data.length;
-
         if (!score) {
         } else {
           data.current["score"] = score.score;
