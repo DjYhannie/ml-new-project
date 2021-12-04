@@ -29,7 +29,6 @@ export default {
       let random = res.data.data.randomizedQuestions
       random = (JSON.parse(random)).map(question => {
         question.choices = JSON.parse(question.choices)
-        // console.log(random)
         return question
       })
       commit('SET_QUESTIONNAIRE', res.data.data.questionnaire)
