@@ -1,3 +1,4 @@
+import { data } from 'jquery'
 import api from '../../libs/axios'
 
 export default {
@@ -47,10 +48,13 @@ export default {
     },
 
     async ACTION_GET_ALL_USERS({ commit }) {
-      const response = await api.get('/users', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('SET_ALL_USERS', response)
-      console.log('ALLUSERS', response)
-      return response
+      let users;
+      await api.get('/users', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }).then((response)=>{
+        users =  response.data.users;
+      });
+      commit('SET_ALL_USERS', users)
+      console.log('ALLUSERS', users);
+      return users;
     },
 
     async ACTION_GET_RESULT_BY_USERID({ commit }) {

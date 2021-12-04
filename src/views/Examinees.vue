@@ -31,6 +31,8 @@
       </b-form-group>
       <!-- <br> -->
     </div>
+    <!-- testing needs to convert to string  JSON.stringify -->
+    {{allusers}}
     <b-table
       id="table"
       bordered
@@ -214,7 +216,6 @@ export default {
       this.SET_RESULT(data);
       this.$router.push({ name: "user/view-details" });
     },
-
     attempts() {
       let results = this.results;
       let questionnaireIds = results.map((result) => result.questionnaire_id);
