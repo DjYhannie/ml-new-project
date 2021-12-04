@@ -1,14 +1,6 @@
 <template>
   <div>
-    <!-- <div v-show="request">
-        <b-card>
-          <h1>
-              WAITING FOR REQUEST...
-          </h1>
-        </b-card>
-      </div> -->
     <div>
-      <!-- searchbar  -->
       <b-form-group
         label-for="filter-input"
         label-cols-sm="11"
@@ -23,7 +15,6 @@
         </b-input-group>
       </b-form-group>
 
-      <!-- per page  -->
       <b-form-group
         label-for="per-page-select"
         label-cols-sm="8"
@@ -37,7 +28,6 @@
           :options="pageOptions"
         />
       </b-form-group>
-      <!-- <br> -->
     </div>
     <b-table
       id="table"
@@ -51,7 +41,6 @@
       show-empty
       empty-text="No matching records found"
     >
-      <!-- current data  -->
       <template #cell(title)="data">
         <p>{{ data.item.current.title }}</p>
       </template>
@@ -68,22 +57,17 @@
         <p>{{ data.item.current.attempts }}</p>
       </template>
       <br />
-      <!-- triggers to show data -->
+
       <template #cell(action)="row">
         <b-button @click="row.toggleDetails">
           {{ row.detailsShowing ? "Hide" : "Show" }} Details
         </b-button>
       </template>
 
-      <br />
-      <!-- shows all data  -->
       <template #row-details="row">
         <b-card>
-          <!-- attempt1 -->
           <b-container class="bv-example-row">
-            <!-- data  -->
             <div class="row" v-for="rowData in row.item.data" :key="rowData">
-              <!-- {{row}} -->
               <div class="col">{{ rowData.title }}</div>
               <br />
               <div class="col">{{ rowData.score }}</div>
@@ -92,7 +76,6 @@
               <br />
               <div class="col">{{ rowData.attempts }}</div>
               <br />
-              <!-- <div class="col">{{ row.item.data }}</div> -->
               <div class="col">
                 <b-button @click="view(rowData)">View</b-button>
                 <br /><br />
@@ -104,7 +87,6 @@
         </b-card>
       </template>
     </b-table>
-    <!-- pagination  -->
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
@@ -150,7 +132,6 @@ export default {
   },
   data() {
     return {
-      // request: false,
       show: true,
       perPage: 3,
       currentPage: 1,
@@ -158,14 +139,6 @@ export default {
       pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
       historyData: [],
       attempts_data: [],
-      // historyFields: [
-      //   // 'name',
-      //   'title',
-      //   'score',
-      //   'remarks',
-      //   'attemps',
-      //   'view details',
-      // ],
       fields: [
         {
           key: "title",
@@ -177,7 +150,6 @@ export default {
         },
         {
           key: "remarks",
-          label: "remarks",
           sortable: true,
         },
         {
@@ -203,6 +175,7 @@ export default {
   },
   async mounted() {
     this.GET_USERS();
+    this.GET_EXAM_RESULT();
     await this.GET_RESULT_BY_USERID();
     this.attempts();
     this.history();
@@ -220,15 +193,13 @@ export default {
       this.SET_RESULT(data);
       this.$router.push({ name: "user/view-details" });
     },
+
     attempts() {
       let results = this.results;
-      // console.log(this.results)
       let questionnaireIds = results.map((result) => result.questionnaire_id);
-      // console.log('ID', questionnaireIds)
       let uniqueQuestionnaireId = questionnaireIds.filter(
         (val, i, self) => self.indexOf(val) === i
       );
-      // console.log('ID', uniqueQuestionnaireId)
 
       uniqueQuestionnaireId.forEach((uniqueQuestionnaireId) => {
         console.log(
@@ -239,6 +210,7 @@ export default {
         );
       });
     },
+
     history() {
       let questionnaireIds = this.results.map(
         (result) => result.questionnaire_id
@@ -258,9 +230,9 @@ export default {
           data: sortedExamResult,
         };
       });
+
       let array_data = [];
       array_data.push(structData);
-      // console.log('CURRENT', structData);
 
       array_data[0].map((data) => {
         console.log("DATA", data);
@@ -270,20 +242,18 @@ export default {
         data.current["attempts"] = data.data.length;
 
         if (!score) {
-          // console.log('SCORE', score);
         } else {
           data.current["score"] = score.score;
           if (score.is_pass) {
-            data.current["remarks"] = "passed";
+            data.current["remarks"] = "PASSED";
           } else {
-            data.current["remarks"] = "failed";
+            data.current["remarks"] = "FAILED";
           }
         }
         this.historyData.push(data);
-        // this.historyData.push(data.current)
       });
       // console.log('ATTEMPTS', this.attempts_data);
-      console.log("HISTORY DATA", this.historyData);
+      // console.log("HISTORY DATA", this.historyData);
     },
   },
 };
