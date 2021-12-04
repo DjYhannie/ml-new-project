@@ -48,7 +48,7 @@ export default {
 
     async ACTION_GET_ALL_USERS({ commit }) {
       const response = await api.get('/users', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('SET_ALL_USERS', response.data.data)
+      commit('SET_ALL_USERS', response)
       console.log('ALLUSERS', response)
       return response
     },
@@ -99,6 +99,9 @@ export default {
     },
     SET_USER(state, users) {
       state.users = users
+    },
+    SET_ALL_USERS(state, users) {
+      state.allusers = allusers
     },
     SET_RESULT_BY_USERID(state, resultByUserId) {
       state.resultByUserId = resultByUserId
