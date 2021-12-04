@@ -244,7 +244,7 @@ export default {
         const examResult = this.results.filter((result) => {
           return result.questionnaire_id === uniqueId;
         });
-        console.log(uniqueId, examResult);
+        // console.log(uniqueId, examResult);
         const sortedExamResult = examResult.sort((a, b) => b.id - a.id);
         return {
           current: sortedExamResult[0],
@@ -255,7 +255,7 @@ export default {
       array_data.push(structData);
 
       array_data[0].map((data) => {
-        console.log("DATA", data);
+        // console.log("DATA", data);
         this.attempts_data.push(data.data);
 
         let score = JSON.parse(data.current.result);

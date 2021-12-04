@@ -42,14 +42,14 @@ export default {
     async ACTION_GET_USERS({ getters }) {
       console.log('ID', getters.StateUser.id)
       const response = await api.get(`/users/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('USERS', response)
+      // console.log('USERS', response)
       return response
     },
 
     async ACTION_GET_ALL_USERS({ commit }) {
       const response = await api.get('/users', { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      commit('SET_ALL_USERS')
-      console.log('USERS', response)
+      commit('SET_ALL_USERS', response.data.data)
+      console.log('ALLUSERS', response)
       return response
     },
 
