@@ -41,7 +41,7 @@ export default {
     async ACTION_GET_USERS({ getters }) {
       console.log('ID', getters.StateUser.id)
       const response = await api.get(`/users/${getters.StateUser.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-      console.log('USERS', response)
+      // console.log('USERS', response)
       return response
     },
 
