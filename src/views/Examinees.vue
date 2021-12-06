@@ -31,8 +31,6 @@
       </b-form-group>
       <!-- <br> -->
     </div>
-    <!-- testing needs to convert to string  JSON.stringify -->
-    {{allusers}}
     <b-table
       id="table"
       bordered
@@ -46,8 +44,8 @@
       empty-text="No matching records found"
     >
       <!-- current data  -->
-      <template #cell(users)="data">
-        <p>{{ data.item.current.users }}</p>
+      <template #cell(username)="data">
+        <p>{{ data.item.current.username }}</p>
       </template>
       <br />
       <template #cell(attempts)="data">
@@ -78,7 +76,7 @@
         <b-card>
           <b-container class="bv-example-row">
             <div class="row" v-for="rowData in row.item.data" :key="rowData">
-              <div class="col">{{ rowData.users }}</div>
+              <div class="col">{{ rowData.username }}</div>
 
               <div class="col">{{ rowData.attempts }}</div>
 
@@ -125,6 +123,7 @@ import {
   BContainer,
 } from "bootstrap-vue";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { filter } from 'postcss-rtl/lib/affected-props';
 export default {
   components: {
     BTable,
@@ -152,11 +151,13 @@ export default {
       attempts_data: [],
       fields: [
         {
-          key: "name",
+          key: "username",
+          label: "Name",
           sortable: false,
         },
         {
           key: "attempts",
+          label: 'Attempts',
           sortable: false,
         },
         {
@@ -200,6 +201,7 @@ export default {
     await this.GET_RESULT_BY_USERID();
     this.attempts();
     this.examineesRemarks();
+    await this.displayUsers();
   },
   methods: {
     ...mapActions({
@@ -214,6 +216,12 @@ export default {
     view(data) {
       this.SET_RESULT(data);
       this.$router.push({ name: "user/view-details" });
+    },
+    displayUsers(){
+      const allusers = this.allusers
+      const username = allusers.map((item) => item.username)
+      // this.examineesData.push(data);
+      console.log(username);
     },
     attempts() {
       let results = this.results;
@@ -255,6 +263,9 @@ export default {
         this.attempts_data.push(data.data);
         let score = JSON.parse(data.current.result);
         data.current["attempts"] = data.data.length;
+        const filteredUser = this.allusers.filter(user => user.id === data.current["user_id"])
+        // console.log(filteredUser)
+        data.current['username'] = filteredUser[0].username
         if (!score) {
         } else {
           data.current["score"] = score.score;
@@ -266,6 +277,7 @@ export default {
         }
         this.examineesData.push(data);
       });
+      console.log("Data", this.examineesData)
     },
   },
 };
