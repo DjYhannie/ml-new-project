@@ -201,12 +201,12 @@ export default {
     await this.GET_RESULT_BY_USERID();
     this.attempts();
     this.examineesRemarks();
-    await this.displayUsers();
+    // await this.displayUsers();
   },
   methods: {
     ...mapActions({
-      GET_EXAM_RESULT: "ACTION_ADD_EXAM_QUESTIONNAIRE",
-      GET_USERS: "ACTION_GET_USERS",
+      // GET_EXAM_RESULT: "ACTION_ADD_EXAM_QUESTIONNAIRE",
+      // GET_USERS: "ACTION_GET_USERS",
       GET_ALL_USERS: "ACTION_GET_ALL_USERS",
       GET_RESULT_BY_USERID: "ACTION_GET_RESULT_BY_USERID",
     }),
@@ -217,12 +217,11 @@ export default {
       this.SET_RESULT(data);
       this.$router.push({ name: "user/view-details" });
     },
-    displayUsers(){
-      const allusers = this.allusers
-      const username = allusers.map((item) => item.username)
-      // this.examineesData.push(data);
-      console.log(username);
-    },
+    // displayUsers(){
+    //   const allusers = this.allusers
+    //   const username = allusers.map((item) => item.username)
+    //   console.log(username);
+    // },
     attempts() {
       let results = this.results;
       let questionnaireIds = results.map((result) => result.questionnaire_id);
@@ -277,7 +276,7 @@ export default {
         }
         this.examineesData.push(data);
       });
-      console.log("Data", this.examineesData)
+      // console.log("Data", this.examineesData)
     },
   },
 };
